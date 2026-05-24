@@ -1,0 +1,46 @@
+---
+const states = [
+  { label: "Now playing", body: "Charm City · Track 04" },
+  { label: "Currently writing", body: "Album 5 · working title ‘Saltwater’" },
+  { label: "Reading", body: "Tampa Bay Times · morning paper" },
+  { label: "In studio", body: "Cutting cover plates" },
+];
+---
+
+<aside
+  id="now-playing"
+  class="fixed bottom-5 left-5 z-40 bg-[#0e0e0e]/95 backdrop-blur border border-rule/80 rounded-full pl-3 pr-5 py-2 flex items-center gap-3 text-[12px] shadow-[0_2px_20px_rgba(0,0,0,0.6)] max-w-[88vw]"
+  data-states={JSON.stringify(states)}
+>
+  <span class="size-8 rounded-full bg-amber/20 flex items-center justify-center">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-amber" aria-hidden="true">
+      <path d="M2 12h2l2-6 4 12 4-9 2 6h2"/>
+    </svg>
+  </span>
+  <div class="leading-tight">
+    <div class="font-mono text-[9.5px] tracking-[0.18em] uppercase text-amber" id="np-label">Now playing</div>
+    <div class="text-paper text-[13px]" id="np-body">Charm City · Track 04</div>
+  </div>
+  <button
+    type="button"
+    aria-label="Dismiss"
+    class="text-paper-faint hover:text-paper ml-2"
+    onclick="document.getElementById('now-playing')?.remove()"
+  >×</button>
+</aside>
+
+<script>
+  const el = document.getElementById('now-playing');
+  if (el) {
+    const states = JSON.parse(el.getAttribute('data-states') || '[]') as { label: string; body: string }[];
+    const labelEl = document.getElementById('np-label');
+    const bodyEl = document.getElementById('np-body');
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % states.length;
+      const s = states[i];
+      if (labelEl) labelEl.textContent = s.label;
+      if (bodyEl) bodyEl.textContent = s.body;
+    }, 5000);
+  }
+</script>

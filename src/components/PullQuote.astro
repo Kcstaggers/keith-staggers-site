@@ -1,0 +1,17 @@
+---
+interface Props {
+  text: string;
+  attribution?: string;
+}
+const { text, attribution } = Astro.props;
+---
+
+<figure class="hairline pt-12 max-w-[920px] mx-auto text-center">
+  <span aria-hidden="true" class="serif italic text-[64px] text-amber leading-none block mb-4">&ldquo;</span>
+  <blockquote class="serif text-[clamp(28px,3.5vw,44px)] leading-[1.25] tracking-[-0.005em] text-paper" set:html={text}></blockquote>
+  {attribution && (
+    <figcaption class="mt-8 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint">
+      {attribution}
+    </figcaption>
+  )}
+</figure>

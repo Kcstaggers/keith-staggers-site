@@ -1,0 +1,89 @@
+---
+import SectionCTA from "./SectionCTA.astro";
+
+type Tile =
+  | { kind: "image"; src: string; alt: string; cls: string; aspect?: string }
+  | { kind: "loop";  src: string; poster: string; alt: string; cls: string; aspect?: string }
+  | { kind: "video"; src: string; poster: string; alt: string; cls: string; aspect?: string };
+
+// Editorial bento. cls = grid spans (Tailwind). aspect = override aspect ratio.
+const tiles: Tile[] = [
+  { kind: "image", src: "/media/keith-photo-7.webp", alt: "Portrait — featured", cls: "md:col-span-2 md:row-span-2" },
+  { kind: "image", src: "/media/keith-photo-1.webp", alt: "Portrait 01", cls: "" },
+  { kind: "image", src: "/media/keith-photo-2.webp", alt: "Portrait 02", cls: "" },
+  { kind: "loop",  src: "/media/keith-video-16x9.mp4", poster: "/media/keith-video-16x9.webp", alt: "Short film — landscape", cls: "md:col-span-2", aspect: "aspect-video" },
+  { kind: "image", src: "/media/keith-photo-3.webp", alt: "Portrait 03", cls: "" },
+  { kind: "image", src: "/media/keith-photo-9.webp", alt: "Portrait 09", cls: "" },
+  { kind: "loop",  src: "/media/keith-video-1x1.mp4", poster: "/media/keith-video-1x1.webp", alt: "Short film — square", cls: "" },
+  { kind: "image", src: "/media/keith-photo-4.webp", alt: "Portrait 04", cls: "" },
+  { kind: "image", src: "/media/keith-photo-5.webp", alt: "Portrait 05", cls: "" },
+  { kind: "loop",  src: "/media/keith-video2-1x1.mp4", poster: "/media/keith-video2-1x1.webp", alt: "Short film — featured", cls: "md:col-span-2 md:row-span-2" },
+  { kind: "image", src: "/media/keith-photo-6.webp", alt: "Portrait 06", cls: "" },
+  { kind: "image", src: "/media/keith-photo-8.webp", alt: "Portrait 08", cls: "" },
+  { kind: "image", src: "/media/keith-photo-10.webp", alt: "Portrait 10", cls: "" },
+];
+---
+
+<section id="visuals" class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto scroll-mt-24">
+  <header class="mb-16">
+    <p class="eyebrow mb-6">Pillar · 04 / Visuals</p>
+    <h2 class="serif text-[clamp(40px,5.5vw,72px)] leading-[1] tracking-[-0.01em] mb-6">
+      Photo &amp; film.
+      <span class="text-paper-dim/80 ml-3">generated, then directed</span>
+    </h2>
+    <p class="serif italic text-[20px] lg:text-[22px] text-paper-dim max-w-[680px] leading-[1.5]">
+      A growing archive of AI-made portraiture and short films. Same eye that built the music, pointed at light.
+    </p>
+  </header>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-fr gap-3 lg:gap-4 hairline pt-12">
+    {tiles.map((t, i) => (
+      <figure class={`${t.cls} ${t.aspect ?? "aspect-square"} bg-[#15110d] border border-rule/60 rounded-sm relative overflow-hidden group`}>
+        {t.kind === "image" && (
+          <img
+            src={t.src}
+            alt={t.alt}
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+        )}
+        {t.kind === "loop" && (
+          <video
+            src={t.src}
+            poster={t.poster}
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-label={t.alt}
+            class="absolute inset-0 w-full h-full object-cover"
+          ></video>
+        )}
+        {t.kind === "video" && (
+          <video
+            src={t.src}
+            poster={t.poster}
+            controls
+            preload="none"
+            playsinline
+            aria-label={t.alt}
+            class="absolute inset-0 w-full h-full object-cover bg-black"
+          ></video>
+        )}
+        <figcaption class="pointer-events-none absolute bottom-2 left-2 font-mono text-[10px] tracking-[0.18em] uppercase text-paper-faint opacity-0 group-hover:opacity-90 transition-opacity">
+          {String(i + 1).padStart(2, "0")}
+          {t.kind !== "image" && <span class="text-amber ml-2">▶</span>}
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <div class="mt-10 flex items-center justify-between gap-4 text-paper-faint font-mono text-[10.5px] tracking-[0.18em] uppercase">
+    <span>{tiles.filter(t => t.kind === "image").length} portraits · {tiles.filter(t => t.kind !== "image").length} films</span>
+    <span class="text-paper-dim">Generated with AI · Directed by hand</span>
+  </div>
+
+  <SectionCTA prompt="Want AI portraiture, film, or visual assets for your brand?" />
+</section>

@@ -1,0 +1,88 @@
+---
+import { site } from "../data/site";
+
+const eyebrow = ["Detective", "Nurse", "AI Creator"];
+const stats = [
+  { value: "50+", label: "Albums" },
+  { value: "800+", label: "Songs" },
+  { value: "3", label: "Books" },
+  { value: "1,000+", label: "Images & films" },
+];
+
+const calLink = `${site.booking.username}/${site.booking.eventSlug}`;
+const ctaHref = site.booking.enabled
+  ? `https://cal.com/${calLink}`
+  : `mailto:${site.email}?subject=Work%20with%20me`;
+---
+
+<section class="px-6 lg:px-12 pt-12 pb-20 lg:pt-20 lg:pb-32 max-w-[1280px] mx-auto">
+  <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+    <div class="lg:col-span-7 xl:col-span-7">
+      <div class="flex items-center gap-3 mb-10">
+        <span class="block h-px w-10 bg-amber"></span>
+        <div class="flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-paper-dim">
+          {eyebrow.map((word, i) => (
+            <>
+              <span>{word}</span>
+              {i < eyebrow.length - 1 && <span class="text-amber" aria-hidden="true">→</span>}
+            </>
+          ))}
+        </div>
+      </div>
+
+      <h1 class="serif text-[clamp(48px,7.5vw,108px)] leading-[0.96] tracking-[-0.015em] mb-10">
+        A body of work, <span class="accent">built</span> with <span class="accent">AI<span class="text-amber">.</span></span>
+      </h1>
+
+      <p class="serif italic text-[clamp(18px,1.6vw,22px)] leading-[1.55] text-paper/90 max-w-[640px] mb-12">
+        Fifty albums. Eight hundred songs. Three books. A thousand images and
+        films. Made by one person and the right tools. I'll help you do the
+        same. Or do it for you.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4">
+        <a
+          href={ctaHref}
+          data-cal-link={site.booking.enabled ? calLink : undefined}
+          data-cal-namespace=""
+          data-cal-config={site.booking.enabled ? '{"layout":"month_view","theme":"dark"}' : undefined}
+          class="inline-flex items-center gap-2 text-[12px] font-mono tracking-[0.18em] uppercase px-6 py-3.5 rounded-full border border-amber bg-amber text-ink hover:bg-transparent hover:text-amber transition-colors"
+        >
+          Hire me
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="#music"
+          class="inline-flex items-center gap-2 text-[12px] font-mono tracking-[0.18em] uppercase px-6 py-3.5 rounded-full border border-rule text-paper-dim hover:text-paper hover:border-paper-dim transition-colors"
+        >
+          Listen
+          <span aria-hidden="true">↓</span>
+        </a>
+        <span class="text-paper-faint font-mono text-[11px] tracking-[0.18em] uppercase ml-2">K.S.</span>
+      </div>
+    </div>
+
+    <aside class="lg:col-span-5 xl:col-span-5">
+      <div class="aspect-[4/5] bg-[#15110d] border border-rule/80 rounded-sm relative overflow-hidden">
+        <img
+          src="/media/keith-hero.webp"
+          alt="Keith Staggers portrait"
+          width="1120"
+          height="1400"
+          loading="eager"
+          decoding="async"
+          class="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+    </aside>
+  </div>
+
+  <div class="hairline mt-20 pt-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+    {stats.map((s) => (
+      <div>
+        <div class="serif italic text-[44px] lg:text-[56px] leading-none text-paper">{s.value}</div>
+        <div class="mt-2 font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">{s.label}</div>
+      </div>
+    ))}
+  </div>
+</section>

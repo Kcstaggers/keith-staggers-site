@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces/index.css";
+@import "@fontsource-variable/inter/index.css";
+
+@theme {
+  --color-ink: #0a0a0a;
+  --color-paper: #e8e4dc;
+  --color-paper-dim: #b8b2a6;
+  --color-paper-faint: #8a847a;
+  --color-rule: #2a2a2a;
+  --color-amber: #c89860;
+  --color-amber-dim: #a07c4a;
+
+  --font-serif: "Fraunces Variable", "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background: var(--color-amber);
+    color: var(--color-ink);
+  }
+}
+
+@utility serif {
+  font-family: var(--font-serif);
+  font-feature-settings: "ss01", "ss02";
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-paper-faint);
+}
+
+@utility accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-amber);
+}
+
+@utility hairline {
+  border-top: 0.5px solid var(--color-rule);
+}

@@ -1,0 +1,63 @@
+---
+import { books } from "../data/books";
+import SectionCTA from "./SectionCTA.astro";
+---
+
+<section id="books" class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto scroll-mt-24">
+  <header class="mb-16">
+    <p class="eyebrow mb-6">Pillar · 03 / Books</p>
+    <h2 class="serif text-[clamp(40px,5.5vw,72px)] leading-[1] tracking-[-0.01em] mb-6">
+      Three published.
+      <span class="text-paper-dim/80 ml-3">written from inside the room</span>
+    </h2>
+    <p class="serif italic text-[20px] lg:text-[22px] text-paper-dim max-w-[640px] leading-[1.5]">
+      Healthcare, leadership, burnout. Not theory. Field notes from the floor.
+    </p>
+  </header>
+
+  <div class="hairline pt-12 space-y-16 lg:space-y-20">
+    {books.map((book, i) => (
+      <article class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div class="lg:col-span-4 lg:col-start-1">
+          <a href={book.amazonUrl} class="block aspect-[2/3] bg-[#15110d] border border-rule/80 rounded-sm relative overflow-hidden group" aria-label={`${book.title} on Amazon`}>
+            <img
+              src={`/media/book-${book.slug}.webp`}
+              alt={`${book.title} cover`}
+              width="600"
+              height="900"
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </a>
+        </div>
+        <div class="lg:col-span-7 lg:col-start-6">
+          <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint mb-4">
+            № 0{i + 1}
+            {book.featured && <span class="text-amber ml-3">★ Featured</span>}
+          </p>
+          <h3 class="serif text-[clamp(28px,3.5vw,44px)] leading-[1.05] tracking-tight mb-3">
+            {book.title}
+          </h3>
+          {book.subtitle && (
+            <p class="serif italic text-[20px] text-paper-dim mb-6">{book.subtitle}</p>
+          )}
+          <p class="text-paper/85 text-[15px] lg:text-[16px] leading-[1.7] mb-8 max-w-[560px]">
+            {book.blurb}
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a
+              href={book.amazonUrl}
+              class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase px-6 py-3 rounded-full border border-amber bg-amber text-ink hover:bg-transparent hover:text-amber transition-colors"
+            >
+              Read on Amazon
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <SectionCTA prompt="Need help writing, ghost-writing, or marketing your book?" />
+</section>

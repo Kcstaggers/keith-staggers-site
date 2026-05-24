@@ -1,0 +1,26 @@
+---
+import { getBookingHref, getCalAttrs } from "../utils/booking";
+
+interface Props {
+  prompt: string;
+  label?: string;
+}
+
+const { prompt, label = "Book a 15-min intro call" } = Astro.props;
+const href = getBookingHref();
+const calAttrs = getCalAttrs();
+---
+
+<div class="hairline mt-20 pt-10 flex flex-col items-center text-center gap-5">
+  <p class="serif italic text-[clamp(20px,2vw,26px)] text-paper-dim max-w-[640px] leading-[1.4]">
+    {prompt}
+  </p>
+  <a
+    href={href}
+    {...calAttrs}
+    class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase px-6 py-3 rounded-full border border-amber text-amber hover:bg-amber hover:text-ink transition-colors"
+  >
+    {label}
+    <span aria-hidden="true">→</span>
+  </a>
+</div>

@@ -1,0 +1,50 @@
+---
+import { site } from "../data/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="px-6 lg:px-12 pt-24 pb-10 border-t border-rule/60">
+  <div class="max-w-[1280px] mx-auto">
+    <div class="serif text-[clamp(80px,16vw,220px)] leading-[0.9] tracking-[-0.02em] mb-12 select-none">
+      Keith Stagger<span class="accent">s.</span>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 hairline pt-10">
+      <div>
+        <p class="eyebrow mb-4">Sections</p>
+        <ul class="space-y-2 text-[14px] text-paper-dim">
+          {site.nav.map((item) => (
+            <li><a href={item.href} class="hover:text-paper transition-colors">{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow mb-4">Listen</p>
+        <ul class="space-y-2 text-[14px] text-paper-dim">
+          <li><a href={site.social.spotify} class="hover:text-paper transition-colors">Spotify</a></li>
+          <li><a href={site.social.appleMusic} class="hover:text-paper transition-colors">Apple Music</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow mb-4">Contact</p>
+        <ul class="space-y-2 text-[14px] text-paper-dim">
+          <li><a href={`mailto:${site.email}`} class="hover:text-paper transition-colors">{site.email}</a></li>
+          <li class="text-paper-faint">Available worldwide</li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow mb-4">Colophon</p>
+        <ul class="space-y-2 text-[14px] text-paper-dim">
+          <li>Built with Astro</li>
+          <li>Fraunces &amp; Inter</li>
+          <li>© {year}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hairline mt-10 pt-6 flex items-center justify-between font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">
+      <span>Independent studio · Working worldwide</span>
+      <span>Free to read · No paywall</span>
+    </div>
+  </div>
+</footer>

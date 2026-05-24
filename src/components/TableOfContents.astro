@@ -1,0 +1,42 @@
+---
+const pillars = [
+  { num: "01", title: "Music", suffix: "fifty albums in", href: "#music", page: "012" },
+  { num: "02", title: "Visuals", suffix: "photo & film", href: "#visuals", page: "028" },
+  { num: "03", title: "Services", suffix: "hire me, four ways", href: "#services", page: "046" },
+  { num: "04", title: "About", suffix: "the long way around", href: "#about", page: "062" },
+  { num: "05", title: "Books", suffix: "three published", href: "#books", page: "080" },
+];
+---
+
+<section class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto">
+  <div class="mb-12">
+    <p class="eyebrow mb-6">Editorial index · Issue 26</p>
+    <h2 class="serif text-[clamp(48px,7vw,84px)] leading-[1] tracking-[-0.01em]">
+      Inside this <span class="accent">issue</span>.
+    </h2>
+    <p class="serif italic text-[20px] lg:text-[22px] text-paper-dim mt-6 max-w-[520px]">
+      Five pillars. One operator. Five years of receipts.
+    </p>
+    <p class="mt-10 font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">
+      Independent studio. Working worldwide.
+    </p>
+  </div>
+
+  <div class="hairline">
+    {pillars.map((p) => (
+      <a
+        href={p.href}
+        class="group grid grid-cols-[auto_1fr_auto] items-baseline gap-6 lg:gap-12 py-7 lg:py-8 border-b border-rule/60 hover:border-paper-dim/40 transition-colors"
+      >
+        <span class="font-mono text-[12px] tracking-[0.18em] text-paper-faint w-10">{p.num}</span>
+        <span class="serif text-[clamp(28px,4vw,44px)] leading-none tracking-tight">
+          {p.title}
+          <span class="text-paper-dim/80 ml-3">{p.suffix}</span>
+        </span>
+        <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint group-hover:text-amber transition-colors">
+          P. {p.page} <span aria-hidden="true" class="ml-2">→</span>
+        </span>
+      </a>
+    ))}
+  </div>
+</section>
