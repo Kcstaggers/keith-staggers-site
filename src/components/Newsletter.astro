@@ -6,17 +6,18 @@ const hasProvider = username.length > 0;
 const action = hasProvider
   ? `https://buttondown.com/api/emails/embed-subscribe/${username}`
   : "#";
+const guide = "/ai-workflow-guide.pdf";
 ---
 
 <section class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto">
   <div class="hairline pt-12 grid lg:grid-cols-12 gap-10 lg:gap-16">
     <div class="lg:col-span-7">
-      <p class="eyebrow mb-6">The Sunday letter</p>
+      <p class="eyebrow mb-6">Free field guide</p>
       <h2 class="serif text-[clamp(36px,5vw,64px)] leading-[1.05] tracking-[-0.01em]">
-        One letter, every <span class="accent">Sunday</span>.
+        Steal my <span class="accent">workflow</span>.
       </h2>
       <p class="serif italic text-[20px] lg:text-[22px] text-paper-dim mt-6 max-w-[560px] leading-[1.5]">
-        Notes from inside the studio. The tools, the tracks, the books in progress. No fluff. Unsubscribe anytime.
+        A field guide to making finished creative work with AI. The method, the loop, and the part nobody on YouTube talks about. Free, and you get the occasional letter from inside the studio.
       </p>
     </div>
 
@@ -24,10 +25,10 @@ const action = hasProvider
       class="lg:col-span-5 self-end w-full"
       action={action}
       method="post"
-      target={hasProvider ? "_blank" : undefined}
       data-newsletter
       data-has-provider={hasProvider ? "true" : "false"}
       data-fallback-email={site.email}
+      data-guide={guide}
     >
       <label for="newsletter-email" class="sr-only">Email address</label>
       <div class="flex flex-col sm:flex-row gap-3">
@@ -42,13 +43,13 @@ const action = hasProvider
         />
         <button
           type="submit"
-          class="font-mono text-[11px] tracking-[0.18em] uppercase px-6 py-3.5 rounded-full border border-amber bg-amber text-ink hover:bg-transparent hover:text-amber transition-colors"
+          class="font-mono text-[11px] tracking-[0.18em] uppercase px-6 py-3.5 rounded-full border border-amber bg-amber text-ink hover:bg-transparent hover:text-amber transition-colors whitespace-nowrap"
         >
-          Subscribe
+          Get the guide
         </button>
       </div>
       <p class="mt-3 font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint" data-newsletter-note>
-        No spam. Unsubscribe anytime.
+        Instant access. No spam. Unsubscribe anytime.
       </p>
     </form>
   </div>
@@ -56,20 +57,37 @@ const action = hasProvider
 
 <script>
   const form = document.querySelector('[data-newsletter]') as HTMLFormElement | null;
-  if (form && form.dataset.hasProvider !== "true") {
-    // No provider configured yet. Route the signup to Keith's inbox instead
-    // of dropping it. Replace by setting newsletter.buttondownUsername in site.ts.
+  if (form) {
+    const guide = form.dataset.guide || "/ai-workflow-guide.pdf";
+    const note = form.querySelector("[data-newsletter-note]");
+    const hasProvider = form.dataset.hasProvider === "true";
+
+    const openGuide = () => window.open(guide, "_blank", "noopener");
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const input = form.querySelector("input[name=email]") as HTMLInputElement | null;
-      const note = form.querySelector("[data-newsletter-note]");
       const email = input?.value?.trim();
       if (!email) return;
-      const to = form.dataset.fallbackEmail || "";
-      const subject = encodeURIComponent("Sunday letter signup");
-      const body = encodeURIComponent(`Please add ${email} to the Sunday letter.`);
-      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-      if (note) note.textContent = "Opening your email app to finish signup…";
+
+      // Deliver the guide immediately, while the click gesture is still active.
+      openGuide();
+
+      if (hasProvider) {
+        // Register the email with the provider in the background.
+        const body = new FormData();
+        body.append("email", email);
+        fetch(form.action, { method: "POST", body, mode: "no-cors" }).catch(() => {});
+        if (note) note.textContent = "Your guide is opening in a new tab. Welcome in.";
+        if (input) input.value = "";
+      } else {
+        // No provider connected yet. Route the signup to Keith's inbox so no lead is lost.
+        const to = form.dataset.fallbackEmail || "";
+        const subject = encodeURIComponent("Field guide signup");
+        const bodyText = encodeURIComponent(`Please add ${email} to the Sunday letter.`);
+        if (note) note.textContent = "Your guide is opening in a new tab. Finish signup in your email app.";
+        window.location.href = `mailto:${to}?subject=${subject}&body=${bodyText}`;
+      }
     });
   }
 </script>
