@@ -57,7 +57,7 @@ const action = hasProvider
 <script>
   const form = document.querySelector('[data-newsletter]') as HTMLFormElement | null;
   if (form && form.dataset.hasProvider !== "true") {
-    // No provider configured yet — route the signup to Keith's inbox instead
+    // No provider configured yet. Route the signup to Keith's inbox instead
     // of dropping it. Replace by setting newsletter.buttondownUsername in site.ts.
     form.addEventListener("submit", (e) => {
       e.preventDefault();

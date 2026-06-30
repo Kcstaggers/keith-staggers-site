@@ -58,7 +58,7 @@
   border-top: 0.5px solid var(--color-rule);
 }
 
-/* Scroll reveal — classes are added by JS, so no-JS visitors and
+/* Scroll reveal. Classes are added by JS, so no-JS visitors and
    reduced-motion users always see content immediately. */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
