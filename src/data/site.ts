@@ -15,7 +15,7 @@ export const site = {
     // then set your Buttondown username here and the form posts straight to it.
     // While this is empty, the form falls back to opening an email to you so
     // no signup is ever lost.
-    buttondownUsername: "",
+    buttondownUsername: "staggers",
   },
   booking: {
     // Live Cal.com booking. Edit here to change the link or button label.
