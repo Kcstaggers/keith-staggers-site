@@ -9,6 +9,6 @@ export type Track = {
 // hero renders automatically once this array has at least one track.
 // while it's empty, nothing shows and nothing breaks.
 export const tracks: Track[] = [
-  // { title: "Red Hat Sunday", src: "/media/audio/red-hat-sunday.mp3" },
-  // { title: "Boot Sequence", src: "/media/audio/boot-sequence.mp3" },
+  { title: "Day Ones & Amens", src: "/media/audio/day-ones-and-amens.mp3" },
+  { title: "What I Did", src: "/media/audio/what-i-did.mp3" },
 ];
