@@ -1,4 +1,11 @@
 ---
+import { site } from "../data/site";
+
+const username = site.newsletter.buttondownUsername;
+const hasProvider = username.length > 0;
+const action = hasProvider
+  ? `https://buttondown.com/api/emails/embed-subscribe/${username}`
+  : "#";
 ---
 
 <section class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto">
@@ -15,9 +22,12 @@
 
     <form
       class="lg:col-span-5 self-end w-full"
-      action="#"
+      action={action}
       method="post"
-      data-newsletter-stub
+      target={hasProvider ? "_blank" : undefined}
+      data-newsletter
+      data-has-provider={hasProvider ? "true" : "false"}
+      data-fallback-email={site.email}
     >
       <label for="newsletter-email" class="sr-only">Email address</label>
       <div class="flex flex-col sm:flex-row gap-3">
@@ -37,7 +47,7 @@
           Subscribe
         </button>
       </div>
-      <p class="mt-3 font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">
+      <p class="mt-3 font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint" data-newsletter-note>
         No spam. Unsubscribe anytime.
       </p>
     </form>
@@ -45,13 +55,21 @@
 </section>
 
 <script>
-  const form = document.querySelector('[data-newsletter-stub]') as HTMLFormElement | null;
-  if (form) {
-    form.addEventListener('submit', (e) => {
+  const form = document.querySelector('[data-newsletter]') as HTMLFormElement | null;
+  if (form && form.dataset.hasProvider !== "true") {
+    // No provider configured yet — route the signup to Keith's inbox instead
+    // of dropping it. Replace by setting newsletter.buttondownUsername in site.ts.
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const btn = form.querySelector('button');
-      if (btn) btn.textContent = 'Wire me up';
-      console.log('Newsletter signup submitted (stub).');
+      const input = form.querySelector("input[name=email]") as HTMLInputElement | null;
+      const note = form.querySelector("[data-newsletter-note]");
+      const email = input?.value?.trim();
+      if (!email) return;
+      const to = form.dataset.fallbackEmail || "";
+      const subject = encodeURIComponent("Sunday letter signup");
+      const body = encodeURIComponent(`Please add ${email} to the Sunday letter.`);
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      if (note) note.textContent = "Opening your email app to finish signup…";
     });
   }
 </script>

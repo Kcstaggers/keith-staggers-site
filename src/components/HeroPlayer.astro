@@ -1,0 +1,82 @@
+---
+import { tracks } from "../data/tracks";
+---
+
+{tracks.length > 0 && (
+  <div
+    class="mt-10 max-w-[520px] hairline pt-6"
+    data-hero-player
+    data-tracks={JSON.stringify(tracks)}
+  >
+    <div class="flex items-center gap-4">
+      <button
+        type="button"
+        data-hp-toggle
+        aria-label="Play preview"
+        class="size-12 shrink-0 rounded-full border border-amber bg-amber text-ink flex items-center justify-center hover:bg-transparent hover:text-amber transition-colors"
+      >
+        <svg data-hp-icon-play viewBox="0 0 16 16" class="size-4 fill-current ml-0.5" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+        <svg data-hp-icon-pause viewBox="0 0 16 16" class="size-4 fill-current hidden" aria-hidden="true"><path d="M3 2h3.5v12H3zM9.5 2H13v12H9.5z"/></svg>
+      </button>
+      <div class="min-w-0 flex-1">
+        <p class="font-mono text-[10px] tracking-[0.22em] uppercase text-amber mb-1">Hear 30 seconds</p>
+        <p class="serif italic text-[17px] text-paper truncate" data-hp-title>{tracks[0].title}</p>
+        <div class="mt-2 h-px bg-rule relative overflow-visible">
+          <div class="absolute inset-y-0 left-0 bg-amber h-px w-0 transition-[width] duration-200 ease-linear" data-hp-bar></div>
+        </div>
+      </div>
+      {tracks.length > 1 && (
+        <button
+          type="button"
+          data-hp-next
+          aria-label="Next track"
+          class="shrink-0 font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint hover:text-paper transition-colors"
+        >
+          Next →
+        </button>
+      )}
+    </div>
+  </div>
+)}
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-hero-player]");
+  if (root) {
+    const tracks: { title: string; src: string }[] = JSON.parse(root.dataset.tracks || "[]");
+    let i = 0;
+    const audio = new Audio();
+    audio.preload = "none";
+    const toggle = root.querySelector<HTMLButtonElement>("[data-hp-toggle]")!;
+    const playIcon = root.querySelector<SVGElement>("[data-hp-icon-play]")!;
+    const pauseIcon = root.querySelector<SVGElement>("[data-hp-icon-pause]")!;
+    const title = root.querySelector<HTMLElement>("[data-hp-title]")!;
+    const bar = root.querySelector<HTMLElement>("[data-hp-bar]")!;
+    const next = root.querySelector<HTMLButtonElement>("[data-hp-next]");
+
+    const setIcons = (playing: boolean) => {
+      playIcon.classList.toggle("hidden", playing);
+      pauseIcon.classList.toggle("hidden", !playing);
+      toggle.setAttribute("aria-label", playing ? "Pause preview" : "Play preview");
+    };
+
+    const load = (n: number, autoplay: boolean) => {
+      i = (n + tracks.length) % tracks.length;
+      audio.src = tracks[i].src;
+      title.textContent = tracks[i].title;
+      bar.style.width = "0%";
+      if (autoplay) audio.play().catch(() => {});
+    };
+
+    toggle.addEventListener("click", () => {
+      if (!audio.src) audio.src = tracks[i].src;
+      audio.paused ? audio.play().catch(() => {}) : audio.pause();
+    });
+    next?.addEventListener("click", () => load(i + 1, !audio.paused));
+    audio.addEventListener("play", () => setIcons(true));
+    audio.addEventListener("pause", () => setIcons(false));
+    audio.addEventListener("timeupdate", () => {
+      if (audio.duration) bar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+    });
+    audio.addEventListener("ended", () => load(i + 1, true));
+  }
+</script>

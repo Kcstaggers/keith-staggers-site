@@ -24,12 +24,23 @@ const ctaHref = site.booking.enabled ? `https://cal.com/${calLink}` : mailtoFall
       <article class="bg-ink p-8 lg:p-10 flex flex-col gap-5">
         <div class="flex items-baseline gap-4">
           <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-amber">{s.num}</span>
-          <h3 class="serif text-[28px] lg:text-[32px] leading-none">{s.title}</h3>
+          <h3 class="serif text-[28px] lg:text-[32px] leading-none">
+            <a href={`/services/${s.slug}/`} class="hover:text-amber transition-colors">{s.title}</a>
+          </h3>
         </div>
         <p class="text-paper/85 text-[15px] leading-[1.7] max-w-[480px]">{s.blurb}</p>
-        <p class="mt-auto pt-3 font-mono text-[11px] tracking-[0.18em] uppercase text-amber">
-          {s.pricing}
-        </p>
+        <div class="mt-auto pt-3 flex items-center justify-between gap-4">
+          <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-amber">
+            {s.pricing}
+          </p>
+          <a
+            href={`/services/${s.slug}/`}
+            class="font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint hover:text-paper transition-colors"
+            aria-label={`More about ${s.title}`}
+          >
+            Details →
+          </a>
+        </div>
       </article>
     ))}
   </div>

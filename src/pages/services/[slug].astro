@@ -1,0 +1,132 @@
+---
+import Base from "../../layouts/Base.astro";
+import SectionCTA from "../../components/SectionCTA.astro";
+import { services } from "../../data/services";
+import { site } from "../../data/site";
+import { getBookingHref, getCalAttrs } from "../../utils/booking";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const others = services.filter((s) => s.slug !== service.slug);
+const href = getBookingHref();
+const calAttrs = getCalAttrs();
+---
+
+<Base title={service.seoTitle} description={service.seoDescription}>
+  <article class="px-6 lg:px-12 pt-12 pb-20 lg:pt-20 lg:pb-28 max-w-[1280px] mx-auto">
+    <!-- Breadcrumb -->
+    <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-paper transition-colors">Home</a>
+      <span class="text-rule mx-2">/</span>
+      <a href="/#services" class="hover:text-paper transition-colors">Work with me</a>
+      <span class="text-rule mx-2">/</span>
+      <span class="text-amber">{service.title}</span>
+    </nav>
+
+    <!-- Hero -->
+    <header class="max-w-[900px]">
+      <div class="flex items-center gap-3 mb-8">
+        <span class="block h-px w-10 bg-amber"></span>
+        <span class="font-mono text-[11px] tracking-[0.22em] uppercase text-paper-dim">
+          Service · {service.num} — {service.pricing}
+        </span>
+      </div>
+      <h1 class="serif text-[clamp(40px,6vw,84px)] leading-[1.02] tracking-[-0.015em] mb-8">
+        {service.headline}
+        <span class="accent block">{service.headlineAccent}</span>
+      </h1>
+      <p class="serif italic text-[clamp(18px,1.6vw,22px)] leading-[1.55] text-paper/90 max-w-[720px] mb-10">
+        {service.intro}
+      </p>
+      <div class="flex flex-wrap items-center gap-4">
+        <a
+          href={href}
+          {...calAttrs}
+          class="inline-flex items-center gap-2 text-[12px] font-mono tracking-[0.18em] uppercase px-6 py-3.5 rounded-full border border-amber bg-amber text-ink hover:bg-transparent hover:text-amber transition-colors"
+        >
+          {site.booking.buttonLabel}
+          <span aria-hidden="true">→</span>
+        </a>
+        <span class="font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">
+          Free · 15 minutes · No-pressure
+        </span>
+      </div>
+    </header>
+
+    <!-- Who it's for -->
+    <section class="hairline mt-20 pt-12 grid lg:grid-cols-12 gap-10">
+      <h2 class="lg:col-span-4 serif text-[clamp(28px,3vw,40px)] leading-[1.05]">
+        Who this is <span class="accent">for</span>.
+      </h2>
+      <ul class="lg:col-span-8 space-y-5">
+        {service.audience.map((a) => (
+          <li class="flex gap-4 text-paper/85 text-[15.5px] leading-[1.7] max-w-[640px]">
+            <span class="text-amber mt-0.5" aria-hidden="true">→</span>
+            <span>{a}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- What you get -->
+    <section class="hairline mt-20 pt-12">
+      <h2 class="serif text-[clamp(28px,3vw,40px)] leading-[1.05] mb-10">
+        What you <span class="accent">get</span>.
+      </h2>
+      <div class="grid md:grid-cols-2 gap-px bg-rule/60">
+        {service.deliverables.map((d, i) => (
+          <div class="bg-ink p-7 lg:p-8">
+            <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-amber mb-3">
+              {String(i + 1).padStart(2, "0")}
+            </p>
+            <h3 class="serif text-[22px] lg:text-[24px] leading-tight mb-3">{d.name}</h3>
+            <p class="text-paper-dim text-[14.5px] leading-[1.7]">{d.detail}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="hairline mt-20 pt-12 grid lg:grid-cols-12 gap-10">
+      <h2 class="lg:col-span-4 serif text-[clamp(28px,3vw,40px)] leading-[1.05]">
+        How it <span class="accent">works</span>.
+      </h2>
+      <ol class="lg:col-span-8 space-y-8">
+        {service.process.map((p, i) => (
+          <li class="flex gap-6">
+            <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-amber pt-1.5 shrink-0">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h3 class="serif text-[20px] leading-tight mb-1.5">{p.step}</h3>
+              <p class="text-paper-dim text-[14.5px] leading-[1.7] max-w-[560px]">{p.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <SectionCTA prompt={service.ctaPrompt} />
+
+    <!-- Other services -->
+    <section class="hairline mt-20 pt-10">
+      <p class="eyebrow mb-6">Other ways in</p>
+      <div class="flex flex-wrap gap-3">
+        {others.map((s) => (
+          <a
+            href={`/services/${s.slug}/`}
+            class="font-mono text-[11px] tracking-[0.18em] uppercase px-5 py-2.5 rounded-full border border-rule text-paper-dim hover:text-paper hover:border-paper-dim transition-colors"
+          >
+            {s.title} →
+          </a>
+        ))}
+      </div>
+    </section>
+  </article>
+</Base>

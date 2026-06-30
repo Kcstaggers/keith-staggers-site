@@ -35,13 +35,13 @@ const rest = albums.filter((a) => a.slug !== featured.slug);
     </div>
     <div class="lg:col-span-7">
       <iframe
-        src={`https://open.spotify.com/embed/album/${featured.spotifyId}?utm_source=generator&theme=0`}
+        data-defer-src={`https://open.spotify.com/embed/album/${featured.spotifyId}?utm_source=generator&theme=0`}
         width="100%"
         height="400"
         frameborder="0"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-        class="rounded-md"
+        class="rounded-md bg-[#15110d]"
         title={`${featured.title} on Spotify`}
       ></iframe>
     </div>
@@ -52,7 +52,7 @@ const rest = albums.filter((a) => a.slug !== featured.slug);
       <article class="group">
         <div class="aspect-square bg-[#15110d] border border-rule/80 rounded-sm mb-5 overflow-hidden relative">
           <iframe
-            src={`https://open.spotify.com/embed/album/${album.spotifyId}?utm_source=generator&theme=0`}
+            data-defer-src={`https://open.spotify.com/embed/album/${album.spotifyId}?utm_source=generator&theme=0`}
             width="100%"
             height="100%"
             frameborder="0"
@@ -99,3 +99,22 @@ const rest = albums.filter((a) => a.slug !== featured.slug);
 
   <SectionCTA prompt="Want music, audio, or ghost-produced tracks for your brand?" />
 </section>
+
+<script>
+  // Spotify embeds are heavy (~1MB+ each). Only load them when they
+  // actually scroll near the viewport.
+  const frames = document.querySelectorAll<HTMLIFrameElement>("iframe[data-defer-src]");
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const frame = entry.target as HTMLIFrameElement;
+        const src = frame.dataset.deferSrc;
+        if (src) frame.src = src;
+        io.unobserve(frame);
+      }
+    },
+    { rootMargin: "400px 0px" }
+  );
+  frames.forEach((f) => io.observe(f));
+</script>

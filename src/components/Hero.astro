@@ -1,5 +1,6 @@
 ---
 import { site } from "../data/site";
+import HeroPlayer from "./HeroPlayer.astro";
 
 const eyebrow = ["Detective", "Nurse", "AI Creator"];
 const stats = [
@@ -60,6 +61,8 @@ const ctaHref = site.booking.enabled
         </a>
         <span class="text-paper-faint font-mono text-[11px] tracking-[0.18em] uppercase ml-2">K.S.</span>
       </div>
+
+      <HeroPlayer />
     </div>
 
     <aside class="lg:col-span-5 xl:col-span-5">

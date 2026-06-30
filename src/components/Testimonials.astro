@@ -10,33 +10,35 @@ function initials(name: string): string {
 }
 ---
 
-<section class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto">
-  <header class="mb-16">
-    <p class="eyebrow mb-6">Word from clients</p>
-    <h2 class="serif text-[clamp(40px,5.5vw,72px)] leading-[1] tracking-[-0.01em] mb-6">
-      What people say after the work ships.
-    </h2>
-  </header>
+{testimonials.length > 0 && (
+  <section class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto">
+    <header class="mb-16">
+      <p class="eyebrow mb-6">Word from clients</p>
+      <h2 class="serif text-[clamp(40px,5.5vw,72px)] leading-[1] tracking-[-0.01em] mb-6">
+        What people say after the work ships.
+      </h2>
+    </header>
 
-  <div class="hairline pt-12 grid md:grid-cols-3 gap-10 lg:gap-12">
-    {testimonials.map((t) => (
-      <figure class="flex flex-col gap-6">
-        <span aria-hidden="true" class="serif italic text-[48px] text-amber leading-none">&ldquo;</span>
-        <blockquote class="serif text-[19px] lg:text-[20px] leading-[1.55] text-paper/95">
-          {t.quote}
-        </blockquote>
-        <figcaption class="mt-auto pt-6 hairline flex items-center gap-3">
-          <span class="size-9 rounded-full bg-[#15110d] border border-rule/80 flex items-center justify-center font-mono text-[11px] tracking-[0.08em] text-amber">
-            {initials(t.name)}
-          </span>
-          <span class="flex flex-col leading-tight">
-            <span class="serif italic text-[15px] text-paper">{t.name}</span>
-            <span class={`font-mono text-[10px] tracking-[0.18em] uppercase ${t.placeholder ? "text-amber/70" : "text-paper-faint"}`}>
-              {t.role}
+    <div class="hairline pt-12 grid md:grid-cols-3 gap-10 lg:gap-12">
+      {testimonials.map((t) => (
+        <figure class="flex flex-col gap-6">
+          <span aria-hidden="true" class="serif italic text-[48px] text-amber leading-none">&ldquo;</span>
+          <blockquote class="serif text-[19px] lg:text-[20px] leading-[1.55] text-paper/95">
+            {t.quote}
+          </blockquote>
+          <figcaption class="mt-auto pt-6 hairline flex items-center gap-3">
+            <span class="size-9 rounded-full bg-[#15110d] border border-rule/80 flex items-center justify-center font-mono text-[11px] tracking-[0.08em] text-amber">
+              {initials(t.name)}
             </span>
-          </span>
-        </figcaption>
-      </figure>
-    ))}
-  </div>
-</section>
+            <span class="flex flex-col leading-tight">
+              <span class="serif italic text-[15px] text-paper">{t.name}</span>
+              <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-paper-faint">
+                {t.role}
+              </span>
+            </span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+)}

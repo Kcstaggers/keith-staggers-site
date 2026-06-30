@@ -57,3 +57,19 @@
 @utility hairline {
   border-top: 0.5px solid var(--color-rule);
 }
+
+/* Scroll reveal — classes are added by JS, so no-JS visitors and
+   reduced-motion users always see content immediately. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

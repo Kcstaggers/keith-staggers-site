@@ -50,13 +50,12 @@ const tiles: Tile[] = [
         )}
         {t.kind === "loop" && (
           <video
-            src={t.src}
+            data-defer-video={t.src}
             poster={t.poster}
-            autoplay
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="none"
             aria-label={t.alt}
             class="absolute inset-0 w-full h-full object-cover"
           ></video>
@@ -87,3 +86,25 @@ const tiles: Tile[] = [
 
   <SectionCTA prompt="Want AI portraiture, film, or visual assets for your brand?" />
 </section>
+
+<script>
+  // Loop videos total ~12MB. Posters show instantly; the video files only
+  // download and play once the tile scrolls near the viewport, and pause
+  // again when it leaves.
+  const vids = document.querySelectorAll<HTMLVideoElement>("video[data-defer-video]");
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const v = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          if (!v.src) v.src = v.dataset.deferVideo ?? "";
+          v.play().catch(() => {});
+        } else if (v.src) {
+          v.pause();
+        }
+      }
+    },
+    { rootMargin: "200px 0px" }
+  );
+  vids.forEach((v) => io.observe(v));
+</script>
