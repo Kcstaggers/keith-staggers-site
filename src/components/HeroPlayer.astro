@@ -77,6 +77,18 @@ import { tracks } from "../data/tracks";
     audio.addEventListener("timeupdate", () => {
       if (audio.duration) bar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
     });
-    audio.addEventListener("ended", () => load(i + 1, true));
+    // When a clip finishes, stop and cue the next one (do not auto-play on).
+    audio.addEventListener("ended", () => load(i + 1, false));
+
+    // Pause the hero when the visitor starts an embedded player (e.g. the
+    // Spotify album iframes). Those are cross-origin, so we can't hear their
+    // play events directly, but clicking into an iframe blurs the page and
+    // makes that iframe the active element. That's our signal to stop.
+    window.addEventListener("blur", () => {
+      window.setTimeout(() => {
+        const el = document.activeElement;
+        if (el && el.tagName === "IFRAME" && !audio.paused) audio.pause();
+      }, 0);
+    });
   }
 </script>
