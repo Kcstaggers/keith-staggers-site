@@ -202,6 +202,129 @@ A scheduled task is set for **Aug 15, 2026** to start a Canva → Cloudflare tra
 - **Vercel auto-detects Astro** — no `vercel.json` needed. Don't add one unless you need to override.
 - **GitHub repo is public.** Don't commit secrets, API keys, .env files, or anything you wouldn't want on someone's homepage. The .gitignore covers the usual suspects.
 
+## Current handoff: Finish Loop revenue launch
+
+Updated July 12, 2026. This is the active business task. Read this section before changing the product, checkout, deployment, or storefront.
+
+### Objective
+
+Create automated digital deliverables that generate income for Keith, use his existing images as visual references where useful, and connect the products to an automated checkout and fulfillment path on keithstaggers.com.
+
+Keith's standing authorization: proceed without repeatedly asking permission unless an action will cost money. Ask before any purchase, paid subscription, advertising spend, contractor expense, or other direct charge. Browser safety rules and regulated identity steps still apply.
+
+### Product built
+
+**The Finish Loop** is a $49 one-time digital toolkit for creators who generate ideas but struggle to finish and release them.
+
+Customer bundle:
+
+- `output/products/the-finish-loop-v1.zip`
+- 3.03 MB, seven files
+- SHA-256: `789857e2d2d9bdd190ca74848785e82b623b86c5aba73b02e97735725534c434`
+- Includes a 26-page field manual, offline interactive planner, 30-day shipping calendar, direction-brief library, finish scorecard, start instructions, and license
+
+Private product source and store instructions:
+
+- `private-products/finish-loop/`
+- `private-products/finish-loop/store-setup.md`
+- `private-products/keith-staggers-product-revenue-plan-v1.md` is the detailed 12-week product and revenue plan
+
+Both `private-products/` and `output/products/` are intentionally gitignored. Do not commit the paid customer ZIP, editable sources, store strategy, or private setup notes to the public GitHub repository.
+
+### Website implementation
+
+The public implementation includes:
+
+- `src/data/products.ts`
+- `src/components/ProductSpotlight.astro`
+- `src/pages/finish-loop.astro`
+- `src/pages/finish-loop/thank-you.astro`
+- Branded campaign media under `public/media/finish-loop/`
+- Product schema, Open Graph assets, sitemap and navigation entries
+- Privacy-safe purchase-intent and fulfillment events
+- A $250 Cal.com coaching-session upsell
+
+The new media is supporting material. The business offer and conversion path remain the focus.
+
+### Git and deployment state
+
+- Working branch: `agent/finish-loop-income`
+- Remote branch: `origin/agent/finish-loop-income`
+- Draft PR: https://github.com/Kcstaggers/keith-staggers-site/pull/2
+- PR is open, mergeable, and had green Vercel checks at the last verification
+- Relevant commits:
+  - `3b571d3 Build Finish Loop product sales path`
+  - `b7d117a Use new Finish Loop campaign portrait`
+  - `61eddf8 Add Finish Loop fulfillment handoff`
+  - `c62e45d Connect Finish Loop test checkout`
+- Last verified preview: https://keith-staggers-site-k9ro56vl3-keith-staggers-projects.vercel.app
+- Production intentionally does not contain the Finish Loop checkout yet
+
+Do not merge PR #2 while `src/data/products.ts` contains a Lemon Squeezy test checkout URL.
+
+Last build verification in `/tmp/kss-verify`:
+
+- `npx astro check`: zero errors, zero warnings, three existing hints
+- `npm run build`: passed, ten static pages
+- The install reported eight dependency vulnerabilities: one low, five moderate, two high. They were not introduced by the checkout change. Do not run `npm audit fix --force`.
+
+### Lemon Squeezy state
+
+- Store: `Keith Staggers Studio`
+- Store URL: https://keithstaggers.lemonsqueezy.com
+- Support email: `hello@keithstaggers.com`
+- Store remains in test mode
+- Test product ID: `1214168`
+- Product is published in test mode at $49
+- Test checkout: https://keithstaggers.lemonsqueezy.com/checkout/buy/3a90d035-c69c-455b-828b-4ae6f3af31a3
+- Product cover, store logo, customer ZIP, confirmation message, receipt note, and redirect are configured
+- Test order `#4295941` passed
+- Test checkout, order creation, receipt messaging, and thank-you handoff passed
+- Lemon Squeezy disables file downloads in test mode, so the ZIP download cannot be proven from that order
+
+Keith completed the Lemon Squeezy and Stripe regulated identity and payout submission. The dashboard currently says:
+
+`Your application has been received and will be reviewed as soon as possible.`
+
+No additional account action was shown on July 12, 2026. Store activation is the current external gate.
+
+### Exact continuation after approval
+
+1. Confirm the dashboard shows the store is approved and live mode is available.
+2. Switch to live mode.
+3. Copy The Finish Loop from test mode to live mode. Lemon Squeezy test products do not automatically become live products.
+4. Verify the live product price, media, ZIP, receipt note, confirmation message, support address, and redirect.
+5. Publish the live product and obtain the live checkout URL.
+6. Replace only the test URL in `src/data/products.ts`.
+7. Re-run `npx astro check` and `npm run build` from `/tmp/kss-verify`.
+8. Stage only the intended tracked file, commit, and push `agent/finish-loop-income`.
+9. Wait for the PR preview to reach READY and verify the $49 CTA points to the live checkout.
+10. Mark PR #2 ready and merge it only after the live checkout is verified.
+11. Wait for the Git-triggered Vercel production deployment to reach READY.
+12. Verify:
+    - https://www.keithstaggers.com/finish-loop/
+    - The CTA opens the live Lemon Squeezy product without a test-mode banner
+    - https://www.keithstaggers.com/finish-loop/thank-you/
+    - Relevant browser console errors
+13. Prefer a single-use 100 percent owner discount for a no-cost live fulfillment test if Lemon Squeezy supports it. Do not create a $49 live charge without Keith's explicit approval.
+14. Verify the downloaded ZIP checksum against the value above.
+15. Update `private-products/finish-loop/store-setup.md` with the live product ID, checkout URL, test order, and download result.
+16. Mark the active income goal complete only after the live checkout and automated fulfillment path are genuinely working.
+
+Verification story:
+
+A visitor opens Keith's Finish Loop sales page, clicks the $49 call to action, completes Lemon Squeezy checkout, receives automated access to the ZIP, and lands on the site's fulfillment page.
+
+### Files that belong to Keith
+
+The following untracked items predate or sit outside the Finish Loop commits. Preserve them and do not stage, delete, rename, or overwrite them unless Keith specifically requests it:
+
+- `Media 2/`
+- `src/components/Hero 2.astro`
+- `src/components/Hero 3.astro`
+- `src/components/Services 2.astro`
+- `src/components/Visuals 2.astro`
+
 ## Pending / nice-to-haves
 
 - Newsletter is intentionally off the homepage. Do not restore it until there is a real publishing cadence and at least four issues drafted.
