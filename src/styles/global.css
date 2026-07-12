@@ -1015,7 +1015,7 @@ svg circle {
 
 .studio-album iframe {
   display: block;
-  min-height: 352px;
+  min-height: 80px;
   border: 1px solid var(--color-rule);
   background: #121212;
 }
