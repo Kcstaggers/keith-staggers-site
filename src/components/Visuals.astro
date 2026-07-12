@@ -1,110 +1,161 @@
 ---
-import SectionCTA from "./SectionCTA.astro";
+type Slide = {
+  title: string;
+  category: string;
+  thumb: string;
+  src: string;
+  type: "image" | "video";
+};
 
-type Tile =
-  | { kind: "image"; src: string; alt: string; cls: string; aspect?: string }
-  | { kind: "loop";  src: string; poster: string; alt: string; cls: string; aspect?: string }
-  | { kind: "video"; src: string; poster: string; alt: string; cls: string; aspect?: string };
-
-// Editorial bento. cls = grid spans (Tailwind). aspect = override aspect ratio.
-const tiles: Tile[] = [
-  { kind: "image", src: "/media/keith-photo-7.webp", alt: "Portrait, featured", cls: "md:col-span-2 md:row-span-2" },
-  { kind: "image", src: "/media/keith-photo-1.webp", alt: "Portrait 01", cls: "" },
-  { kind: "image", src: "/media/keith-photo-2.webp", alt: "Portrait 02", cls: "" },
-  { kind: "loop",  src: "/media/keith-video-16x9.mp4", poster: "/media/keith-video-16x9.webp", alt: "Short film, landscape", cls: "md:col-span-2", aspect: "aspect-video" },
-  { kind: "image", src: "/media/keith-photo-3.webp", alt: "Portrait 03", cls: "" },
-  { kind: "image", src: "/media/keith-photo-9.webp", alt: "Portrait 09", cls: "" },
-  { kind: "loop",  src: "/media/keith-video-1x1.mp4", poster: "/media/keith-video-1x1.webp", alt: "Short film, square", cls: "" },
-  { kind: "image", src: "/media/keith-photo-4.webp", alt: "Portrait 04", cls: "" },
-  { kind: "image", src: "/media/keith-photo-5.webp", alt: "Portrait 05", cls: "" },
-  { kind: "loop",  src: "/media/keith-video2-1x1.mp4", poster: "/media/keith-video2-1x1.webp", alt: "Short film, featured", cls: "md:col-span-2 md:row-span-2" },
-  { kind: "image", src: "/media/keith-photo-6.webp", alt: "Portrait 06", cls: "" },
-  { kind: "image", src: "/media/keith-photo-8.webp", alt: "Portrait 08", cls: "" },
-  { kind: "image", src: "/media/keith-photo-10.webp", alt: "Portrait 10", cls: "" },
+const slides: Slide[] = [
+  { title: "The operator", category: "Portrait", thumb: "/media/keith-hero.webp", src: "/media/keith-hero.webp", type: "image" },
+  { title: "Electric color", category: "Creative direction", thumb: "/media/keith-neon-pink.webp", src: "/media/keith-neon-pink.webp", type: "image" },
+  { title: "Different light, same code", category: "Visual concept", thumb: "/media/keith-neon-violet.webp", src: "/media/keith-neon-violet.webp", type: "image" },
+  { title: "Going under taught me how to rise", category: "Short film", thumb: "/media/going-under-rise-poster.webp", src: "/media/going-under-rise.mp4", type: "video" },
+  { title: "Keith in other worlds", category: "AI film", thumb: "/media/keith-sci-fi-poster.webp", src: "/media/keith-sci-fi.mp4", type: "video" },
+  { title: "A classic frame", category: "Campaign portrait", thumb: "/media/keith-diner.webp", src: "/media/keith-diner.webp", type: "image" },
+  { title: "After dark", category: "Editorial portrait", thumb: "/media/keith-noir.webp", src: "/media/keith-noir.webp", type: "image" },
 ];
 ---
 
-<section id="visuals" class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto scroll-mt-24">
-  <header class="mb-16">
-    <p class="eyebrow mb-6">Pillar · 04 / Visuals</p>
-    <h2 class="serif text-[clamp(40px,5.5vw,72px)] leading-[1] tracking-[-0.01em] mb-6">
-      Photo &amp; film.
-      <span class="text-paper-dim/80 ml-3">generated, then directed</span>
-    </h2>
-    <p class="serif italic text-[20px] lg:text-[22px] text-paper-dim max-w-[680px] leading-[1.5]">
-      A growing archive of AI-made portraiture and short films. Same eye that built the music, pointed at light.
-    </p>
-  </header>
+<section id="visuals" class="px-6 lg:px-12 py-20 lg:py-28 max-w-[1536px] mx-auto scroll-mt-24">
+  <div class="border-y border-paper/80 py-10 lg:py-14">
+    <div class="grid lg:grid-cols-[280px_1fr] gap-10 lg:gap-12">
+      <header>
+        <h2 class="serif text-[clamp(46px,5vw,70px)] leading-[0.92] tracking-[-0.03em]">
+          The range, not the pitch<span class="text-signal">.</span>
+        </h2>
+        <p class="mt-6 text-[17px] leading-[1.6] text-paper-dim">
+          A cross-section of the work. The new pieces live here, not above the business.
+        </p>
 
-  <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-fr gap-3 lg:gap-4 hairline pt-12">
-    {tiles.map((t, i) => (
-      <figure class={`${t.cls} ${t.aspect ?? "aspect-square"} bg-[#15110d] border border-rule/60 rounded-sm relative overflow-hidden group`}>
-        {t.kind === "image" && (
-          <img
-            src={t.src}
-            alt={t.alt}
-            loading="lazy"
-            decoding="async"
-            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-          />
-        )}
-        {t.kind === "loop" && (
-          <video
-            data-defer-video={t.src}
-            poster={t.poster}
-            muted
-            loop
-            playsinline
-            preload="none"
-            aria-label={t.alt}
-            class="absolute inset-0 w-full h-full object-cover"
-          ></video>
-        )}
-        {t.kind === "video" && (
-          <video
-            src={t.src}
-            poster={t.poster}
-            controls
-            preload="none"
-            playsinline
-            aria-label={t.alt}
-            class="absolute inset-0 w-full h-full object-cover bg-black"
-          ></video>
-        )}
-        <figcaption class="pointer-events-none absolute bottom-2 left-2 font-mono text-[10px] tracking-[0.18em] uppercase text-paper-faint opacity-0 group-hover:opacity-90 transition-opacity">
-          {String(i + 1).padStart(2, "0")}
-          {t.kind !== "image" && <span class="text-amber ml-2">▶</span>}
-        </figcaption>
-      </figure>
-    ))}
+        <div class="mt-8 flex items-center gap-5">
+          <button type="button" data-carousel-prev class="size-12 rounded-full border border-amber text-amber hover:bg-amber hover:text-white transition-colors" aria-label="Previous work">
+            <svg viewBox="0 0 24 24" class="size-5 mx-auto" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <span class="font-mono text-[11px] tracking-[0.12em] text-paper-dim"><span data-carousel-index>01</span> / {String(slides.length).padStart(2, "0")}</span>
+          <button type="button" data-carousel-next class="size-12 rounded-full border border-amber text-amber hover:bg-amber hover:text-white transition-colors" aria-label="Next work">
+            <svg viewBox="0 0 24 24" class="size-5 mx-auto" aria-hidden="true"><path d="m10 6 6 6-6 6M5 12h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+        </div>
+        <p class="mt-7 font-mono text-[9px] tracking-[0.14em] uppercase text-paper-faint">Drag, swipe, or use the arrow keys</p>
+      </header>
+
+      <div
+        data-carousel-track
+        class="work-carousel flex gap-4 overflow-x-auto snap-x snap-mandatory pb-5"
+        tabindex="0"
+        aria-label="Keith Staggers selected media"
+      >
+        {slides.map((slide, index) => (
+          <button
+            type="button"
+            data-carousel-slide
+            data-open-media
+            data-media-type={slide.type}
+            data-media-src={slide.src}
+            data-media-poster={slide.type === "video" ? slide.thumb : undefined}
+            data-media-title={slide.title}
+            class="group snap-start shrink-0 w-[72vw] sm:w-[300px] lg:w-[240px] text-left"
+            aria-label={`${slide.type === "video" ? "Play" : "View"} ${slide.title}`}
+          >
+            <span class="block relative aspect-[3/4] overflow-hidden border border-paper/60 bg-paper">
+              <img src={slide.thumb} alt="" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
+              {slide.type === "video" && (
+                <span class="absolute left-3 bottom-3 size-10 rounded-full bg-amber text-white flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="size-4 fill-current ml-0.5" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                </span>
+              )}
+            </span>
+            <span class="block mt-3 font-mono text-[9px] tracking-[0.13em] uppercase text-paper-faint">
+              {String(index + 1).padStart(2, "0")} · {slide.category}<span class="text-signal ml-2" aria-hidden="true">·</span>
+            </span>
+            <span class="block mt-2 serif text-[18px] leading-[1.2] text-paper group-hover:text-amber transition-colors">{slide.title}</span>
+          </button>
+        ))}
+      </div>
+    </div>
   </div>
-
-  <div class="mt-10 flex items-center justify-between gap-4 text-paper-faint font-mono text-[10.5px] tracking-[0.18em] uppercase">
-    <span>{tiles.filter(t => t.kind === "image").length} portraits · {tiles.filter(t => t.kind !== "image").length} films</span>
-    <span class="text-paper-dim">Generated with AI · Directed by hand</span>
-  </div>
-
-  <SectionCTA prompt="Want AI portraiture, film, or visual assets for your brand?" />
 </section>
 
+<dialog data-media-dialog class="m-auto w-[min(92vw,920px)] max-h-[92vh] bg-ink text-paper border border-paper/30 p-0 backdrop:bg-paper/85">
+  <div class="relative">
+    <button type="button" data-media-close class="absolute z-10 right-3 top-3 size-11 rounded-full border border-white/60 bg-paper/90 text-white hover:bg-amber transition-colors" aria-label="Close media viewer">
+      <svg viewBox="0 0 24 24" class="size-5 mx-auto" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+    </button>
+    <video data-media-video controls playsinline preload="metadata" class="hidden w-full max-h-[78vh] bg-black"></video>
+    <img data-media-image src="" alt="" class="hidden w-full max-h-[78vh] object-contain bg-black" />
+    <div class="px-5 py-4 border-t border-rule">
+      <p data-media-heading class="serif text-[22px]"></p>
+    </div>
+  </div>
+</dialog>
+
 <script>
-  // Loop videos total ~12MB. Posters show instantly; the video files only
-  // download and play once the tile scrolls near the viewport, and pause
-  // again when it leaves.
-  const vids = document.querySelectorAll<HTMLVideoElement>("video[data-defer-video]");
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        const v = entry.target as HTMLVideoElement;
-        if (entry.isIntersecting) {
-          if (!v.src) v.src = v.dataset.deferVideo ?? "";
-          v.play().catch(() => {});
-        } else if (v.src) {
-          v.pause();
-        }
+  const carousel = document.querySelector<HTMLElement>("[data-carousel-track]");
+  const carouselSlides = Array.from(document.querySelectorAll<HTMLElement>("[data-carousel-slide]"));
+  const carouselIndex = document.querySelector<HTMLElement>("[data-carousel-index]");
+
+  const moveCarousel = (direction: number) => {
+    if (!carousel || carouselSlides.length === 0) return;
+    const distance = carouselSlides[0].getBoundingClientRect().width + 16;
+    carousel.scrollBy({ left: distance * direction, behavior: "smooth" });
+  };
+
+  document.querySelector("[data-carousel-prev]")?.addEventListener("click", () => moveCarousel(-1));
+  document.querySelector("[data-carousel-next]")?.addEventListener("click", () => moveCarousel(1));
+  carousel?.addEventListener("scroll", () => {
+    if (!carouselIndex || carouselSlides.length === 0) return;
+    const distance = carouselSlides[0].getBoundingClientRect().width + 16;
+    const index = Math.min(carouselSlides.length - 1, Math.max(0, Math.round(carousel.scrollLeft / distance)));
+    carouselIndex.textContent = String(index + 1).padStart(2, "0");
+  }, { passive: true });
+  carousel?.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      moveCarousel(event.key === "ArrowRight" ? 1 : -1);
+    }
+  });
+
+  const mediaDialog = document.querySelector<HTMLDialogElement>("[data-media-dialog]");
+  const mediaVideo = mediaDialog?.querySelector<HTMLVideoElement>("[data-media-video]");
+  const mediaImage = mediaDialog?.querySelector<HTMLImageElement>("[data-media-image]");
+  const mediaHeading = mediaDialog?.querySelector<HTMLElement>("[data-media-heading]");
+  const closeMedia = () => {
+    mediaVideo?.pause();
+    if (mediaVideo) {
+      mediaVideo.removeAttribute("src");
+      mediaVideo.removeAttribute("poster");
+      mediaVideo.load();
+    }
+    mediaDialog?.close();
+  };
+
+  document.querySelectorAll<HTMLButtonElement>("[data-open-media]").forEach((opener) => {
+    opener.addEventListener("click", () => {
+      if (!mediaDialog || !mediaVideo || !mediaImage || !mediaHeading) return;
+      const type = opener.dataset.mediaType;
+      const src = opener.dataset.mediaSrc ?? "";
+      const title = opener.dataset.mediaTitle ?? "Selected work";
+      mediaHeading.textContent = title;
+      if (type === "video") {
+        mediaImage.classList.add("hidden");
+        mediaVideo.classList.remove("hidden");
+        mediaVideo.src = src;
+        if (opener.dataset.mediaPoster) mediaVideo.poster = opener.dataset.mediaPoster;
+      } else {
+        mediaVideo.classList.add("hidden");
+        mediaImage.classList.remove("hidden");
+        mediaImage.src = src;
+        mediaImage.alt = title;
       }
-    },
-    { rootMargin: "200px 0px" }
-  );
-  vids.forEach((v) => io.observe(v));
+      mediaDialog.showModal();
+    });
+  });
+
+  mediaDialog?.querySelector<HTMLButtonElement>("[data-media-close]")?.addEventListener("click", closeMedia);
+  mediaDialog?.addEventListener("click", (event) => {
+    if (event.target === mediaDialog) closeMedia();
+  });
+  mediaDialog?.addEventListener("close", () => mediaVideo?.pause());
 </script>

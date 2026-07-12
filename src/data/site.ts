@@ -1,8 +1,8 @@
 export const site = {
   name: "Keith Staggers",
-  tagline: "Detective. Nurse. AI Creator.",
+  tagline: "AI creative producer, coach, trainer & speaker.",
   description:
-    "Keith Staggers. AI-native digital creator. Fifty albums, eight hundred songs, three books, a thousand images and films. Made with AI. Working worldwide.",
+    "Keith Staggers turns ambitious ideas into finished AI-powered creative work through production, coaching, training, and speaking. Available worldwide.",
   url: "https://keithstaggers.com",
   city: "Tampa, FL",
   email: "hello@keithstaggers.com",
@@ -28,14 +28,15 @@ export const site = {
   social: {
     spotify: "https://open.spotify.com/artist/4BAYMh3hDuSfEQHAOoOu0g",
     appleMusic: "https://music.apple.com/us/artist/keith-staggers",
-    instagram: "",
+    facebook: "https://www.facebook.com/profile.php?id=61564900019924",
+    instagram: "https://www.instagram.com/sta_ggers/",
     youtube: "",
   },
   nav: [
-    { label: "Music", href: "#music" },
-    { label: "Books", href: "#books" },
-    { label: "Visuals", href: "#visuals" },
-    { label: "Work with me", href: "#services" },
-    { label: "About", href: "#about" },
+    { label: "Proof", href: "/#proof" },
+    { label: "Services", href: "/#services" },
+    { label: "Notes", href: "/#notes" },
+    { label: "Story", href: "/#about" },
+    { label: "Follow", href: "https://www.facebook.com/profile.php?id=61564900019924" },
   ],
 };
