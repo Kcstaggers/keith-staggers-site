@@ -288,6 +288,8 @@ Keith completed the Lemon Squeezy and Stripe regulated identity and payout submi
 
 No additional account action was shown on July 12, 2026. Store activation is the current external gate.
 
+Lemon Squeezy then emailed asking for product examples. Its message had a broken `Reply-To` header pointing to `kcstaggers@gmail.com`, so Keith's first reply at 10:20 AM went back to himself. The requested product information was resubmitted through Lemon Squeezy's official Help Center contact form on July 12, 2026. The form displayed `Your form has been submitted successfully.` Support received the store name, storefront, business website, staging product preview, test product ID, price, deliverable summary, test-checkout status, and an explanation of the broken Reply-To header. No further action is currently required unless support responds.
+
 ### Exact continuation after approval
 
 1. Confirm the dashboard shows the store is approved and live mode is available.
