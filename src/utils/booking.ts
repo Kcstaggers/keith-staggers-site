@@ -11,6 +11,6 @@ export function getCalAttrs(): Record<string, string | undefined> {
   return {
     "data-cal-link": `${site.booking.username}/${site.booking.eventSlug}`,
     "data-cal-namespace": "",
-    "data-cal-config": '{"layout":"month_view","theme":"dark"}',
+    "data-cal-config": '{"layout":"month_view","theme":"light"}',
   };
 }

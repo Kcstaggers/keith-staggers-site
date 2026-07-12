@@ -1,0 +1,115 @@
+---
+const paths = [
+  {
+    id: "made",
+    tab: "Make it for me",
+    title: "Done-for-you",
+    detail: "I lead the work end to end. From the first spark to the final file, you get one accountable operator and finished work.",
+    price: "Projects from $2,500",
+    href: "/services/done-for-you/",
+    cta: "See how I build it",
+  },
+  {
+    id: "teach",
+    tab: "Teach us",
+    title: "Coaching + training",
+    detail: "I turn curiosity into working habits. One-to-one for creators, hands-on workshops for teams, always built around real work.",
+    price: "Sessions from $250 · Workshops from $4,000",
+    href: "/services/training/",
+    cta: "See the training",
+  },
+  {
+    id: "bring",
+    tab: "Bring Keith in",
+    title: "Speaking",
+    detail: "A detective, nurse leader, and prolific AI creator in one room. The story earns attention. The tactics give people a next move.",
+    price: "Keynotes from $3,500",
+    href: "/services/speaking/",
+    cta: "See the speaking offer",
+  },
+];
+---
+
+<section id="pathways" class="px-6 lg:px-12 pb-20 lg:pb-28 max-w-[1536px] mx-auto scroll-mt-24">
+  <div class="border-b border-rule grid lg:grid-cols-2">
+    <div class="py-8 lg:pr-12 lg:border-r border-rule">
+      <h2 class="serif text-[clamp(38px,4vw,62px)] leading-none tracking-[-0.025em]">
+        How do you want to move<span class="text-signal">?</span>
+      </h2>
+
+      <div class="mt-10 grid sm:grid-cols-3 border-b border-paper/70" role="tablist" aria-label="Choose how to work with Keith">
+        {paths.map((path, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={`path-tab-${path.id}`}
+            aria-controls={`path-panel-${path.id}`}
+            aria-selected={index === 0 ? "true" : "false"}
+            tabindex={index === 0 ? "0" : "-1"}
+            data-path-tab={path.id}
+            class="path-tab py-4 px-3 text-[15px] text-paper-dim hover:text-amber transition-colors"
+          >
+            {path.tab}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="py-8 lg:pl-12 min-h-[250px]">
+      {paths.map((path, index) => (
+        <article
+          role="tabpanel"
+          id={`path-panel-${path.id}`}
+          aria-labelledby={`path-tab-${path.id}`}
+          data-path-panel={path.id}
+          hidden={index !== 0}
+          class="path-panel"
+        >
+          <div class="grid grid-cols-[auto_1fr] gap-6">
+            <div class="size-14 border-2 border-amber text-signal font-mono text-[12px] flex items-center justify-center">
+              {String(index + 1).padStart(2, "0")}
+            </div>
+            <div>
+              <h3 class="serif text-[clamp(34px,3.8vw,54px)] leading-none tracking-[-0.02em]">{path.title}</h3>
+              <p class="mt-5 text-[17px] leading-[1.65] text-paper-dim max-w-[620px]">{path.detail}</p>
+              <p class="mt-5 font-mono text-[10px] sm:text-[11px] tracking-[0.12em] uppercase text-paper-faint">{path.price}</p>
+              <a href={path.href} class="group mt-5 inline-flex items-center gap-3 text-[16px] text-amber hover:text-amber-dim transition-colors">
+                {path.cta}
+                <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const pathTabs = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-path-tab]"));
+  const pathPanels = Array.from(document.querySelectorAll<HTMLElement>("[data-path-panel]"));
+
+  const activatePath = (tab: HTMLButtonElement) => {
+    const id = tab.dataset.pathTab;
+    pathTabs.forEach((candidate) => {
+      const selected = candidate === tab;
+      candidate.setAttribute("aria-selected", String(selected));
+      candidate.tabIndex = selected ? 0 : -1;
+    });
+    pathPanels.forEach((panel) => {
+      panel.hidden = panel.dataset.pathPanel !== id;
+    });
+  };
+
+  pathTabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activatePath(tab));
+    tab.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      const next = pathTabs[(index + direction + pathTabs.length) % pathTabs.length];
+      next.focus();
+      activatePath(next);
+    });
+  });
+</script>

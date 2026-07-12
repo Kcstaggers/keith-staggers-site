@@ -1,0 +1,34 @@
+---
+import { site } from "../data/site";
+
+const calLink = `${site.booking.username}/${site.booking.eventSlug}`;
+const ctaHref = site.booking.enabled
+  ? `https://cal.com/${calLink}`
+  : `mailto:${site.email}?subject=Bring%20me%20the%20idea`;
+---
+
+<section class="px-6 lg:px-12 py-20 lg:py-28 max-w-[1536px] mx-auto">
+  <div class="border-y border-paper/80 py-12 lg:py-16 grid lg:grid-cols-[1fr_1fr_auto] lg:items-center gap-8 lg:gap-12">
+    <h2 class="serif text-[clamp(58px,7vw,96px)] leading-[0.88] tracking-[-0.035em]">
+      Ready to move<span class="text-signal">?</span>
+    </h2>
+    <div class="lg:border-l border-rule lg:pl-12">
+      <p class="text-[19px] leading-[1.55] text-paper-dim max-w-[520px]">
+        Bring the idea. I’ll turn it into finished work, a capable team, or a room ready to act.
+      </p>
+      <a href="/ai-workflow-guide.pdf" class="mt-4 inline-flex text-[15px] text-amber hover:text-amber-dim transition-colors" download>
+        Not ready to book? Take the free AI workflow guide. No email required →
+      </a>
+    </div>
+    <a
+      href={ctaHref}
+      data-cal-link={site.booking.enabled ? calLink : undefined}
+      data-cal-namespace=""
+      data-cal-config={site.booking.enabled ? '{"layout":"month_view","theme":"light"}' : undefined}
+      class="group bg-amber text-white px-7 py-4 font-mono text-[12px] tracking-[0.08em] uppercase inline-flex items-center justify-center gap-4 hover:bg-amber-dim transition-colors whitespace-nowrap"
+    >
+      Bring me the idea
+      <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+    </a>
+  </div>
+</section>

@@ -8,7 +8,7 @@ Personal/portfolio site for Keith Staggers — Tampa-based retired Baltimore det
 
 Live at **https://www.keithstaggers.com** (apex redirects to www).
 
-Editorial-magazine aesthetic — think New Yorker / Monocle. Dark background, serif headlines, generous whitespace, sparing amber-italic accents. Not a Canva template, not a startup landing page.
+Bright editorial-broadsheet aesthetic. Warm paper background, near-black typography, vivid cobalt actions, and small signal-red punctuation. Serif headlines, generous whitespace, sharp rules, no generic startup-card look. The site leads with Keith as an uncommon operator and the results he creates; the creative archive supports the claim instead of dominating it.
 
 ## Tech stack
 
@@ -16,7 +16,7 @@ Editorial-magazine aesthetic — think New Yorker / Monocle. Dark background, se
 - **Tailwind v4** via `@tailwindcss/vite` — config lives in `src/styles/global.css` using `@theme` (no `tailwind.config.js`)
 - **Fontsource variable fonts**: Fraunces (serif), Inter (sans)
 - **Cal.com embed** for booking
-- **@vercel/analytics/astro** for pageview tracking
+- **@vercel/analytics/astro** for pageviews and privacy-safe conversion events
 - **Spotify iframes** for music playback (no SDK, no auth)
 
 No SSR adapter. No DB. No CMS. All content is in `src/data/*.ts` as TypeScript constants — editing those is how you change copy.
@@ -51,22 +51,27 @@ The `preview-build/` directory is the local file:// preview Keith opens via a `c
 
 ```
 src/
-├── pages/index.astro          # The only page. Order of components here = page order.
+├── pages/index.astro          # Homepage. Order of components here = page order.
+├── pages/notes/[slug].astro   # Static Studio Notes article template
+├── pages/services/[slug].astro # Static service-detail template
 ├── layouts/Base.astro         # HTML shell, fonts, masthead/nav/footer/HirePill, Cal.com embed, Vercel Analytics
 ├── components/
 │   ├── Masthead.astro         # "IN STUDIO · Issue 26" bar with live clock
 │   ├── Nav.astro              # Logo + section links + amber "Hire me" pill
-│   ├── Hero.astro             # The big landing block with portrait
+│   ├── Hero.astro             # Business-first hero with formal portrait, receipts, and booking CTA
+│   ├── Pathways.astro         # Interactive Make it / Teach us / Bring Keith in selector
 │   ├── TableOfContents.astro  # "Inside this issue" — five pillars with page numbers
 │   ├── Music.astro            # Featured album + Spotify grid + streaming-platforms strip
-│   ├── Visuals.astro          # 13-tile bento of photos + autoplay-muted-loop videos
-│   ├── Services.astro         # 4 service cards with pricing
+│   ├── Visuals.astro          # Compact horizontal media carousel + accessible viewer
+│   ├── Services.astro         # Open indexed service rows with pricing and proof
+│   ├── Notes.astro            # Three open editorial article rows, placed near the offers
 │   ├── Testimonials.astro     # 3-column quote grid
 │   ├── About.astro            # Drop-cap narrative + CareerTimeline + PullQuote
 │   ├── CareerTimeline.astro   # Three-era timeline (Detective / Nurse / AI Creator)
 │   ├── PullQuote.astro        # Reusable big-quote block
 │   ├── Books.astro            # 3 books with cover images linking to Amazon
-│   ├── Newsletter.astro       # Stub signup form (not wired to a provider yet)
+│   ├── ClosingCTA.astro       # Booking close + direct guide download, no email gate
+│   ├── Newsletter.astro       # Legacy component, intentionally not rendered
 │   ├── Footer.astro           # Giant wordmark + 4-col grid
 │   ├── HirePill.astro         # Floating bottom-right "Open for projects · Hire me"
 │   └── SectionCTA.astro       # Reusable end-of-section CTA. Used by Music/Visuals/About/Books
@@ -75,11 +80,14 @@ src/
 │   ├── albums.ts              # 7 albums with Spotify/Apple/Amazon IDs
 │   ├── books.ts               # 3 books with Amazon URL + blurbs
 │   ├── services.ts            # 4 services with pricing
+│   ├── notes.ts               # 3 Studio Notes with body copy and related offers
 │   └── testimonials.ts        # 3 testimonials (Kevin Lazar, Kristen Smith, Alex Rivera)
 ├── utils/booking.ts            # getBookingHref() and getCalAttrs() helpers
 └── styles/global.css           # Tailwind v4 @theme — colors, fonts, custom utilities
 public/
 ├── favicon.svg
+├── sitemap.xml                 # Homepage, services, and Studio Notes
+├── robots.txt                  # Allows indexing and points to sitemap.xml
 └── media/                      # Optimized images and videos. 13MB total. See "Media" below.
 Media/                          # SOURCE files (PNGs, MP4s). ~80MB. GITIGNORED. Don't commit.
 preview-build/                  # Local file:// preview output. GITIGNORED.
@@ -87,9 +95,9 @@ preview-build/                  # Local file:// preview output. GITIGNORED.
 
 ## Page order (src/pages/index.astro)
 
-`Hero → TableOfContents → Music → Visuals → Services → Testimonials → About → Books → Newsletter`
+`Hero → Pathways → Services → Notes → Visuals → About → Music → Books → ClosingCTA`
 
-Rationale: creative work (Music + Visuals) lands before the pitch (Services + Testimonials), then the personal story (About + Books), then the soft ask (Newsletter). Don't reorder without a real reason — Keith has scroll-depth opinions.
+Rationale: the offer and the fastest route to hire Keith now come first. Proof and pricing follow. Studio Notes add useful, indexable authority and create source material for social posts. Media sits in a supporting carousel. The newsletter was removed because there is no real email publishing operation behind it. The closing CTA offers direct booking and a no-email guide download.
 
 ## Design system
 
@@ -97,16 +105,17 @@ Tokens are defined in `src/styles/global.css` via Tailwind v4's `@theme` directi
 
 | Token | Hex | Usage |
 |------|------|------|
-| `--color-ink` | `#0a0a0a` | Page background |
-| `--color-paper` | `#e8e4dc` | Body text |
-| `--color-paper-dim` | `#b8b2a6` | Subheads, secondary text |
-| `--color-paper-faint` | `#8a847a` | Captions, metadata |
-| `--color-rule` | `#2a2a2a` | Dividers, borders |
-| `--color-amber` | `#c89860` | Accent — used sparingly |
+| `--color-ink` | `#f4f1ea` | Warm paper page background |
+| `--color-paper` | `#111318` | Primary ink text |
+| `--color-paper-dim` | `#3f4148` | Secondary text |
+| `--color-paper-faint` | `#6d6e73` | Captions, metadata |
+| `--color-rule` | `#b9b7b0` | Dividers, borders |
+| `--color-amber` | `#1546d8` | Cobalt action color, legacy token name |
+| `--color-signal` | `#ef3f36` | Small red punctuation and signal moments |
 
 **Typography stack:** Fraunces (serif, the workhorse), Inter (sans, used rarely), monospace (eyebrows and captions). The eyebrow pattern `eyebrow` (small uppercase + tight tracking, monospace) opens every section.
 
-**Amber rule:** ~6-8 amber moments per scroll, max. The amber italic accent is a *spice*. If you find yourself reaching for it twice in the same block, you're using it too much.
+**Accent rule:** Cobalt is for actions, active states, and links. Signal red is punctuation only. Do not turn the page into a flag or scatter either color as decoration.
 
 ## Conventions Keith cares about
 
@@ -127,6 +136,7 @@ These are real rules from prior iterations — violating them will require rewor
 | Edit testimonials | `src/data/testimonials.ts` | Three currently real. Just edit text + name + role. The `placeholder` field used to flag "sample" quotes — leave it unset for real ones. |
 | Change service pricing | `src/data/services.ts` | Four services. `pricing` field is a free-form string. |
 | Edit availability badge ("Open for projects") | `src/data/site.ts` | `availability.status: "open"\|"limited"\|"booked"` + label. Drives HirePill. |
+| Add or edit a Studio Note | `src/data/notes.ts` | Each note gets a static `/notes/<slug>/` page and a homepage row. Keep claims evidence-based and connect one relevant service. |
 | Swap Cal.com booking | `src/data/site.ts` | `booking.username` + `booking.eventSlug`. Set `booking.enabled: false` to fall back to mailto. |
 | Add a book | `src/data/books.ts` + drop cover at `public/media/book-<slug>.webp` | Cover convention is `book-${book.slug}.webp` at 600×900. |
 | Update the bio | `src/components/About.astro` | Three paragraphs. Keep the drop cap on paragraph 1. |
@@ -168,6 +178,10 @@ Use the helpers in `src/utils/booking.ts`:
 
 If `booking.enabled` is false, falls back gracefully to mailto links and the Cal.com script doesn't load.
 
+## Conversion measurement
+
+`Base.astro` records privacy-safe custom events through Vercel Web Analytics. Current events are Booking Intent, Service Interest, Guide Download, Facebook Follow Intent, Pathway Selected, Studio Note Opened, and Media Opened. Properties contain only the page, destination slug, visible link label, or media title. Do not add names, email addresses, form fields, or other personal data.
+
 ## DNS (don't break this)
 
 Domain `keithstaggers.com` is registered at **Canva** (yes, really — auto-renews 9/1/2026 for $18.99). DNS is currently managed at Canva with these two records pointing at Vercel:
@@ -190,7 +204,10 @@ A scheduled task is set for **Aug 15, 2026** to start a Canva → Cloudflare tra
 
 ## Pending / nice-to-haves
 
-- Newsletter signup is a stub. Wire to ConvertKit/Buttondown/Beehiiv when Keith picks one. Edit `src/components/Newsletter.astro`.
+- Newsletter is intentionally off the homepage. Do not restore it until there is a real publishing cadence and at least four issues drafted.
+- `business-launch-kit-2026-07-11.md` contains the Facebook cadence, six ready posts, and LinkedIn profile starter copy. No external posts were published as part of the site build.
+- Three Studio Notes are now ready as canonical source material for Facebook and future LinkedIn posts: finishing, practical team training, and reinvention.
+- Local rollback point before the July 11 redesign: `backup/pre-phenomenal-redesign-2026-07-11`.
 - AI-workflow lead magnet PDF — discussed but not built. Captures emails from visitors not ready to book.
 - Vercel Speed Insights — separate from Web Analytics, currently off. Could enable in Vercel dashboard if Keith wants Lighthouse-style perf data.
 

@@ -3,13 +3,14 @@
 @import "@fontsource-variable/inter/index.css";
 
 @theme {
-  --color-ink: #0a0a0a;
-  --color-paper: #e8e4dc;
-  --color-paper-dim: #b8b2a6;
-  --color-paper-faint: #8a847a;
-  --color-rule: #2a2a2a;
-  --color-amber: #c89860;
-  --color-amber-dim: #a07c4a;
+  --color-ink: #f4f1ea;
+  --color-paper: #111318;
+  --color-paper-dim: #3f4148;
+  --color-paper-faint: #6d6e73;
+  --color-rule: #b9b7b0;
+  --color-amber: #1546d8;
+  --color-amber-dim: #0e38b3;
+  --color-signal: #ef3f36;
 
   --font-serif: "Fraunces Variable", "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -31,7 +32,12 @@
 
   ::selection {
     background: var(--color-amber);
-    color: var(--color-ink);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-amber);
+    outline-offset: 4px;
   }
 }
 
@@ -58,6 +64,150 @@
   border-top: 0.5px solid var(--color-rule);
 }
 
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -6px;
+  height: 1px;
+  background: var(--color-amber);
+  transition: right 220ms ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  right: 0;
+}
+
+.work-filter {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 5px;
+}
+
+.work-filter[aria-pressed="true"] {
+  color: var(--color-amber);
+  border-bottom-color: var(--color-amber);
+}
+
+.path-tab {
+  position: relative;
+}
+
+.path-tab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -1px;
+  height: 4px;
+  background: var(--color-amber);
+  transition: right 220ms ease;
+}
+
+.path-tab[aria-selected="true"] {
+  color: var(--color-amber);
+}
+
+.path-tab[aria-selected="true"]::after {
+  right: 0;
+}
+
+.path-panel:not([hidden]) {
+  animation: path-in 260ms ease-out;
+}
+
+@keyframes path-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.work-carousel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-amber) var(--color-rule);
+}
+
+.work-carousel::-webkit-scrollbar {
+  height: 4px;
+}
+
+.work-carousel::-webkit-scrollbar-track {
+  background: var(--color-rule);
+}
+
+.work-carousel::-webkit-scrollbar-thumb {
+  background: var(--color-amber);
+}
+
+[data-work-item][hidden] {
+  display: none;
+}
+
+.service-row {
+  position: relative;
+}
+
+.service-row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -1px;
+  height: 1px;
+  background: var(--color-amber);
+  transition: right 300ms ease;
+}
+
+.service-row:hover::after,
+.service-row:focus-visible::after {
+  right: 0;
+}
+
+.note-row {
+  position: relative;
+}
+
+.note-row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -1px;
+  height: 2px;
+  background: var(--color-amber);
+  transition: right 300ms ease;
+}
+
+.note-row:hover::after,
+.note-row:focus-visible::after {
+  right: 0;
+}
+
+dialog[open] {
+  animation: media-in 220ms ease-out;
+}
+
+@keyframes media-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Scroll reveal. Classes are added by JS, so no-JS visitors and
    reduced-motion users always see content immediately. */
 @media (prefers-reduced-motion: no-preference) {
@@ -71,5 +221,16 @@
   .reveal.is-visible {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

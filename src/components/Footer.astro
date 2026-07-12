@@ -14,7 +14,7 @@ const year = new Date().getFullYear();
         <p class="eyebrow mb-4">Sections</p>
         <ul class="space-y-2 text-[14px] text-paper-dim">
           {site.nav.map((item) => (
-            <li><a href={item.href} class="hover:text-paper transition-colors">{item.label}</a></li>
+            <li><a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined} class="hover:text-paper transition-colors">{item.label}</a></li>
           ))}
         </ul>
       </div>
@@ -23,6 +23,8 @@ const year = new Date().getFullYear();
         <ul class="space-y-2 text-[14px] text-paper-dim">
           <li><a href={site.social.spotify} class="hover:text-paper transition-colors">Spotify</a></li>
           <li><a href={site.social.appleMusic} class="hover:text-paper transition-colors">Apple Music</a></li>
+          <li><a href={site.social.facebook} target="_blank" rel="noreferrer" class="hover:text-paper transition-colors">Facebook · 6K+ followers</a></li>
+          <li><a href={site.social.instagram} target="_blank" rel="noreferrer" class="hover:text-paper transition-colors">Instagram</a></li>
         </ul>
       </div>
       <div>
@@ -44,7 +46,7 @@ const year = new Date().getFullYear();
 
     <div class="hairline mt-10 pt-6 flex items-center justify-between font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">
       <span>Independent studio · Working worldwide</span>
-      <span>Free to read · No paywall</span>
+      <span>Book directly · No runaround</span>
     </div>
   </div>
 </footer>

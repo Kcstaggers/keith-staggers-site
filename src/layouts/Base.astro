@@ -3,16 +3,16 @@ import "../styles/global.css";
 import Masthead from "../components/Masthead.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
-import HirePill from "../components/HirePill.astro";
 import Analytics from "@vercel/analytics/astro";
 import { site } from "../data/site";
 
 interface Props {
   title?: string;
   description?: string;
+  ogType?: "website" | "article";
 }
 
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, ogType = "website" } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
 const canonicalUrl = new URL(Astro.url.pathname, site.url).href;
 
@@ -25,11 +25,11 @@ const jsonLd = {
       name: site.name,
       url: site.url,
       email: site.email,
-      image: `${site.url}/media/keith-hero.webp`,
-      jobTitle: "AI Creator, Author & Speaker",
+      image: `${site.url}/media/keith-diner.webp`,
+      jobTitle: "AI Creative Producer, Coach, Trainer and Speaker",
       description: site.description,
       address: { "@type": "PostalAddress", addressLocality: "Tampa", addressRegion: "FL", addressCountry: "US" },
-      sameAs: [site.social.spotify, site.social.appleMusic].filter(Boolean),
+      sameAs: [site.social.facebook, site.social.instagram, site.social.spotify, site.social.appleMusic].filter(Boolean),
     },
     {
       "@type": "ProfessionalService",
@@ -54,12 +54,12 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="light" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={`${site.url}/og-image.png`} />
@@ -73,7 +73,8 @@ const jsonLd = {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{pageTitle}</title>
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
   </head>
   <body class="bg-ink text-paper antialiased">
     <Masthead />
@@ -82,8 +83,67 @@ const jsonLd = {
       <slot />
     </main>
     <Footer />
-    <HirePill />
     <Analytics />
+
+    <script>
+      import { track } from "@vercel/analytics";
+
+      const labelFor = (element: Element) =>
+        (element.textContent ?? "")
+          .replace(/\s+/g, " ")
+          .trim()
+          .slice(0, 80);
+
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return;
+
+        const pathway = event.target.closest<HTMLElement>("[data-path-tab]");
+        if (pathway) {
+          track("Pathway Selected", {
+            pathway: pathway.dataset.pathTab,
+            page: window.location.pathname,
+          });
+          return;
+        }
+
+        const media = event.target.closest<HTMLElement>("[data-open-media]");
+        if (media) {
+          track("Media Opened", {
+            title: media.dataset.mediaTitle,
+            format: media.dataset.mediaType,
+            page: window.location.pathname,
+          });
+          return;
+        }
+
+        const link = event.target.closest<HTMLAnchorElement>("a[href]");
+        if (!link) return;
+
+        const href = link.getAttribute("href") ?? "";
+        const source = labelFor(link);
+        const page = window.location.pathname;
+
+        if (link.dataset.calLink) {
+          track("Booking Intent", { source, page });
+        } else if (href === "/ai-workflow-guide.pdf") {
+          track("Guide Download", { source, page });
+        } else if (href.includes("facebook.com")) {
+          track("Facebook Follow Intent", { source, page });
+        } else if (/^\/services\/[^/]+\/$/.test(href)) {
+          track("Service Interest", {
+            service: href.split("/")[2],
+            source,
+            page,
+          });
+        } else if (/^\/notes\/[^/]+\/$/.test(href)) {
+          track("Studio Note Opened", {
+            note: href.split("/")[2],
+            source,
+            page,
+          });
+        }
+      });
+    </script>
 
     <script>
       // Subtle scroll-reveal on each section's direct children. Skipped
@@ -114,7 +174,7 @@ const jsonLd = {
       <script is:inline define:vars={{ username: site.booking.username, eventSlug: site.booking.eventSlug }}>
         (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
         Cal("init", { origin: "https://cal.com" });
-        Cal("ui", { hideEventTypeDetails: false, layout: "month_view", theme: "dark", styles: { branding: { brandColor: "#c89860" } } });
+        Cal("ui", { hideEventTypeDetails: false, layout: "month_view", theme: "light", styles: { branding: { brandColor: "#1546d8" } } });
       </script>
     )}
   </body>

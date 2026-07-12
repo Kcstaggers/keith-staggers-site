@@ -3,63 +3,54 @@ import { site } from "../data/site";
 import { services } from "../data/services";
 
 const calLink = `${site.booking.username}/${site.booking.eventSlug}`;
-const mailtoFallback = `mailto:${site.email}?subject=Work%20with%20me`;
-const ctaHref = site.booking.enabled ? `https://cal.com/${calLink}` : mailtoFallback;
+const ctaHref = site.booking.enabled
+  ? `https://cal.com/${calLink}`
+  : `mailto:${site.email}?subject=Bring%20me%20the%20idea`;
 ---
 
-<section id="services" class="px-6 lg:px-12 py-24 lg:py-32 max-w-[1280px] mx-auto scroll-mt-24">
-  <header class="mb-16">
-    <p class="eyebrow mb-6">Pillar · 05 / Services</p>
-    <h2 class="serif text-[clamp(40px,5.5vw,72px)] leading-[1] tracking-[-0.01em] mb-6">
-      Work with me.
-      <span class="text-paper-dim/80 ml-3">four ways in</span>
-    </h2>
-    <p class="serif italic text-[20px] lg:text-[22px] text-paper-dim max-w-[640px] leading-[1.5]">
-      Hire the work, hire the brain, hire the room.
-    </p>
-  </header>
+<section id="proof" class="px-6 lg:px-12 py-20 lg:py-28 max-w-[1536px] mx-auto scroll-mt-24">
+  <span id="services" class="block scroll-mt-24" aria-hidden="true"></span>
+  <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+    <header class="lg:col-span-5">
+      <h2 class="serif text-[clamp(52px,6vw,88px)] leading-[0.9] tracking-[-0.035em]">
+        The receipts are the résumé<span class="text-signal">.</span>
+      </h2>
+      <p class="mt-8 text-[20px] leading-[1.55] text-paper-dim max-w-[480px]">
+        Three careers. Years of finished work. No theory without evidence.
+      </p>
+      <p class="mt-6 font-mono text-[10px] sm:text-[11px] tracking-[0.1em] uppercase text-paper-faint leading-[1.8]">
+        50+ albums · 800+ songs · 3 books<br />1,000+ images &amp; films · 6K+ followers
+      </p>
+      <a
+        href={ctaHref}
+        data-cal-link={site.booking.enabled ? calLink : undefined}
+        data-cal-namespace=""
+        data-cal-config={site.booking.enabled ? '{"layout":"month_view","theme":"light"}' : undefined}
+        class="group mt-9 w-fit bg-amber text-white px-7 py-4 font-mono text-[12px] tracking-[0.08em] uppercase inline-flex items-center gap-4 hover:bg-amber-dim transition-colors"
+      >
+        Bring me the idea
+        <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+      </a>
+    </header>
 
-  <div class="hairline pt-12 grid md:grid-cols-2 gap-px bg-rule/60">
-    {services.map((s) => (
-      <article class="bg-ink p-8 lg:p-10 flex flex-col gap-5">
-        <div class="flex items-baseline gap-4">
-          <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-amber">{s.num}</span>
-          <h3 class="serif text-[28px] lg:text-[32px] leading-none">
-            <a href={`/services/${s.slug}/`} class="hover:text-amber transition-colors">{s.title}</a>
-          </h3>
-        </div>
-        <p class="text-paper/85 text-[15px] leading-[1.7] max-w-[480px]">{s.blurb}</p>
-        <div class="mt-auto pt-3 flex items-center justify-between gap-4">
-          <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-amber">
-            {s.pricing}
-          </p>
-          <a
-            href={`/services/${s.slug}/`}
-            class="font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint hover:text-paper transition-colors"
-            aria-label={`More about ${s.title}`}
-          >
-            Details →
-          </a>
-        </div>
-      </article>
-    ))}
-  </div>
-
-  <div class="mt-16 text-center">
-    <a
-      href={ctaHref}
-      data-cal-link={site.booking.enabled ? calLink : undefined}
-      data-cal-namespace=""
-      data-cal-config={site.booking.enabled ? '{"layout":"month_view","theme":"dark"}' : undefined}
-      class="inline-flex items-center gap-3 text-[12px] font-mono tracking-[0.18em] uppercase px-10 py-4 rounded-full border border-amber bg-amber text-ink hover:bg-transparent hover:text-amber transition-colors"
-    >
-      {site.booking.buttonLabel}
-      <span aria-hidden="true">→</span>
-    </a>
-    <p class="mt-6 font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">
-      {site.booking.enabled
-        ? "Free intro call · 15 minutes · No-pressure"
-        : "Responses within 48 hours · Working worldwide"}
-    </p>
+    <div class="lg:col-span-7 border-t border-paper/80">
+      {services.map((service) => (
+        <a
+          href={`/services/${service.slug}/`}
+          class="service-row group grid grid-cols-[auto_1fr_auto] items-start gap-5 sm:gap-8 py-7 border-b border-paper/70"
+          aria-label={`${service.title}. ${service.pricing}`}
+        >
+          <span class="font-mono text-[11px] tracking-[0.14em] text-paper-faint group-hover:text-signal transition-colors">{service.num}</span>
+          <span>
+            <span class="block serif text-[clamp(27px,3vw,40px)] leading-none text-paper group-hover:text-amber transition-colors">{service.title}</span>
+            <span class="block mt-3 text-[15px] leading-[1.55] text-paper-dim max-w-[620px]">{service.blurb}</span>
+            <span class="block mt-3 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint">{service.pricing}</span>
+          </span>
+          <svg viewBox="0 0 24 24" class="size-6 text-amber transition-transform group-hover:translate-x-1" aria-hidden="true">
+            <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      ))}
+    </div>
   </div>
 </section>

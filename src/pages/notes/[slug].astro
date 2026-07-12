@@ -1,0 +1,123 @@
+---
+import Base from "../../layouts/Base.astro";
+import { notes, type StudioNote } from "../../data/notes";
+import { site } from "../../data/site";
+import { getBookingHref, getCalAttrs } from "../../utils/booking";
+
+export function getStaticPaths() {
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }));
+}
+
+interface Props {
+  note: StudioNote;
+}
+
+const { note } = Astro.props;
+const href = getBookingHref();
+const calAttrs = getCalAttrs();
+const canonicalUrl = new URL(`/notes/${note.slug}/`, site.url).href;
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: note.title,
+  description: note.excerpt,
+  mainEntityOfPage: canonicalUrl,
+  author: {
+    "@type": "Person",
+    name: site.name,
+    url: site.url,
+  },
+  publisher: {
+    "@type": "Person",
+    name: site.name,
+    url: site.url,
+  },
+};
+---
+
+<Base title={note.title} description={note.excerpt} ogType="article">
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+  </Fragment>
+
+  <article class="px-6 lg:px-12 pt-12 pb-20 lg:pt-20 lg:pb-28 max-w-[1280px] mx-auto">
+    <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-paper transition-colors">Home</a>
+      <span class="text-rule mx-2">/</span>
+      <a href="/#notes" class="hover:text-paper transition-colors">Studio Notes</a>
+      <span class="text-rule mx-2">/</span>
+      <span class="text-amber">{note.number}</span>
+    </nav>
+
+    <header class="grid lg:grid-cols-12 gap-10 lg:gap-16 pb-16 lg:pb-24">
+      <div class="lg:col-span-9">
+        <p class="eyebrow mb-7">Studio note · {note.number} / {note.category}</p>
+        <h1 class="serif text-[clamp(46px,7vw,96px)] leading-[0.96] tracking-[-0.04em]">
+          {note.title}
+        </h1>
+      </div>
+      <div class="lg:col-span-3 lg:self-end">
+        <p class="font-mono text-[10px] tracking-[0.16em] uppercase text-paper-faint mb-3">{note.readingTime}</p>
+        <p class="serif italic text-[19px] leading-[1.5] text-paper-dim">By Keith Staggers</p>
+      </div>
+    </header>
+
+    <div class="hairline pt-12 grid lg:grid-cols-12 gap-12 lg:gap-16">
+      <aside class="lg:col-span-3">
+        <p class="serif italic text-[21px] leading-[1.55] text-paper-dim lg:sticky lg:top-28">
+          {note.excerpt}
+        </p>
+      </aside>
+
+      <div class="lg:col-span-7 lg:col-start-5">
+        {note.sections.map((section, index) => (
+          <section class:list={["note-section", index > 0 && "mt-16 pt-12 border-t border-rule/70"]}>
+            <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-amber mb-4">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+            <h2 class="serif text-[clamp(30px,3.6vw,46px)] leading-[1.04] tracking-[-0.02em] mb-7">
+              {section.heading}
+            </h2>
+            {section.paragraphs.map((paragraph) => (
+              <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6 last:mb-0">
+                {paragraph}
+              </p>
+            ))}
+          </section>
+        ))}
+      </div>
+    </div>
+
+    <section class="mt-24 lg:mt-32 bg-paper text-ink p-8 sm:p-12 lg:p-16 grid lg:grid-cols-12 gap-10 items-end">
+      <div class="lg:col-span-8">
+        <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-ink/55 mb-5">Put the idea to work</p>
+        <h2 class="serif text-[clamp(36px,5vw,64px)] leading-[0.98] tracking-[-0.03em]">
+          Need help turning this into something finished?
+        </h2>
+      </div>
+      <div class="lg:col-span-4 lg:text-right">
+        <a
+          href={`/services/${note.service.slug}/`}
+          class="block mb-4 text-[12px] font-mono tracking-[0.12em] uppercase text-ink/65 hover:text-amber transition-colors"
+        >
+          Explore {note.service.title} →
+        </a>
+        <a
+          href={href}
+          {...calAttrs}
+          class="inline-flex items-center gap-3 bg-amber text-white px-6 py-4 font-mono text-[11px] tracking-[0.1em] uppercase hover:bg-amber-dim transition-colors"
+        >
+          Bring me the idea <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="mt-12 flex flex-wrap items-center justify-between gap-5 font-mono text-[10px] tracking-[0.15em] uppercase text-paper-faint">
+      <a href="/#notes" class="hover:text-paper transition-colors">← All studio notes</a>
+      <a href={site.social.facebook} target="_blank" rel="noreferrer" class="hover:text-paper transition-colors">Follow on Facebook · 6K+</a>
+    </div>
+  </article>
+</Base>
