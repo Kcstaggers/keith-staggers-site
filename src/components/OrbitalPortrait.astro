@@ -3,9 +3,17 @@ interface Props {
   class?: string;
   eager?: boolean;
   compact?: boolean;
+  src?: string;
+  alt?: string;
 }
 
-const { class: className = "", eager = false, compact = false } = Astro.props;
+const {
+  class: className = "",
+  eager = false,
+  compact = false,
+  src = "/media/keith-photo-9.webp",
+  alt = "Keith Staggers wearing black sunglasses and a dark suit",
+} = Astro.props;
 ---
 
 <div class:list={["portrait-portal", compact && "portrait-portal--compact", className]} data-portrait-portal>
@@ -15,8 +23,8 @@ const { class: className = "", eager = false, compact = false } = Astro.props;
   <span class="portrait-node portrait-node--coral" aria-hidden="true"></span>
   <div class="portrait-image-wrap">
     <img
-      src="/media/keith-photo-9.webp"
-      alt="Keith Staggers wearing black sunglasses and a dark suit"
+      src={src}
+      alt={alt}
       width="1080"
       height="1080"
       loading={eager ? "eager" : "lazy"}

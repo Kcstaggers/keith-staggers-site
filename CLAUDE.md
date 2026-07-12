@@ -218,6 +218,7 @@ Updated July 12, 2026. Keith rejected the previous editorial homepage as too sta
 - True near-black canvas, cold white type, electric cobalt active states, ultraviolet depth, and coral action color
 - Inter display type with mono utility text
 - Keith Photo 9 as a recurring circular identity portal with orbit lines and subtle pointer motion
+- Keith Photo 5 is the dedicated Finish Loop campaign portrait on the homepage product stage and product sales page
 - Open bands, rails, cinematic stages, and thin rules. No cream background, default bento grid, decorative hero eyebrow, or tint over Keith's face
 - Homepage order: studio hero, production ticker, Finish Loop, service selector, Studio Notes, interactive work stage, catalog proof, three-lives story, booking close
 
