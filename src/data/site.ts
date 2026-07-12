@@ -33,6 +33,7 @@ export const site = {
     youtube: "",
   },
   nav: [
+    { label: "The Finish Loop", href: "/finish-loop/" },
     { label: "Proof", href: "/#proof" },
     { label: "Services", href: "/#services" },
     { label: "Notes", href: "/#notes" },

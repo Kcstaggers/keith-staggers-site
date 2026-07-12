@@ -21,3 +21,10 @@ preview-build/
 
 # Vercel local
 .vercel
+
+# Paid digital products. Keep customer files and source out of the public repository.
+/private-products/
+/output/products/
+/output/pdf/
+/tmp/
+/.playwright-cli/
