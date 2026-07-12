@@ -286,7 +286,7 @@ Private product source and store instructions:
 
 Both `private-products/` and `output/products/` are intentionally gitignored. Do not commit the paid customer ZIP, editable sources, store strategy, or private setup notes to the public GitHub repository.
 
-The local customer bundle was rebuilt on July 12, 2026 after Keith selected Photo 5 for the real field-manual cover. The Lemon Squeezy test product still contains the older 3.03 MB ZIP and must be updated with the new 0.89 MB bundle before live launch.
+The local customer bundle was rebuilt on July 12, 2026 after Keith selected Photo 5 for the real field-manual cover. The Photo 5 product image and replacement bundle are now saved to Lemon Squeezy test product `1214168`. Lemon Squeezy reports the active cover at 309.58 KB and the active replacement ZIP at 912.13 KB. The local ZIP is 934,020 bytes with SHA-256 `aad2e9aeb3fba53893173a149d5fff5b737013cb5778cb48d9c634b43fccd6e2`. The older 3.03 MB ZIP remains stored but is inactive and will not be delivered.
 
 ### Website implementation
 
@@ -335,6 +335,7 @@ Last build verification in `/tmp/kss-verify`:
 - Product is published in test mode at $49
 - Test checkout: https://keithstaggers.lemonsqueezy.com/checkout/buy/3a90d035-c69c-455b-828b-4ae6f3af31a3
 - Product cover, store logo, customer ZIP, confirmation message, receipt note, and redirect are configured
+- The active Photo 5 cover is 309.58 KB and the active replacement ZIP is 912.13 KB in Lemon Squeezy; the legacy 3.03 MB ZIP is inactive
 - Test order `#4295941` passed
 - Test checkout, order creation, receipt messaging, and thank-you handoff passed
 - Lemon Squeezy disables file downloads in test mode, so the ZIP download cannot be proven from that order
@@ -346,6 +347,8 @@ Keith completed the Lemon Squeezy and Stripe regulated identity and payout submi
 No additional account action was shown on July 12, 2026. Store activation is the current external gate.
 
 Lemon Squeezy then emailed asking for product examples. Its message had a broken `Reply-To` header pointing to `kcstaggers@gmail.com`, so Keith's first reply at 10:20 AM went back to himself. The requested product information was resubmitted through Lemon Squeezy's official Help Center contact form on July 12, 2026. The form displayed `Your form has been submitted successfully.` Support received the store name, storefront, business website, staging product preview, test product ID, price, deliverable summary, test-checkout status, and an explanation of the broken Reply-To header. No further action is currently required unless support responds.
+
+`hello@keithstaggers.com` does not currently forward to `kcstaggers@gmail.com`. A July 12, 2026 DNS check returned no MX record for `keithstaggers.com`, and a search of the logged-in Gmail mailbox returned no messages addressed to `hello@keithstaggers.com`. Configure domain mail routing before publishing this address as a working support channel.
 
 ### Exact continuation after approval
 
