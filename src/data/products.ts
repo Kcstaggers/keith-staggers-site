@@ -3,7 +3,8 @@ export const finishLoop = {
   slug: "finish-loop",
   price: 49,
   currency: "USD",
-  checkoutUrl: "",
+  checkoutUrl:
+    "https://keithstaggers.lemonsqueezy.com/checkout/buy/3a90d035-c69c-455b-828b-4ae6f3af31a3",
   headline: "Finish the work. Ship the thing.",
   description:
     "A complete creator operating system for directing, finishing, and releasing AI-assisted work. Built for solo creators who are done collecting drafts.",
