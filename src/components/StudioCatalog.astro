@@ -1,44 +1,69 @@
 ---
 import { albums } from "../data/albums";
 import { books } from "../data/books";
+import { site } from "../data/site";
 
 const featured = albums.find((album) => album.featured) ?? albums[0];
+const catalog = albums.filter((album) => album.slug !== featured.slug);
 ---
 
-<section class="studio-section studio-catalog" aria-labelledby="studio-catalog-title">
+<section id="music" class="studio-section studio-catalog scroll-mt-24" aria-labelledby="studio-catalog-title">
   <div class="studio-shell">
     <header class="studio-catalog-head">
-      <h2 id="studio-catalog-title" class="studio-display studio-section-title">The catalog is the <strong>proof</strong><span class="text-signal">.</span></h2>
-      <p>Fifty albums. Three books. Hundreds of finished decisions behind every number.</p>
+      <h2 id="studio-catalog-title" class="studio-display studio-section-title">The <strong>music</strong> is the proof<span class="text-signal">.</span></h2>
+      <p>50+ albums. 800+ songs. A catalog built one finished release at a time.</p>
     </header>
 
-    <div class="studio-catalog-grid">
-      <article class="studio-sound-stage">
-        <div class="studio-sound-copy">
-          <small>Featured release</small>
-          <h3 class="studio-display">{featured.title}</h3>
-          <p>{featured.featuredBlurb}</p>
-          <div>
-            {featured.appleMusicUrl && <a href={featured.appleMusicUrl}>Apple Music ↗</a>}
-            {featured.amazonMusicUrl && <a href={featured.amazonMusicUrl}>Amazon Music ↗</a>}
-          </div>
+    <article class="studio-music-feature">
+      <div class="studio-sound-copy">
+        <small>Latest release</small>
+        <h3 class="studio-display">{featured.title}</h3>
+        <p>{featured.featuredBlurb}</p>
+        <div>
+          {featured.appleMusicUrl && <a href={featured.appleMusicUrl}>Apple Music ↗</a>}
+          {featured.amazonMusicUrl && <a href={featured.amazonMusicUrl}>Amazon Music ↗</a>}
         </div>
-        <iframe
-          data-defer-src={`https://open.spotify.com/embed/album/${featured.spotifyId}?utm_source=generator&theme=0`}
-          width="100%"
-          height="352"
-          frameborder="0"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-          title={`${featured.title} on Spotify`}
-        ></iframe>
-      </article>
+      </div>
+      <iframe
+        data-defer-src={`https://open.spotify.com/embed/album/${featured.spotifyId}?utm_source=generator&theme=0`}
+        width="100%"
+        height="352"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        title={`${featured.title} on Spotify`}
+      ></iframe>
+    </article>
 
-      <div class="studio-book-rail" aria-label="Keith Staggers books">
-        {books.map((book, index) => (
-          <a href={book.amazonUrl} class="studio-book" aria-label={`${book.title} on Amazon`}>
-            <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} cover`} width="600" height="900" loading="lazy" decoding="async" />
-            <span><small>Book {String(index + 1).padStart(2, "0")}</small><b>{book.title}</b></span>
+    <div class="studio-album-head">
+      <span>The catalog</span>
+      <a href={site.social.spotify}>Hear every release ↗</a>
+    </div>
+
+    <div class="studio-album-rail" aria-label="Keith Staggers album catalog">
+      {catalog.map((album) => (
+        <article class="studio-album">
+          <iframe
+            data-defer-src={`https://open.spotify.com/embed/album/${album.spotifyId}?utm_source=generator&theme=0`}
+            width="100%"
+            height="352"
+            frameborder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            title={`${album.title} on Spotify`}
+          ></iframe>
+          <h3>{album.title}</h3>
+        </article>
+      ))}
+    </div>
+
+    <div class="studio-book-strip" aria-label="Keith Staggers books">
+      <p><b>Also published</b><span>3 books</span></p>
+      <div>
+        {books.map((book) => (
+          <a href={book.amazonUrl} class="studio-book-mini" aria-label={`${book.title} on Amazon`}>
+            <img src={`/media/book-${book.slug}.webp`} alt="" width="600" height="900" loading="lazy" decoding="async" />
+            <span>{book.title}</span>
           </a>
         ))}
       </div>

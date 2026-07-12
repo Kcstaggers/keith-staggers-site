@@ -218,9 +218,10 @@ Updated July 12, 2026. Keith rejected the previous editorial homepage as too sta
 - True near-black canvas, cold white type, electric cobalt active states, ultraviolet depth, and coral action color
 - Inter display type with mono utility text
 - Keith Photo 9 as a recurring circular identity portal with orbit lines and subtle pointer motion
-- Keith Photo 5 is the dedicated Finish Loop campaign portrait on the homepage product stage and product sales page
+- Keith Photo 5 is embedded in the actual Finish Loop field-manual cover and drives the homepage product stage, sales page, thank-you page, and social campaign image
+- Music is the dominant catalog proof with a featured Spotify stage and six-release rail. The three books appear only as a compact supporting strip
 - Open bands, rails, cinematic stages, and thin rules. No cream background, default bento grid, decorative hero eyebrow, or tint over Keith's face
-- Homepage order: studio hero, production ticker, Finish Loop, service selector, Studio Notes, interactive work stage, catalog proof, three-lives story, booking close
+- Homepage order: studio hero, production ticker, Finish Loop, service selector, music-first catalog proof, Studio Notes, interactive work stage, three-lives story, booking close
 
 Private generated concepts and the complete design spec are gitignored at:
 
@@ -273,8 +274,8 @@ Keith's standing authorization: proceed without repeatedly asking permission unl
 Customer bundle:
 
 - `output/products/the-finish-loop-v1.zip`
-- 3.03 MB, seven files
-- SHA-256: `789857e2d2d9bdd190ca74848785e82b623b86c5aba73b02e97735725534c434`
+- 0.89 MB, seven files
+- SHA-256: `aad2e9aeb3fba53893173a149d5fff5b737013cb5778cb48d9c634b43fccd6e2`
 - Includes a 26-page field manual, offline interactive planner, 30-day shipping calendar, direction-brief library, finish scorecard, start instructions, and license
 
 Private product source and store instructions:
@@ -284,6 +285,8 @@ Private product source and store instructions:
 - `private-products/keith-staggers-product-revenue-plan-v1.md` is the detailed 12-week product and revenue plan
 
 Both `private-products/` and `output/products/` are intentionally gitignored. Do not commit the paid customer ZIP, editable sources, store strategy, or private setup notes to the public GitHub repository.
+
+The local customer bundle was rebuilt on July 12, 2026 after Keith selected Photo 5 for the real field-manual cover. The Lemon Squeezy test product still contains the older 3.03 MB ZIP and must be updated with the new 0.89 MB bundle before live launch.
 
 ### Website implementation
 

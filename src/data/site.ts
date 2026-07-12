@@ -34,9 +34,9 @@ export const site = {
   },
   nav: [
     { label: "Work", href: "/#visuals" },
+    { label: "Music", href: "/#music" },
     { label: "The Finish Loop", href: "/finish-loop/" },
     { label: "Services", href: "/#services" },
-    { label: "Notes", href: "/#notes" },
     { label: "About", href: "/#about" },
   ],
 };
