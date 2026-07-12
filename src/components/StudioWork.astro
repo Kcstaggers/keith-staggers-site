@@ -1,0 +1,169 @@
+---
+import OrbitalPortrait from "./OrbitalPortrait.astro";
+
+type WorkItem = {
+  title: string;
+  category: string;
+  thumb: string;
+  src: string;
+  type: "image" | "video";
+  shape: "portrait" | "landscape";
+};
+
+const work: WorkItem[] = [
+  { title: "Going under taught me how to rise", category: "Short film", thumb: "/media/going-under-rise-poster.webp", src: "/media/going-under-rise.mp4", type: "video", shape: "landscape" },
+  { title: "Electric color", category: "Creative direction", thumb: "/media/keith-neon-pink.webp", src: "/media/keith-neon-pink.webp", type: "image", shape: "portrait" },
+  { title: "Keith in other worlds", category: "AI film", thumb: "/media/keith-sci-fi-poster.webp", src: "/media/keith-sci-fi.mp4", type: "video", shape: "portrait" },
+  { title: "After dark", category: "Editorial portrait", thumb: "/media/keith-noir.webp", src: "/media/keith-noir.webp", type: "image", shape: "portrait" },
+  { title: "A classic frame", category: "Campaign portrait", thumb: "/media/keith-diner.webp", src: "/media/keith-diner.webp", type: "image", shape: "landscape" },
+  { title: "Different light, same code", category: "Visual concept", thumb: "/media/keith-neon-violet.webp", src: "/media/keith-neon-violet.webp", type: "image", shape: "portrait" },
+];
+---
+
+<section id="visuals" class="studio-section studio-work scroll-mt-24" aria-labelledby="studio-work-title">
+  <div class="studio-shell studio-work-head">
+    <div>
+      <h2 id="studio-work-title" class="studio-display studio-section-title">The work <strong>moves</strong><span class="text-signal">.</span></h2>
+      <p>Music, images, films, books, and systems. Built to leave the folder.</p>
+    </div>
+    <div class="studio-work-identity">
+      <OrbitalPortrait compact />
+      <span><b data-studio-work-index>01</b> / {String(work.length).padStart(2, "0")}</span>
+    </div>
+  </div>
+
+  <div class="studio-work-stage">
+    <button type="button" class="studio-work-arrow studio-work-arrow--prev" data-studio-work-prev aria-label="Previous work">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6M11 6l-6 6 6 6" /></svg>
+    </button>
+
+    <div class="studio-work-track" data-studio-work-track tabindex="0" aria-label="Keith Staggers selected work">
+      {work.map((item, index) => (
+        <button
+          type="button"
+          class:list={["studio-work-item", `studio-work-item--${item.shape}`]}
+          data-studio-work-item
+          data-studio-media
+          data-media-type={item.type}
+          data-media-src={item.src}
+          data-media-poster={item.type === "video" ? item.thumb : undefined}
+          data-media-title={item.title}
+          aria-label={`${item.type === "video" ? "Play" : "View"} ${item.title}`}
+        >
+          <span class="studio-work-frame">
+            {item.type === "video" ? (
+              <video src={item.src} poster={item.thumb} autoplay muted loop playsinline preload="metadata"></video>
+            ) : (
+              <img src={item.thumb} alt="" loading="lazy" decoding="async" />
+            )}
+            {item.type === "video" && (
+              <span class="studio-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
+            )}
+          </span>
+          <span class="studio-work-meta"><small>{String(index + 1).padStart(2, "0")} · {item.category}</small><b>{item.title}</b></span>
+        </button>
+      ))}
+    </div>
+
+    <button type="button" class="studio-work-arrow studio-work-arrow--next" data-studio-work-next aria-label="Next work">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+    </button>
+  </div>
+
+  <div class="studio-shell studio-work-status">
+    <span>Selected work</span>
+    <b data-studio-work-title>{work[0].title}</b>
+    <small>Drag · swipe · use arrow keys</small>
+  </div>
+</section>
+
+<dialog data-studio-media-dialog class="studio-media-dialog" aria-labelledby="studio-media-title">
+  <button type="button" data-studio-media-close class="studio-media-close" aria-label="Close media viewer">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+  </button>
+  <video data-studio-media-video controls playsinline preload="metadata"></video>
+  <img data-studio-media-image src="" alt="" />
+  <h3 id="studio-media-title" data-studio-media-heading></h3>
+</dialog>
+
+<script>
+  const workTrack = document.querySelector<HTMLElement>("[data-studio-work-track]");
+  const workItems = Array.from(document.querySelectorAll<HTMLElement>("[data-studio-work-item]"));
+  const workIndex = document.querySelector<HTMLElement>("[data-studio-work-index]");
+  const workTitle = document.querySelector<HTMLElement>("[data-studio-work-title]");
+
+  const updateWorkStatus = () => {
+    if (!workTrack || workItems.length === 0) return;
+    const center = workTrack.scrollLeft + workTrack.clientWidth / 2;
+    let active = 0;
+    let best = Number.POSITIVE_INFINITY;
+    workItems.forEach((item, index) => {
+      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const distance = Math.abs(itemCenter - center);
+      if (distance < best) {
+        best = distance;
+        active = index;
+      }
+    });
+    if (workIndex) workIndex.textContent = String(active + 1).padStart(2, "0");
+    if (workTitle) workTitle.textContent = workItems[active].dataset.mediaTitle ?? "Selected work";
+  };
+
+  const moveWork = (direction: number) => {
+    if (!workTrack) return;
+    workTrack.scrollBy({ left: Math.min(680, workTrack.clientWidth * 0.72) * direction, behavior: "smooth" });
+  };
+
+  document.querySelector("[data-studio-work-prev]")?.addEventListener("click", () => moveWork(-1));
+  document.querySelector("[data-studio-work-next]")?.addEventListener("click", () => moveWork(1));
+  workTrack?.addEventListener("scroll", updateWorkStatus, { passive: true });
+  workTrack?.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    moveWork(event.key === "ArrowRight" ? 1 : -1);
+  });
+  updateWorkStatus();
+
+  const studioDialog = document.querySelector<HTMLDialogElement>("[data-studio-media-dialog]");
+  const studioVideo = studioDialog?.querySelector<HTMLVideoElement>("[data-studio-media-video]");
+  const studioImage = studioDialog?.querySelector<HTMLImageElement>("[data-studio-media-image]");
+  const studioHeading = studioDialog?.querySelector<HTMLElement>("[data-studio-media-heading]");
+
+  const closeStudioMedia = () => {
+    studioVideo?.pause();
+    if (studioVideo) {
+      studioVideo.removeAttribute("src");
+      studioVideo.removeAttribute("poster");
+      studioVideo.load();
+    }
+    studioDialog?.close();
+  };
+
+  document.querySelectorAll<HTMLButtonElement>("[data-studio-media]").forEach((opener) => {
+    opener.addEventListener("click", () => {
+      if (!studioDialog || !studioVideo || !studioImage || !studioHeading) return;
+      const type = opener.dataset.mediaType;
+      const src = opener.dataset.mediaSrc ?? "";
+      const title = opener.dataset.mediaTitle ?? "Selected work";
+      studioHeading.textContent = title;
+      if (type === "video") {
+        studioImage.hidden = true;
+        studioVideo.hidden = false;
+        studioVideo.src = src;
+        if (opener.dataset.mediaPoster) studioVideo.poster = opener.dataset.mediaPoster;
+      } else {
+        studioVideo.hidden = true;
+        studioImage.hidden = false;
+        studioImage.src = src;
+        studioImage.alt = title;
+      }
+      studioDialog.showModal();
+    });
+  });
+
+  studioDialog?.querySelector("[data-studio-media-close]")?.addEventListener("click", closeStudioMedia);
+  studioDialog?.addEventListener("click", (event) => {
+    if (event.target === studioDialog) closeStudioMedia();
+  });
+  studioDialog?.addEventListener("close", () => studioVideo?.pause());
+</script>

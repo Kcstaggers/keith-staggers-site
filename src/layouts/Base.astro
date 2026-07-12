@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import Masthead from "../components/Masthead.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import Analytics from "@vercel/analytics/astro";
@@ -27,7 +26,7 @@ const jsonLd = {
       name: site.name,
       url: site.url,
       email: site.email,
-      image: `${site.url}/media/keith-diner.webp`,
+      image: `${site.url}/media/keith-photo-9.webp`,
       jobTitle: "AI Creative Producer, Coach, Trainer and Speaker",
       description: site.description,
       address: { "@type": "PostalAddress", addressLocality: "Tampa", addressRegion: "FL", addressCountry: "US" },
@@ -56,7 +55,7 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="dark" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={pageTitle} />
@@ -79,7 +78,6 @@ const jsonLd = {
     <slot name="head" />
   </head>
   <body class="bg-ink text-paper antialiased">
-    <Masthead />
     <Nav />
     <main>
       <slot />
@@ -182,7 +180,7 @@ const jsonLd = {
       <script is:inline define:vars={{ username: site.booking.username, eventSlug: site.booking.eventSlug }}>
         (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
         Cal("init", { origin: "https://cal.com" });
-        Cal("ui", { hideEventTypeDetails: false, layout: "month_view", theme: "light", styles: { branding: { brandColor: "#1546d8" } } });
+        Cal("ui", { hideEventTypeDetails: false, layout: "month_view", theme: "dark", styles: { branding: { brandColor: "#ff604d" } } });
       </script>
     )}
   </body>

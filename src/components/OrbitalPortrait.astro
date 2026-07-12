@@ -1,0 +1,46 @@
+---
+interface Props {
+  class?: string;
+  eager?: boolean;
+  compact?: boolean;
+}
+
+const { class: className = "", eager = false, compact = false } = Astro.props;
+---
+
+<div class:list={["portrait-portal", compact && "portrait-portal--compact", className]} data-portrait-portal>
+  <span class="portrait-orbit portrait-orbit--one" aria-hidden="true"></span>
+  <span class="portrait-orbit portrait-orbit--two" aria-hidden="true"></span>
+  <span class="portrait-node portrait-node--blue" aria-hidden="true"></span>
+  <span class="portrait-node portrait-node--coral" aria-hidden="true"></span>
+  <div class="portrait-image-wrap">
+    <img
+      src="/media/keith-photo-9.webp"
+      alt="Keith Staggers wearing black sunglasses and a dark suit"
+      width="1080"
+      height="1080"
+      loading={eager ? "eager" : "lazy"}
+      fetchpriority={eager ? "high" : "auto"}
+      decoding="async"
+      class="portrait-image"
+    />
+  </div>
+</div>
+
+<script>
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll<HTMLElement>("[data-portrait-portal]").forEach((portal) => {
+      portal.addEventListener("pointermove", (event) => {
+        const rect = portal.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+        const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+        portal.style.setProperty("--portal-x", `${x * 8}px`);
+        portal.style.setProperty("--portal-y", `${y * 8}px`);
+      });
+      portal.addEventListener("pointerleave", () => {
+        portal.style.setProperty("--portal-x", "0px");
+        portal.style.setProperty("--portal-y", "0px");
+      });
+    });
+  }
+</script>

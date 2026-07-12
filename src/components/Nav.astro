@@ -4,31 +4,64 @@ import { site } from "../data/site";
 const calLink = `${site.booking.username}/${site.booking.eventSlug}`;
 const ctaHref = site.booking.enabled
   ? `https://cal.com/${calLink}`
-  : `mailto:${site.email}?subject=Work%20with%20me`;
+  : `mailto:${site.email}?subject=Bring%20me%20the%20idea`;
 ---
 
-<header class="px-6 lg:px-12 py-6 max-w-[1440px] mx-auto flex items-center justify-between gap-6 border-b border-rule/60">
-  <a href="/" class="serif text-[22px] tracking-tight leading-none">
-    Keith Staggers<span class="accent">.</span>
-  </a>
-  <nav class="hidden md:flex items-center gap-8 text-[12px] font-mono tracking-[0.08em] text-paper-dim" aria-label="Primary navigation">
-    {site.nav.map((item) => (
-      <a
-        href={item.href}
-        target={item.href.startsWith("http") ? "_blank" : undefined}
-        rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-        class="nav-link hover:text-paper transition-colors"
-      >{item.label}</a>
-    ))}
+<header class="studio-nav-wrap">
+  <div class="studio-shell studio-nav">
+    <a href="/" class="studio-logo">Keith Staggers<span>.</span></a>
+
+    <nav class="studio-nav-links" aria-label="Primary navigation">
+      {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <a
+      href={ctaHref}
+      data-cal-link={site.booking.enabled ? calLink : undefined}
+      data-cal-namespace=""
+      data-cal-config={site.booking.enabled ? '{"layout":"month_view","theme":"dark"}' : undefined}
+      class="studio-nav-cta"
+    >
+      Bring me the idea
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+    </a>
+
+    <button type="button" class="studio-menu-button" data-studio-menu-button aria-expanded="false" aria-controls="studio-mobile-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav id="studio-mobile-menu" class="studio-mobile-menu" data-studio-mobile-menu hidden aria-label="Mobile navigation">
+    {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    <a
+      href={ctaHref}
+      data-cal-link={site.booking.enabled ? calLink : undefined}
+      data-cal-namespace=""
+      data-cal-config={site.booking.enabled ? '{"layout":"month_view","theme":"dark"}' : undefined}
+    >Bring me the idea</a>
   </nav>
-  <a
-    href={ctaHref}
-    data-cal-link={site.booking.enabled ? calLink : undefined}
-    data-cal-namespace=""
-    data-cal-config={site.booking.enabled ? '{"layout":"month_view","theme":"light"}' : undefined}
-    class="group inline-flex items-center gap-2 bg-amber text-white px-3 sm:px-4 py-3 text-[9px] sm:text-[11px] font-mono tracking-[0.08em] sm:tracking-[0.1em] uppercase whitespace-nowrap hover:bg-amber-dim transition-colors"
-  >
-    Bring me the idea
-    <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
-  </a>
 </header>
+
+<script>
+  const menuButton = document.querySelector<HTMLButtonElement>("[data-studio-menu-button]");
+  const mobileMenu = document.querySelector<HTMLElement>("[data-studio-mobile-menu]");
+
+  const closeMenu = () => {
+    if (!menuButton || !mobileMenu) return;
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Open menu");
+    mobileMenu.hidden = true;
+  };
+
+  menuButton?.addEventListener("click", () => {
+    if (!mobileMenu) return;
+    const opening = menuButton.getAttribute("aria-expanded") !== "true";
+    menuButton.setAttribute("aria-expanded", String(opening));
+    menuButton.setAttribute("aria-label", opening ? "Close menu" : "Open menu");
+    mobileMenu.hidden = !opening;
+  });
+  mobileMenu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu();
+  });
+</script>

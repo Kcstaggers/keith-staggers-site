@@ -8,7 +8,7 @@ Personal/portfolio site for Keith Staggers — Tampa-based retired Baltimore det
 
 Live at **https://www.keithstaggers.com** (apex redirects to www).
 
-Bright editorial-broadsheet aesthetic. Warm paper background, near-black typography, vivid cobalt actions, and small signal-red punctuation. Serif headlines, generous whitespace, sharp rules, no generic startup-card look. The site leads with Keith as an uncommon operator and the results he creates; the creative archive supports the claim instead of dominating it.
+The current production site still uses the bright editorial-broadsheet aesthetic. The active redesign on `agent/ai-creator-wow` replaces the homepage with a near-black AI creative studio experience built around Keith Photo 9, electric cobalt, ultraviolet depth, and coral actions. The site leads with Keith as an uncommon operator and the results he creates. The creative archive supports the claim instead of dominating it.
 
 ## Tech stack
 
@@ -202,7 +202,60 @@ A scheduled task is set for **Aug 15, 2026** to start a Canva → Cloudflare tra
 - **Vercel auto-detects Astro** — no `vercel.json` needed. Don't add one unless you need to override.
 - **GitHub repo is public.** Don't commit secrets, API keys, .env files, or anything you wouldn't want on someone's homepage. The .gitignore covers the usual suspects.
 
-## Current handoff: Finish Loop revenue launch
+## Current design handoff: AI creator studio homepage
+
+Updated July 12, 2026. Keith rejected the previous editorial homepage as too static and asked for a phenomenal, dynamic design with `public/media/keith-photo-9.webp` as the driving social identity image.
+
+### Git and rollback
+
+- Active design branch: `agent/ai-creator-wow`
+- Explicit pre-redesign rollback commit: `de5bf27`
+- Do not overwrite or stage the user-owned untracked files listed later in this document.
+- The design is not published to production yet.
+
+### Design direction
+
+- True near-black canvas, cold white type, electric cobalt active states, ultraviolet depth, and coral action color
+- Inter display type with mono utility text
+- Keith Photo 9 as a recurring circular identity portal with orbit lines and subtle pointer motion
+- Open bands, rails, cinematic stages, and thin rules. No cream background, default bento grid, decorative hero eyebrow, or tint over Keith's face
+- Homepage order: studio hero, production ticker, Finish Loop, service selector, Studio Notes, interactive work stage, catalog proof, three-lives story, booking close
+
+Private generated concepts and the complete design spec are gitignored at:
+
+`private-products/design-concepts/ai-creator-wow/`
+
+The design spec includes the desktop and mobile concepts, responsive rules, motion rules, intentional deviations, and final fidelity ledger.
+
+### New homepage implementation
+
+- `src/components/OrbitalPortrait.astro`
+- `src/components/StudioHero.astro`
+- `src/components/StudioProduct.astro`
+- `src/components/StudioServices.astro`
+- `src/components/StudioNotes.astro`
+- `src/components/StudioWork.astro`
+- `src/components/StudioCatalog.astro`
+- `src/components/StudioStory.astro`
+- `src/components/StudioClosing.astro`
+- `src/pages/index.astro` renders only these Studio components.
+- `src/components/Nav.astro`, `src/components/Footer.astro`, `src/layouts/Base.astro`, `src/data/site.ts`, and `src/styles/global.css` contain the new studio shell and styling.
+- Legacy homepage components remain in the repository but are not rendered, which keeps rollback straightforward.
+
+### Verified behavior
+
+- Desktop hero matches the generated concept closely and uses Photo 9 without altering Keith's identity.
+- Service tabs change the selected content and accessible state.
+- The media rail opens real videos and images in a labeled accessible dialog.
+- Mobile navigation opens and closes correctly.
+- A 375px native client viewport has no page-level horizontal overflow.
+- Desktop native client viewport has no page-level horizontal overflow.
+- Browser console was clean during the interaction pass.
+- Latest temporary browser screenshots: `/tmp/keith-wow-desktop.png`, `/tmp/keith-wow-mobile.png`, `/tmp/keith-wow-services.png`, and `/tmp/keith-wow-work.png`.
+
+Before publishing, rerun `npx astro check` and `npm run build`, commit this branch, push it, and inspect the Vercel preview. Do not merge the revenue PR or publish the Finish Loop checkout while Lemon Squeezy remains in test mode.
+
+## Current revenue handoff: Finish Loop launch
 
 Updated July 12, 2026. This is the active business task. Read this section before changing the product, checkout, deployment, or storefront.
 

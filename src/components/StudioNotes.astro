@@ -1,0 +1,26 @@
+---
+import { notes } from "../data/notes";
+---
+
+<section id="notes" class="studio-section studio-notes scroll-mt-24" aria-labelledby="studio-notes-title">
+  <div class="studio-shell studio-notes-grid">
+    <header>
+      <h2 id="studio-notes-title" class="studio-display studio-section-title">The thinking behind the <strong>work</strong><span class="text-signal">.</span></h2>
+      <p>Clear thinking on AI, creative work, and starting again. No recycled prompts.</p>
+    </header>
+
+    <div class="studio-note-list">
+      {notes.map((note) => (
+        <a href={`/notes/${note.slug}/`} class="studio-note-row">
+          <span class="studio-note-number">{note.number}</span>
+          <span class="studio-note-body">
+            <small>{note.category} · {note.readingTime}</small>
+            <b>{note.title}</b>
+            <span>{note.excerpt}</span>
+          </span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

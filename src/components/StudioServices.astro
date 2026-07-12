@@ -1,0 +1,115 @@
+---
+const paths = [
+  {
+    id: "made",
+    number: "01",
+    tab: "Make it for me",
+    title: "Done-for-you",
+    detail: "One accountable operator. From the first spark to the final file, I direct the work and deliver the finished asset.",
+    price: "Projects from $2,500",
+    href: "/services/done-for-you/",
+    cta: "See how I build it",
+  },
+  {
+    id: "teach",
+    number: "02",
+    tab: "Teach us",
+    title: "Coaching + training",
+    detail: "One-to-one for creators. Hands-on workshops for teams. Every session ends with a working habit and a real next move.",
+    price: "Sessions from $250 · Workshops from $4,000",
+    href: "/services/training/",
+    cta: "See the training",
+    secondaryHref: "/services/coaching/",
+    secondaryCta: "See one-to-one coaching",
+  },
+  {
+    id: "bring",
+    number: "03",
+    tab: "Bring Keith in",
+    title: "Speaking",
+    detail: "Detective, nurse leader, and prolific AI creator in one room. The story earns attention. The tactics give people a next move.",
+    price: "Keynotes from $3,500",
+    href: "/services/speaking/",
+    cta: "See the speaking offer",
+  },
+];
+---
+
+<section id="services" class="studio-section studio-services scroll-mt-24" aria-labelledby="studio-services-title">
+  <div class="studio-shell">
+    <div class="studio-services-head">
+      <h2 id="studio-services-title" class="studio-display studio-section-title">Choose the <strong>move</strong><span class="text-signal">.</span></h2>
+      <p>Pick the result. The system changes around it.</p>
+    </div>
+
+    <div class="service-selector" role="tablist" aria-label="Choose how to work with Keith">
+      {paths.map((path, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`studio-service-tab-${path.id}`}
+          aria-controls={`studio-service-panel-${path.id}`}
+          aria-selected={index === 0 ? "true" : "false"}
+          tabindex={index === 0 ? "0" : "-1"}
+          data-studio-service-tab={path.id}
+          class="service-selector-tab"
+        >
+          <span>{path.number}</span>
+          <b>{path.tab}</b>
+        </button>
+      ))}
+    </div>
+
+    <div class="service-panels">
+      {paths.map((path, index) => (
+        <article
+          role="tabpanel"
+          id={`studio-service-panel-${path.id}`}
+          aria-labelledby={`studio-service-tab-${path.id}`}
+          data-studio-service-panel={path.id}
+          hidden={index !== 0}
+          class="service-panel"
+        >
+          <div>
+            <h3 class="studio-display">{path.title}</h3>
+            <p>{path.detail}</p>
+          </div>
+          <div class="service-panel-action">
+            <span>{path.price}</span>
+            <a href={path.href}>{path.cta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg></a>
+            {path.secondaryHref && <a class="service-secondary" href={path.secondaryHref}>{path.secondaryCta}</a>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const studioServiceTabs = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-studio-service-tab]"));
+  const studioServicePanels = Array.from(document.querySelectorAll<HTMLElement>("[data-studio-service-panel]"));
+
+  const activateStudioService = (tab: HTMLButtonElement) => {
+    const id = tab.dataset.studioServiceTab;
+    studioServiceTabs.forEach((candidate) => {
+      const selected = candidate === tab;
+      candidate.setAttribute("aria-selected", String(selected));
+      candidate.tabIndex = selected ? 0 : -1;
+    });
+    studioServicePanels.forEach((panel) => {
+      panel.hidden = panel.dataset.studioServicePanel !== id;
+    });
+  };
+
+  studioServiceTabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activateStudioService(tab));
+    tab.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      const next = studioServiceTabs[(index + direction + studioServiceTabs.length) % studioServiceTabs.length];
+      next.focus();
+      activateStudioService(next);
+    });
+  });
+</script>

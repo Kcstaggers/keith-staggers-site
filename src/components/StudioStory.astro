@@ -1,0 +1,36 @@
+---
+import OrbitalPortrait from "./OrbitalPortrait.astro";
+
+const lives = [
+  { label: "Detective", dates: "1992–2013", tone: "blue", icon: "shield" },
+  { label: "Nurse leader", dates: "2014–Now", tone: "violet", icon: "care" },
+  { label: "AI creator", dates: "2023–Now", tone: "coral", icon: "nodes" },
+];
+---
+
+<section id="about" class="studio-section studio-story scroll-mt-24" aria-labelledby="studio-story-title">
+  <div class="studio-shell">
+    <header class="studio-story-head">
+      <h2 id="studio-story-title" class="studio-display studio-section-title">Three lives.<br />One operating <strong>code</strong><span class="text-signal">.</span></h2>
+      <blockquote>Read the room. Find the pattern. Use the tool. Finish the job.</blockquote>
+    </header>
+
+    <div class="studio-life-path" data-life-path>
+      <span class="studio-life-line" aria-hidden="true"></span>
+      <div class="studio-life-portrait"><OrbitalPortrait compact /></div>
+      {lives.map((life) => (
+        <article class:list={["studio-life", `studio-life--${life.tone}`]}>
+          <span class="studio-life-icon" aria-hidden="true">
+            {life.icon === "shield" && <svg viewBox="0 0 32 32"><path d="M16 3 27 7v8c0 7-4.5 11-11 14C9.5 26 5 22 5 15V7l11-4Z"/><path d="m11 16 3 3 7-8"/></svg>}
+            {life.icon === "care" && <svg viewBox="0 0 32 32"><path d="M12 4h8v8h8v8h-8v8h-8v-8H4v-8h8V4Z"/></svg>}
+            {life.icon === "nodes" && <svg viewBox="0 0 32 32"><circle cx="8" cy="10" r="3"/><circle cx="24" cy="7" r="3"/><circle cx="23" cy="24" r="3"/><circle cx="8" cy="23" r="3"/><path d="m11 10 10-3M10 13l11 9M11 23h9"/></svg>}
+          </span>
+          <h3>{life.label}</h3>
+          <p>{life.dates}</p>
+        </article>
+      ))}
+    </div>
+
+    <a href="/notes/three-careers-one-standard/" class="studio-story-link">Read the full story <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg></a>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+---
+import { albums } from "../data/albums";
+import { books } from "../data/books";
+
+const featured = albums.find((album) => album.featured) ?? albums[0];
+---
+
+<section class="studio-section studio-catalog" aria-labelledby="studio-catalog-title">
+  <div class="studio-shell">
+    <header class="studio-catalog-head">
+      <h2 id="studio-catalog-title" class="studio-display studio-section-title">The catalog is the <strong>proof</strong><span class="text-signal">.</span></h2>
+      <p>Fifty albums. Three books. Hundreds of finished decisions behind every number.</p>
+    </header>
+
+    <div class="studio-catalog-grid">
+      <article class="studio-sound-stage">
+        <div class="studio-sound-copy">
+          <small>Featured release</small>
+          <h3 class="studio-display">{featured.title}</h3>
+          <p>{featured.featuredBlurb}</p>
+          <div>
+            {featured.appleMusicUrl && <a href={featured.appleMusicUrl}>Apple Music ↗</a>}
+            {featured.amazonMusicUrl && <a href={featured.amazonMusicUrl}>Amazon Music ↗</a>}
+          </div>
+        </div>
+        <iframe
+          data-defer-src={`https://open.spotify.com/embed/album/${featured.spotifyId}?utm_source=generator&theme=0`}
+          width="100%"
+          height="352"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title={`${featured.title} on Spotify`}
+        ></iframe>
+      </article>
+
+      <div class="studio-book-rail" aria-label="Keith Staggers books">
+        {books.map((book, index) => (
+          <a href={book.amazonUrl} class="studio-book" aria-label={`${book.title} on Amazon`}>
+            <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} cover`} width="600" height="900" loading="lazy" decoding="async" />
+            <span><small>Book {String(index + 1).padStart(2, "0")}</small><b>{book.title}</b></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const catalogFrames = document.querySelectorAll<HTMLIFrameElement>(".studio-catalog iframe[data-defer-src]");
+  const catalogObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const frame = entry.target as HTMLIFrameElement;
+        if (frame.dataset.deferSrc) frame.src = frame.dataset.deferSrc;
+        catalogObserver.unobserve(frame);
+      }
+    },
+    { rootMargin: "400px 0px" }
+  );
+  catalogFrames.forEach((frame) => catalogObserver.observe(frame));
+</script>

@@ -33,11 +33,10 @@ export const site = {
     youtube: "",
   },
   nav: [
+    { label: "Work", href: "/#visuals" },
     { label: "The Finish Loop", href: "/finish-loop/" },
-    { label: "Proof", href: "/#proof" },
     { label: "Services", href: "/#services" },
     { label: "Notes", href: "/#notes" },
-    { label: "Story", href: "/#about" },
-    { label: "Follow", href: "https://www.facebook.com/profile.php?id=61564900019924" },
+    { label: "About", href: "/#about" },
   ],
 };
