@@ -6,7 +6,7 @@ interface Props {
   label?: string;
 }
 
-const { prompt, label = "Book a 15-min intro call" } = Astro.props;
+const { prompt, label = "Start with fit questions" } = Astro.props;
 const href = getBookingHref();
 const calAttrs = getCalAttrs();
 ---

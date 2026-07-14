@@ -1,0 +1,94 @@
+---
+const stages = [
+  {
+    number: "01",
+    title: "Find repeated work",
+    detail: "Name the task, owner, inputs, and finish line before choosing a tool.",
+  },
+  {
+    number: "02",
+    title: "Bound the AI job",
+    detail: "Decide what AI may draft or sort, and what it may never see or decide.",
+  },
+  {
+    number: "03",
+    title: "Keep the human check",
+    detail: "Verify facts, context, tone, and the final decision with the accountable person.",
+  },
+  {
+    number: "04",
+    title: "Document next use",
+    detail: "Save the inputs, prompt pattern, checks, and handoff so the work can repeat.",
+  },
+];
+
+const examples = [
+  {
+    work: "Team huddle",
+    input: "Rough notes",
+    output: "Structured agenda",
+    check: "Leader verifies priorities",
+    asset: "Reusable huddle template",
+  },
+  {
+    work: "Rounding follow-up",
+    input: "Synthetic observations",
+    output: "Grouped themes",
+    check: "Leader assigns owners",
+    asset: "Action tracker",
+  },
+  {
+    work: "Content launch",
+    input: "Brief and source material",
+    output: "Draft sequence",
+    check: "Creator checks tone and claims",
+    asset: "Finished campaign",
+  },
+];
+---
+
+<section id="method" class="studio-section studio-method scroll-mt-24" aria-labelledby="studio-method-title">
+  <div class="studio-shell">
+    <header class="studio-method-head">
+      <div>
+        <p class="studio-kicker">A method you can use now</p>
+        <h2 id="studio-method-title" class="studio-display studio-section-title">
+          Useful AI work has<br /><strong>four parts</strong><span class="text-signal">.</span>
+        </h2>
+      </div>
+      <p>
+        If a workflow cannot survive these four steps, it is not ready for the work. This is the method behind the product, training, and builds.
+      </p>
+    </header>
+
+    <ol class="method-loop" aria-label="Four-part AI workflow method">
+      {stages.map((stage, index) => (
+        <li class="method-node" style={`--method-delay: ${index * 120}ms`}>
+          <span>{stage.number}</span>
+          <h3>{stage.title}</h3>
+          <p>{stage.detail}</p>
+        </li>
+      ))}
+    </ol>
+
+    <p class="method-value-line">
+      <span>This is what you are buying</span>
+      Not more prompts. A loop your team can use again.
+    </p>
+
+    <div class="method-examples" aria-label="Examples of the method in practice">
+      <div class="method-example-row method-example-head" aria-hidden="true">
+        <span>Work</span><span>Input</span><span>AI assists</span><span>Human checks</span><span>Asset</span>
+      </div>
+      {examples.map((example) => (
+        <div class="method-example-row">
+          <b>{example.work}</b>
+          <span data-label="Input">{example.input}</span>
+          <span data-label="AI assists">{example.output}</span>
+          <span data-label="Human checks">{example.check}</span>
+          <span data-label="Asset">{example.asset}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

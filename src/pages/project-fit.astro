@@ -1,0 +1,189 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site";
+---
+
+<Base
+  title="Project fit"
+  description="Answer a few direct questions before requesting time with Keith Staggers. Keith reviews every inquiry before sharing a private booking link."
+>
+  <section class="project-fit" aria-labelledby="project-fit-title">
+    <div class="studio-shell project-fit-shell">
+      <header class="project-fit-head">
+        <div>
+          <p class="studio-kicker">Before the calendar</p>
+          <h1 id="project-fit-title" class="studio-display">
+            Show me the<br /><strong>real problem</strong><span class="text-signal">.</span>
+          </h1>
+        </div>
+        <div class="project-fit-intro">
+          <p>I review every inquiry before sharing a private booking link. Six useful answers save both of us a meeting that should have been an email.</p>
+          <a href="/finish-loop/">Need the $49 Finish Loop instead? Go straight to it →</a>
+        </div>
+      </header>
+
+      <ol class="project-fit-steps" aria-label="How the project fit process works">
+        <li><span>01</span><b>Answer</b><p>Name the outcome, timeline, and right level of investment.</p></li>
+        <li><span>02</span><b>I review</b><p>I decide whether I can help and which offer is the smallest useful move.</p></li>
+        <li><span>03</span><b>Then we talk</b><p>If it fits, I reply with the private calendar link and the right next step.</p></li>
+      </ol>
+
+      <div class="project-fit-grid">
+        <aside class="project-fit-aside">
+          <p class="studio-kicker">A good inquiry includes</p>
+          <ul>
+            <li>A specific result, not “help with AI.”</li>
+            <li>A real owner or decision-maker.</li>
+            <li>A timeline tied to actual work.</li>
+            <li>A budget or hiring conversation that matches the ask.</li>
+          </ul>
+          <p class="project-fit-privacy">Do not include protected health information, confidential employer or client data, passwords, or API keys.</p>
+        </aside>
+
+        <form class="project-fit-form" data-project-fit-form data-email={site.email}>
+          <div class="fit-field fit-field--half">
+            <label for="fit-name">Your name</label>
+            <input id="fit-name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="fit-email">Your email</label>
+            <input id="fit-email" name="email" type="email" autocomplete="email" required />
+          </div>
+
+          <div class="fit-field">
+            <label for="fit-role">Organization and your role</label>
+            <input id="fit-role" name="role" type="text" autocomplete="organization-title" placeholder="Company, team, or independent project" required />
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="fit-need">What conversation do you need?</label>
+            <select id="fit-need" name="need" required>
+              <option value="">Choose one</option>
+              <option>Done-for-you workflow or production build</option>
+              <option>AI Jumpstart one-to-one session</option>
+              <option>Team training or workshop</option>
+              <option>Speaking or event</option>
+              <option>Employment or recruiter conversation</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="fit-timeline">When does this need to move?</label>
+            <select id="fit-timeline" name="timeline" required>
+              <option value="">Choose one</option>
+              <option>Within 30 days</option>
+              <option>Within 1 to 3 months</option>
+              <option>Within 3 to 6 months</option>
+              <option>Exploring with no date yet</option>
+            </select>
+          </div>
+
+          <div class="fit-field">
+            <label for="fit-outcome">What must be true when the work is finished?</label>
+            <textarea id="fit-outcome" name="outcome" rows="5" minlength="40" placeholder="Describe the result, who will use it, and what finished means." required></textarea>
+          </div>
+
+          <div class="fit-field">
+            <label for="fit-tried">What have you already tried, built, or decided?</label>
+            <textarea id="fit-tried" name="tried" rows="4" minlength="20" placeholder="Tools, drafts, internal attempts, approvals, or blockers." required></textarea>
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="fit-investment">Which level fits the conversation?</label>
+            <select id="fit-investment" name="investment" required>
+              <option value="">Choose one</option>
+              <option>Employment or recruiter discussion</option>
+              <option>$250 working session</option>
+              <option>$2,500 to $5,000 project</option>
+              <option>$3,500+ training or speaking</option>
+              <option>$5,000+ scoped build</option>
+              <option>I need guidance before choosing</option>
+            </select>
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="fit-link">Website or LinkedIn profile</label>
+            <input id="fit-link" name="link" type="url" inputmode="url" placeholder="https://" />
+          </div>
+
+          <label class="fit-confirm" for="fit-confirm">
+            <input id="fit-confirm" name="confirmed" type="checkbox" required />
+            <span>I confirm this contains no protected, confidential, or credential information.</span>
+          </label>
+
+          <button class="studio-button studio-button--primary fit-submit" type="submit">
+            Review my inquiry
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          </button>
+        </form>
+      </div>
+
+      <section class="project-fit-review" data-fit-review hidden tabindex="-1" aria-labelledby="fit-review-title">
+        <p class="studio-kicker">One last step</p>
+        <h2 id="fit-review-title" class="studio-display">Review it. Then send it<span class="text-signal">.</span></h2>
+        <p>Your answers have not been transmitted yet. Use the email button below. I will reply with a private booking link only if the conversation fits.</p>
+        <textarea data-fit-summary rows="15" readonly aria-label="Project inquiry summary"></textarea>
+        <div class="project-fit-review-actions">
+          <a data-fit-email class="studio-button studio-button--primary" href={`mailto:${site.email}`}>
+            Email this to Keith
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          </a>
+          <button type="button" class="studio-button studio-button--secondary" data-fit-edit>Change my answers</button>
+        </div>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const fitForm = document.querySelector<HTMLFormElement>("[data-project-fit-form]");
+  const fitReview = document.querySelector<HTMLElement>("[data-fit-review]");
+  const fitSummary = document.querySelector<HTMLTextAreaElement>("[data-fit-summary]");
+  const fitEmail = document.querySelector<HTMLAnchorElement>("[data-fit-email]");
+  const fitEdit = document.querySelector<HTMLButtonElement>("[data-fit-edit]");
+
+  const readValue = (data: FormData, key: string) => String(data.get(key) ?? "").trim();
+
+  fitForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!fitForm.reportValidity() || !fitReview || !fitSummary || !fitEmail) return;
+
+    const data = new FormData(fitForm);
+    const need = readValue(data, "need");
+    const name = readValue(data, "name");
+    const summary = [
+      "PROJECT FIT INQUIRY",
+      "",
+      `Name: ${name}`,
+      `Email: ${readValue(data, "email")}`,
+      `Organization and role: ${readValue(data, "role")}`,
+      `Conversation: ${need}`,
+      `Timeline: ${readValue(data, "timeline")}`,
+      `Investment fit: ${readValue(data, "investment")}`,
+      `Website or LinkedIn: ${readValue(data, "link") || "Not provided"}`,
+      "",
+      "OUTCOME",
+      readValue(data, "outcome"),
+      "",
+      "WHAT I HAVE TRIED",
+      readValue(data, "tried"),
+      "",
+      "I confirm this inquiry contains no protected, confidential, or credential information.",
+    ].join("\n");
+
+    const subject = `Project fit: ${need} · ${name}`;
+    const recipient = fitForm.dataset.email ?? "";
+    fitSummary.value = summary;
+    fitEmail.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(summary)}`;
+    fitReview.hidden = false;
+    fitReview.focus();
+  });
+
+  fitEdit?.addEventListener("click", () => {
+    if (!fitForm || !fitReview) return;
+    fitReview.hidden = true;
+    fitForm.querySelector<HTMLElement>("input, select, textarea")?.focus();
+  });
+</script>

@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import Masthead from "../components/Masthead.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import Analytics from "@vercel/analytics/astro";
@@ -10,11 +9,13 @@ interface Props {
   title?: string;
   description?: string;
   ogType?: "website" | "article";
+  ogImage?: string;
 }
 
-const { title, description = site.description, ogType = "website" } = Astro.props;
+const { title, description = site.description, ogType = "website", ogImage = "/og-image.png" } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
 const canonicalUrl = new URL(Astro.url.pathname, site.url).href;
+const socialImage = new URL(ogImage, site.url).href;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -25,16 +26,16 @@ const jsonLd = {
       name: site.name,
       url: site.url,
       email: site.email,
-      image: `${site.url}/media/keith-diner.webp`,
-      jobTitle: "AI Creative Producer, Coach, Trainer and Speaker",
+      image: `${site.url}/media/keith-photo-9.webp`,
+      jobTitle: "AI Creator, Trainer and Workflow Builder",
       description: site.description,
       address: { "@type": "PostalAddress", addressLocality: "Tampa", addressRegion: "FL", addressCountry: "US" },
-      sameAs: [site.social.facebook, site.social.instagram, site.social.spotify, site.social.appleMusic].filter(Boolean),
+      sameAs: [site.social.linkedin, site.social.facebook, site.social.instagram, site.social.spotify, site.social.appleMusic].filter(Boolean),
     },
     {
       "@type": "ProfessionalService",
       "@id": `${site.url}/#services`,
-      name: "Keith Staggers · AI Creative Services",
+      name: "Keith Staggers · AI Systems, Training and Production",
       url: `${site.url}/#services`,
       founder: { "@id": `${site.url}/#keith` },
       areaServed: "Worldwide",
@@ -54,7 +55,7 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="dark" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={pageTitle} />
@@ -62,14 +63,14 @@ const jsonLd = {
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={site.name} />
-    <meta property="og:image" content={`${site.url}/og-image.png`} />
+    <meta property="og:image" content={socialImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={`${site.name} · ${site.tagline}`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${site.url}/og-image.png`} />
+    <meta name="twitter:image" content={socialImage} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{pageTitle}</title>
@@ -77,7 +78,6 @@ const jsonLd = {
     <slot name="head" />
   </head>
   <body class="bg-ink text-paper antialiased">
-    <Masthead />
     <Nav />
     <main>
       <slot />
@@ -123,8 +123,14 @@ const jsonLd = {
         const source = labelFor(link);
         const page = window.location.pathname;
 
-        if (link.dataset.calLink) {
-          track("Booking Intent", { source, page });
+        if (link.dataset.productPurchase) {
+          track("Product Checkout Intent", {
+            product: link.dataset.productPurchase,
+            source,
+            page,
+          });
+        } else if (href === "/project-fit/") {
+          track("Qualification Started", { source, page });
         } else if (href === "/ai-workflow-guide.pdf") {
           track("Guide Download", { source, page });
         } else if (href.includes("facebook.com")) {
@@ -142,6 +148,12 @@ const jsonLd = {
             page,
           });
         }
+      });
+
+      document.addEventListener("submit", (event) => {
+        if (!(event.target instanceof HTMLFormElement)) return;
+        if (!event.target.matches("[data-project-fit-form]")) return;
+        track("Qualification Reviewed", { page: window.location.pathname });
       });
     </script>
 
@@ -170,12 +182,5 @@ const jsonLd = {
       }
     </script>
 
-    {site.booking.enabled && (
-      <script is:inline define:vars={{ username: site.booking.username, eventSlug: site.booking.eventSlug }}>
-        (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-        Cal("init", { origin: "https://cal.com" });
-        Cal("ui", { hideEventTypeDetails: false, layout: "month_view", theme: "light", styles: { branding: { brandColor: "#1546d8" } } });
-      </script>
-    )}
   </body>
 </html>

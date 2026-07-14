@@ -1,0 +1,74 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getBookingHref, getCalAttrs } from "../../utils/booking";
+
+const bookingAttrs = getCalAttrs();
+---
+
+<Base
+  title="The Finish Loop Is Yours"
+  description="Start The Finish Loop and turn one project into finished, released work."
+  ogImage="/media/finish-loop/finish-loop-og.png"
+>
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+
+  <section class="border-b border-paper bg-paper text-ink" aria-labelledby="thanks-heading">
+    <div class="mx-auto grid min-h-[72vh] max-w-[1600px] lg:grid-cols-[1fr_0.72fr]">
+      <div class="flex flex-col justify-between px-5 py-16 sm:px-8 lg:px-12 lg:py-24 xl:px-16">
+        <div>
+          <p class="eyebrow !text-amber">Purchase complete</p>
+          <h1 id="thanks-heading" class="serif mt-7 max-w-5xl text-[clamp(4rem,10vw,9rem)] leading-[0.84] tracking-[-0.06em]">
+            Now close the loop<span class="text-signal">.</span>
+          </h1>
+          <p class="serif mt-9 max-w-2xl text-2xl leading-snug sm:text-3xl">
+            Your download is available in the checkout confirmation and receipt email. Start with <strong>START-HERE.txt</strong>.
+          </p>
+        </div>
+
+        <ol class="mt-14 grid border-l border-t border-ink/30 sm:grid-cols-3">
+          <li class="border-b border-r border-ink/30 p-5"><span class="eyebrow !text-amber">01</span><p class="serif mt-4 text-2xl">Open the planner.</p></li>
+          <li class="border-b border-r border-ink/30 p-5"><span class="eyebrow !text-amber">02</span><p class="serif mt-4 text-2xl">Choose one seven-day project.</p></li>
+          <li class="border-b border-r border-ink/30 p-5"><span class="eyebrow !text-amber">03</span><p class="serif mt-4 text-2xl">Set the ship date now.</p></li>
+        </ol>
+      </div>
+
+      <div class="relative min-h-[540px] overflow-hidden bg-ink">
+        <img
+          src="/media/keith-photo-5.webp"
+          alt="Keith Staggers in a navy suit reviewing a project on his phone"
+          width="1080"
+          height="1080"
+          class="h-full w-full object-cover object-center"
+        />
+        <img
+          src="/media/finish-loop/field-manual-cover.webp"
+          alt="The Finish Loop field manual"
+          width="900"
+          height="1165"
+          class="absolute bottom-6 left-6 w-[38%] max-w-[260px] border border-ink/40 shadow-2xl"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-rule" aria-labelledby="support-heading">
+    <div class="mx-auto grid max-w-[1600px] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-2 lg:px-12 lg:py-24 xl:px-16">
+      <div>
+        <p class="eyebrow !text-amber">Need the files?</p>
+        <h2 id="support-heading" class="serif mt-5 text-5xl leading-[0.94] tracking-[-0.045em]">Check the receipt first.</h2>
+        <p class="mt-7 max-w-xl text-lg leading-relaxed text-paper-dim">The secure download link is attached to your purchase confirmation. If it does not arrive, email <a class="text-amber underline underline-offset-4" href="mailto:kcstaggers@gmail.com?subject=Finish%20Loop%20download%20help">kcstaggers@gmail.com</a>.</p>
+      </div>
+      <div class="border-t border-rule pt-7 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+        <p class="eyebrow !text-amber">Want help applying it?</p>
+        <h2 class="serif mt-5 text-5xl leading-[0.94] tracking-[-0.045em]">Bring the real project.</h2>
+        <p class="mt-7 max-w-xl text-lg leading-relaxed text-paper-dim">A 60-minute working session is $250. We diagnose the block, apply the system live, and leave with a concrete release plan.</p>
+        <a href={getBookingHref()} {...bookingAttrs} class="mt-7 inline-flex min-h-13 items-center justify-center bg-amber px-7 py-3 font-bold text-white transition-colors hover:bg-amber-dim">Start a project inquiry →</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { track } from "@vercel/analytics";
+    track("Product Fulfillment Landed", { product: "finish-loop", page: window.location.pathname });
+  </script>
+</Base>

@@ -1,0 +1,58 @@
+---
+import { site } from "../data/site";
+import OrbitalPortrait from "./OrbitalPortrait.astro";
+
+const ctaHref = site.booking.intakePath;
+---
+
+<section class="studio-hero" aria-labelledby="studio-hero-title">
+  <div class="studio-shell studio-hero-grid">
+    <div class="studio-hero-copy">
+      <h1 id="studio-hero-title" class="studio-display studio-hero-title">
+        <span>Make the thing</span>
+        <span><strong>they cannot</strong></span>
+        <span>ignore<span class="text-signal">.</span></span>
+      </h1>
+
+      <p class="studio-hero-support">
+        I turn repeated work and ambitious ideas into systems people can use through AI production, coaching, team training, and speaking.
+      </p>
+
+      <div class="studio-actions">
+        <a
+          href="#method"
+          class="studio-button studio-button--primary"
+        >
+          See the method
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+        </a>
+        <a
+          href={ctaHref}
+          class="studio-button studio-button--secondary"
+        >
+          Bring me the problem
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+        </a>
+      </div>
+
+      <p class="studio-proof-line">
+        <span>Working nurse leader</span><i></i><span>3 books</span><i></i><span>50+ albums</span><i></i><span>Deployed AI apps</span>
+      </p>
+    </div>
+
+    <div class="studio-hero-portrait">
+      <OrbitalPortrait eager />
+      <p class="portrait-caption">One operator · Three careers · Finished work</p>
+    </div>
+  </div>
+
+  <div class="production-ticker" aria-label="Keith's workflow loop">
+    <div class="production-ticker-track">
+      {[0, 1].map(() => (
+        <span aria-hidden="true">
+          <b>Workflow loop</b><i>Find friction</i><em>→</em><i>Define done</i><em>→</em><i>Build</i><em>→</em><i>Verify</i><em>→</em><i>Document</i><em>→</em><i>Use again</i><em>→</em>
+        </span>
+      ))}
+    </div>
+  </div>
+</section>

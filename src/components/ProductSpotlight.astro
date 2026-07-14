@@ -1,0 +1,41 @@
+---
+import { finishLoop } from "../data/products";
+---
+
+<section class="border-y border-paper bg-paper text-ink" aria-labelledby="product-spotlight-heading">
+  <div class="mx-auto grid max-w-[1600px] lg:grid-cols-[0.78fr_1.22fr]">
+    <div class="flex flex-col justify-between px-5 py-14 sm:px-8 lg:px-12 lg:py-20 xl:px-16">
+      <div>
+        <p class="eyebrow !text-amber">New · The Finish Loop</p>
+        <h2 id="product-spotlight-heading" class="serif mt-5 max-w-xl text-[clamp(3.8rem,7vw,7rem)] leading-[0.86] tracking-[-0.055em]">
+          Stop collecting drafts<span class="text-signal">.</span>
+        </h2>
+        <p class="serif mt-7 max-w-lg text-xl leading-snug sm:text-2xl">{finishLoop.promise}</p>
+      </div>
+
+      <div class="mt-10 border-t border-ink/30 pt-6">
+        <p><span class="serif text-5xl tracking-[-0.05em]">${finishLoop.price}</span> <span class="eyebrow ml-3 !text-ink/60">One time</span></p>
+        <a href="/finish-loop/" class="mt-5 inline-flex min-h-13 items-center justify-center bg-amber px-7 py-3 font-bold text-white transition-colors hover:bg-amber-dim">
+          See the complete system →
+        </a>
+      </div>
+    </div>
+
+    <a href="/finish-loop/" class="group relative block min-h-[480px] overflow-hidden bg-ink" aria-label="See The Finish Loop">
+      <img
+        src="/media/keith-photo-5.webp"
+        alt="Keith Staggers in a navy suit reviewing a project on his phone"
+        width="1080"
+        height="1080"
+        class="h-full min-h-[480px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+      />
+      <img
+        src="/media/finish-loop/field-manual-cover.webp"
+        alt="The Finish Loop field manual"
+        width="900"
+        height="1165"
+        class="absolute bottom-6 left-6 w-[32%] max-w-[260px] border border-ink/40 shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 sm:bottom-9 sm:left-9"
+      />
+    </a>
+  </div>
+</section>

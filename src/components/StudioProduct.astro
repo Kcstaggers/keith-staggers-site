@@ -1,0 +1,58 @@
+---
+import { finishLoop } from "../data/products";
+---
+
+<section id="finish-loop" class="studio-section studio-product scroll-mt-24" aria-labelledby="studio-product-title">
+  <div class="studio-shell studio-product-grid">
+    <div class="studio-product-copy">
+      <p class="studio-kicker">The Finish Loop</p>
+      <h2 id="studio-product-title" class="studio-display studio-section-title">
+        Ideas are easy.<br /><strong>Finishing</strong> is the edge<span class="text-signal">.</span>
+      </h2>
+      <p class="studio-section-lede">A $49 field system for turning AI-assisted ideas into finished work. Use it when the problem is not more ideas. It is deciding, finishing, and shipping.</p>
+      <ul class="studio-product-benefits">
+        <li>Define what done means before you generate.</li>
+        <li>Separate AI help from human judgment.</li>
+        <li>Use the 30-day calendar and finish scorecard.</li>
+      </ul>
+      <p class="studio-product-price"><b>${finishLoop.price}</b><span>one time</span></p>
+      <a href="/finish-loop/" class="studio-button studio-button--cobalt">
+        See the complete system
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+      </a>
+    </div>
+
+    <div class="studio-product-stage" data-product-stage>
+      <span class="product-path product-path--one" aria-hidden="true"></span>
+      <span class="product-path product-path--two" aria-hidden="true"></span>
+      <a href="/finish-loop/" class="product-manual" data-product-manual aria-label="See The Finish Loop">
+        <img
+          src="/media/finish-loop/field-manual-cover.webp"
+          alt="The Finish Loop field manual"
+          width="900"
+          height="1165"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const stage = document.querySelector<HTMLElement>("[data-product-stage]");
+  const manual = stage?.querySelector<HTMLElement>("[data-product-manual]");
+  if (stage && manual && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    stage.addEventListener("pointermove", (event) => {
+      const rect = stage.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      manual.style.setProperty("--manual-rotate-y", `${x * 7}deg`);
+      manual.style.setProperty("--manual-rotate-x", `${y * -5}deg`);
+    });
+    stage.addEventListener("pointerleave", () => {
+      manual.style.setProperty("--manual-rotate-y", "0deg");
+      manual.style.setProperty("--manual-rotate-x", "0deg");
+    });
+  }
+</script>
