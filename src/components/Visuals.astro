@@ -30,11 +30,11 @@ const slides: Slide[] = [
         </p>
 
         <div class="mt-8 flex items-center gap-5">
-          <button type="button" data-carousel-prev class="size-12 rounded-full border border-amber text-amber hover:bg-amber hover:text-white transition-colors" aria-label="Previous work">
+          <button type="button" data-carousel-prev class="size-12 rounded-full border border-cobalt text-cobalt hover:bg-cobalt hover:text-white transition-colors" aria-label="Previous work">
             <svg viewBox="0 0 24 24" class="size-5 mx-auto" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           </button>
           <span class="font-mono text-[11px] tracking-[0.12em] text-paper-dim"><span data-carousel-index>01</span> / {String(slides.length).padStart(2, "0")}</span>
-          <button type="button" data-carousel-next class="size-12 rounded-full border border-amber text-amber hover:bg-amber hover:text-white transition-colors" aria-label="Next work">
+          <button type="button" data-carousel-next class="size-12 rounded-full border border-cobalt text-cobalt hover:bg-cobalt hover:text-white transition-colors" aria-label="Next work">
             <svg viewBox="0 0 24 24" class="size-5 mx-auto" aria-hidden="true"><path d="m10 6 6 6-6 6M5 12h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           </button>
         </div>
@@ -62,7 +62,7 @@ const slides: Slide[] = [
             <span class="block relative aspect-[3/4] overflow-hidden border border-paper/60 bg-paper">
               <img src={slide.thumb} alt="" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
               {slide.type === "video" && (
-                <span class="absolute left-3 bottom-3 size-10 rounded-full bg-amber text-white flex items-center justify-center">
+                <span class="absolute left-3 bottom-3 size-10 rounded-full bg-cobalt text-white flex items-center justify-center">
                   <svg viewBox="0 0 24 24" class="size-4 fill-current ml-0.5" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
                 </span>
               )}
@@ -70,7 +70,7 @@ const slides: Slide[] = [
             <span class="block mt-3 font-mono text-[9px] tracking-[0.13em] uppercase text-paper-faint">
               {String(index + 1).padStart(2, "0")} · {slide.category}<span class="text-signal ml-2" aria-hidden="true">·</span>
             </span>
-            <span class="block mt-2 serif text-[18px] leading-[1.2] text-paper group-hover:text-amber transition-colors">{slide.title}</span>
+            <span class="block mt-2 serif text-[18px] leading-[1.2] text-paper group-hover:text-cobalt transition-colors">{slide.title}</span>
           </button>
         ))}
       </div>
@@ -80,7 +80,7 @@ const slides: Slide[] = [
 
 <dialog data-media-dialog class="m-auto w-[min(92vw,920px)] max-h-[92vh] bg-ink text-paper border border-paper/30 p-0 backdrop:bg-paper/85">
   <div class="relative">
-    <button type="button" data-media-close class="absolute z-10 right-3 top-3 size-11 rounded-full border border-white/60 bg-paper/90 text-white hover:bg-amber transition-colors" aria-label="Close media viewer">
+    <button type="button" data-media-close class="absolute z-10 right-3 top-3 size-11 rounded-full border border-white/60 bg-paper/90 text-white hover:bg-cobalt transition-colors" aria-label="Close media viewer">
       <svg viewBox="0 0 24 24" class="size-5 mx-auto" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
     </button>
     <video data-media-video controls playsinline preload="metadata" class="hidden w-full max-h-[78vh] bg-black"></video>

@@ -8,9 +8,9 @@ const ctaHref = site.booking.enabled
 
 const dotColor =
   site.availability.status === "open"
-    ? "bg-amber"
+    ? "bg-cobalt"
     : site.availability.status === "limited"
-      ? "bg-amber/60"
+      ? "bg-cobalt/60"
       : "bg-paper-faint";
 
 const pulseClass = site.availability.status === "open" ? "animate-pulse" : "";
@@ -37,7 +37,7 @@ const pulseClass = site.availability.status === "open" ? "animate-pulse" : "";
         </span>
       </span>
       <span class="h-4 w-px bg-rule"></span>
-      <span class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-amber group-hover:text-paper transition-colors">
+      <span class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt group-hover:text-paper transition-colors">
         Hire me
         <span aria-hidden="true">→</span>
       </span>

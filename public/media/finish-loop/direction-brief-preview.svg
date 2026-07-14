@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Direction brief library preview</title>
+  <desc id="desc">A structured outcome brief with success, constraints, references, and hard stop fields.</desc>
+  <rect width="900" height="1200" fill="#050608"/>
+  <rect x="54" y="54" width="792" height="1092" fill="#0d1016" stroke="#282c36" stroke-width="3"/>
+  <rect x="54" y="54" width="14" height="1092" fill="#ff604d"/>
+  <text x="112" y="126" fill="#2851ff" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="5">DIRECTION BRIEF 01 / 08</text>
+  <text x="112" y="214" fill="#f4f6fb" font-family="Georgia, serif" font-size="70" font-weight="700">Define it</text>
+  <text x="112" y="280" fill="#f4f6fb" font-family="Georgia, serif" font-size="70" font-weight="700">before AI does.</text>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="112" y="372" fill="#ff604d" font-size="19" font-weight="700" letter-spacing="4">OUTCOME</text>
+    <text x="112" y="414" fill="#f4f6fb" font-size="25">Create [deliverable] for [person]</text>
+    <text x="112" y="448" fill="#a8abb7" font-size="22">so they can [use or change].</text>
+    <line x1="112" y1="484" x2="790" y2="484" stroke="#282c36" stroke-width="2"/>
+
+    <text x="112" y="544" fill="#2851ff" font-size="19" font-weight="700" letter-spacing="4">SUCCESS</text>
+    <text x="112" y="586" fill="#f4f6fb" font-size="25">Feel: [clear] [specific] [useful]</text>
+    <text x="112" y="620" fill="#a8abb7" font-size="22">Next action: [one action].</text>
+    <line x1="112" y1="656" x2="790" y2="656" stroke="#282c36" stroke-width="2"/>
+
+    <text x="112" y="716" fill="#7139ff" font-size="19" font-weight="700" letter-spacing="4">MUST INCLUDE</text>
+    <rect x="112" y="744" width="292" height="54" fill="none" stroke="#727786" stroke-width="2"/>
+    <text x="136" y="779" fill="#f4f6fb" font-size="21">facts + proof</text>
+    <rect x="420" y="744" width="292" height="54" fill="none" stroke="#727786" stroke-width="2"/>
+    <text x="444" y="779" fill="#f4f6fb" font-size="21">format + constraints</text>
+
+    <text x="112" y="870" fill="#ff604d" font-size="19" font-weight="700" letter-spacing="4">MUST AVOID</text>
+    <text x="112" y="912" fill="#f4f6fb" font-size="25">Clichés · invented facts · filler</text>
+    <line x1="112" y1="950" x2="790" y2="950" stroke="#282c36" stroke-width="2"/>
+
+    <text x="112" y="1010" fill="#2851ff" font-size="19" font-weight="700" letter-spacing="4">HARD STOP</text>
+    <text x="112" y="1052" fill="#f4f6fb" font-size="25">Format: [ ]  Ship date: [ ]</text>
+  </g>
+  <circle cx="776" cy="1100" r="27" fill="#ff604d"/>
+  <path d="M764 1100l9 9 17-20" fill="none" stroke="#050608" stroke-width="6" stroke-linecap="square"/>
+</svg>

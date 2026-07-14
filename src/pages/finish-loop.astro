@@ -5,6 +5,20 @@ import { getBookingHref, getCalAttrs } from "../utils/booking";
 
 const bookingAttrs = getCalAttrs();
 const checkoutReady = Boolean(finishLoop.checkoutUrl);
+const inclusionPreviews = [
+  "/media/finish-loop/field-manual-cover.webp",
+  "/media/finish-loop/planner-preview.webp",
+  "/media/finish-loop/shipping-calendar-preview.svg",
+  "/media/finish-loop/direction-brief-preview.svg",
+  "/media/finish-loop/finish-scorecard-preview.svg",
+];
+const inclusionAlt = [
+  "The Finish Loop field manual cover",
+  "The Finish Loop offline interactive planner preview",
+  "The 30-day shipping calendar release rhythm",
+  "A reusable direction brief with outcome, success, constraints, and hard stop fields",
+  "The editable Finish scorecard with production readiness gates",
+];
 const productJsonLd = {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -30,11 +44,11 @@ const productJsonLd = {
   <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
 
   <section class="border-b border-paper bg-ink" aria-labelledby="finish-loop-title">
-    <div class="mx-auto grid max-w-[1600px] lg:grid-cols-[0.82fr_1.18fr]">
-      <div class="flex min-h-[670px] flex-col justify-between border-paper px-5 py-12 sm:px-8 lg:border-r lg:px-12 lg:py-16 xl:px-16">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
+      <div class="flex min-h-[670px] min-w-0 flex-col justify-between border-paper px-5 py-12 sm:px-8 lg:border-r lg:px-12 lg:py-16 xl:px-16">
         <div>
-          <p class="eyebrow !text-amber">The Finish Loop</p>
-          <h1 id="finish-loop-title" class="serif mt-6 max-w-[720px] text-[clamp(4rem,8vw,8.8rem)] leading-[0.83] tracking-[-0.065em]">
+          <p class="eyebrow !text-cobalt">The Finish Loop</p>
+          <h1 id="finish-loop-title" class="serif mt-6 max-w-[720px] text-[clamp(3rem,12.5vw,8.8rem)] leading-[0.83] tracking-[-0.065em] sm:text-[clamp(4rem,8vw,8.8rem)]">
             Finish the work.<br />Ship the thing<span class="text-signal">.</span>
           </h1>
           <p class="serif mt-9 max-w-xl text-xl leading-snug sm:text-2xl">{finishLoop.description}</p>
@@ -49,7 +63,7 @@ const productJsonLd = {
             <a
               href={finishLoop.checkoutUrl}
               data-product-purchase={finishLoop.slug}
-              class="mt-5 inline-flex min-h-13 items-center justify-center bg-amber px-7 py-3 font-bold text-white transition-colors hover:bg-amber-dim"
+              class="mt-5 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim"
             >
               Get The Finish Loop →
             </a>
@@ -62,7 +76,7 @@ const productJsonLd = {
         </div>
       </div>
 
-      <div class="relative min-h-[560px] overflow-hidden bg-paper">
+      <div class="relative min-h-[560px] min-w-0 overflow-hidden bg-paper">
         <img
           src="/media/keith-photo-5.webp"
           alt="Keith Staggers in a navy suit reviewing a project on his phone"
@@ -96,16 +110,16 @@ const productJsonLd = {
 
   <section class="border-b border-paper bg-paper text-ink" aria-labelledby="loop-heading">
     <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24 xl:px-16">
-      <div class="grid gap-10 lg:grid-cols-[0.62fr_1.38fr] lg:gap-16">
+      <div class="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)] lg:gap-16">
         <div>
-          <p class="eyebrow !text-amber">The six-step loop</p>
-          <h2 id="loop-heading" class="serif mt-5 max-w-lg text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">
+          <p class="eyebrow !text-cobalt">The six-step loop</p>
+          <h2 id="loop-heading" class="serif mt-5 max-w-lg text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
             A repeatable system. Built for solo creators.
           </h2>
           <p class="mt-7 max-w-md text-lg leading-relaxed text-ink/70">{finishLoop.promise}</p>
         </div>
 
-        <ol class="grid border-l border-t border-ink/30 sm:grid-cols-2 xl:grid-cols-3">
+        <ol class="grid grid-cols-[minmax(0,1fr)] border-l border-t border-ink/30 sm:grid-cols-2 xl:grid-cols-3">
           {finishLoop.steps.map((step) => (
             <li class="min-h-56 border-b border-r border-ink/30 p-6">
               <p class="serif text-6xl leading-none tracking-[-0.05em]">{step.num}</p>
@@ -118,30 +132,30 @@ const productJsonLd = {
     </div>
   </section>
 
-  <section class="border-b border-rule" aria-labelledby="includes-heading">
+  <section id="included" class="border-b border-rule scroll-mt-20" aria-labelledby="includes-heading">
     <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24 xl:px-16">
-      <div class="grid gap-12 lg:grid-cols-[0.55fr_1.45fr] lg:gap-16">
+      <div class="grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,1.45fr)] lg:gap-16">
         <div>
-          <p class="eyebrow !text-amber">What you get</p>
-          <h2 id="includes-heading" class="serif mt-5 max-w-md text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">
+          <p class="eyebrow !text-cobalt">What you get</p>
+          <h2 id="includes-heading" class="serif mt-5 max-w-md text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
             Everything you need to finish and ship.
           </h2>
         </div>
-        <div class="grid border-l border-t border-rule sm:grid-cols-2 xl:grid-cols-5">
+        <div class="grid min-w-0 grid-cols-[minmax(0,1fr)] border-l border-t border-rule sm:grid-cols-2 xl:grid-cols-5">
           {finishLoop.includes.map((item, index) => (
             <article class="border-b border-r border-rule p-5">
-              <p class="eyebrow !text-amber">0{index + 1}</p>
-              {index === 0 && (
-                <img src="/media/finish-loop/field-manual-cover.webp" alt="" width="900" height="1165" class="mt-5 aspect-[3/4] w-full object-cover" />
-              )}
-              {index === 1 && (
-                <img src="/media/finish-loop/planner-preview.webp" alt="" width="1280" height="900" class="mt-5 aspect-[3/4] w-full object-cover object-left" />
-              )}
-              {index > 1 && (
-                <div class="mt-5 flex aspect-[3/4] items-center justify-center border border-rule bg-paper/40 p-5 text-center">
-                  <span class="serif text-6xl text-paper-faint">0{index + 1}</span>
-                </div>
-              )}
+              <p class="eyebrow !text-cobalt">0{index + 1}</p>
+              <img
+                src={inclusionPreviews[index]}
+                alt={inclusionAlt[index]}
+                width="900"
+                height="1200"
+                loading="lazy"
+                class:list={[
+                  "mt-5 aspect-[3/4] w-full border border-rule object-cover",
+                  index === 1 && "object-left",
+                ]}
+              />
               <h3 class="serif mt-5 text-2xl leading-tight">{item.name}</h3>
               <p class="mt-3 text-sm leading-relaxed text-paper-dim">{item.detail}</p>
             </article>
@@ -152,10 +166,10 @@ const productJsonLd = {
   </section>
 
   <section class="border-b border-paper bg-paper text-ink" aria-labelledby="planner-heading">
-    <div class="mx-auto grid max-w-[1600px] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[0.62fr_1.38fr] lg:px-12 lg:py-24 xl:px-16">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)] lg:px-12 lg:py-24 xl:px-16">
       <div class="lg:pr-10">
-        <p class="eyebrow !text-amber">Plan it. Run it. Finish it.</p>
-        <h2 id="planner-heading" class="serif mt-5 text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">
+        <p class="eyebrow !text-cobalt">Plan it. Run it. Finish it.</p>
+        <h2 id="planner-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
           The planner keeps you moving without the noise.
         </h2>
         <p class="mt-7 max-w-md text-lg leading-relaxed text-ink/70">
@@ -181,18 +195,18 @@ const productJsonLd = {
   </section>
 
   <section class="border-b border-rule" aria-labelledby="fit-heading">
-    <div class="mx-auto grid max-w-[1600px] lg:grid-cols-2">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-2">
       <div class="border-rule px-5 py-16 sm:px-8 lg:border-r lg:px-12 lg:py-24 xl:px-16">
-        <p class="eyebrow !text-amber">This is for you if</p>
-        <h2 id="fit-heading" class="serif mt-5 text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">You are serious about finishing.</h2>
+        <p class="eyebrow !text-cobalt">This is for you if</p>
+        <h2 id="fit-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">You are serious about finishing.</h2>
         <ul class="mt-9 border-t border-rule">
           {finishLoop.fit.map((item) => <li class="border-b border-rule py-5 text-lg">{item}</li>)}
         </ul>
       </div>
       <div class="px-5 py-16 sm:px-8 lg:px-12 lg:py-24 xl:px-16">
-        <p class="eyebrow !text-amber">About Keith Staggers</p>
-        <h2 class="serif mt-5 text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">Creator. Director. Builder.</h2>
-        <div class="mt-9 grid gap-7 sm:grid-cols-[180px_1fr]">
+        <p class="eyebrow !text-cobalt">About Keith Staggers</p>
+        <h2 class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">Creator. Director. Builder.</h2>
+        <div class="mt-9 grid grid-cols-[minmax(0,1fr)] gap-7 sm:grid-cols-[180px_minmax(0,1fr)]">
           <img src="/media/keith-hero.webp" alt="Keith Staggers" width="1400" height="1400" class="aspect-square w-full object-cover" />
           <div class="space-y-5 text-lg leading-relaxed text-paper-dim">
             <p>I spent decades making decisions where details mattered, first as a detective, then as a nurse. Now I use the same discipline to build music, books, films, and visual work with AI.</p>
@@ -204,16 +218,16 @@ const productJsonLd = {
   </section>
 
   <section class="border-b border-paper bg-paper text-ink" aria-labelledby="coaching-heading">
-    <div class="mx-auto grid max-w-[1600px] lg:grid-cols-[0.7fr_1fr_0.7fr]">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,0.7fr)]">
       <img src="/media/keith-neon-violet.webp" alt="Keith Staggers in a violet studio portrait" width="1200" height="1200" class="h-full min-h-80 w-full object-cover" />
       <div class="border-ink/30 px-5 py-14 sm:px-8 lg:border-r lg:px-12">
-        <p class="eyebrow !text-amber">Work with Keith</p>
-        <h2 id="coaching-heading" class="serif mt-5 text-5xl leading-[0.94] tracking-[-0.045em]">60-minute working session</h2>
+        <p class="eyebrow !text-cobalt">Work with Keith</p>
+        <h2 id="coaching-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-5xl">60-minute working session</h2>
         <p class="mt-6 text-lg leading-relaxed text-ink/70">Bring the real project. We find the block, apply the system live, and leave with a concrete next move.</p>
       </div>
       <div class="flex flex-col justify-center px-5 py-14 sm:px-8 lg:px-12">
         <p><span class="serif text-6xl tracking-[-0.05em]">$250</span> <span class="eyebrow ml-3 !text-ink/60">One-time session</span></p>
-        <a href={getBookingHref()} {...bookingAttrs} class="mt-6 inline-flex min-h-13 items-center justify-center bg-amber px-7 py-3 font-bold text-white transition-colors hover:bg-amber-dim">
+        <a href={getBookingHref()} {...bookingAttrs} class="mt-6 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim">
           Start a project inquiry →
         </a>
       </div>
@@ -222,8 +236,8 @@ const productJsonLd = {
 
   <section class="border-b border-rule" aria-labelledby="faq-heading">
     <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24 xl:px-16">
-      <p class="eyebrow !text-amber">FAQ</p>
-      <h2 id="faq-heading" class="serif mt-5 text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">Before you buy.</h2>
+      <p class="eyebrow !text-cobalt">FAQ</p>
+      <h2 id="faq-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">Before you buy.</h2>
       <div class="mt-10 grid border-l border-t border-rule md:grid-cols-2 xl:grid-cols-5">
         {finishLoop.faqs.map((item) => (
           <details class="group border-b border-r border-rule p-5" open>
@@ -236,16 +250,16 @@ const productJsonLd = {
   </section>
 
   <section id="buy" class="bg-paper text-ink" aria-labelledby="buy-heading">
-    <div class="mx-auto grid max-w-[1600px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-end lg:px-12 lg:py-28 xl:px-16">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:px-12 lg:py-28 xl:px-16">
       <div>
-        <p class="eyebrow !text-amber">The Finish Loop</p>
+        <p class="eyebrow !text-cobalt">The Finish Loop</p>
         <h2 id="buy-heading" class="serif mt-5 max-w-4xl text-[clamp(4rem,9vw,8rem)] leading-[0.84] tracking-[-0.055em]">Finish it<span class="text-signal">.</span></h2>
         <p class="mt-7 max-w-2xl text-xl leading-relaxed text-ink/70">Get the manual, planner, calendar, briefs, and scorecard. One payment. Immediate delivery.</p>
       </div>
       <div class="min-w-72 border-t border-ink pt-6 lg:text-right">
         <p class="serif text-6xl tracking-[-0.05em]">${finishLoop.price}</p>
         {checkoutReady ? (
-          <a href={finishLoop.checkoutUrl} data-product-purchase={finishLoop.slug} class="mt-5 inline-flex min-h-13 items-center justify-center bg-amber px-7 py-3 font-bold text-white transition-colors hover:bg-amber-dim">
+          <a href={finishLoop.checkoutUrl} data-product-purchase={finishLoop.slug} class="mt-5 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim">
             Get The Finish Loop →
           </a>
         ) : (

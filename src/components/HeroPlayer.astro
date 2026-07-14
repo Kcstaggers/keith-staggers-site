@@ -13,7 +13,7 @@ import { tracks } from "../data/tracks";
         type="button"
         data-hp-toggle
         aria-label="Play preview"
-        class="size-12 shrink-0 rounded-full border border-amber text-amber flex items-center justify-center hover:bg-amber hover:text-ink transition-colors"
+        class="size-12 shrink-0 rounded-full border border-cobalt text-cobalt flex items-center justify-center hover:bg-cobalt hover:text-ink transition-colors"
       >
         <svg data-hp-icon-play viewBox="0 0 16 16" class="size-4 fill-current ml-0.5" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
         <svg data-hp-icon-pause viewBox="0 0 16 16" class="size-4 fill-current hidden" aria-hidden="true"><path d="M3 2h3.5v12H3zM9.5 2H13v12H9.5z"/></svg>
@@ -22,7 +22,7 @@ import { tracks } from "../data/tracks";
         <p class="font-mono text-[9px] tracking-[0.2em] uppercase text-paper-faint mb-1">Now playing · 30-second preview</p>
         <p class="serif text-[17px] text-paper truncate" data-hp-title>{tracks[0].title}</p>
         <div class="mt-3 h-px bg-rule relative overflow-visible">
-          <div class="absolute inset-y-0 left-0 bg-amber h-px w-0 transition-[width] duration-200 ease-linear" data-hp-bar></div>
+          <div class="absolute inset-y-0 left-0 bg-cobalt h-px w-0 transition-[width] duration-200 ease-linear" data-hp-bar></div>
         </div>
       </div>
       {tracks.length > 1 && (
@@ -30,7 +30,7 @@ import { tracks } from "../data/tracks";
           type="button"
           data-hp-next
           aria-label="Next track"
-          class="shrink-0 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint hover:text-amber transition-colors"
+          class="shrink-0 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint hover:text-cobalt transition-colors"
         >
           Next →
         </button>

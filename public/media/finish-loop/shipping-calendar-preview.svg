@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">30-day shipping calendar preview</title>
+  <desc id="desc">Four-week release rhythm showing close, repeat, series, and asset stages.</desc>
+  <rect width="900" height="1200" fill="#f4f6fb"/>
+  <rect width="900" height="18" fill="#2851ff"/>
+  <text x="72" y="108" fill="#050608" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="5">THE FINISH LOOP</text>
+  <text x="72" y="195" fill="#050608" font-family="Georgia, serif" font-size="78" font-weight="700">30 days.</text>
+  <text x="72" y="270" fill="#050608" font-family="Georgia, serif" font-size="78" font-weight="700">One rhythm.</text>
+  <text x="72" y="320" fill="#727786" font-family="Inter, Arial, sans-serif" font-size="24">Finish, release, learn, repeat.</text>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <rect x="72" y="388" width="756" height="150" fill="#050608"/>
+    <text x="104" y="430" fill="#ff604d" font-size="20" font-weight="700" letter-spacing="4">WEEK 01</text>
+    <text x="104" y="480" fill="#f4f6fb" font-size="34" font-weight="700">Close one loop</text>
+    <text x="104" y="516" fill="#a8abb7" font-size="20">Outcome · Test · Finish · Release</text>
+
+    <rect x="72" y="554" width="756" height="150" fill="#10131a"/>
+    <text x="104" y="596" fill="#2851ff" font-size="20" font-weight="700" letter-spacing="4">WEEK 02</text>
+    <text x="104" y="646" fill="#f4f6fb" font-size="34" font-weight="700">Make it repeatable</text>
+    <text x="104" y="682" fill="#a8abb7" font-size="20">Remove friction · Build the checklist</text>
+
+    <rect x="72" y="720" width="756" height="150" fill="#050608"/>
+    <text x="104" y="762" fill="#7139ff" font-size="20" font-weight="700" letter-spacing="4">WEEK 03</text>
+    <text x="104" y="812" fill="#f4f6fb" font-size="34" font-weight="700">Build a small series</text>
+    <text x="104" y="848" fill="#a8abb7" font-size="20">One audience · One format · Three pieces</text>
+
+    <rect x="72" y="886" width="756" height="150" fill="#10131a"/>
+    <text x="104" y="928" fill="#ff604d" font-size="20" font-weight="700" letter-spacing="4">WEEK 04</text>
+    <text x="104" y="978" fill="#f4f6fb" font-size="34" font-weight="700">Turn output into an asset</text>
+    <text x="104" y="1014" fill="#a8abb7" font-size="20">Package · Post · Invite one action</text>
+  </g>
+
+  <line x1="72" y1="1080" x2="828" y2="1080" stroke="#282c36" stroke-width="2"/>
+  <text x="72" y="1128" fill="#050608" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">DAY 30</text>
+  <text x="230" y="1128" fill="#2851ff" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">COUNT WHAT SHIPPED →</text>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Finish scorecard preview</title>
+  <desc id="desc">An editable production readiness scorecard covering outcome, truth, craft, format, and release.</desc>
+  <rect width="900" height="1200" fill="#f4f6fb"/>
+  <rect width="900" height="18" fill="#ff604d"/>
+  <text x="64" y="108" fill="#2851ff" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="5">FINISH GATE · EDITABLE CSV</text>
+  <text x="64" y="200" fill="#050608" font-family="Georgia, serif" font-size="76" font-weight="700">Ready to</text>
+  <text x="64" y="276" fill="#050608" font-family="Georgia, serif" font-size="76" font-weight="700">release?</text>
+  <text x="64" y="326" fill="#727786" font-family="Inter, Arial, sans-serif" font-size="23">Score each gate 0–2. Fix failed essentials.</text>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <rect x="64" y="386" width="772" height="74" fill="#050608"/>
+    <text x="92" y="432" fill="#f4f6fb" font-size="20" font-weight="700" letter-spacing="3">GATE</text>
+    <text x="665" y="432" fill="#f4f6fb" font-size="20" font-weight="700" letter-spacing="3">SCORE</text>
+
+    <g font-size="26" fill="#050608" font-weight="700">
+      <text x="92" y="524">Outcome</text>
+      <text x="92" y="636">Truth</text>
+      <text x="92" y="748">Craft</text>
+      <text x="92" y="860">Format</text>
+      <text x="92" y="972">Release</text>
+    </g>
+    <g font-size="18" fill="#727786">
+      <text x="92" y="558">Clear purpose + person</text>
+      <text x="92" y="670">Facts, links, permissions</text>
+      <text x="92" y="782">Most visible defect fixed</text>
+      <text x="92" y="894">Works in the real destination</text>
+      <text x="92" y="1006">Named, linked, scheduled</text>
+    </g>
+    <g fill="none" stroke="#282c36" stroke-width="2">
+      <line x1="64" y1="572" x2="836" y2="572"/>
+      <line x1="64" y1="684" x2="836" y2="684"/>
+      <line x1="64" y1="796" x2="836" y2="796"/>
+      <line x1="64" y1="908" x2="836" y2="908"/>
+      <line x1="64" y1="1020" x2="836" y2="1020"/>
+    </g>
+    <g font-size="22" font-weight="700" text-anchor="middle">
+      <g fill="#2851ff"><circle cx="735" cy="524" r="34"/><circle cx="735" cy="636" r="34"/><circle cx="735" cy="748" r="34"/><circle cx="735" cy="860" r="34"/><circle cx="735" cy="972" r="34"/></g>
+      <g fill="#f4f6fb"><text x="735" y="532">2</text><text x="735" y="644">2</text><text x="735" y="756">2</text><text x="735" y="868">2</text><text x="735" y="980">2</text></g>
+    </g>
+  </g>
+
+  <rect x="64" y="1060" width="772" height="82" fill="#050608"/>
+  <text x="92" y="1112" fill="#f4f6fb" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">10 / 10</text>
+  <text x="260" y="1112" fill="#ff604d" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">SHIP IT →</text>
+</svg>
