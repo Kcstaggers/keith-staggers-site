@@ -83,7 +83,7 @@ src/
 │   ├── books.ts               # 3 books with Amazon URL + blurbs
 │   ├── services.ts            # 4 services with pricing
 │   ├── notes.ts               # 3 Studio Notes with body copy and related offers
-│   └── testimonials.ts        # 3 testimonials (Kevin Lazar, Kristen Smith, Alex Rivera)
+│   └── testimonials.ts        # Empty by design; real testimonials only, with written permission
 ├── utils/booking.ts            # Compatibility helpers that now return the project-fit path
 └── styles/global.css           # Tailwind v4 @theme — colors, fonts, custom utilities
 public/
