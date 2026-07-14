@@ -7,7 +7,7 @@ const bookingAttrs = getCalAttrs();
 const checkoutReady = Boolean(finishLoop.checkoutUrl);
 const inclusionPreviews = [
   "/media/finish-loop/field-manual-cover.webp",
-  "/media/finish-loop/planner-preview.webp",
+  "/media/finish-loop/planner-card-preview.png",
   "/media/finish-loop/shipping-calendar-preview.svg",
   "/media/finish-loop/direction-brief-preview.svg",
   "/media/finish-loop/finish-scorecard-preview.svg",
@@ -151,10 +151,7 @@ const productJsonLd = {
                 width="900"
                 height="1200"
                 loading="lazy"
-                class:list={[
-                  "mt-5 aspect-[3/4] w-full border border-rule object-cover",
-                  index === 1 && "object-left",
-                ]}
+                class="mt-5 aspect-[3/4] w-full border border-rule object-cover"
               />
               <h3 class="serif mt-5 text-2xl leading-tight">{item.name}</h3>
               <p class="mt-3 text-sm leading-relaxed text-paper-dim">{item.detail}</p>
