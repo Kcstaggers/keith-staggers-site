@@ -14,7 +14,7 @@ The current production site uses the near-black AI studio experience built aroun
 
 ## Tech stack
 
-- **Astro 5** (static site generation, TypeScript strict)
+- **Astro 7** (static site generation, TypeScript strict; Node 24.x pinned for Vercel)
 - **Tailwind v4** via `@tailwindcss/vite` — config lives in `src/styles/global.css` using `@theme` (no `tailwind.config.js`)
 - **Fontsource variable fonts**: Fraunces (serif), Inter (sans)
 - **Project-fit qualification page** before any private booking link is shared
@@ -193,6 +193,7 @@ A scheduled task is set for **Aug 15, 2026** to start a Canva → Cloudflare tra
 - **Sandbox mount can't delete files** in Keith's Desktop folder. `rm -rf .git` etc. will fail. Build in `/tmp/kss-verify` and copy back, or have Keith run destructive commands in his Terminal.
 - **Spotify iframes can't autoplay.** That's a browser policy, not a bug. The featured album section uses a tall embed (height=400) so the play button is visible.
 - **Vercel auto-detects Astro** — no `vercel.json` needed. Don't add one unless you need to override.
+- **Keep `compressHTML: true` in `astro.config.mjs`.** Astro 7 defaults to JSX whitespace compression, which removes visible spaces between split text nodes across this site.
 - **GitHub repo is public.** Don't commit secrets, API keys, .env files, or anything you wouldn't want on someone's homepage. The .gitignore covers the usual suspects.
 
 ## Current design handoff: AI creator studio homepage
@@ -314,11 +315,11 @@ The new media is supporting material. The business offer and conversion path rem
 
 Do not replace the test checkout URL with a live checkout URL until Lemon Squeezy approves the store and the live product is configured and verified.
 
-Last build verification in `/tmp/kss-verify`:
+Latest build verification in the isolated `/tmp/kss-astro7-upgrade` worktree:
 
-- `npx astro check`: zero errors, zero warnings, three existing hints
-- `npm run build`: passed, ten static pages
-- The install reported eight dependency vulnerabilities: one low, five moderate, two high. They were not introduced by the checkout change. Do not run `npm audit fix --force`.
+- `npx astro check`: zero errors, zero warnings, five existing hints
+- `npm run build`: passed, 11 static pages
+- The July 14 Astro 7 upgrade cleared the previous eight dependency advisories without using a forced audit fix. A clean `npm ci` and `npm audit` now report zero vulnerabilities.
 
 ### Lemon Squeezy state
 
