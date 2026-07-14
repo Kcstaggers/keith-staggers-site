@@ -37,33 +37,33 @@ const productJsonLd = {
 ---
 
 <Base
-  title="The Finish Loop · AI Field System"
+  title="The Finish Loop · Creator Operating System"
   description={finishLoop.description}
   ogImage="/media/finish-loop/finish-loop-og.png"
 >
   <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
 
   <section class="border-b border-paper bg-ink" aria-labelledby="finish-loop-title">
-    <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
       <div class="flex min-h-[670px] min-w-0 flex-col justify-between border-paper px-5 py-12 sm:px-8 lg:border-r lg:px-12 lg:py-16 xl:px-16">
         <div>
           <p class="eyebrow !text-cobalt">The Finish Loop</p>
-          <h1 id="finish-loop-title" class="studio-display mt-6 max-w-[720px] text-[clamp(3rem,10vw,7.2rem)] leading-[0.84] tracking-[-0.065em] sm:text-[clamp(4rem,8.5vw,7.2rem)]">
-            Finish the work.<br />Ship the thing.
+          <h1 id="finish-loop-title" class="serif mt-6 max-w-[720px] text-[clamp(3rem,12.5vw,8.8rem)] leading-[0.83] tracking-[-0.065em] sm:text-[clamp(4rem,8vw,8.8rem)]">
+            Finish the work.<br />Ship the thing<span class="text-signal">.</span>
           </h1>
-          <p class="mt-9 max-w-xl text-xl leading-relaxed text-paper-dim sm:text-2xl">{finishLoop.description}</p>
+          <p class="serif mt-9 max-w-xl text-xl leading-snug sm:text-2xl">{finishLoop.description}</p>
         </div>
 
         <div class="mt-12 border-t border-paper pt-7">
           <div class="flex flex-wrap items-end gap-x-5 gap-y-2">
-            <span class="studio-display text-6xl tracking-[-0.05em]">${finishLoop.price}</span>
+            <span class="serif text-6xl tracking-[-0.05em]">${finishLoop.price}</span>
             <span class="eyebrow pb-2 !text-paper-dim">One-time access · no subscription</span>
           </div>
           {checkoutReady ? (
             <a
               href={finishLoop.checkoutUrl}
               data-product-purchase={finishLoop.slug}
-              class="mt-5 inline-flex min-h-13 items-center justify-center bg-signal px-7 py-3 font-bold text-ink transition-colors hover:bg-paper"
+              class="mt-5 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim"
             >
               Get The Finish Loop →
             </a>
@@ -76,20 +76,15 @@ const productJsonLd = {
         </div>
       </div>
 
-      <div class="grid min-h-[560px] min-w-0 gap-8 overflow-hidden bg-[#090b10] p-5 sm:grid-cols-[minmax(0,0.8fr)_minmax(240px,1.2fr)] sm:items-center sm:p-8 lg:p-10">
-        <div>
-          <p class="eyebrow !text-paper-dim">The six-step system</p>
-          <ol class="mt-6 border-t border-rule">
-            {finishLoop.steps.map((step, index) => (
-              <li class="grid grid-cols-[44px_1fr] items-center gap-3 border-b border-rule py-4">
-                <span class:list={["font-mono text-xs font-bold", index < 3 ? "text-cobalt" : "text-[#7139ff]"]}>{step.num}</span>
-                <span class="font-bold text-paper">{step.name}</span>
-              </li>
-            ))}
-          </ol>
-          <p class="mt-6 text-sm leading-relaxed text-paper-dim">Build the workflow. Keep the judgment.</p>
-        </div>
-        <div class="border border-rule bg-ink p-3 shadow-2xl sm:p-4">
+      <div class="relative min-h-[560px] min-w-0 overflow-hidden bg-paper">
+        <img
+          src="/media/keith-photo-5.webp"
+          alt="Keith Staggers in a navy suit reviewing a project on his phone"
+          width="1080"
+          height="1080"
+          class="h-full min-h-[560px] w-full object-cover object-center"
+        />
+        <div class="absolute bottom-5 left-5 w-[42%] max-w-[330px] border border-rule bg-paper p-3 shadow-xl sm:bottom-8 sm:left-8 sm:p-4">
           <img
             src="/media/finish-loop/field-manual-cover.webp"
             alt="The Finish Loop field manual cover"
@@ -106,7 +101,7 @@ const productJsonLd = {
     <div class="mx-auto grid max-w-[1600px] grid-cols-3 divide-x divide-rule">
       {finishLoop.proof.map((item) => (
         <div class="px-3 py-9 text-center sm:px-8 sm:py-12">
-          <p class="studio-display text-[clamp(2.4rem,6vw,5.5rem)] leading-none tracking-[-0.05em]">{item.value}</p>
+          <p class="serif text-[clamp(2.4rem,6vw,5.5rem)] leading-none tracking-[-0.05em]">{item.value}</p>
           <p class="mt-2 text-xs text-paper-dim sm:text-base">{item.label}</p>
         </div>
       ))}
@@ -118,7 +113,7 @@ const productJsonLd = {
       <div class="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)] lg:gap-16">
         <div>
           <p class="eyebrow !text-cobalt">The six-step loop</p>
-          <h2 id="loop-heading" class="studio-display mt-5 max-w-lg text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
+          <h2 id="loop-heading" class="serif mt-5 max-w-lg text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
             A repeatable system. Built for solo creators.
           </h2>
           <p class="mt-7 max-w-md text-lg leading-relaxed text-ink/70">{finishLoop.promise}</p>
@@ -127,8 +122,8 @@ const productJsonLd = {
         <ol class="grid grid-cols-[minmax(0,1fr)] border-l border-t border-ink/30 sm:grid-cols-2 xl:grid-cols-3">
           {finishLoop.steps.map((step) => (
             <li class="min-h-56 border-b border-r border-ink/30 p-6">
-              <p class="studio-display text-6xl leading-none tracking-[-0.05em]">{step.num}</p>
-              <h3 class="studio-display mt-4 text-3xl">{step.name}</h3>
+              <p class="serif text-6xl leading-none tracking-[-0.05em]">{step.num}</p>
+              <h3 class:list={["serif mt-4 text-3xl", step.name === "Release" && "text-signal"]}>{step.name}</h3>
               <p class="mt-4 leading-relaxed text-ink/70">{step.detail}</p>
             </li>
           ))}
@@ -142,7 +137,7 @@ const productJsonLd = {
       <div class="grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,1.45fr)] lg:gap-16">
         <div>
           <p class="eyebrow !text-cobalt">What you get</p>
-          <h2 id="includes-heading" class="studio-display mt-5 max-w-md text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
+          <h2 id="includes-heading" class="serif mt-5 max-w-md text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
             Everything you need to finish and ship.
           </h2>
         </div>
@@ -158,7 +153,7 @@ const productJsonLd = {
                 loading="lazy"
                 class="mt-5 aspect-[3/4] w-full border border-rule object-cover"
               />
-              <h3 class="studio-display mt-5 text-2xl leading-tight">{item.name}</h3>
+              <h3 class="serif mt-5 text-2xl leading-tight">{item.name}</h3>
               <p class="mt-3 text-sm leading-relaxed text-paper-dim">{item.detail}</p>
             </article>
           ))}
@@ -171,7 +166,7 @@ const productJsonLd = {
     <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)] lg:px-12 lg:py-24 xl:px-16">
       <div class="lg:pr-10">
         <p class="eyebrow !text-cobalt">Plan it. Run it. Finish it.</p>
-        <h2 id="planner-heading" class="studio-display mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
+        <h2 id="planner-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
           The planner keeps you moving without the noise.
         </h2>
         <p class="mt-7 max-w-md text-lg leading-relaxed text-ink/70">
@@ -200,16 +195,16 @@ const productJsonLd = {
     <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-2">
       <div class="border-rule px-5 py-16 sm:px-8 lg:border-r lg:px-12 lg:py-24 xl:px-16">
         <p class="eyebrow !text-cobalt">This is for you if</p>
-        <h2 id="fit-heading" class="studio-display mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">You are serious about finishing.</h2>
+        <h2 id="fit-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">You are serious about finishing.</h2>
         <ul class="mt-9 border-t border-rule">
           {finishLoop.fit.map((item) => <li class="border-b border-rule py-5 text-lg">{item}</li>)}
         </ul>
       </div>
       <div class="px-5 py-16 sm:px-8 lg:px-12 lg:py-24 xl:px-16">
         <p class="eyebrow !text-cobalt">About Keith Staggers</p>
-        <h2 class="studio-display mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">Creator. Director. Builder.</h2>
+        <h2 class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">Creator. Director. Builder.</h2>
         <div class="mt-9 grid grid-cols-[minmax(0,1fr)] gap-7 sm:grid-cols-[180px_minmax(0,1fr)]">
-          <img src="/media/keith-hero.webp" alt="Keith Staggers" width="1400" height="1400" class="aspect-square w-full object-cover" />
+          <img src="/media/keith-photo-9.webp" alt="Keith Staggers in a black suit and sunglasses" width="1080" height="1080" class="aspect-square w-full object-cover" />
           <div class="space-y-5 text-lg leading-relaxed text-paper-dim">
             <p>I spent decades making decisions where details mattered, first as a detective, then as a nurse. Now I use the same discipline to build music, books, films, and visual work with AI.</p>
             <p>The Finish Loop is the process underneath that catalog. It exists because generating is easy and closing the loop is rare.</p>
@@ -221,21 +216,39 @@ const productJsonLd = {
 
   <section class="border-b border-paper bg-paper text-ink" aria-labelledby="coaching-heading">
     <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,0.7fr)]">
-      <div class="flex min-h-80 flex-col justify-center bg-ink px-5 py-12 text-paper sm:px-8 lg:px-10">
-        <p class="eyebrow !text-paper-dim">AI Jumpstart</p>
+      <div class="flex min-h-80 flex-col justify-center bg-ink px-5 py-12 text-paper sm:px-8 lg:px-10" aria-label="The three-part working session">
+        <p class="eyebrow !text-paper-dim">The working session</p>
         <ol class="mt-7 border-t border-rule">
-          <li class="grid grid-cols-[42px_1fr] gap-3 border-b border-rule py-4"><span class="font-mono text-xs text-cobalt">01</span><span>Bring one stuck workflow or project.</span></li>
-          <li class="grid grid-cols-[42px_1fr] gap-3 border-b border-rule py-4"><span class="font-mono text-xs text-cobalt">02</span><span>Build the first working version.</span></li>
-          <li class="grid grid-cols-[42px_1fr] gap-3 border-b border-rule py-4"><span class="font-mono text-xs text-[#7139ff]">03</span><span>Leave with a clear next-step plan.</span></li>
+          <li class="grid grid-cols-[42px_1fr] gap-3 border-b border-rule py-4">
+            <span class="font-mono text-xs font-bold text-cobalt">01</span>
+            <span>
+              <strong class="block text-paper">Bring the project</strong>
+              <span class="mt-1 block text-sm leading-relaxed text-paper-dim">One real project, workflow, or decision.</span>
+            </span>
+          </li>
+          <li class="grid grid-cols-[42px_1fr] gap-3 border-b border-rule py-4">
+            <span class="font-mono text-xs font-bold text-cobalt">02</span>
+            <span>
+              <strong class="block text-paper">Find the block</strong>
+              <span class="mt-1 block text-sm leading-relaxed text-paper-dim">We isolate what is keeping it unfinished.</span>
+            </span>
+          </li>
+          <li class="grid grid-cols-[42px_1fr] gap-3 border-b border-rule py-4">
+            <span class="font-mono text-xs font-bold text-signal">03</span>
+            <span>
+              <strong class="block text-paper">Leave with a plan</strong>
+              <span class="mt-1 block text-sm leading-relaxed text-paper-dim">You leave with a concrete next move.</span>
+            </span>
+          </li>
         </ol>
       </div>
       <div class="border-ink/30 px-5 py-14 sm:px-8 lg:border-r lg:px-12">
         <p class="eyebrow !text-cobalt">Work with Keith</p>
-        <h2 id="coaching-heading" class="studio-display mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-5xl">60-minute working session</h2>
+        <h2 id="coaching-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-5xl">60-minute working session</h2>
         <p class="mt-6 text-lg leading-relaxed text-ink/70">Bring the real project. We find the block, apply the system live, and leave with a concrete next move.</p>
       </div>
       <div class="flex flex-col justify-center px-5 py-14 sm:px-8 lg:px-12">
-        <p><span class="studio-display text-6xl tracking-[-0.05em]">$250</span> <span class="eyebrow ml-3 !text-ink/60">One-time session</span></p>
+        <p><span class="serif text-6xl tracking-[-0.05em]">$250</span> <span class="eyebrow ml-3 !text-ink/60">One-time session</span></p>
         <a href={getBookingHref()} {...bookingAttrs} class="mt-6 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim">
           Start a project inquiry →
         </a>
@@ -246,7 +259,7 @@ const productJsonLd = {
   <section class="border-b border-rule" aria-labelledby="faq-heading">
     <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24 xl:px-16">
       <p class="eyebrow !text-cobalt">FAQ</p>
-      <h2 id="faq-heading" class="studio-display mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">Before you buy.</h2>
+      <h2 id="faq-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">Before you buy.</h2>
       <div class="mt-10 grid border-l border-t border-rule md:grid-cols-2 xl:grid-cols-5">
         {finishLoop.faqs.map((item) => (
           <details class="group border-b border-r border-rule p-5" open>
@@ -262,13 +275,13 @@ const productJsonLd = {
     <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:px-12 lg:py-28 xl:px-16">
       <div>
         <p class="eyebrow !text-cobalt">The Finish Loop</p>
-        <h2 id="buy-heading" class="studio-display mt-5 max-w-4xl text-[clamp(4rem,9vw,8rem)] leading-[0.84] tracking-[-0.055em]">Finish it.</h2>
+        <h2 id="buy-heading" class="serif mt-5 max-w-4xl text-[clamp(4rem,9vw,8rem)] leading-[0.84] tracking-[-0.055em]">Finish it<span class="text-signal">.</span></h2>
         <p class="mt-7 max-w-2xl text-xl leading-relaxed text-ink/70">Get the manual, planner, calendar, briefs, and scorecard. One payment. Immediate delivery.</p>
       </div>
       <div class="min-w-72 border-t border-ink pt-6 lg:text-right">
-        <p class="studio-display text-6xl tracking-[-0.05em]">${finishLoop.price}</p>
+        <p class="serif text-6xl tracking-[-0.05em]">${finishLoop.price}</p>
         {checkoutReady ? (
-          <a href={finishLoop.checkoutUrl} data-product-purchase={finishLoop.slug} class="mt-5 inline-flex min-h-13 items-center justify-center bg-signal px-7 py-3 font-bold text-ink transition-colors hover:bg-white">
+          <a href={finishLoop.checkoutUrl} data-product-purchase={finishLoop.slug} class="mt-5 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim">
             Get The Finish Loop →
           </a>
         ) : (

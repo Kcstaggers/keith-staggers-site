@@ -7,7 +7,7 @@ export const finishLoop = {
     "https://keithstaggers.lemonsqueezy.com/checkout/buy/3a90d035-c69c-455b-828b-4ae6f3af31a3",
   headline: "Finish the work. Ship the thing.",
   description:
-    "A six-step field system for deciding, finishing, and shipping AI-assisted work. Built for solo creators who are done collecting drafts.",
+    "A complete creator operating system for directing, finishing, and releasing AI-assisted work. Built for solo creators who are done collecting drafts.",
   promise:
     "Choose one outcome, direct the work, close the last 10 percent, and leave with a release system you can repeat.",
   proof: [
@@ -70,7 +70,7 @@ export const finishLoop = {
     },
     {
       question: "What if I need help?",
-      answer: "Start an AI Jumpstart inquiry. Bring one stuck workflow or project and apply the system live with Keith.",
+      answer: "Start a project inquiry for a 60-minute working session with Keith. Bring the real project and explain where you are stuck. Keith reviews the details before sharing a private calendar link.",
     },
   ],
 };
