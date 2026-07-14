@@ -204,7 +204,7 @@ Updated July 12, 2026. Keith rejected the previous editorial homepage as too sta
 - Active design branch: `agent/ai-creator-wow`
 - Explicit pre-redesign rollback commit: `de5bf27`
 - Do not overwrite or stage the user-owned untracked files listed later in this document.
-- The design is not published to production yet.
+- The Studio design and project-fit gate were published to production through PR #3 on July 13, 2026.
 
 ### Design direction
 
