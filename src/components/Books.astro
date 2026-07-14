@@ -34,7 +34,7 @@ import SectionCTA from "./SectionCTA.astro";
         <div class="lg:col-span-7 lg:col-start-6">
           <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint mb-4">
             № 0{i + 1}
-            {book.featured && <span class="text-amber ml-3">★ Featured</span>}
+            {book.featured && <span class="text-cobalt ml-3">★ Featured</span>}
           </p>
           <h3 class="serif text-[clamp(28px,3.5vw,44px)] leading-[1.05] tracking-tight mb-3">
             {book.title}
@@ -48,7 +48,7 @@ import SectionCTA from "./SectionCTA.astro";
           <div class="flex flex-wrap gap-3">
             <a
               href={book.amazonUrl}
-              class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase px-6 py-3 rounded-full border border-amber bg-amber text-ink hover:bg-transparent hover:text-amber transition-colors"
+              class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase px-6 py-3 rounded-full border border-cobalt bg-cobalt text-ink hover:bg-transparent hover:text-cobalt transition-colors"
             >
               Read on Amazon
               <span aria-hidden="true">↗</span>
