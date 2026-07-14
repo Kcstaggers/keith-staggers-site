@@ -307,9 +307,10 @@ The new media is supporting material. The business offer and conversion path rem
 
 - Working branch: `agent/ai-creator-wow`
 - Remote branch: `origin/agent/ai-creator-wow`
-- PRs `#3` through `#7` from this branch were merged to `main`; latest production merge is `dd11282`
+- PR `#8` merged the July 14 brand pass to `main`; production merge is `3e1c210`
 - Production currently contains The Finish Loop page and the Lemon Squeezy test checkout URL
-- The July 14 brand pass replaces the portrait-led product imagery with the approved diagrammatic system and aligns all public previews with the paid bundle
+- The July 14 brand pass is live at `https://www.keithstaggers.com/finish-loop/` and replaces the portrait-led product imagery with the approved diagrammatic system
+- Production desktop, 390-pixel mobile, thank-you page, image loads, exact public asset hashes, overflow, and browser console were verified after deployment
 
 Do not replace the test checkout URL with a live checkout URL until Lemon Squeezy approves the store and the live product is configured and verified.
 
