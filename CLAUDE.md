@@ -10,7 +10,7 @@ Personal/portfolio site for Keith Staggers — Tampa-based retired Baltimore det
 
 Live at **https://www.keithstaggers.com** (apex redirects to www).
 
-The current production site still uses the bright editorial-broadsheet aesthetic. The active redesign on `agent/ai-creator-wow` replaces the homepage with a near-black AI studio experience built around Keith Photo 9, electric cobalt, ultraviolet depth, and coral actions. It leads with a useful four-part method, then Notes, The Finish Loop, clear buyer-intent services, proof, and Keith's story. Nursing remains a proof-rich specialty without becoming the brand ceiling.
+The current production site uses the near-black AI studio experience built around Keith Photo 9, electric cobalt, ultraviolet depth, and coral actions. It leads with a useful four-part method, then Notes, The Finish Loop, clear buyer-intent services, proof, and Keith's story. Nursing remains a proof-rich specialty without becoming the brand ceiling. The Studio redesign and project-fit gate went live July 13, 2026. The Finish Loop product previews and phone-width corrections went live July 14, 2026.
 
 ## Tech stack
 
@@ -59,7 +59,7 @@ src/
 ├── layouts/Base.astro         # HTML shell, fonts, navigation/footer, structured data, Vercel Analytics
 ├── components/
 │   ├── Masthead.astro         # "IN STUDIO · Issue 26" bar with live clock
-│   ├── Nav.astro              # Logo + section links + amber "Hire me" pill
+│   ├── Nav.astro              # Logo + section links + cobalt action pill
 │   ├── Hero.astro             # Business-first hero with formal portrait, receipts, and booking CTA
 │   ├── Pathways.astro         # Interactive Make it / Teach us / Bring Keith in selector
 │   ├── TableOfContents.astro  # "Inside this issue" — five pillars with page numbers
@@ -112,7 +112,7 @@ Tokens are defined in `src/styles/global.css` via Tailwind v4's `@theme` directi
 | `--color-paper-dim` | `#a8abb7` | Secondary type |
 | `--color-paper-faint` | `#727786` | Captions and metadata |
 | `--color-rule` | `#282c36` | Dividers, grids, and borders |
-| `--color-amber` | `#2851ff` | Cobalt action color, legacy token name |
+| `--color-cobalt` | `#2851ff` | Cobalt action color and active states |
 | `--color-signal` | `#ff604d` | Coral action and completion signal |
 
 **Typography stack:** Inter is the display and body workhorse. Monospace labels workflows, captions, and technical detail. Fraunces remains installed for controlled editorial accents outside the main studio surfaces.
@@ -197,7 +197,7 @@ A scheduled task is set for **Aug 15, 2026** to start a Canva → Cloudflare tra
 
 ## Current design handoff: AI creator studio homepage
 
-Updated July 12, 2026. Keith rejected the previous editorial homepage as too static and asked for a phenomenal, dynamic design with `public/media/keith-photo-9.webp` as the driving social identity image.
+Updated July 14, 2026. Keith rejected the previous editorial homepage as too static and asked for a phenomenal, dynamic design with `public/media/keith-photo-9.webp` as the driving social identity image.
 
 ### Git and rollback
 
@@ -205,6 +205,7 @@ Updated July 12, 2026. Keith rejected the previous editorial homepage as too sta
 - Explicit pre-redesign rollback commit: `de5bf27`
 - Do not overwrite or stage the user-owned untracked files listed later in this document.
 - The Studio design and project-fit gate were published to production through PR #3 on July 13, 2026.
+- The Finish Loop product previews and mobile sizing corrections were published through PR #5 on July 14, 2026.
 
 ### Design direction
 
@@ -246,13 +247,15 @@ The design spec includes the desktop and mobile concepts, responsive rules, moti
 - The media rail opens real videos and images in a labeled accessible dialog.
 - Mobile navigation opens and closes correctly.
 - A 375px native client viewport has no page-level horizontal overflow.
+- The Finish Loop page was also verified at an exact 390px viewport with a 390px document width after replacing implicit grid minimums with `minmax(0, 1fr)`.
 - Desktop native client viewport has no page-level horizontal overflow.
 - Mobile browser console and page errors were clean during the interaction pass.
 - All 13 internal homepage links returned HTTP 200 locally.
 - `npx astro check` passes with 0 errors and 0 warnings, plus 6 existing deprecation hints. `npm run build` passes with all 10 static routes.
 - Latest QA screenshots are under `/Users/keithstaggers/.codex/visualizations/2026/07/12/019f57c3-3582-7623-9d6a-ffa5103b48ca/` with the `website-value-funnel-` prefix.
+- Finish Loop comparison and exact-mobile screenshots use the `finish-loop-` prefix in the same folder.
 
-Before publishing, rerun `npx astro check` and `npm run build`, commit this branch, push it, and inspect the Vercel preview. Do not merge the revenue PR or publish the Finish Loop checkout while Lemon Squeezy remains in test mode.
+Before future publishing, rerun `npx astro check` and `npm run build`, commit only intended files, push the branch, and inspect the Vercel preview. The current Studio site, qualification gate, and Finish Loop visual update are already live.
 
 ## Current revenue handoff: Finish Loop launch
 
