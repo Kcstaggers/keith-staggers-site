@@ -274,8 +274,8 @@ Keith's standing authorization: proceed without repeatedly asking permission unl
 Customer bundle:
 
 - `output/products/the-finish-loop-v1.zip`
-- 0.89 MB, seven files
-- SHA-256: `aad2e9aeb3fba53893173a149d5fff5b737013cb5778cb48d9c634b43fccd6e2`
+- 119,328 bytes, seven files
+- SHA-256: `b5da9cee4b59581f5774c77623b3486268e4bbd36fe37fb02c3899bfe9713f91`
 - Includes a 26-page field manual, offline interactive planner, 30-day shipping calendar, direction-brief library, finish scorecard, start instructions, and license
 
 Private product source and store instructions:
@@ -286,7 +286,7 @@ Private product source and store instructions:
 
 Both `private-products/` and `output/products/` are intentionally gitignored. Do not commit the paid customer ZIP, editable sources, store strategy, or private setup notes to the public GitHub repository.
 
-The local customer bundle was rebuilt on July 12, 2026 after Keith selected Photo 5 for the real field-manual cover. The Photo 5 product image and replacement bundle are now saved to Lemon Squeezy test product `1214168`. Lemon Squeezy reports the active cover at 309.58 KB and the active replacement ZIP at 912.13 KB. The local ZIP is 934,020 bytes with SHA-256 `aad2e9aeb3fba53893173a149d5fff5b737013cb5778cb48d9c634b43fccd6e2`. The older 3.03 MB ZIP remains stored but is inactive and will not be delivered.
+The local customer bundle was rebuilt on July 14, 2026 to match the approved master brand. The replacement uses the photo-free six-step system map, embedded Inter typography, the current support address, AI Jumpstart naming, and an aligned six-gate scorecard. The verified local ZIP is 119,328 bytes with SHA-256 `b5da9cee4b59581f5774c77623b3486268e4bbd36fe37fb02c3899bfe9713f91`. Lemon Squeezy test product `1214168` still has the superseded Photo 5 cover, portrait store logo, and 912.13 KB ZIP; replace all three with the verified July 14 files before copying the product to live mode. The older 3.03 MB ZIP remains stored but inactive.
 
 ### Website implementation
 
@@ -305,19 +305,13 @@ The new media is supporting material. The business offer and conversion path rem
 
 ### Git and deployment state
 
-- Working branch: `agent/finish-loop-income`
-- Remote branch: `origin/agent/finish-loop-income`
-- Draft PR: https://github.com/Kcstaggers/keith-staggers-site/pull/2
-- PR is open, mergeable, and had green Vercel checks at the last verification
-- Relevant commits:
-  - `3b571d3 Build Finish Loop product sales path`
-  - `b7d117a Use new Finish Loop campaign portrait`
-  - `61eddf8 Add Finish Loop fulfillment handoff`
-  - `c62e45d Connect Finish Loop test checkout`
-- Last verified preview: https://keith-staggers-site-k9ro56vl3-keith-staggers-projects.vercel.app
-- Production intentionally does not contain the Finish Loop checkout yet
+- Working branch: `agent/ai-creator-wow`
+- Remote branch: `origin/agent/ai-creator-wow`
+- PRs `#3` through `#7` from this branch were merged to `main`; latest production merge is `dd11282`
+- Production currently contains The Finish Loop page and the Lemon Squeezy test checkout URL
+- The July 14 brand pass replaces the portrait-led product imagery with the approved diagrammatic system and aligns all public previews with the paid bundle
 
-Do not merge PR #2 while `src/data/products.ts` contains a Lemon Squeezy test checkout URL.
+Do not replace the test checkout URL with a live checkout URL until Lemon Squeezy approves the store and the live product is configured and verified.
 
 Last build verification in `/tmp/kss-verify`:
 
@@ -329,13 +323,13 @@ Last build verification in `/tmp/kss-verify`:
 
 - Store: `Keith Staggers Studio`
 - Store URL: https://keithstaggers.lemonsqueezy.com
-- Support email: `hello@keithstaggers.com`
+- Support email: `kcstaggers@gmail.com`
 - Store remains in test mode
 - Test product ID: `1214168`
 - Product is published in test mode at $49
 - Test checkout: https://keithstaggers.lemonsqueezy.com/checkout/buy/3a90d035-c69c-455b-828b-4ae6f3af31a3
 - Product cover, store logo, customer ZIP, confirmation message, receipt note, and redirect are configured
-- The active Photo 5 cover is 309.58 KB and the active replacement ZIP is 912.13 KB in Lemon Squeezy; the legacy 3.03 MB ZIP is inactive
+- The active Photo 5 cover, portrait logo, and 912.13 KB ZIP in Lemon Squeezy are superseded and awaiting replacement with the verified July 14 assets; the legacy 3.03 MB ZIP is inactive
 - Test order `#4295941` passed
 - Test checkout, order creation, receipt messaging, and thank-you handoff passed
 - Lemon Squeezy disables file downloads in test mode, so the ZIP download cannot be proven from that order
