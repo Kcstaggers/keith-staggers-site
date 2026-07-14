@@ -196,17 +196,20 @@ A scheduled task is set for **Aug 15, 2026** to start a Canva → Cloudflare tra
 - **Keep `compressHTML: true` in `astro.config.mjs`.** Astro 7 defaults to JSX whitespace compression, which removes visible spaces between split text nodes across this site.
 - **GitHub repo is public.** Don't commit secrets, API keys, .env files, or anything you wouldn't want on someone's homepage. The .gitignore covers the usual suspects.
 
-## Current design handoff: AI creator studio homepage
+## Current production handoff: AI creator studio homepage
 
-Updated July 14, 2026. Keith rejected the previous editorial homepage as too static and asked for a phenomenal, dynamic design with `public/media/keith-photo-9.webp` as the driving social identity image.
+Updated July 14, 2026. Keith chose the portrait-and-music Studio homepage as the production direction and rejected the broader Future Wow signal-rain candidate. The live site keeps `public/media/keith-photo-9.webp` as the driving identity image, the approved photo-led Finish Loop presentation, and the project-fit buffer before calendar access.
 
 ### Git and rollback
 
-- Active design branch: `agent/ai-creator-wow`
+- Authoritative branch: `main`
+- Last functional production merge: `db687ca670553cfbbf0bc97de311c28cfe506f8f`
 - Explicit pre-redesign rollback commit: `de5bf27`
 - Do not overwrite or stage the user-owned untracked files listed later in this document.
 - The Studio design and project-fit gate were published to production through PR #3 on July 13, 2026.
 - The Finish Loop product previews and mobile sizing corrections were published through PR #5 on July 14, 2026.
+- PR #10 restored the approved Finish Loop presentation. Merge commit: `a2400340543ce335194bf8e380ecf7e9601fd590`.
+- PR #11 upgraded production to Astro 7.0.9 on Node 24.x. Merge commit: `db687ca670553cfbbf0bc97de311c28cfe506f8f`.
 
 ### Design direction
 
@@ -251,8 +254,10 @@ The design spec includes the desktop and mobile concepts, responsive rules, moti
 - The Finish Loop page was also verified at an exact 390px viewport with a 390px document width after replacing implicit grid minimums with `minmax(0, 1fr)`.
 - Desktop native client viewport has no page-level horizontal overflow.
 - Mobile browser console and page errors were clean during the interaction pass.
-- All 13 internal homepage links returned HTTP 200 locally.
-- `npx astro check` passes with 0 errors and 0 warnings, plus 6 existing deprecation hints. `npm run build` passes with all 10 static routes.
+- All 11 production routes returned HTTP 200 after the Astro 7 deployment, and the apex domain returned the intended 307 redirect to `www`.
+- `npx astro check` passes with 0 errors and 0 warnings, plus 5 existing inactive legacy hints. `npm run build` passes with all 11 static routes.
+- A clean `npm ci` and `npm audit` report zero vulnerabilities.
+- Production desktop at 1440 pixels and mobile at 390 pixels have no page-level horizontal overflow, visible broken images, or relevant browser console errors.
 - Latest QA screenshots are under `/Users/keithstaggers/.codex/visualizations/2026/07/12/019f57c3-3582-7623-9d6a-ffa5103b48ca/` with the `website-value-funnel-` prefix.
 - Finish Loop comparison and exact-mobile screenshots use the `finish-loop-` prefix in the same folder.
 
@@ -260,7 +265,7 @@ Before future publishing, rerun `npx astro check` and `npm run build`, commit on
 
 ## Current revenue handoff: Finish Loop launch
 
-Updated July 12, 2026. This is the active business task. Read this section before changing the product, checkout, deployment, or storefront.
+Updated July 14, 2026. This is the active business task. Read this section before changing the product, checkout, deployment, or storefront.
 
 ### Objective
 
@@ -306,16 +311,16 @@ The new media is supporting material. The business offer and conversion path rem
 
 ### Git and deployment state
 
-- Working branch: `agent/ai-creator-wow`
-- Remote branch: `origin/agent/ai-creator-wow`
-- PR `#8` merged the July 14 brand pass to `main`; production merge is `3e1c210`
+- Authoritative branch: `main`
+- PR #10 merged the approved Finish Loop restoration as `a2400340543ce335194bf8e380ecf7e9601fd590`.
+- PR #11 merged the Astro 7 upgrade as `db687ca670553cfbbf0bc97de311c28cfe506f8f`.
 - Production currently contains The Finish Loop page and the Lemon Squeezy test checkout URL
-- The July 14 brand pass is live at `https://www.keithstaggers.com/finish-loop/` and replaces the portrait-led product imagery with the approved diagrammatic system
-- Production desktop, 390-pixel mobile, thank-you page, image loads, exact public asset hashes, overflow, and browser console were verified after deployment
+- The approved photo-led Creator Operating System presentation is live at `https://www.keithstaggers.com/finish-loop/`, with near-black branded planner previews and the homepage Photo 9 in the About block.
+- Production desktop, 390-pixel mobile, all 11 routes, thank-you page, image loads, overflow, and browser console were verified after deployment.
 
 Do not replace the test checkout URL with a live checkout URL until Lemon Squeezy approves the store and the live product is configured and verified.
 
-Latest build verification in the isolated `/tmp/kss-astro7-upgrade` worktree:
+Latest Astro 7 release verification:
 
 - `npx astro check`: zero errors, zero warnings, five existing hints
 - `npm run build`: passed, 11 static pages
@@ -358,10 +363,10 @@ DECIDED July 12, 2026: interim fix is the Lemon Squeezy support email switching 
 4. Verify the live product price, media, ZIP, receipt note, confirmation message, support address, and redirect.
 5. Publish the live product and obtain the live checkout URL.
 6. Replace only the test URL in `src/data/products.ts`.
-7. Re-run `npx astro check` and `npm run build` from `/tmp/kss-verify`.
-8. Stage only the intended tracked file, commit, and push `agent/finish-loop-income`.
-9. Wait for the PR preview to reach READY and verify the $49 CTA points to the live checkout.
-10. Mark PR #2 ready and merge it only after the live checkout is verified.
+7. From a fresh branch based on current `main`, run a clean `npm ci`, `npx astro check`, `npm run build`, and `npm audit` in an isolated worktree.
+8. Stage only the intended tracked file, commit, and push a fresh `agent/finish-loop-live-checkout` branch.
+9. Open a new PR, wait for its preview to reach READY, and verify the $49 CTA points to the live checkout.
+10. Merge that PR only after the live checkout is verified.
 11. Wait for the Git-triggered Vercel production deployment to reach READY.
 12. Verify:
     - https://www.keithstaggers.com/finish-loop/
@@ -382,6 +387,7 @@ A visitor opens Keith's Finish Loop sales page, clicks the $49 call to action, c
 The following untracked items predate or sit outside the Finish Loop commits. Preserve them and do not stage, delete, rename, or overwrite them unless Keith specifically requests it:
 
 - `Media 2/`
+- `output/`
 - `src/components/Hero 2.astro`
 - `src/components/Hero 3.astro`
 - `src/components/Services 2.astro`

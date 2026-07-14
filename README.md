@@ -1,94 +1,119 @@
-# Keith Staggers — Personal Site
+# Keith Staggers Studio
 
-Editorial-magazine personal site for keithstaggers.com. Built with Astro + Tailwind v4.
+Production website for [Keith Staggers](https://www.keithstaggers.com), an AI creator, trainer, workflow builder, nurse leader, author, and music producer.
 
-## Preview right now (no install needed)
+The site is a value-first storefront. It teaches Keith's working method, publishes Studio Notes, sells The Finish Loop, presents service offers, and routes serious inquiries through a qualification step.
 
-Open `preview-build/index.html` in any browser. That's a static export of the current state — fonts, layout, everything works. The Spotify embeds will load live from open.spotify.com.
+## Stack
 
-## Run the dev server (live reload while editing)
+- Astro 7 with static site generation
+- TypeScript strict mode
+- Tailwind CSS v4 through the Vite plugin
+- Inter and Fraunces variable fonts
+- Vercel Web Analytics
+- Spotify embeds
+- Node.js 24.x
 
-Requires Node 20+ and npm. Install Node from https://nodejs.org if needed.
+There is no server-side rendering, database, CMS, or public calendar integration. Content is stored in TypeScript data files.
+
+## Offer funnel
+
+1. The homepage teaches Keith's method and presents Studio Notes.
+2. The Finish Loop offers a $49 entry product through Lemon Squeezy.
+3. Visitors can explore four paid service paths:
+   - AI Jumpstart at $250
+   - Done-for-You Builds from $2,500
+   - AI Training, including a $179 public cohort and team workshops from $3,500
+   - Speaking from $3,500
+4. Every service inquiry goes through `/project-fit/`.
+5. The form builds a reviewable email. Nothing is transmitted until the visitor intentionally opens and sends it.
+6. Keith reviews the inquiry and shares a private calendar link only when the conversation fits.
+
+Recruiters and employment inquiries can use the same form without being forced into a sales-budget answer.
+
+The Lemon Squeezy checkout URL lives in `src/data/products.ts`. Replace it only after the live product and fulfillment path have been verified. Current activation details live in `CLAUDE.md`.
+
+## Routes
+
+The build generates 11 static pages.
+
+| Route | Purpose |
+|---|---|
+| `/` | Studio homepage and value-first offer path |
+| `/finish-loop/` | The Finish Loop sales page |
+| `/finish-loop/thank-you/` | Post-purchase handoff, intentionally excluded from indexing |
+| `/project-fit/` | Qualification form before scheduling |
+| `/services/done-for-you/` | Done-for-You Builds |
+| `/services/coaching/` | AI Jumpstart |
+| `/services/training/` | AI Training |
+| `/services/speaking/` | Speaking |
+| `/notes/the-finishing-problem/` | Studio Note |
+| `/notes/the-monday-morning-test/` | Studio Note |
+| `/notes/three-careers-one-standard/` | Studio Note |
+
+Service and Studio Note routes are generated from their data files with Astro `getStaticPaths()`.
+
+## Local development
+
+Requires Node.js 24.x and npm.
 
 ```bash
-cd ~/Desktop/keith-staggers-site
-npm install
+npm ci
 npm run dev
 ```
 
-Then open http://localhost:4321.
+Open [http://localhost:4321](http://localhost:4321).
 
-## Project layout
+Run the verification commands before publishing:
 
-```
-src/
-├── pages/
-│   └── index.astro            ← the homepage
-├── layouts/
-│   └── Base.astro             ← HTML shell, font loading, masthead/nav/footer
-├── components/
-│   ├── Masthead.astro         ← top "IN STUDIO · time" strip
-│   ├── Nav.astro              ← logo + nav + Work With Me CTA
-│   ├── Hero.astro             ← A body of work, built with AI.
-│   ├── TableOfContents.astro  ← Inside this issue.
-│   ├── About.astro            ← Detective → Nurse → Creator narrative
-│   ├── CareerTimeline.astro   ← three-era timeline
-│   ├── PullQuote.astro        ← reusable big-quote component
-│   ├── Music.astro            ← featured album + grid (Spotify embeds)
-│   ├── Books.astro            ← 3 books with Amazon + Buy Direct buttons
-│   ├── Visuals.astro          ← AI photo/film bento grid (placeholders)
-│   ├── Services.astro         ← 4 ways to work with you
-│   ├── Newsletter.astro       ← Sunday letter signup (stub form)
-│   ├── Footer.astro           ← giant wordmark + colophon
-│   └── NowPlaying.astro       ← floating live-status pill
-├── data/
-│   ├── albums.ts              ← real Spotify/Apple/Amazon IDs
-│   ├── books.ts               ← real Amazon links
-│   └── site.ts                ← nav, email, social, tagline
-└── styles/
-    └── global.css             ← Tailwind v4 + design tokens (colors, fonts)
+```bash
+npm run astro -- check
+npm run build
+npm run preview
 ```
 
-## Drop in real images
+The static build is written to `dist/`.
 
-Hero portrait, album covers, book covers, and visuals are placeholders right now. To wire up real images:
+## Where to edit
 
-1. **Hero portrait** — save your portrait as `public/keith-hero.jpg`, then in `src/components/Hero.astro` replace the placeholder `<aside>` with `<img src="/keith-hero.jpg" alt="Keith Staggers" class="aspect-[4/5] w-full object-cover rounded-sm" />`.
-2. **Album covers** — already covered by the Spotify embed iframes.
-3. **Book covers** — save as `public/nurse-the-fck-up.jpg`, `public/beyond-burnout.jpg`, `public/leading-with-care.jpg`. Then in `src/components/Books.astro`, replace each placeholder `<div>` with `<img src={`/${book.slug}.jpg`} alt={book.title} class="aspect-[2/3] w-full object-cover rounded-sm" />`.
-4. **Visuals tiles** — save 6 images as `public/visuals/01.jpg` through `06.jpg`. In `src/components/Visuals.astro` swap each placeholder `<div>` for an `<img>`.
+| Change | File |
+|---|---|
+| Site identity, navigation, email, social links, and qualification path | `src/data/site.ts` |
+| Finish Loop price, content, and checkout URL | `src/data/products.ts` |
+| Service offers, pricing, and detail pages | `src/data/services.ts` |
+| Studio Notes | `src/data/notes.ts` |
+| Albums, tracks, and books | `src/data/albums.ts`, `src/data/tracks.ts`, `src/data/books.ts` |
+| Homepage order | `src/pages/index.astro` |
+| Homepage sections | `src/components/Studio*.astro` |
+| Shared shell, metadata, structured data, and analytics | `src/layouts/Base.astro` |
+| Design tokens and global styling | `src/styles/global.css` |
+| Optimized public media | `public/media/` |
 
-## Sell books direct (Lemon Squeezy)
+Source media, paid product files, editable product materials, and local build output are intentionally excluded from the public repository.
 
-1. Sign up at https://lemonsqueezy.com, add each ebook as a digital product, get the buy-link URL.
-2. In `src/data/books.ts`, fill in the `directBuyUrl` field for each book. The "Buy direct" button will start working automatically.
+## Deployment
 
-## Wire up the newsletter
+The public repository is [Kcstaggers/keith-staggers-site](https://github.com/Kcstaggers/keith-staggers-site).
 
-1. Pick one: ConvertKit, Buttondown, or Beehiiv. Create a form, copy the form action URL.
-2. In `src/components/Newsletter.astro`, change the `<form action="#">` to your form action URL, and remove the JS stub at the bottom.
+Vercel automatically creates previews for branches and deploys production when a verified pull request is merged into `main`.
 
-## Deploy to Vercel
+Publishing flow:
 
-1. Push this folder to a GitHub repo:
-   ```bash
-   git init && git add . && git commit -m "Initial site"
-   gh repo create keithstaggers-site --private --source=. --push
-   ```
-2. Go to https://vercel.com/new, import the repo. Vercel auto-detects Astro. Click Deploy.
-3. Once deployed, add your custom domain in Vercel project settings → Domains → add `keithstaggers.com`.
-4. Vercel will give you DNS records. Go to wherever your domain is registered (Canva, GoDaddy, etc.), update the nameservers or A/CNAME records as Vercel instructs.
-5. SSL is automatic.
+1. Create a focused branch.
+2. Run Astro check and the production build.
+3. Push the branch and inspect the Vercel preview.
+4. Verify desktop, mobile, navigation, forms, images, and relevant console output.
+5. Merge the pull request into `main`.
+6. Wait for the production deployment to become ready.
+7. Verify the live routes and conversion links at [www.keithstaggers.com](https://www.keithstaggers.com).
 
-## Brand tokens (in `src/styles/global.css`)
+The apex domain redirects to `www`. Vercel generates the site from `main`.
 
-| Token | Value | Where it shows up |
-|------|------|------|
-| `--color-ink` | `#0a0a0a` | Page background |
-| `--color-paper` | `#e8e4dc` | Body text |
-| `--color-paper-dim` | `#b8b2a6` | Subheads, secondary text |
-| `--color-paper-faint` | `#8a847a` | Captions, hints |
-| `--color-rule` | `#2a2a2a` | Dividers, borders |
-| `--color-amber` | `#c89860` | Accent — sparingly! |
+## Guardrails
 
-The amber italic accent is reserved for ~6 specific moments per scroll. Resist the urge to use it everywhere.
+- Keep the public calendar private. Service calls must remain behind `/project-fit/`.
+- Never add personal form answers to analytics.
+- Never commit secrets, environment files, customer ZIPs, or editable paid-product sources.
+- Books link directly to Amazon.
+- Keep customer-facing availability worldwide rather than geographically limited.
+- Follow the current operating and deployment record in `CLAUDE.md` before changing checkout, DNS, or production behavior.
