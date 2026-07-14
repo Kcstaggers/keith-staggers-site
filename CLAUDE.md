@@ -10,7 +10,7 @@ Personal/portfolio site for Keith Staggers — Tampa-based retired Baltimore det
 
 Live at **https://www.keithstaggers.com** (apex redirects to www).
 
-The current production site uses the near-black AI studio experience built around Keith Photo 9, electric cobalt, ultraviolet depth, and coral actions. It leads with a useful four-part method, then Notes, The Finish Loop, clear buyer-intent services, proof, and Keith's story. Nursing remains a proof-rich specialty without becoming the brand ceiling. The Studio redesign and project-fit gate went live July 13, 2026. The Finish Loop product previews and phone-width corrections went live July 14, 2026.
+The current production site uses the near-black AI studio experience built around Keith Photo 9, electric cobalt, ultraviolet depth, and coral actions. It leads with a useful four-part method, then Notes, The Finish Loop, clear buyer-intent services, proof, and Keith's story. Nursing remains a proof-rich specialty without becoming the brand ceiling. The Studio redesign and project-fit gate went live July 13, 2026. The Finish Loop product previews and phone-width corrections went live July 14, 2026. The default social preview is the photo-free 1200 × 630 brand graphic at `public/og-keith-staggers-v2.png`; keep its versioned filename when replacing it so LinkedIn does not reuse an obsolete cached image.
 
 ## Tech stack
 
@@ -88,6 +88,7 @@ src/
 └── styles/global.css           # Tailwind v4 @theme — colors, fonts, custom utilities
 public/
 ├── favicon.svg
+├── og-keith-staggers-v2.png   # Default photo-free social and LinkedIn Featured preview
 ├── sitemap.xml                 # Homepage, services, and Studio Notes
 ├── robots.txt                  # Allows indexing and points to sitemap.xml
 └── media/                      # Optimized images and videos. 13MB total. See "Media" below.
