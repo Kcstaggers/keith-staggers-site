@@ -122,7 +122,9 @@ Keynotes start at $3,500. Bring me into the room: https://cal.com/keith-staggers
 
 ## LinkedIn profile starter
 
-### Headline
+**SUPERSEDED July 12, 2026.** The live profile at linkedin.com/in/keithstaggers was built that day with a stronger dual-lane headline (nurse leader + AI consultant + detective + keithstaggers.com) that carries both the healthcare and creator audiences and survives recruiter scrutiny. Do not replace it with the starter copy below. The Featured-section order below is also partially done (site link is live). This section is kept only as history.
+
+### Headline (superseded, do not use)
 
 AI Creative Producer | AI Training for Teams | Speaker | Retired Detective → Nurse Leader → AI-Native Creator
 

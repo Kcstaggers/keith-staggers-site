@@ -27,15 +27,15 @@ const jsonLd = {
       url: site.url,
       email: site.email,
       image: `${site.url}/media/keith-photo-9.webp`,
-      jobTitle: "AI Creative Producer, Coach, Trainer and Speaker",
+      jobTitle: "AI Creator, Trainer and Workflow Builder",
       description: site.description,
       address: { "@type": "PostalAddress", addressLocality: "Tampa", addressRegion: "FL", addressCountry: "US" },
-      sameAs: [site.social.facebook, site.social.instagram, site.social.spotify, site.social.appleMusic].filter(Boolean),
+      sameAs: [site.social.linkedin, site.social.facebook, site.social.instagram, site.social.spotify, site.social.appleMusic].filter(Boolean),
     },
     {
       "@type": "ProfessionalService",
       "@id": `${site.url}/#services`,
-      name: "Keith Staggers · AI Creative Services",
+      name: "Keith Staggers · AI Systems, Training and Production",
       url: `${site.url}/#services`,
       founder: { "@id": `${site.url}/#keith` },
       areaServed: "Worldwide",
@@ -129,8 +129,8 @@ const jsonLd = {
             source,
             page,
           });
-        } else if (link.dataset.calLink) {
-          track("Booking Intent", { source, page });
+        } else if (href === "/project-fit/") {
+          track("Qualification Started", { source, page });
         } else if (href === "/ai-workflow-guide.pdf") {
           track("Guide Download", { source, page });
         } else if (href.includes("facebook.com")) {
@@ -148,6 +148,12 @@ const jsonLd = {
             page,
           });
         }
+      });
+
+      document.addEventListener("submit", (event) => {
+        if (!(event.target instanceof HTMLFormElement)) return;
+        if (!event.target.matches("[data-project-fit-form]")) return;
+        track("Qualification Reviewed", { page: window.location.pathname });
       });
     </script>
 
@@ -176,12 +182,5 @@ const jsonLd = {
       }
     </script>
 
-    {site.booking.enabled && (
-      <script is:inline define:vars={{ username: site.booking.username, eventSlug: site.booking.eventSlug }}>
-        (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-        Cal("init", { origin: "https://cal.com" });
-        Cal("ui", { hideEventTypeDetails: false, layout: "month_view", theme: "dark", styles: { branding: { brandColor: "#ff604d" } } });
-      </script>
-    )}
   </body>
 </html>

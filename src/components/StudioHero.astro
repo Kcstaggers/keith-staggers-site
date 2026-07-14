@@ -2,10 +2,7 @@
 import { site } from "../data/site";
 import OrbitalPortrait from "./OrbitalPortrait.astro";
 
-const calLink = `${site.booking.username}/${site.booking.eventSlug}`;
-const ctaHref = site.booking.enabled
-  ? `https://cal.com/${calLink}`
-  : `mailto:${site.email}?subject=Bring%20me%20the%20idea`;
+const ctaHref = site.booking.intakePath;
 ---
 
 <section class="studio-hero" aria-labelledby="studio-hero-title">
@@ -18,42 +15,42 @@ const ctaHref = site.booking.enabled
       </h1>
 
       <p class="studio-hero-support">
-        AI creative production, coaching, training, and speaking. Built by a detective, nurse leader, and prolific creator.
+        I turn repeated work and ambitious ideas into systems people can use through AI production, coaching, team training, and speaking.
       </p>
 
       <div class="studio-actions">
         <a
-          href={ctaHref}
-          data-cal-link={site.booking.enabled ? calLink : undefined}
-          data-cal-namespace=""
-          data-cal-config={site.booking.enabled ? '{"layout":"month_view","theme":"dark"}' : undefined}
+          href="#method"
           class="studio-button studio-button--primary"
         >
-          Bring me the idea
+          See the method
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
         </a>
-        <a href="#visuals" class="studio-button studio-button--secondary">
-          Enter the work
+        <a
+          href={ctaHref}
+          class="studio-button studio-button--secondary"
+        >
+          Bring me the problem
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
         </a>
       </div>
 
       <p class="studio-proof-line">
-        <span>50+ albums</span><i></i><span>800+ songs</span><i></i><span>3 books</span><i></i><span>1,000+ images &amp; films</span>
+        <span>Working nurse leader</span><i></i><span>3 books</span><i></i><span>50+ albums</span><i></i><span>Deployed AI apps</span>
       </p>
     </div>
 
     <div class="studio-hero-portrait">
       <OrbitalPortrait eager />
-      <p class="portrait-caption">Turning ambitious ideas into finished work</p>
+      <p class="portrait-caption">One operator · Three careers · Finished work</p>
     </div>
   </div>
 
-  <div class="production-ticker" aria-label="Keith's production loop">
+  <div class="production-ticker" aria-label="Keith's workflow loop">
     <div class="production-ticker-track">
       {[0, 1].map(() => (
         <span aria-hidden="true">
-          <b>Production loop</b><i>Concept</i><em>→</em><i>Capture</i><em>→</em><i>Compose</i><em>→</em><i>Edit</i><em>→</em><i>Release</i><em>→</em><i>Analyze</i><em>→</em>
+          <b>Workflow loop</b><i>Find friction</i><em>→</em><i>Define done</i><em>→</em><i>Build</i><em>→</em><i>Verify</i><em>→</em><i>Document</i><em>→</em><i>Use again</i><em>→</em>
         </span>
       ))}
     </div>

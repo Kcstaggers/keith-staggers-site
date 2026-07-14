@@ -8,13 +8,14 @@ const year = new Date().getFullYear();
     <a href="/" class="studio-footer-name">Keith Staggers<span>.</span></a>
     <div class="studio-footer-grid">
       <div>
-        <p>AI creative studio</p>
+        <p>AI studio · Training, systems, and finished work</p>
         <p>Available worldwide</p>
       </div>
       <nav aria-label="Footer navigation">
         {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
       </nav>
       <nav aria-label="Social links">
+        <a href={site.social.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
         <a href={site.social.facebook} target="_blank" rel="noreferrer">Facebook</a>
         <a href={site.social.instagram} target="_blank" rel="noreferrer">Instagram</a>
         <a href={site.social.spotify} target="_blank" rel="noreferrer">Spotify</a>

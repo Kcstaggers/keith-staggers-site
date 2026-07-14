@@ -1,11 +1,14 @@
 export const site = {
   name: "Keith Staggers",
-  tagline: "AI creative producer, coach, trainer & speaker.",
+  tagline: "AI creator, trainer, and workflow builder.",
   description:
-    "Keith Staggers turns ambitious ideas into finished AI-powered creative work through production, coaching, training, and speaking. Available worldwide.",
+    "Keith Staggers turns ambitious ideas and repeated work into finished AI-powered systems through production, coaching, training, and speaking. Available worldwide.",
   url: "https://keithstaggers.com",
   city: "Tampa, FL",
-  email: "hello@keithstaggers.com",
+  // INTERIM (July 12, 2026): hello@keithstaggers.com cannot receive mail until the
+  // domain moves to Vercel DNS (Canva blocks MX records). Swap back after the
+  // transfer + a verified test email. See CLAUDE.md "email" notes.
+  email: "kcstaggers@gmail.com",
   availability: {
     status: "open" as "open" | "limited" | "booked",
     label: "Open for projects",
@@ -18,14 +21,16 @@ export const site = {
     buttondownUsername: "staggers",
   },
   booking: {
-    // Live Cal.com booking. Edit here to change the link or button label.
-    // Full URL: https://cal.com/<username>/<eventSlug>
-    enabled: true,
-    username: "keith-staggers-rpphlg",
-    eventSlug: "15-min-intro-call",
-    buttonLabel: "Book a 15-min intro call",
+    // Public scheduling is intentionally gated. Visitors answer the project-fit
+    // questions first. Keith sends the private calendar link only after review.
+    enabled: false,
+    username: "",
+    eventSlug: "",
+    intakePath: "/project-fit/",
+    buttonLabel: "Start with fit questions",
   },
   social: {
+    linkedin: "https://www.linkedin.com/in/keithstaggers/",
     spotify: "https://open.spotify.com/artist/4BAYMh3hDuSfEQHAOoOu0g",
     appleMusic: "https://music.apple.com/us/artist/keith-staggers",
     facebook: "https://www.facebook.com/profile.php?id=61564900019924",
@@ -34,9 +39,9 @@ export const site = {
   },
   nav: [
     { label: "Work", href: "/#visuals" },
-    { label: "Music", href: "/#music" },
     { label: "The Finish Loop", href: "/finish-loop/" },
     { label: "Services", href: "/#services" },
+    { label: "Notes", href: "/#notes" },
     { label: "About", href: "/#about" },
   ],
 };
