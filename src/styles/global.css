@@ -21,6 +21,7 @@
   html {
     background: var(--color-ink);
     color: var(--color-paper);
+    overflow-x: clip;
     font-family: var(--font-sans);
     color-scheme: dark;
     -webkit-font-smoothing: antialiased;
