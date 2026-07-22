@@ -25,7 +25,7 @@ export const notes: StudioNote[] = [
       "More prompts will not rescue a process with no finish line. The advantage is knowing what done looks like, then building backward from there.",
     readingTime: "4 min read",
     service: {
-      title: "Done-for-you production",
+      title: "AI Workflow Install Sprint",
       slug: "done-for-you",
     },
     sections: [

@@ -2,7 +2,7 @@ export const site = {
   name: "Keith Staggers",
   tagline: "AI creator, trainer, and workflow builder.",
   description:
-    "Keith Staggers turns ambitious ideas and repeated work into finished AI-powered systems through production, coaching, training, and speaking. Available worldwide.",
+    "Keith Staggers turns repeated work into tested, documented AI workflows people can own, with practical training and speaking for teams. Available worldwide.",
   url: "https://keithstaggers.com",
   city: "Tampa, FL",
   // INTERIM (July 12, 2026): hello@keithstaggers.com cannot receive mail until the

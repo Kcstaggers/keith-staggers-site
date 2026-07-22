@@ -17,7 +17,7 @@ import { site } from "../data/site";
           </h1>
         </div>
         <div class="project-fit-intro">
-          <p>I review every inquiry before sharing a private booking link. Six useful answers save both of us a meeting that should have been an email.</p>
+          <p>I review every inquiry before sharing a private booking link. A clear workflow, owner, input, finish line, and human check save both of us a meeting that should have been an email.</p>
           <a href="/finish-loop/">Need the $49 Finish Loop instead? Go straight to it →</a>
         </div>
       </header>
@@ -60,7 +60,7 @@ import { site } from "../data/site";
             <label for="fit-need">What conversation do you need?</label>
             <select id="fit-need" name="need" required>
               <option value="">Choose one</option>
-              <option>Done-for-you workflow or production build</option>
+              <option>AI Workflow Install Sprint</option>
               <option>AI Jumpstart one-to-one session</option>
               <option>Team training or workshop</option>
               <option>Speaking or event</option>
@@ -86,6 +86,16 @@ import { site } from "../data/site";
           </div>
 
           <div class="fit-field">
+            <label for="fit-input">What starts the workflow, and what material goes in?</label>
+            <textarea id="fit-input" name="input" rows="3" minlength="20" placeholder="Name the trigger, source material, and where it currently lives." required></textarea>
+          </div>
+
+          <div class="fit-field">
+            <label for="fit-approval">Who checks or approves the result before it is used or sent?</label>
+            <input id="fit-approval" name="approval" type="text" minlength="5" placeholder="Name the role, even if that person is you." required />
+          </div>
+
+          <div class="fit-field">
             <label for="fit-tried">What have you already tried, built, or decided?</label>
             <textarea id="fit-tried" name="tried" rows="4" minlength="20" placeholder="Tools, drafts, internal attempts, approvals, or blockers." required></textarea>
           </div>
@@ -96,9 +106,9 @@ import { site } from "../data/site";
               <option value="">Choose one</option>
               <option>Employment or recruiter discussion</option>
               <option>$250 working session</option>
-              <option>$2,500 to $5,000 project</option>
+              <option>$2,500+ Workflow Install Sprint</option>
               <option>$3,500+ training or speaking</option>
-              <option>$5,000+ scoped build</option>
+              <option>$5,000+ expanded workflow or production build</option>
               <option>I need guidance before choosing</option>
             </select>
           </div>
@@ -166,6 +176,12 @@ import { site } from "../data/site";
       "",
       "OUTCOME",
       readValue(data, "outcome"),
+      "",
+      "INPUT AND TRIGGER",
+      readValue(data, "input"),
+      "",
+      "HUMAN CHECK",
+      readValue(data, "approval"),
       "",
       "WHAT I HAVE TRIED",
       readValue(data, "tried"),
