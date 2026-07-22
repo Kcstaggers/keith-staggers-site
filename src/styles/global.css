@@ -1509,6 +1509,26 @@ svg circle {
   box-shadow: var(--studio-shadow);
 }
 
+.project-fit-form[hidden] { display: none; }
+
+.project-fit-fallback { grid-template-columns: minmax(0, 1fr); }
+
+.project-fit-fallback-copy h2 {
+  margin-top: 0.75rem;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.project-fit-fallback-copy > p:not(.studio-kicker) {
+  max-width: 68ch;
+  margin-top: 1rem;
+  color: var(--color-paper-dim);
+  font-family: var(--font-mono);
+  line-height: 1.65;
+}
+
+.project-fit-fallback-copy .studio-button { margin-top: 1.5rem; }
+
 .fit-field { grid-column: 1 / -1; }
 .fit-field--half { grid-column: span 1; }
 
@@ -1591,6 +1611,7 @@ svg circle {
   line-height: 1.65;
 }
 
+.project-fit-copy-status { min-height: 1.5em; }
 .project-fit-review textarea { min-height: 330px; margin-top: 2rem; color: var(--color-paper-dim); }
 .project-fit-review-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
 

@@ -27,7 +27,6 @@ const guide = "/ai-workflow-guide.pdf";
       method="post"
       data-newsletter
       data-has-provider={hasProvider ? "true" : "false"}
-      data-fallback-email={site.email}
       data-guide={guide}
     >
       <label for="newsletter-email" class="sr-only">Email address</label>
@@ -81,12 +80,7 @@ const guide = "/ai-workflow-guide.pdf";
         if (note) note.textContent = "Your guide is opening in a new tab. Welcome in.";
         if (input) input.value = "";
       } else {
-        // No provider connected yet. Route the signup to Keith's inbox so no lead is lost.
-        const to = form.dataset.fallbackEmail || "";
-        const subject = encodeURIComponent("Field guide signup");
-        const bodyText = encodeURIComponent(`Please add ${email} to the Sunday letter.`);
-        if (note) note.textContent = "Your guide is opening in a new tab. Finish signup in your email app.";
-        window.location.href = `mailto:${to}?subject=${subject}&body=${bodyText}`;
+        if (note) note.textContent = "Your guide is opening in a new tab. Newsletter signup is temporarily unavailable.";
       }
     });
   }

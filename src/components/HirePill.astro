@@ -4,7 +4,7 @@ import { site } from "../data/site";
 const calLink = `${site.booking.username}/${site.booking.eventSlug}`;
 const ctaHref = site.booking.enabled
   ? `https://cal.com/${calLink}`
-  : `mailto:${site.email}?subject=Work%20with%20me`;
+  : site.booking.intakePath;
 
 const dotColor =
   site.availability.status === "open"

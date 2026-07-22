@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://keithstaggers.com/sitemap.xml
+Sitemap: https://www.keithstaggers.com/sitemap.xml

@@ -4,7 +4,7 @@ import { site } from "../data/site";
 const calLink = `${site.booking.username}/${site.booking.eventSlug}`;
 const ctaHref = site.booking.enabled
   ? `https://cal.com/${calLink}`
-  : `mailto:${site.email}?subject=Bring%20me%20the%20idea`;
+  : site.booking.intakePath;
 ---
 
 <section class="px-6 lg:px-12 pt-12 lg:pt-16 pb-10 max-w-[1536px] mx-auto">

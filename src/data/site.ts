@@ -3,12 +3,8 @@ export const site = {
   tagline: "AI creator, trainer, and workflow builder.",
   description:
     "Keith Staggers turns repeated work into tested, documented AI workflows people can own, with practical training and speaking for teams. Available worldwide.",
-  url: "https://keithstaggers.com",
+  url: "https://www.keithstaggers.com",
   city: "Tampa, FL",
-  // INTERIM (July 12, 2026): hello@keithstaggers.com cannot receive mail until the
-  // domain moves to Vercel DNS (Canva blocks MX records). Swap back after the
-  // transfer + a verified test email. See CLAUDE.md "email" notes.
-  email: "kcstaggers@gmail.com",
   availability: {
     status: "open" as "open" | "limited" | "booked",
     label: "Open for projects",
