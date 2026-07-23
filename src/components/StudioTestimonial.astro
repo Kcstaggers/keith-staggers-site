@@ -1,0 +1,25 @@
+---
+import { testimonials } from "../data/testimonials";
+
+const testimonial = testimonials[0];
+---
+
+{testimonial && (
+  <section class="studio-section studio-testimonial" aria-labelledby="studio-testimonial-title">
+    <div class="studio-shell studio-testimonial-grid">
+      <header class="studio-testimonial-meta">
+        <h2 id="studio-testimonial-title" class="studio-kicker">Client proof</h2>
+        <span>01 / 01</span>
+      </header>
+
+      <figure class="studio-testimonial-quote">
+        <span class="studio-testimonial-mark" aria-hidden="true">“</span>
+        <blockquote>{testimonial.quote}</blockquote>
+        <figcaption>
+          <b>{testimonial.name}</b>
+          <span>{testimonial.role}</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+)}
