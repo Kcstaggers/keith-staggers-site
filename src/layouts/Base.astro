@@ -39,6 +39,7 @@ const jsonLd = {
       founder: { "@id": `${site.url}/#keith` },
       areaServed: "Worldwide",
       makesOffer: [
+        { "@type": "Offer", itemOffered: { "@type": "Course", name: "AI for the Frontline Nurse Leader" } },
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Workflow Install Sprint" } },
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "1:1 AI creator coaching" } },
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI training workshops for teams" } },
@@ -122,7 +123,13 @@ const jsonLd = {
         const source = labelFor(link);
         const page = window.location.pathname;
 
-        if (link.dataset.productPurchase) {
+        if (link.dataset.cohortPurchase) {
+          track("Cohort Checkout Intent", {
+            cohort: link.dataset.cohortPurchase,
+            source,
+            page,
+          });
+        } else if (link.dataset.productPurchase) {
           track("Product Checkout Intent", {
             product: link.dataset.productPurchase,
             source,

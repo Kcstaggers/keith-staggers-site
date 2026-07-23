@@ -1,0 +1,164 @@
+---
+import Base from "../layouts/Base.astro";
+import { books } from "../data/books";
+
+const buildRecord = [
+  { value: "21 years", label: "Baltimore detective · 1992 to 2013" },
+  { value: "2014 to now", label: "Nurse and nurse leader" },
+  { value: "2022 to now", label: "Founder and AI consultant" },
+  { value: "50+", label: "Albums released" },
+  { value: "800+", label: "Songs released" },
+  { value: "1,000+", label: "AI images and films created" },
+];
+---
+
+<Base
+  title="Proof · Apps, Books and Build Record"
+  description="Verified proof from Keith Staggers: an AI Canvas production demo, the provenance-limited GearSTAT simulator case study, three healthcare books, and a finished-work record."
+>
+  <article class="proof-page">
+    <header class="studio-shell proof-hero">
+      <div>
+        <h1 class="studio-display">The work is the <strong>proof</strong><span class="text-signal">.</span></h1>
+      </div>
+      <p>
+        Apps, build checks, books, and finished releases. These are independent portfolio builds and published work. They show capability, not invented client results.
+      </p>
+    </header>
+
+    <section class="proof-canvas" aria-labelledby="proof-canvas-title">
+      <div class="studio-shell proof-canvas-grid">
+        <div class="proof-video-wrap">
+          <a
+            data-proof-reel-link
+            data-href="https://youtu.be/6WyEbSuM7u4"
+            aria-disabled="true"
+            tabindex="-1"
+            class="proof-reel-poster"
+            aria-label="AI Canvas production test, scheduled for public release August 2"
+          >
+            <span class="proof-reel-label">Finish Log 002 · AI Canvas demo reel</span>
+            <span class="proof-reel-result"><b>4¢</b><i>→</i><b>$0</b></span>
+            <span class="proof-reel-caption">The real test · 82 seconds</span>
+            <span class="proof-reel-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+          </a>
+          <p class="proof-reel-status" data-proof-reel-status>The public YouTube release is scheduled for August 2.</p>
+        </div>
+        <div class="proof-canvas-copy">
+          <p class="studio-kicker">AI Canvas · production test</p>
+          <h2 id="proof-canvas-title" class="studio-display">A system that knew the price and still could not <strong>spend the money</strong><span class="text-signal">.</span></h2>
+          <p>Keith put a production queue behind AI Canvas, then proved the path with one worker, mock mode on, provider keys off, billing off, and public execution off.</p>
+          <ul>
+            <li><b>2,016</b><span>tests passed before production</span></li>
+            <li><b>Attempt 1</b><span>production canary succeeded</span></li>
+            <li><b>$0.04</b><span>quoted</span></li>
+            <li><b>$0</b><span>reserved, charged, and provider cost</span></li>
+          </ul>
+          <a data-proof-reel-link data-href="https://youtu.be/6WyEbSuM7u4" aria-disabled="true" tabindex="-1">Public demo scheduled for August 2 ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="studio-shell proof-gearstat" aria-labelledby="proof-gearstat-title">
+      <header>
+        <p class="studio-kicker">GearSTAT · simulated workflow case study</p>
+        <h2 id="proof-gearstat-title" class="studio-display">Useful proof.<br /><strong>Hard boundaries</strong><span class="text-signal">.</span></h2>
+      </header>
+      <div class="proof-case-grid">
+        <article>
+          <span>01</span>
+          <h3>The problem shaped</h3>
+          <p>A nurse-facing simulator for finding hospital equipment and recording whether the nurse actually found it.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>The build record</h3>
+          <p>The recorded July 9 checkpoint reached 206 of 206 tests and 23 of 23 static pages.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>The honest limit</h3>
+          <p>No PHI, no staff tracking, and no live hospital integration. It is not market proof, a client result, or a hospital deployment.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>The current role</h3>
+          <p>GearSTAT is maintained as a parked portfolio build. The demo and documentation show workflow thinking without overstating provenance.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="proof-books" aria-labelledby="proof-books-title">
+      <div class="studio-shell">
+        <header class="proof-books-head">
+          <h2 id="proof-books-title" class="studio-display">Three healthcare books.<br /><strong>Published in 2023</strong><span class="text-signal">.</span></h2>
+          <p>Leadership, burnout, and the reality of med-surg, written from inside the work.</p>
+        </header>
+        <div class="proof-book-list">
+          {books.map((book) => (
+            <a href={book.amazonUrl} target="_blank" rel="noreferrer" class="proof-book">
+              <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} book cover`} width="600" height="900" loading="lazy" decoding="async" />
+              <span><b>{book.title}</b><small>{book.subtitle}</small></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="studio-shell proof-record" aria-labelledby="proof-record-title">
+      <header>
+        <h2 id="proof-record-title" class="studio-display">The build <strong>record</strong><span class="text-signal">.</span></h2>
+        <p>Three careers, one standard: observe carefully, build the useful thing, verify it, and finish.</p>
+      </header>
+      <dl>
+        {buildRecord.map((item) => (
+          <div>
+            <dt>{item.value}</dt>
+            <dd>{item.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="proof-boundary">
+      <div class="studio-shell proof-boundary-grid">
+        <div>
+          <p class="studio-kicker">Portfolio boundary</p>
+          <h2 class="studio-display">Independent work only<span class="text-signal">.</span></h2>
+        </div>
+        <p>Employer projects, employer data, patient information, and internal healthcare workflows are excluded from this portfolio.</p>
+      </div>
+    </section>
+
+    <section class="studio-shell proof-close">
+      <div>
+        <h2 class="studio-display">Want the nurse-leader lane?</h2>
+        <p>Start with the September 16 working session. For team training, speaking, or a workflow install, use the fit questions.</p>
+      </div>
+      <div>
+        <a href="/frontline-nurse-leader/" class="studio-button studio-button--primary">See the Sept 16 cohort</a>
+        <a href="/project-fit/" class="studio-button studio-button--secondary">Start with fit questions</a>
+      </div>
+    </section>
+  </article>
+
+  <script>
+    const proofReelStatus = document.querySelector<HTMLElement>("[data-proof-reel-status]");
+    const proofReelIsPublic = Date.now() >= Date.parse("2026-08-02T11:00:00-04:00");
+    if (proofReelIsPublic) {
+      if (proofReelStatus) proofReelStatus.textContent = "The public demo is available on YouTube.";
+      document.querySelectorAll<HTMLAnchorElement>("[data-proof-reel-link]").forEach((link) => {
+        const href = link.dataset.href;
+        if (!href) return;
+        link.href = href;
+        link.target = "_blank";
+        link.rel = "noreferrer";
+        link.removeAttribute("aria-disabled");
+        link.removeAttribute("tabindex");
+        if (!link.classList.contains("proof-reel-poster")) link.textContent = "Watch the 82-second proof on YouTube ↗";
+      });
+    }
+  </script>
+</Base>

@@ -2,7 +2,7 @@ export const site = {
   name: "Keith Staggers",
   tagline: "AI creator, trainer, and workflow builder.",
   description:
-    "Keith Staggers turns repeated work into tested, documented AI workflows people can own, with practical training and speaking for teams. Available worldwide.",
+    "Keith Staggers helps frontline nurse leaders use AI for real weekly work, then builds tested workflows, training, and finished systems for teams. Available worldwide.",
   url: "https://www.keithstaggers.com",
   city: "Tampa, FL",
   availability: {
@@ -34,8 +34,8 @@ export const site = {
     youtube: "",
   },
   nav: [
-    { label: "Work", href: "/#visuals" },
-    { label: "The Finish Loop", href: "/finish-loop/" },
+    { label: "Sept 16 cohort", href: "/frontline-nurse-leader/" },
+    { label: "Proof", href: "/proof/" },
     { label: "Services", href: "/#services" },
     { label: "Notes", href: "/#notes" },
     { label: "About", href: "/#about" },

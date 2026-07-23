@@ -1,0 +1,153 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site";
+
+const checkoutUrl = "https://buy.stripe.com/eVq6oH9wt2iV2B50rF6wE00";
+const agenda = [
+  {
+    number: "01",
+    title: "The Monday hour",
+    detail: "Practice inbox triage, huddle preparation, and staffing summaries with synthetic data.",
+  },
+  {
+    number: "02",
+    title: "The deck that eats your month",
+    detail: "Turn raw quality and patient-experience data into a presentation-ready story.",
+  },
+  {
+    number: "03",
+    title: "The rounding loop",
+    detail: "Move from audit and rounding data to a themed action plan with owners and dates.",
+  },
+  {
+    number: "04",
+    title: "Guardrails and the library",
+    detail: "Use clear PHI boundaries, verification habits, and a prompt library mapped to your week.",
+  },
+];
+
+const courseJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "AI for the Frontline Nurse Leader · Founding Cohort",
+  description: "A live virtual working session for nurse managers, assistant managers, and charge nurses using synthetic data and practical AI guardrails.",
+  provider: {
+    "@type": "Person",
+    name: site.name,
+    url: site.url,
+  },
+  offers: {
+    "@type": "Offer",
+    price: "179",
+    priceCurrency: "USD",
+    url: checkoutUrl,
+    availability: "https://schema.org/LimitedAvailability",
+  },
+  hasCourseInstance: {
+    "@type": "CourseInstance",
+    courseMode: "Online",
+    startDate: "2026-09-16T09:00:00-04:00",
+    endDate: "2026-09-16T13:15:00-04:00",
+  },
+};
+---
+
+<Base
+  title="AI for the Frontline Nurse Leader · September 16 Founding Cohort"
+  description="A live virtual AI working session for nurse managers, assistant managers, and charge nurses on September 16, 2026. Founding cohort registration is $179."
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(courseJsonLd)} />
+  </Fragment>
+
+  <article class="cohort-page">
+    <header class="studio-shell cohort-hero">
+      <div class="cohort-hero-copy">
+        <p class="cohort-date">September 16, 2026 · 9:00 AM to 1:15 PM ET · Live virtual</p>
+        <h1 class="studio-display">AI for the <strong>Frontline Nurse Leader</strong><span class="text-signal">.</span></h1>
+        <p class="cohort-lede">
+          A hands-on working session for nurse managers, assistant managers, and charge nurses. Practice the weekly work with AI, use synthetic data, and keep the judgment where it belongs.
+        </p>
+        <div class="cohort-actions">
+          <a
+            href={checkoutUrl}
+            data-cohort-purchase="frontline-nurse-leader-sept-16"
+            class="studio-button studio-button--primary"
+          >
+            Register for $179
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          </a>
+          <a href="#agenda" class="studio-button studio-button--secondary">See the agenda</a>
+        </div>
+        <p class="cohort-ce">4.0 nursing contact hours pending approval.</p>
+      </div>
+
+      <aside class="cohort-facts" aria-label="Cohort details">
+        <p><span>Date</span><strong>Wednesday, September 16</strong></p>
+        <p><span>Time</span><strong>9:00 AM to 1:15 PM ET</strong></p>
+        <p><span>Format</span><strong>Live virtual working session</strong></p>
+        <p><span>Capacity</span><strong>20 registrations</strong></p>
+        <p><span>Price</span><strong>$179 USD</strong></p>
+      </aside>
+    </header>
+
+    <section id="agenda" class="studio-shell cohort-agenda" aria-labelledby="cohort-agenda-title">
+      <div class="cohort-section-head">
+        <h2 id="cohort-agenda-title" class="studio-display">Your Monday work.<br /><strong>Built together</strong><span class="text-signal">.</span></h2>
+        <p>Bring a laptop and an approved AI tool or free account. Every exercise uses synthetic data. No patient information and no employer material.</p>
+      </div>
+
+      <ol class="cohort-agenda-list">
+        {agenda.map((item) => (
+          <li>
+            <span>{item.number}</span>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="cohort-outcomes">
+      <div class="studio-shell cohort-outcomes-grid">
+        <div>
+          <h2 class="studio-display">Leave with a method you can <strong>use again</strong><span class="text-signal">.</span></h2>
+        </div>
+        <ul>
+          <li>A personal prompt library mapped to recurring nurse-leader work</li>
+          <li>A practical way to verify output before it becomes a decision</li>
+          <li>Clear boundaries for PHI, public tools, and human approval</li>
+          <li>A repeatable workflow for huddles, quality stories, and follow-up</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="studio-shell cohort-boundary">
+      <div>
+        <p class="studio-kicker">Independent education</p>
+        <h2 class="studio-display">Built from the job.<br /><strong>Separate from the employer</strong><span class="text-signal">.</span></h2>
+      </div>
+      <p>
+        This is an independent Keith Staggers Studio offering. Exercises use synthetic data. Employer documents, internal workflows, patient information, and protected health information are not course material.
+      </p>
+    </section>
+
+    <section class="cohort-close">
+      <div class="studio-shell cohort-close-grid">
+        <div>
+          <h2 class="studio-display">Twenty seats.<br /><strong>One working day</strong><span class="text-signal">.</span></h2>
+          <p>Registration is one seat per payment. Refund, cancellation, and educational-use terms are displayed at checkout.</p>
+          <p class="cohort-ce">4.0 nursing contact hours pending approval.</p>
+        </div>
+        <a
+          href={checkoutUrl}
+          data-cohort-purchase="frontline-nurse-leader-sept-16"
+          class="studio-button studio-button--primary"
+        >
+          Register for $179
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+        </a>
+      </div>
+    </section>
+  </article>
+</Base>
