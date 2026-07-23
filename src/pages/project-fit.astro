@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { site } from "../data/site";
+import { formConfigured, formEndpoint } from "../data/forms";
 ---
 
 <Base
@@ -18,13 +18,13 @@ import { site } from "../data/site";
         </div>
         <div class="project-fit-intro">
           <p>I review every inquiry before sharing a private booking link. A clear workflow, owner, input, finish line, and human check save both of us a meeting that should have been an email.</p>
-          <a href="/finish-loop/">Need the $49 Finish Loop instead? Go straight to it →</a>
+          <a href="/workflow-readiness/">Not sure the job is ready? Take the free readiness check →</a>
         </div>
       </header>
 
       <ol class="project-fit-steps" aria-label="How the project fit process works">
         <li><span>01</span><b>Answer</b><p>Name the outcome, timeline, and right level of investment.</p></li>
-        <li><span>02</span><b>I review</b><p>I decide whether I can help and which offer is the smallest useful move.</p></li>
+        <li><span>02</span><b>Send securely</b><p>Your inquiry goes to Keith's private inbox without publishing an email address.</p></li>
         <li><span>03</span><b>Then we talk</b><p>If it fits, I reply with the private calendar link and the right next step.</p></li>
       </ol>
 
@@ -37,35 +37,40 @@ import { site } from "../data/site";
             <li>A timeline tied to actual work.</li>
             <li>A budget or hiring conversation that matches the ask.</li>
           </ul>
-          <p class="project-fit-privacy">Do not include protected health information, confidential employer or client data, passwords, or API keys.</p>
+          <p class="project-fit-privacy">Your details are used only to evaluate and reply to this inquiry. Do not include protected health information, confidential employer or client data, passwords, or API keys.</p>
         </aside>
 
-        <noscript>
-          <section class="project-fit-form project-fit-fallback" aria-labelledby="fit-fallback-title">
-            <div class="project-fit-fallback-copy">
-              <p class="studio-kicker">JavaScript is off</p>
-              <h2 id="fit-fallback-title">Message me on LinkedIn instead.</h2>
-              <p>This page cannot prepare the reviewable inquiry without JavaScript. Nothing has been sent. Message Keith on LinkedIn and include your name, organization and role, desired conversation, timeline, finished outcome, workflow input, human approver, what you have tried, and investment fit.</p>
-              <p>Do not include protected health information, confidential employer or client data, passwords, or API keys.</p>
-              <a class="studio-button studio-button--primary" href={site.social.linkedin} target="_blank" rel="noreferrer">Message Keith on LinkedIn</a>
-            </div>
-          </section>
-        </noscript>
+        <form
+          class="project-fit-form"
+          data-project-fit-form
+          data-form-configured={String(formConfigured)}
+          action={formEndpoint || undefined}
+          method="post"
+          accept-charset="UTF-8"
+        >
+          <input type="hidden" name="subject" value="[KS Project Fit] {{ email }}" />
+          <input type="hidden" name="form_type" value="Project Fit" />
+          <input type="hidden" name="inquiry_marker" value="ks-project-fit-v1" />
+          <input type="hidden" name="source_page" value="/project-fit/" />
 
-        <form class="project-fit-form" data-project-fit-form method="dialog" hidden>
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="fit-company-site">Leave this field empty</label>
+            <input id="fit-company-site" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
           <div class="fit-field fit-field--half">
             <label for="fit-name">Your name</label>
-            <input id="fit-name" name="name" type="text" autocomplete="name" required />
+            <input id="fit-name" name="name" type="text" autocomplete="name" maxlength="120" required />
           </div>
 
           <div class="fit-field fit-field--half">
             <label for="fit-email">Your email</label>
-            <input id="fit-email" name="email" type="email" autocomplete="email" required />
+            <input id="fit-email" name="email" type="email" autocomplete="email" maxlength="254" required />
           </div>
 
           <div class="fit-field">
             <label for="fit-role">Organization and your role</label>
-            <input id="fit-role" name="role" type="text" autocomplete="organization-title" placeholder="Company, team, or independent project" required />
+            <input id="fit-role" name="role" type="text" autocomplete="organization-title" maxlength="180" placeholder="Company, team, or independent project" required />
           </div>
 
           <div class="fit-field fit-field--half">
@@ -94,22 +99,22 @@ import { site } from "../data/site";
 
           <div class="fit-field">
             <label for="fit-outcome">What must be true when the work is finished?</label>
-            <textarea id="fit-outcome" name="outcome" rows="5" minlength="40" placeholder="Describe the result, who will use it, and what finished means." required></textarea>
+            <textarea id="fit-outcome" name="outcome" rows="5" minlength="40" maxlength="2000" placeholder="Describe the result, who will use it, and what finished means." required></textarea>
           </div>
 
           <div class="fit-field">
             <label for="fit-input">What starts the workflow, and what material goes in?</label>
-            <textarea id="fit-input" name="input" rows="3" minlength="20" placeholder="Name the trigger, source material, and where it currently lives." required></textarea>
+            <textarea id="fit-input" name="input" rows="3" minlength="20" maxlength="1200" placeholder="Name the trigger, source material, and where it currently lives." required></textarea>
           </div>
 
           <div class="fit-field">
             <label for="fit-approval">Who checks or approves the result before it is used or sent?</label>
-            <input id="fit-approval" name="approval" type="text" minlength="5" placeholder="Name the role, even if that person is you." required />
+            <input id="fit-approval" name="approval" type="text" minlength="5" maxlength="300" placeholder="Name the role, even if that person is you." required />
           </div>
 
           <div class="fit-field">
             <label for="fit-tried">What have you already tried, built, or decided?</label>
-            <textarea id="fit-tried" name="tried" rows="4" minlength="20" placeholder="Tools, drafts, internal attempts, approvals, or blockers." required></textarea>
+            <textarea id="fit-tried" name="tried" rows="4" minlength="20" maxlength="1600" placeholder="Tools, drafts, internal attempts, approvals, or blockers." required></textarea>
           </div>
 
           <div class="fit-field fit-field--half">
@@ -126,35 +131,45 @@ import { site } from "../data/site";
           </div>
 
           <div class="fit-field fit-field--half">
-            <label for="fit-link">Website or LinkedIn profile</label>
-            <input id="fit-link" name="link" type="url" inputmode="url" placeholder="https://" />
+            <label for="fit-link">Website or profile</label>
+            <input id="fit-link" name="link" type="url" inputmode="url" maxlength="500" placeholder="https://" />
           </div>
 
           <label class="fit-confirm" for="fit-confirm">
-            <input id="fit-confirm" name="confirmed" type="checkbox" required />
+            <input id="fit-confirm" name="confidentiality_confirmed" type="checkbox" value="Confirmed" required />
             <span>I confirm this contains no protected, confidential, or credential information.</span>
           </label>
 
-          <button class="studio-button studio-button--primary fit-submit" type="submit">
-            Review my inquiry
+          <label class="fit-confirm" for="fit-consent">
+            <input id="fit-consent" name="contact_consent" type="checkbox" value="Consented" required />
+            <span>I consent to Keith using the contact details above to evaluate and reply to this inquiry.</span>
+          </label>
+
+          <p
+            class="form-status"
+            data-fit-status
+            data-state={formConfigured ? "ready" : "error"}
+            aria-live="polite"
+          >
+            {formConfigured
+              ? "Your inquiry will be sent through Formspree to Keith's private inbox."
+              : "Inquiry delivery is not configured yet. The form will not send."}
+          </p>
+
+          <button class="studio-button studio-button--primary fit-submit" type="submit" disabled={!formConfigured}>
+            <span data-submit-label>Send inquiry</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
           </button>
         </form>
       </div>
 
-      <section class="project-fit-review" data-fit-review hidden tabindex="-1" aria-labelledby="fit-review-title">
-        <p class="studio-kicker">One last step</p>
-        <h2 id="fit-review-title" class="studio-display">Review it. Then share it<span class="text-signal">.</span></h2>
-        <p>Your answers have not been transmitted. Copy the inquiry, then message me on LinkedIn. I will reply by email when needed and share a private booking link only if the conversation fits.</p>
-        <textarea data-fit-summary rows="15" readonly aria-label="Project inquiry summary"></textarea>
-        <p class="project-fit-copy-status" data-fit-copy-status aria-live="polite">Nothing has been sent.</p>
+      <section class="project-fit-review" data-fit-success hidden tabindex="-1" aria-labelledby="fit-success-title">
+        <p class="studio-kicker">Sent securely</p>
+        <h2 id="fit-success-title" class="studio-display">Inquiry received<span class="text-signal">.</span></h2>
+        <p>Keith will review the fit before offering a private calendar link. If there is a useful next step, the reply will go to the email you provided.</p>
         <div class="project-fit-review-actions">
-          <button type="button" data-fit-copy class="studio-button studio-button--primary">
-            Copy inquiry
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
-          </button>
-          <a class="studio-button studio-button--secondary" href={site.social.linkedin} target="_blank" rel="noreferrer">Message Keith on LinkedIn</a>
-          <button type="button" class="studio-button studio-button--secondary" data-fit-edit>Change my answers</button>
+          <a class="studio-button studio-button--secondary" href="/">Back to the studio</a>
+          <a class="studio-button studio-button--secondary" href="/workflow-readiness/">Check another workflow</a>
         </div>
       </section>
     </div>
@@ -163,73 +178,52 @@ import { site } from "../data/site";
 
 <script>
   const fitForm = document.querySelector<HTMLFormElement>("[data-project-fit-form]");
-  const fitReview = document.querySelector<HTMLElement>("[data-fit-review]");
-  const fitSummary = document.querySelector<HTMLTextAreaElement>("[data-fit-summary]");
-  const fitCopy = document.querySelector<HTMLButtonElement>("[data-fit-copy]");
-  const fitCopyStatus = document.querySelector<HTMLElement>("[data-fit-copy-status]");
-  const fitEdit = document.querySelector<HTMLButtonElement>("[data-fit-edit]");
+  const fitStatus = document.querySelector<HTMLElement>("[data-fit-status]");
+  const fitSuccess = document.querySelector<HTMLElement>("[data-fit-success]");
+  const fitSubmit = fitForm?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const fitSubmitLabel = fitForm?.querySelector<HTMLElement>("[data-submit-label]");
 
-  const readValue = (data: FormData, key: string) => String(data.get(key) ?? "").trim();
-
-  fitForm?.addEventListener("submit", (event) => {
+  fitForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (!fitForm.reportValidity() || !fitReview || !fitSummary || !fitCopyStatus) return;
 
-    const data = new FormData(fitForm);
-    const need = readValue(data, "need");
-    const name = readValue(data, "name");
-    const summary = [
-      "PROJECT FIT INQUIRY",
-      "",
-      `Name: ${name}`,
-      `Email: ${readValue(data, "email")}`,
-      `Organization and role: ${readValue(data, "role")}`,
-      `Conversation: ${need}`,
-      `Timeline: ${readValue(data, "timeline")}`,
-      `Investment fit: ${readValue(data, "investment")}`,
-      `Website or LinkedIn: ${readValue(data, "link") || "Not provided"}`,
-      "",
-      "OUTCOME",
-      readValue(data, "outcome"),
-      "",
-      "INPUT AND TRIGGER",
-      readValue(data, "input"),
-      "",
-      "HUMAN CHECK",
-      readValue(data, "approval"),
-      "",
-      "WHAT I HAVE TRIED",
-      readValue(data, "tried"),
-      "",
-      "I confirm this inquiry contains no protected, confidential, or credential information.",
-    ].join("\n");
+    if (!fitForm.reportValidity() || !fitStatus || !fitSubmit || !fitSubmitLabel) return;
 
-    fitSummary.value = summary;
-    fitCopyStatus.textContent = "Nothing has been sent.";
-    fitReview.hidden = false;
-    fitReview.focus();
-  });
+    const configured = fitForm.dataset.formConfigured === "true";
+    const endpoint = fitForm.getAttribute("action");
+    if (!configured || !endpoint) {
+      fitStatus.dataset.state = "error";
+      fitStatus.textContent = "Inquiry delivery is not configured. Nothing was sent.";
+      return;
+    }
 
-  fitCopy?.addEventListener("click", async () => {
-    if (!fitSummary || !fitCopyStatus) return;
+    fitForm.setAttribute("aria-busy", "true");
+    fitSubmit.disabled = true;
+    fitSubmitLabel.textContent = "Sending...";
+    fitStatus.dataset.state = "ready";
+    fitStatus.textContent = "Sending your inquiry...";
 
     try {
-      await navigator.clipboard.writeText(fitSummary.value);
-      fitCopyStatus.textContent = "Inquiry copied. Message Keith on LinkedIn and paste it there.";
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: new FormData(fitForm),
+        headers: { Accept: "application/json" },
+      });
+
+      if (!response.ok) throw new Error("Form submission failed");
+
+      fitForm.reset();
+      fitForm.hidden = true;
+      if (fitSuccess) {
+        fitSuccess.hidden = false;
+        fitSuccess.focus();
+      }
     } catch {
-      fitSummary.focus();
-      fitSummary.select();
-      fitCopyStatus.textContent = "Copy the selected inquiry, then message Keith on LinkedIn.";
+      fitStatus.dataset.state = "error";
+      fitStatus.textContent = "That did not send. Check your connection and try again. Your answers are still on this page.";
+      fitSubmit.disabled = false;
+      fitSubmitLabel.textContent = "Send inquiry";
+    } finally {
+      fitForm.removeAttribute("aria-busy");
     }
   });
-
-  fitEdit?.addEventListener("click", () => {
-    if (!fitForm || !fitReview) return;
-    fitReview.hidden = true;
-    fitForm.querySelector<HTMLElement>("input, select, textarea")?.focus();
-  });
-
-  if (fitForm && fitReview && fitSummary && fitCopy && fitCopyStatus && fitEdit) {
-    fitForm.hidden = false;
-  }
 </script>

@@ -1,0 +1,361 @@
+---
+import Base from "../layouts/Base.astro";
+import { formConfigured, formEndpoint } from "../data/forms";
+import { site } from "../data/site";
+
+const questions = [
+  {
+    id: "repeated",
+    number: "01",
+    title: "Does the job repeat in a recognizable way?",
+    help: "You can point to recent examples and describe when it happens.",
+  },
+  {
+    id: "owner",
+    number: "02",
+    title: "Is one person accountable for the result?",
+    help: "A named owner can make decisions, answer questions, and accept the handoff.",
+  },
+  {
+    id: "input",
+    number: "03",
+    title: "Do you know what starts the work and what goes in?",
+    help: "The trigger, source material, format, and current location are clear.",
+  },
+  {
+    id: "finish",
+    number: "04",
+    title: "Can you state what finished looks like?",
+    help: "A reviewer can tell whether the result is usable without guessing.",
+  },
+  {
+    id: "approval",
+    number: "05",
+    title: "Is a human check named before the result is used?",
+    help: "The approver and the decision they make are visible in the workflow.",
+  },
+  {
+    id: "tests",
+    number: "06",
+    title: "Can you assemble ten representative test cases?",
+    help: "Past examples or safe synthetic cases cover normal work and known exceptions.",
+  },
+  {
+    id: "safety",
+    number: "07",
+    title: "Can the job use approved data, client-owned tools, and a manual fallback?",
+    help: "The workflow can stop safely, avoid restricted material, and return to a known manual path.",
+  },
+];
+
+const readinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "AI Workflow Readiness Check",
+  description: "A free seven-question check that helps teams decide whether one repeated job is ready for an AI workflow, needs a working session, or should stay manual.",
+  url: `${site.url}/workflow-readiness/`,
+  isPartOf: { "@type": "WebSite", name: site.name, url: site.url },
+};
+---
+
+<Base
+  title="AI Workflow Readiness Check"
+  description="Answer seven direct questions and learn whether one repeated job is ready for an AI workflow, needs a working session, or should stay manual."
+>
+  <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(readinessJsonLd)} />
+
+  <section class="workflow-readiness" aria-labelledby="readiness-title">
+    <div class="studio-shell workflow-readiness-shell">
+      <header class="readiness-head">
+        <div>
+          <p class="studio-kicker">AI workflow readiness check</p>
+          <h1 id="readiness-title" class="studio-display">
+            Is this job<br /><strong>ready to build</strong><span class="text-signal">?</span>
+          </h1>
+        </div>
+        <div class="readiness-intro">
+          <p>Seven questions. Five minutes. No email gate before your score. Choose yes only when the evidence exists today.</p>
+          <p>Your result points to the smallest useful next move: Project Fit, an AI Jumpstart, or a free guide.</p>
+        </div>
+      </header>
+
+      <noscript>
+        <section class="readiness-noscript" aria-labelledby="readiness-noscript-title">
+          <h2 id="readiness-noscript-title">The scored check needs JavaScript.</h2>
+          <p>You can still use the free guide now or go directly to Project Fit if the workflow is already clear.</p>
+          <div>
+            <a class="studio-button studio-button--cobalt" href="/ai-workflow-guide.pdf">Open the free guide</a>
+            <a class="studio-button studio-button--secondary" href="/project-fit/">Start Project Fit</a>
+          </div>
+        </section>
+        <style>.readiness-score-form { display: none; }</style>
+      </noscript>
+
+      <form class="readiness-score-form" data-readiness-form>
+        <div class="readiness-question-list">
+          {questions.map((question) => (
+            <fieldset class="readiness-question">
+              <legend>
+                <span class="readiness-question-number" aria-hidden="true">{question.number}</span>
+                <span>{question.title}</span>
+              </legend>
+              <div class="readiness-question-body">
+                <p>{question.help}</p>
+                <div class="readiness-options">
+                  <label>
+                    <input type="radio" name={question.id} value="1" required />
+                    <span>Yes</span>
+                  </label>
+                  <label>
+                    <input type="radio" name={question.id} value="0" />
+                    <span>Not yet</span>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          ))}
+        </div>
+
+        <div class="readiness-score-action">
+          <p>Your answers stay in this browser unless you later choose to send your result.</p>
+          <button class="studio-button studio-button--primary" type="submit">
+            See my result
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          </button>
+        </div>
+      </form>
+
+      <section class="readiness-result" data-readiness-result hidden tabindex="-1" aria-labelledby="readiness-result-title">
+        <div class="readiness-result-score" aria-label="Readiness score">
+          <strong data-readiness-score>0</strong><span>/7</span>
+        </div>
+        <div class="readiness-result-copy">
+          <p class="studio-kicker" data-readiness-band>Your result</p>
+          <h2 id="readiness-result-title" class="studio-display" data-readiness-title>Result</h2>
+          <p data-readiness-description></p>
+          <div class="readiness-result-actions">
+            <a class="studio-button studio-button--cobalt" data-readiness-cta href="/project-fit/">
+              <span data-readiness-cta-label>Start Project Fit</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+            </a>
+            <button class="studio-button studio-button--secondary" data-readiness-reset type="button">Check another workflow</button>
+          </div>
+        </div>
+
+        <form
+          class="readiness-followup project-fit-form"
+          data-readiness-followup
+          data-form-configured={String(formConfigured)}
+          action={formEndpoint || undefined}
+          method="post"
+          accept-charset="UTF-8"
+        >
+          <input type="hidden" name="subject" value="[KS Project Fit] {{ email }}" />
+          <input type="hidden" name="form_type" value="Workflow Readiness Follow-up" />
+          <input type="hidden" name="inquiry_marker" value="ks-project-fit-v1" />
+          <input type="hidden" name="source_page" value="/workflow-readiness/" />
+          <input type="hidden" name="readiness_score" data-followup-score value="" />
+          <input type="hidden" name="readiness_result" data-followup-result value="" />
+
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="readiness-company-site">Leave this field empty</label>
+            <input id="readiness-company-site" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <header class="readiness-followup-head">
+            <p class="studio-kicker">Optional follow-up</p>
+            <h3>Want Keith to look at the result?</h3>
+            <p>Send the score and one sentence about the job. If there is a useful next step, Keith will reply to the address you provide.</p>
+            <p>Do not include protected health information, confidential employer or client data, passwords, or API keys.</p>
+          </header>
+
+          <div class="fit-field fit-field--half">
+            <label for="readiness-name">Your name</label>
+            <input id="readiness-name" name="name" type="text" autocomplete="name" maxlength="120" required />
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="readiness-email">Your email</label>
+            <input id="readiness-email" name="email" type="email" autocomplete="email" maxlength="254" required />
+          </div>
+
+          <div class="fit-field">
+            <label for="readiness-job">What job are you considering?</label>
+            <textarea id="readiness-job" name="workflow_summary" rows="3" minlength="20" maxlength="800" placeholder="Name the repeated job and the part that still feels unclear." required></textarea>
+          </div>
+
+          <label class="fit-confirm" for="readiness-confidentiality">
+            <input id="readiness-confidentiality" name="confidentiality_confirmed" type="checkbox" value="Confirmed" required />
+            <span>I confirm this contains no protected, confidential, or credential information.</span>
+          </label>
+
+          <label class="fit-confirm" for="readiness-consent">
+            <input id="readiness-consent" name="contact_consent" type="checkbox" value="Consented" required />
+            <span>I consent to Keith using this information to reply about my result. This does not add me to a mailing list.</span>
+          </label>
+
+          <p
+            class="form-status"
+            data-readiness-followup-status
+            data-state={formConfigured ? "ready" : "error"}
+            aria-live="polite"
+          >
+            {formConfigured
+              ? "Only the details in this follow-up form will be sent."
+              : "Follow-up delivery is not configured yet. The form will not send."}
+          </p>
+
+          <button class="studio-button studio-button--primary fit-submit" type="submit" disabled={!formConfigured}>
+            <span data-followup-submit-label>Send my result</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          </button>
+        </form>
+
+        <section class="readiness-followup-success" data-readiness-followup-success hidden tabindex="-1" aria-labelledby="readiness-followup-success-title">
+          <p class="studio-kicker">Sent securely</p>
+          <h3 id="readiness-followup-success-title">Your result is in Keith's inbox.</h3>
+          <p>If there is a useful next step, the reply will go to the email you provided.</p>
+        </section>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const readinessForm = document.querySelector<HTMLFormElement>("[data-readiness-form]");
+  const readinessResult = document.querySelector<HTMLElement>("[data-readiness-result]");
+  const readinessScore = document.querySelector<HTMLElement>("[data-readiness-score]");
+  const readinessBand = document.querySelector<HTMLElement>("[data-readiness-band]");
+  const readinessTitle = document.querySelector<HTMLElement>("[data-readiness-title]");
+  const readinessDescription = document.querySelector<HTMLElement>("[data-readiness-description]");
+  const readinessCta = document.querySelector<HTMLAnchorElement>("[data-readiness-cta]");
+  const readinessCtaLabel = document.querySelector<HTMLElement>("[data-readiness-cta-label]");
+  const readinessReset = document.querySelector<HTMLButtonElement>("[data-readiness-reset]");
+  const followupForm = document.querySelector<HTMLFormElement>("[data-readiness-followup]");
+  const followupScore = document.querySelector<HTMLInputElement>("[data-followup-score]");
+  const followupResult = document.querySelector<HTMLInputElement>("[data-followup-result]");
+  const followupStatus = document.querySelector<HTMLElement>("[data-readiness-followup-status]");
+  const followupSuccess = document.querySelector<HTMLElement>("[data-readiness-followup-success]");
+  const followupSubmit = followupForm?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const followupSubmitLabel = followupForm?.querySelector<HTMLElement>("[data-followup-submit-label]");
+
+  const outcomes = {
+    ready: {
+      band: "6 to 7 yes answers, with both critical gates",
+      title: "Ready for a fit review.",
+      description: "You have enough structure to scope a workflow without starting with a vague tool conversation. Use Project Fit to name the job, owner, input, finish line, and investment level.",
+      href: "/project-fit/",
+      label: "Start Project Fit",
+    },
+    gated: {
+      band: "Critical gate missing",
+      title: "Close the approval or safety gap first.",
+      description: "A high total is not enough when human approval or a safe, client-owned path is still missing. Name the reviewer, permitted data, approved tools, and manual fallback before treating this job as install-ready.",
+      href: "/services/coaching/",
+      label: "See the AI Jumpstart",
+    },
+    unclear: {
+      band: "3 to 5 yes answers",
+      title: "Useful, but not install-ready.",
+      description: "The job is real, but one or more ownership, input, finish-line, approval, or safety decisions are still loose. A $250 AI Jumpstart is the smaller useful move.",
+      href: "/services/coaching/",
+      label: "See the AI Jumpstart",
+    },
+    early: {
+      band: "0 to 2 yes answers",
+      title: "Keep this one manual for now.",
+      description: "You do not need a build yet. Use the free guide to define the work, then revisit this check when the owner, input, finish line, and human decision are clearer.",
+      href: "/ai-workflow-guide.pdf",
+      label: "Open the free guide",
+    },
+  };
+
+  readinessForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!readinessForm.reportValidity() || !readinessResult || !readinessScore || !readinessBand || !readinessTitle || !readinessDescription || !readinessCta || !readinessCtaLabel) return;
+
+    const data = new FormData(readinessForm);
+    const score = Array.from(data.values()).reduce((total, value) => total + Number(value), 0);
+    const criticalGatesReady = data.get("approval") === "1" && data.get("safety") === "1";
+    const key = score >= 6 && criticalGatesReady ? "ready" : score >= 6 ? "gated" : score >= 3 ? "unclear" : "early";
+    const outcome = outcomes[key];
+
+    readinessScore.textContent = String(score);
+    readinessBand.textContent = outcome.band;
+    readinessTitle.textContent = outcome.title;
+    readinessDescription.textContent = outcome.description;
+    readinessCta.href = outcome.href;
+    readinessCtaLabel.textContent = outcome.label;
+    readinessResult.dataset.outcome = key;
+    readinessResult.hidden = false;
+
+    if (followupScore) followupScore.value = `${score}/7`;
+    if (followupResult) followupResult.value = outcome.title;
+    followupSuccess?.setAttribute("hidden", "");
+    if (followupForm) followupForm.hidden = false;
+
+    readinessResult.focus();
+    readinessResult.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  });
+
+  readinessReset?.addEventListener("click", () => {
+    readinessForm?.reset();
+    followupForm?.reset();
+    if (followupSubmit) followupSubmit.disabled = followupForm?.dataset.formConfigured !== "true";
+    if (followupSubmitLabel) followupSubmitLabel.textContent = "Send my result";
+    if (followupStatus) {
+      const configured = followupForm?.dataset.formConfigured === "true";
+      followupStatus.dataset.state = configured ? "ready" : "error";
+      followupStatus.textContent = configured
+        ? "Only the details in this follow-up form will be sent."
+        : "Follow-up delivery is not configured yet. The form will not send.";
+    }
+    if (readinessResult) readinessResult.hidden = true;
+    followupSuccess?.setAttribute("hidden", "");
+    readinessForm?.querySelector<HTMLInputElement>('input[type="radio"]')?.focus();
+    readinessForm?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  followupForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!followupForm.reportValidity() || !followupStatus || !followupSubmit || !followupSubmitLabel) return;
+
+    const configured = followupForm.dataset.formConfigured === "true";
+    const endpoint = followupForm.getAttribute("action");
+    if (!configured || !endpoint) {
+      followupStatus.dataset.state = "error";
+      followupStatus.textContent = "Follow-up delivery is not configured. Nothing was sent.";
+      return;
+    }
+
+    followupForm.setAttribute("aria-busy", "true");
+    followupSubmit.disabled = true;
+    followupSubmitLabel.textContent = "Sending...";
+    followupStatus.dataset.state = "ready";
+    followupStatus.textContent = "Sending your result...";
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: new FormData(followupForm),
+        headers: { Accept: "application/json" },
+      });
+
+      if (!response.ok) throw new Error("Form submission failed");
+
+      followupForm.reset();
+      followupForm.hidden = true;
+      if (followupSuccess) {
+        followupSuccess.hidden = false;
+        followupSuccess.focus();
+      }
+    } catch {
+      followupStatus.dataset.state = "error";
+      followupStatus.textContent = "That did not send. Check your connection and try again. Your details are still on this page.";
+      followupSubmit.disabled = false;
+      followupSubmitLabel.textContent = "Send my result";
+    } finally {
+      followupForm.removeAttribute("aria-busy");
+    }
+  });
+</script>

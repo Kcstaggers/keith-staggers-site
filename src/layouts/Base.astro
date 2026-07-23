@@ -128,6 +128,8 @@ const jsonLd = {
             source,
             page,
           });
+        } else if (href === "/workflow-readiness/") {
+          track("Readiness Started", { source, page });
         } else if (href === "/project-fit/") {
           track("Qualification Started", { source, page });
         } else if (href === "/ai-workflow-guide.pdf") {
@@ -151,8 +153,13 @@ const jsonLd = {
 
       document.addEventListener("submit", (event) => {
         if (!(event.target instanceof HTMLFormElement)) return;
-        if (!event.target.matches("[data-project-fit-form]")) return;
-        track("Qualification Reviewed", { page: window.location.pathname });
+        if (event.target.matches("[data-project-fit-form]")) {
+          track("Qualification Send Attempt", { page: window.location.pathname });
+        } else if (event.target.matches("[data-readiness-form]")) {
+          track("Readiness Completed", { page: window.location.pathname });
+        } else if (event.target.matches("[data-readiness-followup]")) {
+          track("Readiness Follow-up Attempt", { page: window.location.pathname });
+        }
       });
     </script>
 
