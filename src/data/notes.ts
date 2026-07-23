@@ -9,12 +9,6 @@ export type StudioNote = {
     title: string;
     slug: string;
   };
-  nextStep: {
-    heading: string;
-    detail: string;
-    label: string;
-    href: string;
-  };
   sections: Array<{
     heading: string;
     paragraphs: string[];
@@ -33,12 +27,6 @@ export const notes: StudioNote[] = [
     service: {
       title: "AI Workflow Install Sprint",
       slug: "done-for-you",
-    },
-    nextStep: {
-      heading: "Check the workflow before you build it.",
-      detail: "Use the free seven-question readiness check to see whether the work has a clear owner, finish line, human approval point, and safe path.",
-      label: "Run the free readiness check",
-      href: "/workflow-readiness/",
     },
     sections: [
       {
@@ -76,12 +64,6 @@ export const notes: StudioNote[] = [
       title: "AI training workshops",
       slug: "training",
     },
-    nextStep: {
-      heading: "Put this to work on your next Monday.",
-      detail: "The September 16 cohort is built for nurse managers, assistant managers, and charge nurses who want hands-on practice, not another tool tour.",
-      label: "See the Sept 16 cohort",
-      href: "/frontline-nurse-leader/",
-    },
     sections: [
       {
         heading: "A good demo can still be bad training.",
@@ -117,12 +99,6 @@ export const notes: StudioNote[] = [
     service: {
       title: "Keynotes and speaking",
       slug: "speaking",
-    },
-    nextStep: {
-      heading: "See the record behind the reinvention.",
-      detail: "The proof page puts the apps, build checks, healthcare books, and independent portfolio boundaries in one place.",
-      label: "Open the proof page",
-      href: "/proof/",
     },
     sections: [
       {

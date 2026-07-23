@@ -1,7 +1,7 @@
 ---
 import { site } from "../data/site";
 
-const ctaHref = "/frontline-nurse-leader/";
+const ctaHref = site.booking.intakePath;
 ---
 
 <header class="studio-nav-wrap">
@@ -16,7 +16,7 @@ const ctaHref = "/frontline-nurse-leader/";
       href={ctaHref}
       class="studio-nav-cta"
     >
-      Sept 16 cohort
+      Start here
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
     </a>
 
@@ -27,7 +27,7 @@ const ctaHref = "/frontline-nurse-leader/";
 
   <nav id="studio-mobile-menu" class="studio-mobile-menu" data-studio-mobile-menu hidden aria-label="Mobile navigation">
     {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
-    <a href={ctaHref}>See the Sept 16 cohort</a>
+    <a href={ctaHref}>Start with fit questions</a>
   </nav>
 </header>
 
