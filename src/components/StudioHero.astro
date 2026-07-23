@@ -1,39 +1,42 @@
 ---
+import { site } from "../data/site";
 import OrbitalPortrait from "./OrbitalPortrait.astro";
+
+const ctaHref = site.booking.intakePath;
 ---
 
 <section class="studio-hero" aria-labelledby="studio-hero-title">
   <div class="studio-shell studio-hero-grid">
     <div class="studio-hero-copy">
       <h1 id="studio-hero-title" class="studio-display studio-hero-title">
-        <span>Make Monday</span>
-        <span><strong>work lighter</strong></span>
-        <span>with AI<span class="text-signal">.</span></span>
+        <span>Build the workflow.</span>
+        <span><strong>Keep the</strong></span>
+        <span>judgment<span class="text-signal">.</span></span>
       </h1>
 
       <p class="studio-hero-support">
-        A practical working session for nurse managers, assistant managers, and charge nurses. Build useful workflows on synthetic data. Keep the human judgment.
+        I turn repeated work and ambitious ideas into tested, documented AI systems people can own, then train teams to use them responsibly.
       </p>
 
       <div class="studio-actions">
         <a
-          href="/frontline-nurse-leader/"
+          href="/services/done-for-you/"
           class="studio-button studio-button--primary"
         >
-          See the Sept 16 cohort
+          See the install sprint
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
         </a>
         <a
-          href="/services/training/"
+          href={ctaHref}
           class="studio-button studio-button--secondary"
         >
-          Explore team training
+          Bring me the workflow
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
         </a>
       </div>
 
       <p class="studio-proof-line">
-        <span>Working nurse leader</span><i></i><span>3 healthcare books</span><i></i><span>Hands-on, synthetic-data practice</span><i></i><span>Deployed AI apps</span>
+        <span>Working nurse leader</span><i></i><span>3 books</span><i></i><span>50+ albums</span><i></i><span>Deployed AI apps</span>
       </p>
     </div>
 
