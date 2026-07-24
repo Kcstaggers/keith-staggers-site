@@ -1,0 +1,217 @@
+---
+import Base from "../layouts/Base.astro";
+import OrbitalPortrait from "../components/OrbitalPortrait.astro";
+import { site } from "../data/site";
+
+const canonicalUrl = `${site.url}/about/`;
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": `${canonicalUrl}#page`,
+      name: "About Keith Staggers",
+      description:
+        "Keith Staggers is an AI creator, trainer and workflow builder whose work spans investigation, nursing leadership and independent AI production.",
+      url: canonicalUrl,
+      dateModified: "2026-07-23",
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${site.url}/#website` },
+      mainEntity: { "@id": `${site.url}/#keith` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About",
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
+
+const careers = [
+  {
+    dates: "1992 to 2013",
+    title: "Baltimore detective",
+    copy: "Twenty-one years separating evidence from noise, asking better questions, and writing clearly enough for someone else to act.",
+  },
+  {
+    dates: "2014 to now",
+    title: "Nurse and nurse leader",
+    copy: "A second career built around staying useful when the room is tense, explaining difficult things clearly, and keeping accountability inside the decision.",
+  },
+  {
+    dates: "2022 to now",
+    title: "Founder and AI consultant",
+    copy: "Practical AI systems, training, production, and independent builds shaped around real work rather than tool demonstrations.",
+  },
+];
+
+const operatingCode = [
+  {
+    title: "Find repeated work.",
+    copy: "Name the task, owner, inputs, and finish line before choosing a tool.",
+  },
+  {
+    title: "Bound the AI job.",
+    copy: "Decide what AI may assist and what it may never see or decide.",
+  },
+  {
+    title: "Keep the human check.",
+    copy: "Verify the facts, context, tone, and final decision before the work moves.",
+  },
+  {
+    title: "Document next use.",
+    copy: "Save the inputs, checks, handoff, and recovery path so the work can repeat.",
+  },
+];
+---
+
+<Base
+  title="About · Three-Career AI Workflow Builder"
+  description="Keith Staggers is a Tampa-based AI creator, trainer and workflow builder with experience in investigation, nursing leadership and independent AI production."
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutJsonLd)} />
+  </Fragment>
+
+  <article class="px-6 pb-20 pt-10 lg:px-12 lg:pb-28 lg:pt-16">
+    <div class="mx-auto max-w-[1280px]">
+      <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+        <a href="/" class="transition-colors hover:text-paper">Home</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <span class="text-cobalt-text" aria-current="page">About</span>
+      </nav>
+
+      <header class="grid items-center gap-12 border-b border-rule pb-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.6fr)] lg:gap-20 lg:pb-24">
+        <div>
+          <p class="studio-kicker">About Keith Staggers</p>
+          <h1 class="studio-display mt-6 text-[clamp(50px,8vw,112px)] leading-[0.92] tracking-[-0.055em]">
+            Three careers.<br />One operating <strong>code</strong><span class="text-signal">.</span>
+          </h1>
+          <p class="mt-8 max-w-[760px] text-[clamp(18px,2vw,24px)] leading-[1.6] text-paper-dim">
+            I build practical AI systems, train people to use them responsibly, and finish ambitious creative work. The titles changed. The standard did not: read the room, find the pattern, use the tool, finish the job.
+          </p>
+          <p class="mt-7 font-mono text-[11px] tracking-[0.16em] uppercase text-paper-faint">
+            {site.city} · Available worldwide
+          </p>
+        </div>
+        <div class="mx-auto w-full max-w-[430px]">
+          <OrbitalPortrait eager />
+        </div>
+      </header>
+
+      <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="career-title">
+        <div class="lg:col-span-4">
+          <p class="studio-kicker">The throughline</p>
+          <h2 id="career-title" class="studio-display mt-5 text-[clamp(34px,4vw,58px)] leading-[1]">
+            The work changed.<br /><strong>The standard did not.</strong>
+          </h2>
+        </div>
+        <div class="grid gap-px bg-rule/70 md:grid-cols-3 lg:col-span-8">
+          {careers.map((career, index) => (
+            <article class="bg-ink p-7">
+              <p class="font-mono text-[10px] tracking-[0.16em] uppercase text-cobalt-text">
+                {String(index + 1).padStart(2, "0")} · {career.dates}
+              </p>
+              <h3 class="mt-5 serif text-[25px] leading-tight">{career.title}</h3>
+              <p class="mt-4 text-[15px] leading-[1.75] text-paper-dim">{career.copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="grid gap-12 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="builder-title">
+        <div class="lg:col-span-7">
+          <p class="studio-kicker">Builder, not commentator</p>
+          <h2 id="builder-title" class="studio-display mt-5 text-[clamp(38px,5vw,70px)] leading-[0.98]">
+            The method comes from <strong>finished work</strong><span class="text-signal">.</span>
+          </h2>
+          <div class="mt-8 max-w-[760px] space-y-5 text-[17px] leading-[1.75] text-paper-dim">
+            <p>I use AI as part of real production. The public record includes more than 50 albums, more than 800 songs, three healthcare books published in 2023, more than 1,000 AI-created images and films, and independent software builds.</p>
+            <p>The point is not volume alone. It is learning what makes work survive the last mile from promising draft to finished release.</p>
+          </div>
+          <a href="/proof/" class="studio-button studio-button--secondary mt-8">See the build record</a>
+        </div>
+        <dl class="grid grid-cols-2 gap-px bg-rule/70 lg:col-span-5">
+          <div class="bg-ink p-6"><dt class="studio-display text-[42px]">50+</dt><dd class="mt-2 text-sm text-paper-dim">albums released</dd></div>
+          <div class="bg-ink p-6"><dt class="studio-display text-[42px]">800+</dt><dd class="mt-2 text-sm text-paper-dim">songs released</dd></div>
+          <div class="bg-ink p-6"><dt class="studio-display text-[42px]">3</dt><dd class="mt-2 text-sm text-paper-dim">books published</dd></div>
+          <div class="bg-ink p-6"><dt class="studio-display text-[42px]">1,000+</dt><dd class="mt-2 text-sm text-paper-dim">AI images and films</dd></div>
+        </dl>
+      </section>
+
+      <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="code-title">
+        <div class="grid gap-10 lg:grid-cols-12">
+          <header class="lg:col-span-4">
+            <p class="studio-kicker">How I work</p>
+            <h2 id="code-title" class="studio-display mt-5 text-[clamp(36px,4vw,60px)] leading-[1]">
+              Four rules.<br /><strong>Every build.</strong>
+            </h2>
+            <p class="mt-6 max-w-sm text-paper-dim">Tools change. These four rules do not.</p>
+          </header>
+          <ol class="grid gap-px bg-rule/70 md:grid-cols-2 lg:col-span-8">
+            {operatingCode.map((item, index) => (
+              <li class="bg-ink p-7">
+                <span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">{String(index + 1).padStart(2, "0")}</span>
+                <h3 class="mt-4 serif text-[24px]">{item.title}</h3>
+                <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">{item.copy}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="shared-title">
+        <div class="lg:col-span-5">
+          <h2 id="shared-title" class="studio-display text-[clamp(36px,4.5vw,64px)] leading-[0.98]">
+            What the three careers <strong>share</strong><span class="text-signal">.</span>
+          </h2>
+        </div>
+        <div class="space-y-6 text-[18px] leading-[1.75] text-paper-dim lg:col-span-7">
+          <p>Detective work taught me to observe before acting. Nursing taught me that judgment has consequences. Production taught me that an idea has no value until it survives the last mile. The common thread is accountable follow-through.</p>
+          <p>I install practical AI workflows, coach people through stuck projects, train teams, speak on adoption and reinvention, and take on selected production work. The Finish Loop is the self-serve starting point for creators who need a system for finishing and releasing their work.</p>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <a href="/services/" class="studio-button studio-button--secondary">Explore services</a>
+            <a href="/finish-loop/" class="studio-button studio-button--secondary">See The Finish Loop</a>
+            <a href="/notes/" class="studio-button studio-button--secondary">Read Studio Notes</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid gap-8 border-b border-rule py-12 lg:grid-cols-12" aria-labelledby="boundary-title">
+        <div class="lg:col-span-4">
+          <p class="studio-kicker">Portfolio boundary</p>
+          <h2 id="boundary-title" class="mt-4 serif text-[30px]">Independent work only.</h2>
+        </div>
+        <p class="max-w-[720px] text-[16px] leading-[1.75] text-paper-dim lg:col-span-8">
+          Everything shown here is independent work. Employer projects, employer data, patient information, and internal healthcare workflows are excluded.
+        </p>
+      </section>
+
+      <section class="grid items-end gap-10 pt-16 lg:grid-cols-12 lg:pt-24">
+        <div class="lg:col-span-8">
+          <p class="studio-kicker">Work with me</p>
+          <h2 class="studio-display mt-5 text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
+            Bring one repeated job or one idea that needs to <strong>cross the line</strong><span class="text-signal">.</span>
+          </h2>
+        </div>
+        <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+          <a href="/project-fit/" class="studio-button studio-button--primary">Start with fit questions</a>
+          <a href="/proof/" class="studio-button studio-button--secondary">See the proof</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>

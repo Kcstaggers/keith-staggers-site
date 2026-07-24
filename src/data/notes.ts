@@ -3,11 +3,14 @@ export type StudioNote = {
   number: string;
   category: string;
   title: string;
+  seoTitle: string;
   excerpt: string;
   readingTime: string;
-  service: {
+  datePublished: string;
+  dateModified: string;
+  related: {
     title: string;
-    slug: string;
+    href: string;
   };
   sections: Array<{
     heading: string;
@@ -21,12 +24,15 @@ export const notes: StudioNote[] = [
     number: "01",
     category: "AI practice",
     title: "Most people do not have an AI problem. They have a finishing problem.",
+    seoTitle: "The AI Finishing Problem",
     excerpt:
       "More prompts will not rescue a process with no finish line. The advantage is knowing what done looks like, then building backward from there.",
     readingTime: "4 min read",
-    service: {
-      title: "AI Workflow Install Sprint",
-      slug: "done-for-you",
+    datePublished: "2026-07-11",
+    dateModified: "2026-07-23",
+    related: {
+      title: "The Finish Loop",
+      href: "/finish-loop/",
     },
     sections: [
       {
@@ -57,12 +63,15 @@ export const notes: StudioNote[] = [
     number: "02",
     category: "Team training",
     title: "AI training should change Monday morning.",
+    seoTitle: "AI Training That Changes Monday Morning",
     excerpt:
       "If nobody uses anything the next day, the session was entertainment. Good training ends with a working habit, not a folder full of slides.",
     readingTime: "3 min read",
-    service: {
+    datePublished: "2026-07-11",
+    dateModified: "2026-07-23",
+    related: {
       title: "AI training workshops",
-      slug: "training",
+      href: "/services/training/",
     },
     sections: [
       {
@@ -93,12 +102,15 @@ export const notes: StudioNote[] = [
     number: "03",
     category: "Reinvention",
     title: "Three careers. One standard.",
+    seoTitle: "Three Careers, One Operating Standard",
     excerpt:
       "Detective, nurse leader, creator. The titles changed. The real work stayed the same: read the room, find the pattern, use the tool, finish the job.",
     readingTime: "4 min read",
-    service: {
+    datePublished: "2026-07-11",
+    dateModified: "2026-07-23",
+    related: {
       title: "Keynotes and speaking",
-      slug: "speaking",
+      href: "/services/speaking/",
     },
     sections: [
       {

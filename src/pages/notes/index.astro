@@ -1,0 +1,171 @@
+---
+import Base from "../../layouts/Base.astro";
+import { notes } from "../../data/notes";
+import { site } from "../../data/site";
+
+const canonicalUrl = `${site.url}/notes/`;
+const notesJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["CollectionPage", "Blog"],
+      "@id": `${canonicalUrl}#page`,
+      name: "Studio Notes on Practical AI Work",
+      description:
+        "Essays from Keith Staggers on practical AI workflows, team training, creative production, professional reinvention and finishing the work.",
+      url: canonicalUrl,
+      dateModified: "2026-07-23",
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${site.url}/#website` },
+      author: { "@id": `${site.url}/#keith` },
+      mainEntity: { "@id": `${canonicalUrl}#list` },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${canonicalUrl}#list`,
+      numberOfItems: notes.length,
+      itemListElement: notes.map((note, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: note.title,
+        url: `${site.url}/notes/${note.slug}/`,
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Studio Notes",
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
+
+const startingPoints = [
+  {
+    problem: "A workflow keeps circling.",
+    move: "Read the finishing note, then check whether the job is ready.",
+    href: "/notes/the-finishing-problem/",
+  },
+  {
+    problem: "Training is not changing behavior.",
+    move: "Read the Monday-morning test, then review practical team training.",
+    href: "/notes/the-monday-morning-test/",
+  },
+  {
+    problem: "You are building the next chapter.",
+    move: "Read the three-career story, then see the operating code behind it.",
+    href: "/notes/three-careers-one-standard/",
+  },
+];
+---
+
+<Base
+  title="Studio Notes · Practical AI and Finishing"
+  description="Essays from Keith Staggers on practical AI workflows, team training, creative production, professional reinvention and finishing the work."
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(notesJsonLd)} />
+  </Fragment>
+
+  <article class="px-6 pb-20 pt-10 lg:px-12 lg:pb-28 lg:pt-16">
+    <div class="mx-auto max-w-[1280px]">
+      <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+        <a href="/" class="transition-colors hover:text-paper">Home</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <span class="text-cobalt-text" aria-current="page">Studio Notes</span>
+      </nav>
+
+      <header class="grid gap-10 border-b border-rule pb-16 lg:grid-cols-12 lg:pb-24">
+        <div class="lg:col-span-9">
+          <p class="studio-kicker">Studio Notes</p>
+          <h1 class="studio-display mt-6 text-[clamp(52px,8vw,112px)] leading-[0.92] tracking-[-0.055em]">
+            Notes for people<br /><strong>doing the work</strong><span class="text-signal">.</span>
+          </h1>
+        </div>
+        <p class="self-end text-[18px] leading-[1.7] text-paper-dim lg:col-span-3">
+          Short, practical essays on AI, creative production, training, and reinvention. Where AI helps, where judgment stays human, and what finishing requires. No recycled prompt lists.
+        </p>
+      </header>
+
+      <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="all-notes-title">
+        <div class="mb-10 flex items-end justify-between gap-5">
+          <div>
+            <p class="studio-kicker">All notes</p>
+            <h2 id="all-notes-title" class="studio-display mt-4 text-[clamp(34px,4vw,58px)]">Read the <strong>record</strong><span class="text-signal">.</span></h2>
+          </div>
+          <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">{notes.length} published notes</span>
+        </div>
+
+        <div class="divide-y divide-rule border-y border-rule">
+          {notes.map((note) => (
+            <article class="grid gap-7 py-9 lg:grid-cols-[72px_minmax(0,1fr)_220px] lg:items-start">
+              <span class="font-mono text-[12px] tracking-[0.16em] text-cobalt-text">{note.number}</span>
+              <div>
+                <p class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">
+                  {note.category} · {note.readingTime}
+                </p>
+                <h3 class="mt-4 serif text-[clamp(28px,3.5vw,46px)] leading-[1.02]">
+                  <a href={`/notes/${note.slug}/`} class="transition-colors hover:text-cobalt">{note.title}</a>
+                </h3>
+                <p class="mt-4 max-w-[760px] text-[16px] leading-[1.7] text-paper-dim">{note.excerpt}</p>
+              </div>
+              <div class="lg:text-right">
+                <a href={`/notes/${note.slug}/`} class="block font-mono text-[11px] tracking-[0.12em] uppercase text-paper hover:text-cobalt-text">Read note →</a>
+                <a href={note.related.href} class="mt-4 block font-mono text-[10px] leading-[1.5] tracking-[0.1em] uppercase text-paper-faint hover:text-paper">
+                  Put it to work: {note.related.title} →
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="start-title">
+        <div class="lg:col-span-4">
+          <p class="studio-kicker">Start with the problem</p>
+          <h2 id="start-title" class="studio-display mt-5 text-[clamp(36px,4vw,60px)] leading-[1]">
+            Read what matches the <strong>work in front of you</strong><span class="text-signal">.</span>
+          </h2>
+        </div>
+        <div class="grid gap-px bg-rule/70 lg:col-span-8">
+          {startingPoints.map((item, index) => (
+            <a href={item.href} class="grid gap-3 bg-ink p-6 transition-colors hover:bg-paper/[0.04] sm:grid-cols-[48px_minmax(0,1fr)]">
+              <span class="font-mono text-[10px] text-cobalt-text">{String(index + 1).padStart(2, "0")}</span>
+              <span>
+                <strong class="block serif text-[24px]">{item.problem}</strong>
+                <span class="mt-2 block text-[15px] leading-[1.6] text-paper-dim">{item.move}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="grid items-end gap-10 pt-16 lg:grid-cols-12 lg:pt-24">
+        <div class="lg:col-span-7">
+          <p class="studio-kicker">Put the thinking to work</p>
+          <h2 class="studio-display mt-5 text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
+            Choose the smallest useful <strong>next move</strong><span class="text-signal">.</span>
+          </h2>
+        </div>
+        <div class="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
+          <a href="/workflow-readiness/" class="studio-button studio-button--primary">Check a workflow</a>
+          <a href="/finish-loop/" class="studio-button studio-button--secondary">Finish a project</a>
+          <a href="/services/" class="studio-button studio-button--secondary">Explore services</a>
+          <a href="/proof/" class="studio-button studio-button--secondary">See the proof</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>

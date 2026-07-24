@@ -1,14 +1,59 @@
 ---
 import Base from "../layouts/Base.astro";
 import { formConfigured, formEndpoint } from "../data/forms";
+import { site } from "../data/site";
+
+const projectFitJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${site.url}/project-fit/#page`,
+      name: "Project Fit",
+      description:
+        "Answer direct questions before requesting time with Keith Staggers. Keith reviews every inquiry before sharing a private booking link.",
+      url: `${site.url}/project-fit/`,
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${site.url}/#website` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${site.url}/project-fit/#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Project Fit",
+          item: `${site.url}/project-fit/`,
+        },
+      ],
+    },
+  ],
+};
 ---
 
 <Base
   title="Project fit"
   description="Answer a few direct questions before requesting time with Keith Staggers. Keith reviews every inquiry before sharing a private booking link."
 >
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(projectFitJsonLd)} />
+  </Fragment>
+
   <section class="project-fit" aria-labelledby="project-fit-title">
     <div class="studio-shell project-fit-shell">
+      <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+        <a href="/" class="transition-colors hover:text-paper">Home</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <span class="text-cobalt-text" aria-current="page">Project Fit</span>
+      </nav>
+
       <header class="project-fit-head">
         <div>
           <p class="studio-kicker">Before the calendar</p>
