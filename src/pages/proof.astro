@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { books } from "../data/books";
+import { site } from "../data/site";
 
 const buildRecord = [
   { value: "21 years", label: "Baltimore detective · 1992 to 2013" },
@@ -10,13 +11,99 @@ const buildRecord = [
   { value: "800+", label: "Songs released" },
   { value: "1,000+", label: "AI images and films created" },
 ];
+const canonicalUrl = `${site.url}/proof/`;
+const proofItems = [
+  {
+    "@type": "CreativeWork",
+    "@id": `${canonicalUrl}#ai-canvas`,
+    name: "AI Canvas production shadow",
+    description:
+      "An owner-run production shadow that proved a durable mock-only execution path with billing, paid providers, and public execution off.",
+    creator: { "@id": `${site.url}/#keith` },
+  },
+  {
+    "@type": "CreativeWork",
+    "@id": `${canonicalUrl}#gearstat`,
+    name: "GearSTAT simulated portfolio build",
+    description:
+      "An independent nurse-facing simulator built with simulated data. It is not a hospital deployment, client result, or active venture.",
+    creator: { "@id": `${site.url}/#keith` },
+  },
+  ...books.map((book) => ({
+    "@type": "Book",
+    "@id": `${canonicalUrl}#book-${book.slug}`,
+    name: book.title,
+    alternateName: book.subtitle,
+    description: book.blurb,
+    datePublished: "2023",
+    author: { "@id": `${site.url}/#keith` },
+    url: book.amazonUrl,
+    image: `${site.url}/media/book-${book.slug}.webp`,
+  })),
+];
+const proofJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${canonicalUrl}#page`,
+      name: "Proof · AI Builds, Books and Finished Work",
+      description:
+        "Independent AI builds, test records, three healthcare books, and a finished-work record from Keith Staggers.",
+      url: canonicalUrl,
+      dateModified: "2026-07-23",
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${site.url}/#website` },
+      about: { "@id": `${site.url}/#keith` },
+      mainEntity: { "@id": `${canonicalUrl}#work` },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${canonicalUrl}#work`,
+      numberOfItems: proofItems.length,
+      itemListElement: proofItems.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item,
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Proof",
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
 ---
 
 <Base
-  title="Proof · Selected Builds, Books and Finished Work"
-  description="Independent portfolio proof from Keith Staggers: an AI Canvas production-shadow test, the provenance-limited GearSTAT simulator case study, three healthcare books, and a finished-work record."
+  title="Proof · AI Builds, Books and Finished Work"
+  description="See Keith Staggers' independent AI builds, test records, three healthcare books, and finished-work record. No client outcomes are claimed."
 >
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(proofJsonLd)} />
+  </Fragment>
+
   <article class="proof-page">
+    <nav class="studio-shell pt-8 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-paper transition-colors">Home</a>
+      <span class="text-rule mx-2" aria-hidden="true">/</span>
+      <span class="text-cobalt-text" aria-current="page">Proof</span>
+    </nav>
+
     <header class="studio-shell proof-hero">
       <div>
         <h1 class="studio-display">The work is the <strong>proof</strong><span class="text-signal">.</span></h1>
@@ -145,7 +232,7 @@ const buildRecord = [
       </div>
       <div>
         <a href="/project-fit/" class="studio-button studio-button--primary">Start with fit questions</a>
-        <a href="/#services" class="studio-button studio-button--secondary">Explore services</a>
+        <a href="/services/" class="studio-button studio-button--secondary">Explore services</a>
       </div>
     </section>
   </article>

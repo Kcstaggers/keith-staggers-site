@@ -4,6 +4,7 @@ export type Service = {
   title: string;
   blurb: string;
   pricing: string;
+  lastModified: string;
   // Landing page fields
   seoTitle: string;
   seoDescription: string;
@@ -13,6 +14,7 @@ export type Service = {
   audience: string[];
   deliverables: { name: string; detail: string }[];
   process: { step: string; detail: string }[];
+  faqs: { question: string; answer: string }[];
   ctaPrompt: string;
 };
 
@@ -24,7 +26,8 @@ export const services: Service[] = [
     blurb:
       "One repeated job turned into a tested, documented AI-assisted workflow in a client-owned path. You own the system and the human decision stays visible.",
     pricing: "Projects from $2,500",
-    seoTitle: "AI Workflow Install Sprint for Small Teams and Professional Services",
+    lastModified: "2026-07-23",
+    seoTitle: "AI Workflow Consulting for Small Teams",
     seoDescription:
       "Turn one repeated job into a tested, documented AI-assisted workflow in a client-owned path. Projects from $2,500.",
     headline: "One repeated job.",
@@ -49,6 +52,28 @@ export const services: Service[] = [
       { step: "Build and prove", detail: "Review the smallest complete loop and test it against the agreed cases before expansion." },
       { step: "Own it", detail: "Run, check, stop, and recover the workflow without Keith controlling the screen." },
     ],
+    faqs: [
+      {
+        question: "What kind of workflow fits an Install Sprint?",
+        answer:
+          "One repeated job with a clear owner, recognizable inputs, a finish line, and a named human check. A broad request to automate a department is not ready until one job is isolated.",
+      },
+      {
+        question: "Will the system live in my accounts?",
+        answer:
+          "The preferred path is client-owned accounts, subscriptions, and data connections. The handoff is designed so your team can run, stop, and recover the workflow without Keith controlling the screen.",
+      },
+      {
+        question: "What material can be used during the build?",
+        answer:
+          "Testing starts with synthetic or specifically approved redacted material. Protected, confidential, credential, and restricted data should not be submitted through the public inquiry form.",
+      },
+      {
+        question: "What happens after handoff?",
+        answer:
+          "You receive the operating procedure, recorded walkthrough, owner training, known limits, recovery steps, and fourteen days of stabilization.",
+      },
+    ],
     ctaPrompt: "Name the repeated job, who owns it, and what finished means. I will tell you whether it is ready for an install sprint.",
   },
   {
@@ -58,7 +83,8 @@ export const services: Service[] = [
     blurb:
       "One hour on your actual workflow, business problem, or stuck project. Leave with a first solution, a roadmap, and a starter prompt pack.",
     pricing: "$250 · 60 minutes",
-    seoTitle: "AI Jumpstart · A Practical One-to-One AI Working Session",
+    lastModified: "2026-07-23",
+    seoTitle: "One-to-One AI Workflow Coaching",
     seoDescription:
       "Work directly with Keith Staggers for one hour on an AI workflow or project. Leave with a recording, written roadmap, and starter prompt pack. $250.",
     headline: "Bring one stuck workflow.",
@@ -74,13 +100,35 @@ export const services: Service[] = [
     deliverables: [
       { name: "Workflow diagnosis", detail: "We identify the repeated work, friction, risk, and actual outcome." },
       { name: "Live build", detail: "We create the first useful prompt, workflow, or prototype together." },
-      { name: "Written roadmap", detail: "Three ordered next steps, tools named, with clear DIY and done-for-you boundaries." },
+      { name: "Recording and roadmap", detail: "A session recording, three ordered next steps, named tools, and clear DIY and done-for-you boundaries." },
       { name: "Starter prompt pack", detail: "A small set of prompts tailored to the problem we worked." },
     ],
     process: [
       { step: "Book", detail: "Bring one workflow, business problem, or stuck project." },
       { step: "Work", detail: "Sixty minutes, screens shared, focused on the real task." },
       { step: "Roadmap", detail: "Receive the written plan and starter prompt pack within 48 hours." },
+    ],
+    faqs: [
+      {
+        question: "What should I bring?",
+        answer:
+          "Bring one real workflow, business problem, or stuck project and enough nonconfidential context to work on it. A focused problem produces a better hour than a general tour of AI tools.",
+      },
+      {
+        question: "Is this a tool demonstration?",
+        answer:
+          "No. The session is built around your actual task. We identify the useful AI role, keep the human decisions visible, and build the first working move together.",
+      },
+      {
+        question: "What do I receive afterward?",
+        answer:
+          "You receive the session recording, a written roadmap with three ordered next steps, and a small starter prompt pack tailored to the problem.",
+      },
+      {
+        question: "Is this the right format for a team?",
+        answer:
+          "AI Jumpstart is a one-to-one working session. Teams that need a shared method, exercises, and follow-up should use the training offer.",
+      },
     ],
     ctaPrompt: "Bring the workflow or project that keeps circling. Leave with a working first move.",
   },
@@ -91,7 +139,8 @@ export const services: Service[] = [
     blurb:
       "Hands-on training built around real work. Teams practice with synthetic or approved material and leave with a repeatable playbook.",
     pricing: "Public cohort $179 · Team workshops from $3,500",
-    seoTitle: "Practical AI Training for Leaders and Operational Teams",
+    lastModified: "2026-07-23",
+    seoTitle: "Practical AI Training for Leaders and Teams",
     seoDescription:
       "Hands-on AI training for nurse leaders, operations teams, educators, administrators, and small teams. Build responsible workflows using practical guardrails.",
     headline: "A workshop should change",
@@ -116,6 +165,28 @@ export const services: Service[] = [
       { step: "Build live", detail: "Participants work through the method with direct coaching." },
       { step: "Embed", detail: "Leave with documented systems and a clear next-use plan." },
     ],
+    faqs: [
+      {
+        question: "Is this a general AI overview?",
+        answer:
+          "No. Participants work through selected tasks during the session. The goal is a repeatable habit and playbook, not a product tour or a folder of slides.",
+      },
+      {
+        question: "Can the workshop use examples from our work?",
+        answer:
+          "Yes, when the examples are synthetic or specifically approved for the session. The scope identifies the permitted material, approved tools, and human checks before exercises are built.",
+      },
+      {
+        question: "What does the team leave with?",
+        answer:
+          "The team leaves with three mapped workflows, reusable prompt and check patterns, documented boundaries, and a structured thirty-day follow-up.",
+      },
+      {
+        question: "Are public and private formats available?",
+        answer:
+          "Yes. Public cohort seats are $179. Private team workshops start at $3,500 and are scoped around the audience, selected work, and operating boundaries.",
+      },
+    ],
     ctaPrompt: "Tell me what work the team keeps repeating. I will show you what a practical session can change.",
   },
   {
@@ -125,7 +196,8 @@ export const services: Service[] = [
     blurb:
       "Practical talks on AI adoption, leadership, responsible workflows, and reinvention from someone doing the work now.",
     pricing: "Keynotes from $3,500",
-    seoTitle: "Speaker on Practical AI Adoption, Leadership and Reinvention",
+    lastModified: "2026-07-23",
+    seoTitle: "Practical AI Speaker for Leaders and Teams",
     seoDescription:
       "Book Keith Staggers to speak on practical AI adoption, leadership, responsible workflows, and professional reinvention. Keynotes from $3,500.",
     headline: "The story earns the room.",
@@ -148,6 +220,28 @@ export const services: Service[] = [
       { step: "Call", detail: "Fifteen minutes on the event, audience, and desired outcome." },
       { step: "Tailor", detail: "The examples, stories, and action framework are shaped to the room." },
       { step: "Deliver", detail: "On stage or virtual, with simple production requirements." },
+    ],
+    faqs: [
+      {
+        question: "What speaking formats are available?",
+        answer:
+          "Formats include a forty-five to sixty-minute keynote, a moderated fireside or Q&A, and a workshop add-on for a smaller group.",
+      },
+      {
+        question: "What topics does Keith speak about?",
+        answer:
+          "Core topics are practical AI adoption, responsible workflows, leadership, professional reinvention, and the judgment required to finish useful work.",
+      },
+      {
+        question: "Can the session be delivered virtually?",
+        answer:
+          "Yes. Speaking can be delivered on stage or virtually. The format and production requirements are fixed during the event call.",
+      },
+      {
+        question: "Is the talk tailored to the audience?",
+        answer:
+          "Yes. The event, audience, desired outcome, examples, stories, and action framework are discussed before the talk is finalized.",
+      },
     ],
     ctaPrompt: "Tell me about the event and the room. I will tell you the practical angle I would bring.",
   },

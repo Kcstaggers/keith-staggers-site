@@ -16,17 +16,85 @@ const { service } = Astro.props;
 const others = services.filter((s) => s.slug !== service.slug);
 const href = getBookingHref();
 const calAttrs = getCalAttrs();
+const canonicalUrl = new URL(`/services/${service.slug}/`, site.url).href;
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": `${canonicalUrl}#service`,
+      name: service.title,
+      serviceType: service.title,
+      description: service.seoDescription,
+      url: canonicalUrl,
+      provider: { "@id": `${site.url}/#keith` },
+      areaServed: "Worldwide",
+      audience: service.audience.map((audienceType) => ({
+        "@type": "Audience",
+        audienceType,
+      })),
+      offers: {
+        "@type": "Offer",
+        url: canonicalUrl,
+        description: service.pricing,
+      },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonicalUrl}#faq`,
+      mainEntity: service.faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Services",
+          item: `${site.url}/services/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: service.title,
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
 ---
 
-<Base title={service.seoTitle} description={service.seoDescription}>
+<Base
+  title={service.seoTitle}
+  description={service.seoDescription}
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
+  </Fragment>
+
   <article class="px-6 lg:px-12 pt-12 pb-20 lg:pt-20 lg:pb-28 max-w-[1280px] mx-auto">
     <!-- Breadcrumb -->
     <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
       <a href="/" class="hover:text-paper transition-colors">Home</a>
-      <span class="text-rule mx-2">/</span>
-      <a href="/#services" class="hover:text-paper transition-colors">Services</a>
-      <span class="text-rule mx-2">/</span>
-      <span class="text-cobalt">{service.title}</span>
+      <span class="text-rule mx-2" aria-hidden="true">/</span>
+      <a href="/services/" class="hover:text-paper transition-colors">Services</a>
+      <span class="text-rule mx-2" aria-hidden="true">/</span>
+      <span class="text-cobalt-text" aria-current="page">{service.title}</span>
     </nav>
 
     <!-- Hero -->
@@ -48,7 +116,7 @@ const calAttrs = getCalAttrs();
         <a
           href={href}
           {...calAttrs}
-          class="inline-flex items-center gap-2 text-[12px] font-mono tracking-[0.18em] uppercase px-6 py-3.5 rounded-full border border-cobalt bg-cobalt text-ink hover:bg-transparent hover:text-cobalt transition-colors"
+          class="inline-flex items-center gap-2 text-[12px] font-mono tracking-[0.18em] uppercase px-6 py-3.5 rounded-full border border-cobalt bg-cobalt text-ink hover:bg-transparent hover:text-cobalt-text transition-colors"
         >
           {site.booking.buttonLabel}
           <span aria-hidden="true">→</span>
@@ -82,7 +150,7 @@ const calAttrs = getCalAttrs();
       <div class="grid md:grid-cols-2 gap-px bg-rule/60">
         {service.deliverables.map((d, i) => (
           <div class="bg-ink p-7 lg:p-8">
-            <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt mb-3">
+            <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt-text mb-3">
               {String(i + 1).padStart(2, "0")}
             </p>
             <h3 class="serif text-[22px] lg:text-[24px] leading-tight mb-3">{d.name}</h3>
@@ -100,7 +168,7 @@ const calAttrs = getCalAttrs();
       <ol class="lg:col-span-8 space-y-8">
         {service.process.map((p, i) => (
           <li class="flex gap-6">
-            <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt pt-1.5 shrink-0">
+            <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt-text pt-1.5 shrink-0">
               {String(i + 1).padStart(2, "0")}
             </span>
             <div>
@@ -112,12 +180,38 @@ const calAttrs = getCalAttrs();
       </ol>
     </section>
 
+    <section class="hairline mt-20 pt-12 grid lg:grid-cols-12 gap-10" aria-labelledby="service-faq-title">
+      <div class="lg:col-span-4">
+        <p class="eyebrow mb-5">Before you ask</p>
+        <h2 id="service-faq-title" class="serif text-[clamp(28px,3vw,40px)] leading-[1.05]">
+          Practical <span class="accent">questions</span>.
+        </h2>
+      </div>
+      <div class="lg:col-span-8 divide-y divide-rule border-y border-rule">
+        {service.faqs.map((faq, index) => (
+          <details class="group py-6">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-6 serif text-[20px] leading-tight">
+              <span><span class="mr-3 font-mono text-[10px] tracking-[0.16em] text-cobalt-text" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{faq.question}</span>
+              <span class="font-mono text-cobalt-text transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="max-w-[680px] pb-1 pt-5 text-[15px] leading-[1.75] text-paper-dim">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
     <SectionCTA prompt={service.ctaPrompt} />
 
     <!-- Other services -->
     <section class="hairline mt-20 pt-10">
       <p class="eyebrow mb-6">Other ways in</p>
       <div class="flex flex-wrap gap-3">
+        <a
+          href="/services/"
+          class="font-mono text-[11px] tracking-[0.18em] uppercase px-5 py-2.5 rounded-full border border-cobalt text-cobalt-text hover:text-paper hover:border-paper-dim transition-colors"
+        >
+          All services →
+        </a>
         {others.map((s) => (
           <a
             href={`/services/${s.slug}/`}

@@ -28,16 +28,16 @@ export const site = {
   social: {
     linkedin: "https://www.linkedin.com/in/keithstaggers/",
     spotify: "https://open.spotify.com/artist/4BAYMh3hDuSfEQHAOoOu0g",
-    appleMusic: "https://music.apple.com/us/artist/keith-staggers",
+    appleMusic: "https://music.apple.com/us/artist/keith-staggers/1743790202",
     facebook: "https://www.facebook.com/profile.php?id=61564900019924",
     instagram: "https://www.instagram.com/sta_ggers/",
-    youtube: "",
+    youtube: "https://www.youtube.com/@kcstaggers",
   },
   nav: [
     { label: "Proof", href: "/proof/" },
     { label: "The Finish Loop", href: "/finish-loop/" },
-    { label: "Services", href: "/#services" },
-    { label: "Notes", href: "/#notes" },
-    { label: "About", href: "/#about" },
+    { label: "Services", href: "/services/" },
+    { label: "Notes", href: "/notes/" },
+    { label: "About", href: "/about/" },
   ],
 };

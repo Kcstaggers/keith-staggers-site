@@ -9,6 +9,7 @@
   --color-paper-faint: #727786;
   --color-rule: #282c36;
   --color-cobalt: #2851ff;
+  --color-cobalt-text: #6684ff;
   --color-cobalt-dim: #173ee6;
   --color-signal: #ff604d;
 
@@ -52,6 +53,24 @@
   --studio-violet: #7139ff;
   --studio-panel: #090b10;
   --studio-shadow: 0 30px 90px rgb(0 0 0 / 0.55);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  transform: translateY(-200%);
+  padding: 0.8rem 1rem;
+  background: var(--color-signal);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 img,
@@ -1474,7 +1493,7 @@ svg circle {
   align-items: center;
   gap: 0.8rem;
   margin-top: 2rem;
-  color: var(--color-cobalt);
+  color: var(--color-cobalt-text);
   font-family: var(--font-mono);
   font-size: 0.73rem;
 }
@@ -2631,6 +2650,7 @@ svg circle {
   .studio-button { width: 100%; }
   .studio-proof-line { font-size: 0.66rem; }
   .studio-proof-line span:nth-of-type(2) { display: none; }
+  .studio-proof-line i:nth-of-type(1) { display: none; }
   .studio-hero-portrait { width: 100%; max-width: 520px; margin: 0 auto; }
   .production-ticker-track span { min-height: 3rem; }
 

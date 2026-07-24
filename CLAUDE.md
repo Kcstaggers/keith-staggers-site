@@ -255,8 +255,8 @@ The design spec includes the desktop and mobile concepts, responsive rules, moti
 - The Finish Loop page was also verified at an exact 390px viewport with a 390px document width after replacing implicit grid minimums with `minmax(0, 1fr)`.
 - Desktop native client viewport has no page-level horizontal overflow.
 - Mobile browser console and page errors were clean during the interaction pass.
-- All 11 production routes returned HTTP 200 after the Astro 7 deployment, and the apex domain returned the intended 307 redirect to `www`.
-- `npx astro check` passes with 0 errors and 0 warnings, plus 5 existing inactive legacy hints. `npm run build` passes with all 11 static routes.
+- The current release builds 16 static HTML pages. Fifteen are indexable and the Finish Loop thank-you page remains `noindex`.
+- `npx astro check` passes with 0 errors and 0 warnings, plus 5 existing inactive legacy hints. `npm run build` now includes the committed SEO release gate.
 - A clean `npm ci` and `npm audit` report zero vulnerabilities.
 - Production desktop at 1440 pixels and mobile at 390 pixels have no page-level horizontal overflow, visible broken images, or relevant browser console errors.
 - Latest QA screenshots are under `/Users/keithstaggers/.codex/visualizations/2026/07/12/019f57c3-3582-7623-9d6a-ffa5103b48ca/` with the `website-value-funnel-` prefix.
@@ -264,9 +264,37 @@ The design spec includes the desktop and mobile concepts, responsive rules, moti
 
 Before future publishing, rerun `npx astro check` and `npm run build`, commit only intended files, push the branch, and inspect the Vercel preview. The current Studio site, qualification gate, and Finish Loop visual update are already live.
 
-## Current revenue handoff: Finish Loop launch
+## Current public discovery state
 
-Updated July 14, 2026. This is the active business task. Read this section before changing the product, checkout, deployment, or storefront.
+Updated July 23, 2026. This section supersedes older route-count, test-checkout, and discovery status below.
+
+- The broad Studio homepage remains the primary identity. Do not replace it with a cohort-first or employer-led homepage.
+- Canonical authority hubs now live at `/about/`, `/services/`, and `/notes/`. Homepage sections link into those hubs, and detail-page breadcrumbs link back to them.
+- The build contains 16 static HTML pages, with 15 indexable URLs in the generated sitemap. `/finish-loop/thank-you/` remains excluded and `noindex`.
+- Canonical URLs use trailing slashes. Astro and Vercel both enforce the same policy.
+- Global `WebSite`, `Person`, and `ProfessionalService` entities connect to page-specific ProfilePage, Service, FAQPage, Article, Product, ItemList, CollectionPage or Blog, WebPage, and BreadcrumbList markup as appropriate.
+- The verified Apple Music artist URL includes artist ID `1743790202`. LinkedIn, Facebook, Instagram, YouTube, Spotify, and Apple Music are connected through the public Person entity.
+- Studio Note publication metadata uses the verified July 11 Git history. Visible freshness dates remain omitted under the no-dated-content rule.
+- The homepage does not eagerly download portfolio video or Spotify media. Film previews stay static until a visitor opens one. The only audio-bearing film has a verified full-duration music caption.
+- Small blue text uses the accessible text-blue token while the original cobalt remains for large display type, borders, and backgrounds.
+- Every page has a keyboard skip link and addressable main region. Breadcrumbs expose current-page state without reading decorative separators.
+- `npm run build` runs the generated-site SEO verifier. It checks sitemap parity, titles, descriptions, canonicals, social metadata, schema presence, internal references, employer and staged-product exclusions, the live Finish Loop checkout, the secure project-fit endpoint, and media-loading controls.
+- The live Finish Loop checkout URL is `https://keithstaggers.lemonsqueezy.com/checkout/buy/b7bc50dd-cd89-4371-8227-4c85c36c0591`. Preserve it unless a later verified merchant change replaces it.
+- CharterRN remains staged and absent. Employer projects, employer data, patient information, and internal healthcare workflows remain excluded.
+
+Release verification:
+
+- `npm run verify`: passed
+- `npm audit --audit-level=high`: zero vulnerabilities
+- SEO release gate: 16 HTML pages, 15 indexable URLs
+- Desktop and 390-pixel mobile rendered QA: no horizontal overflow
+- Live $49 checkout: opens outside test mode
+- Project-fit form: still posts to the verified Formspree endpoint
+- Independent SEO and accessibility red-team passes: no P1 or P2 blockers
+
+## Historical revenue handoff: Finish Loop launch
+
+Updated July 14, 2026. Historical record only. The live checkout and current production instructions above supersede the test-mode status and approval sequence in this section.
 
 ### Objective
 

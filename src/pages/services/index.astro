@@ -1,0 +1,201 @@
+---
+import Base from "../../layouts/Base.astro";
+import { services } from "../../data/services";
+import { site } from "../../data/site";
+
+const canonicalUrl = `${site.url}/services/`;
+const serviceHubJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${canonicalUrl}#page`,
+      name: "AI Workflow Services, Training and Speaking",
+      description:
+        "AI workflow installation, one-to-one coaching, hands-on team training and speaking from Keith Staggers.",
+      url: canonicalUrl,
+      dateModified: "2026-07-23",
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${site.url}/#website` },
+      mainEntity: { "@id": `${canonicalUrl}#list` },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${canonicalUrl}#list`,
+      numberOfItems: services.length,
+      itemListElement: services.map((service, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: service.title,
+        url: `${site.url}/services/${service.slug}/`,
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Services",
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
+
+const outcomePaths = [
+  { need: "One repeated job built and handed over", service: "AI Workflow Install Sprint", href: "/services/done-for-you/" },
+  { need: "A working first move on one problem", service: "AI Jumpstart", href: "/services/coaching/" },
+  { need: "A team using AI responsibly in real work", service: "AI Training", href: "/services/training/" },
+  { need: "A practical framework for an event or leadership room", service: "Speaking", href: "/services/speaking/" },
+  { need: "A self-serve system for finishing creative work", service: "The Finish Loop", href: "/finish-loop/" },
+];
+---
+
+<Base
+  title="AI Workflow, Training and Speaking Services"
+  description="Explore AI workflow installation, one-to-one coaching, hands-on team training and speaking from Keith Staggers. Practical scope, proof and clear handoff."
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceHubJsonLd)} />
+  </Fragment>
+
+  <article class="px-6 pb-20 pt-10 lg:px-12 lg:pb-28 lg:pt-16">
+    <div class="mx-auto max-w-[1280px]">
+      <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+        <a href="/" class="transition-colors hover:text-paper">Home</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <span class="text-cobalt-text" aria-current="page">Services</span>
+      </nav>
+
+      <header class="grid gap-10 border-b border-rule pb-16 lg:grid-cols-12 lg:pb-24">
+        <div class="lg:col-span-9">
+          <p class="studio-kicker">Services</p>
+          <h1 class="studio-display mt-6 text-[clamp(50px,8vw,108px)] leading-[0.92] tracking-[-0.055em]">
+            Practical AI services,<br /><strong>sized to the work</strong><span class="text-signal">.</span>
+          </h1>
+        </div>
+        <p class="self-end text-[18px] leading-[1.7] text-paper-dim lg:col-span-3">
+          I help professionals and small teams turn repeated work into usable AI-assisted systems. Start with the smallest service that gets you to a real finish line.
+        </p>
+      </header>
+
+      <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="services-list-title">
+        <div class="mb-10 flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p class="studio-kicker">Four ways in</p>
+            <h2 id="services-list-title" class="studio-display mt-4 text-[clamp(34px,4vw,58px)]">Choose the <strong>move</strong><span class="text-signal">.</span></h2>
+          </div>
+          <a href="/workflow-readiness/" class="font-mono text-[11px] tracking-[0.14em] uppercase text-cobalt-text hover:text-paper">
+            Check one workflow free →
+          </a>
+        </div>
+
+        <div class="grid gap-px bg-rule/70 md:grid-cols-2">
+          {services.map((service) => (
+            <article class="flex min-h-[360px] flex-col bg-ink p-7 lg:p-9">
+              <div class="flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.16em] uppercase">
+                <span class="text-cobalt-text">{service.num}</span>
+                <span class="text-paper-faint">{service.pricing}</span>
+              </div>
+              <h3 class="mt-8 studio-display text-[clamp(31px,3vw,46px)] leading-[1]">{service.title}</h3>
+              <p class="mt-5 max-w-[560px] text-[16px] leading-[1.75] text-paper-dim">{service.blurb}</p>
+              <a
+                href={`/services/${service.slug}/`}
+                class="mt-auto pt-8 font-mono text-[11px] tracking-[0.14em] uppercase text-paper transition-colors hover:text-cobalt-text"
+              >
+                See scope, process and fit →
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="outcome-title">
+        <div class="lg:col-span-4">
+          <p class="studio-kicker">Choose by outcome</p>
+          <h2 id="outcome-title" class="studio-display mt-5 text-[clamp(36px,4vw,58px)] leading-[1]">
+            Start with what must be <strong>true at the end</strong><span class="text-signal">.</span>
+          </h2>
+        </div>
+        <ul class="divide-y divide-rule border-y border-rule lg:col-span-8">
+          {outcomePaths.map((path, index) => (
+            <li>
+              <a href={path.href} class="grid gap-3 py-6 transition-colors hover:text-cobalt-text sm:grid-cols-[48px_minmax(0,1fr)_auto] sm:items-center">
+                <span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">{String(index + 1).padStart(2, "0")}</span>
+                <span class="text-[16px] text-paper-dim">{path.need}</span>
+                <strong class="serif text-[21px]">{path.service} →</strong>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="grounded-title">
+        <div class="lg:col-span-5">
+          <p class="studio-kicker">How the work stays grounded</p>
+          <h2 id="grounded-title" class="studio-display mt-5 text-[clamp(36px,4.5vw,64px)] leading-[0.98]">
+            The work comes <strong>before the tool</strong><span class="text-signal">.</span>
+          </h2>
+          <p class="mt-6 max-w-lg text-[17px] leading-[1.7] text-paper-dim">
+            Workflow and training engagements begin with the job, the accountable person, and the finish line. The tool is selected only after those decisions are clear.
+          </p>
+        </div>
+        <ol class="grid gap-px bg-rule/70 md:grid-cols-2 lg:col-span-7">
+          {[
+            "Name the owner and finish line.",
+            "Use synthetic or approved material.",
+            "State what AI may assist and what stays human.",
+            "Keep the accountable person in the final decision.",
+            "Document the operating and recovery steps.",
+          ].map((item, index) => (
+            <li class="bg-ink p-6">
+              <span class="font-mono text-[10px] text-cobalt-text">{String(index + 1).padStart(2, "0")}</span>
+              <p class="mt-3 serif text-[22px] leading-tight">{item}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24">
+        <div class="lg:col-span-7">
+          <p class="studio-kicker">Proof, with boundaries</p>
+          <h2 class="studio-display mt-5 text-[clamp(36px,4.5vw,64px)] leading-[0.98]">
+            See what the work proves and <strong>what it does not</strong><span class="text-signal">.</span>
+          </h2>
+          <p class="mt-6 max-w-[680px] text-[17px] leading-[1.7] text-paper-dim">
+            Review independent build records, books, and finished releases. The Proof page states what each artifact demonstrates without inventing client outcomes.
+          </p>
+          <a href="/proof/" class="studio-button studio-button--secondary mt-7">See the proof</a>
+        </div>
+        <aside class="border border-rule p-7 lg:col-span-5">
+          <p class="studio-kicker">Need a smaller door?</p>
+          <div class="mt-6 space-y-4">
+            <a href="/workflow-readiness/" class="block border-b border-rule pb-4 serif text-[24px] hover:text-cobalt">Check one workflow free →</a>
+            <a href="/finish-loop/" class="block border-b border-rule pb-4 serif text-[24px] hover:text-cobalt">Get The Finish Loop for $49 →</a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="grid items-end gap-10 pt-16 lg:grid-cols-12 lg:pt-24">
+        <div class="lg:col-span-8">
+          <p class="studio-kicker">Start with the real job</p>
+          <h2 class="studio-display mt-5 text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
+            Tell me what repeats, who owns it, and what <strong>finished means</strong><span class="text-signal">.</span>
+          </h2>
+        </div>
+        <div class="lg:col-span-4 lg:text-right">
+          <a href="/project-fit/" class="studio-button studio-button--primary">Start with fit questions</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>
