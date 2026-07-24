@@ -279,6 +279,7 @@ Updated July 23, 2026. This section supersedes older route-count, test-checkout,
 - Small blue text uses the accessible text-blue token while the original cobalt remains for large display type, borders, and backgrounds.
 - Every page has a keyboard skip link and addressable main region. Breadcrumbs expose current-page state without reading decorative separators.
 - `npm run build` runs the generated-site SEO verifier. It checks sitemap parity, titles, descriptions, canonicals, social metadata, schema presence, internal references, employer and staged-product exclusions, the live Finish Loop checkout, the secure project-fit endpoint, and media-loading controls.
+- Google Search Console uses the permanent URL-prefix verification token in the shared page head. Do not remove it while the property is active.
 - The live Finish Loop checkout URL is `https://keithstaggers.lemonsqueezy.com/checkout/buy/b7bc50dd-cd89-4371-8227-4c85c36c0591`. Preserve it unless a later verified merchant change replaces it.
 - CharterRN remains staged and absent. Employer projects, employer data, patient information, and internal healthcare workflows remain excluded.
 
