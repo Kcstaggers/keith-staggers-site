@@ -9,6 +9,9 @@ export const site = {
     status: "open" as "open" | "limited" | "booked",
     label: "Open for projects",
   },
+  verification: {
+    google: "rgjOz-yffU1GPVoW7egiohALY7BiR2sCpCCV8zsojkY",
+  },
   newsletter: {
     // Newsletter signups. Create a free account at https://buttondown.com,
     // then set your Buttondown username here and the form posts straight to it.

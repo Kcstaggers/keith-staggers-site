@@ -190,6 +190,12 @@ if (indexableRoutes.sort().join("\n") !== sitemapRoutes.join("\n")) {
 
 const homepage = pages.find((page) => page.route === "/")?.html ?? "";
 if (!homepage.includes("Build the workflow.")) fail("homepage: broad Studio identity is missing");
+if (
+  metaContent(homepage, "name", "google-site-verification") !==
+  "rgjOz-yffU1GPVoW7egiohALY7BiR2sCpCCV8zsojkY"
+) {
+  fail("homepage: Google Search Console verification is missing");
+}
 if (/<video\b[^>]*\ssrc=/i.test(homepage)) fail("homepage: preview video has an eager src");
 if (/<iframe\b[^>]*\ssrc=/i.test(homepage)) fail("homepage: Spotify iframe has an eager src");
 if (!homepage.includes("https://music.apple.com/us/artist/keith-staggers/1743790202")) {
