@@ -34,7 +34,7 @@ export const site = {
     youtube: "",
   },
   nav: [
-    { label: "Work", href: "/#visuals" },
+    { label: "Proof", href: "/proof/" },
     { label: "The Finish Loop", href: "/finish-loop/" },
     { label: "Services", href: "/#services" },
     { label: "Notes", href: "/#notes" },
