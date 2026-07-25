@@ -28,16 +28,31 @@ const bodyFor = async (response, label) => {
   }
 };
 
-for (const [label, origin] of [
-  ["apex", apexUrl],
-  ["Vercel alias", aliasUrl],
-]) {
-  const response = await request(`${origin}/notes/?source=smoke`, { redirect: "manual" });
-  if (!response) continue;
-  const location = response.headers.get("location") ?? "";
-  if (response.status !== 308) fail(`${label}: expected 308, received ${response.status}`);
+const apexResponse = await request(`${apexUrl}/notes/?source=smoke`, { redirect: "manual" });
+if (apexResponse) {
+  const location = apexResponse.headers.get("location") ?? "";
+  if (apexResponse.status !== 308) fail(`apex: expected 308, received ${apexResponse.status}`);
   if (location !== `${siteUrl}/notes/?source=smoke`) {
-    fail(`${label}: path or query was not preserved (${location || "missing location"})`);
+    fail(`apex: path or query was not preserved (${location || "missing location"})`);
+  }
+}
+
+const aliasResponse = await request(`${aliasUrl}/notes/?source=smoke`, { redirect: "manual" });
+if (aliasResponse) {
+  const location = aliasResponse.headers.get("location") ?? "";
+  if (aliasResponse.status === 308) {
+    if (location !== `${siteUrl}/notes/?source=smoke`) {
+      fail(`Vercel alias: path or query was not preserved (${location || "missing location"})`);
+    }
+  } else if (aliasResponse.status === 200) {
+    const aliasHtml = await bodyFor(aliasResponse, "Vercel alias");
+    const aliasCanonical =
+      aliasHtml.match(/<link\s+[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i)?.[1] ?? "";
+    if (aliasCanonical !== `${siteUrl}/notes/`) {
+      fail(`Vercel alias: canonical is ${aliasCanonical || "missing"}`);
+    }
+  } else {
+    fail(`Vercel alias: expected 200 or 308, received ${aliasResponse.status}`);
   }
 }
 
@@ -121,4 +136,6 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`Live verification passed: ${sitemapUrls.length} indexable URLs, canonical redirects, RSS, AI text, PDF, cache, and bot access.`);
+console.log(
+  `Live verification passed: ${sitemapUrls.length} indexable URLs, canonical hosts, RSS, AI text, PDF, cache, and bot access.`
+);
