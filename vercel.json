@@ -5,12 +5,6 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "keith-staggers-site.vercel.app" }],
-      "destination": "https://www.keithstaggers.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
       "has": [{ "type": "host", "value": "keithstaggers.com" }],
       "destination": "https://www.keithstaggers.com/:path*",
       "permanent": true

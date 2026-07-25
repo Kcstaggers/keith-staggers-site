@@ -275,7 +275,7 @@ const pdfHeaders = vercelConfig.headers?.find((rule) => rule.source === "/ai-wor
 if (!pdfHeaders.some((header) => header.key === "X-Robots-Tag" && header.value.includes("noindex"))) {
   fail("vercel.json: PDF noindex header is missing");
 }
-const expectedCanonicalHosts = ["keithstaggers.com", "keith-staggers-site.vercel.app"];
+const expectedCanonicalHosts = ["keithstaggers.com"];
 for (const host of expectedCanonicalHosts) {
   const redirect = vercelConfig.redirects?.find((rule) =>
     rule.has?.some((condition) => condition.type === "host" && condition.value === host)
