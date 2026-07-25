@@ -26,5 +26,6 @@ preview-build/
 /private-products/
 /output/products/
 /output/pdf/
+/output/playwright/
 /tmp/
 /.playwright-cli/

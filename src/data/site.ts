@@ -30,6 +30,7 @@ export const site = {
   },
   social: {
     linkedin: "https://www.linkedin.com/in/keithstaggers/",
+    github: "https://github.com/Kcstaggers",
     spotify: "https://open.spotify.com/artist/4BAYMh3hDuSfEQHAOoOu0g",
     appleMusic: "https://music.apple.com/us/artist/keith-staggers/1743790202",
     facebook: "https://www.facebook.com/profile.php?id=61564900019924",

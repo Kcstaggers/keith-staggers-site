@@ -57,7 +57,7 @@ const paths = [
 
     <div class="py-8 lg:pl-12 min-h-[250px]">
       {paths.map((path, index) => (
-        <article
+        <div
           role="tabpanel"
           id={`path-panel-${path.id}`}
           aria-labelledby={`path-tab-${path.id}`}
@@ -79,7 +79,7 @@ const paths = [
               </a>
             </div>
           </div>
-        </article>
+        </div>
       ))}
     </div>
   </div>

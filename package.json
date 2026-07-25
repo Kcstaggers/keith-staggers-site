@@ -13,6 +13,8 @@
     "build": "astro build && npm run verify:seo",
     "preview": "astro preview",
     "verify:seo": "node scripts/verify-seo.mjs",
+    "verify:live": "node scripts/verify-live.mjs",
+    "submit:indexnow": "node scripts/submit-indexnow.mjs",
     "verify": "npm run check && npm run build",
     "astro": "astro"
   },

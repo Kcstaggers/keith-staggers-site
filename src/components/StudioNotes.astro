@@ -1,5 +1,9 @@
 ---
-import { notes } from "../data/notes";
+import { publishedNotes } from "../data/notes";
+
+const latestNotes = [...publishedNotes]
+  .sort((a, b) => b.datePublished.localeCompare(a.datePublished) || b.number.localeCompare(a.number))
+  .slice(0, 4);
 ---
 
 <section id="notes" class="studio-section studio-notes scroll-mt-24" aria-labelledby="studio-notes-title">
@@ -13,7 +17,7 @@ import { notes } from "../data/notes";
     </header>
 
     <div class="studio-note-list">
-      {notes.map((note) => (
+      {latestNotes.map((note) => (
         <a href={`/notes/${note.slug}/`} class="studio-note-row">
           <span class="studio-note-number">{note.number}</span>
           <span class="studio-note-body">

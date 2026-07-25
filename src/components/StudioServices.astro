@@ -65,7 +65,7 @@ const paths = [
 
     <div class="service-panels">
       {paths.map((path, index) => (
-        <article
+        <div
           role="tabpanel"
           id={`studio-service-panel-${path.id}`}
           aria-labelledby={`studio-service-tab-${path.id}`}
@@ -82,7 +82,7 @@ const paths = [
             <a href={path.href}>{path.cta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg></a>
             {path.secondaryHref && <a class="service-secondary" href={path.secondaryHref}>{path.secondaryCta}</a>}
           </div>
-        </article>
+        </div>
       ))}
     </div>
   </div>

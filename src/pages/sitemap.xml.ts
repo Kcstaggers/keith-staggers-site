@@ -1,29 +1,41 @@
 import type { APIRoute } from "astro";
-import { notes } from "../data/notes";
+import { publishedNotes } from "../data/notes";
+import { fixedRouteLastModified } from "../data/route-metadata";
 import { services } from "../data/services";
 import { site } from "../data/site";
 
 export const prerender = true;
 
-const releaseDate = "2026-07-23";
-const coreRoutes = [
-  "/",
-  "/about/",
-  "/services/",
-  "/notes/",
-  "/finish-loop/",
-  "/proof/",
-  "/workflow-readiness/",
-  "/project-fit/",
-].map((route) => ({ route, lastModified: releaseDate }));
+const newestDate = (dates: string[]) => [...dates].sort().at(-1) ?? "2026-07-11";
+const fixedHomepageDate = fixedRouteLastModified.find(({ route }) => route === "/")?.lastModified ?? "2026-07-11";
+const homepageRoute = {
+  route: "/",
+  lastModified: newestDate([
+    fixedHomepageDate,
+    ...publishedNotes.map((note) => note.dateModified),
+    ...services.map((service) => service.lastModified),
+  ]),
+};
+const collectionRoutes = [
+  {
+    route: "/services/",
+    lastModified: newestDate(services.map((service) => service.lastModified)),
+  },
+  {
+    route: "/notes/",
+    lastModified: newestDate(publishedNotes.map((note) => note.dateModified)),
+  },
+];
 
 const routes = [
-  ...coreRoutes,
+  homepageRoute,
+  ...fixedRouteLastModified.filter(({ route }) => route !== "/"),
+  ...collectionRoutes,
   ...services.map((service) => ({
     route: `/services/${service.slug}/`,
     lastModified: service.lastModified,
   })),
-  ...notes.map((note) => ({
+  ...publishedNotes.map((note) => ({
     route: `/notes/${note.slug}/`,
     lastModified: note.dateModified,
   })),

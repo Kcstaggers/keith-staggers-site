@@ -30,7 +30,7 @@ GitHub-based auto-deploy. Every push to `main` triggers Vercel.
 - **Repo:** `github.com/Kcstaggers/keith-staggers-site` (public)
 - **Vercel project:** `keith-staggers-site` under team `keith-staggers-projects` (Hobby plan)
 - **Default branch:** `main`
-- **Build command:** `astro build` (Vercel auto-detects)
+- **Build command:** `npm run build` through `vercel.json`, including the SEO release verifier
 - **Output:** `dist/`
 - **Custom domains:** `keithstaggers.com` (307s to www), `www.keithstaggers.com` (production), `keith-staggers-site.vercel.app` (Vercel default)
 
@@ -82,15 +82,14 @@ src/
 │   ├── albums.ts              # 7 albums with Spotify/Apple/Amazon IDs
 │   ├── books.ts               # 3 books with Amazon URL + blurbs
 │   ├── services.ts            # 4 services with pricing
-│   ├── notes.ts               # 3 Studio Notes with body copy and related offers
+│   ├── notes.ts               # Published-state Studio Notes with metadata, images, resources, and curated relations
 │   └── testimonials.ts        # Empty by design; real testimonials only, with written permission
 ├── utils/booking.ts            # Compatibility helpers that now return the project-fit path
 └── styles/global.css           # Tailwind v4 @theme — colors, fonts, custom utilities
 public/
 ├── favicon.svg
 ├── og-keith-staggers-v2.png   # Default photo-free social and LinkedIn Featured preview
-├── sitemap.xml                 # Homepage, services, and Studio Notes
-├── robots.txt                  # Allows indexing and points to sitemap.xml
+├── robots.txt                  # Allows indexing and points to the dynamic sitemap
 └── media/                      # Optimized images and videos. 13MB total. See "Media" below.
 Media/                          # SOURCE files (PNGs, MP4s). ~80MB. GITIGNORED. Don't commit.
 preview-build/                  # Local file:// preview output. GITIGNORED.
@@ -139,7 +138,7 @@ These are real rules from prior iterations — violating them will require rewor
 | Edit testimonials | `src/data/testimonials.ts` | EMPTY by design (real-only policy). July 12, 2026 ruling from Keith: "Kristen Smith" and "Alex Rivera" were fabricated placeholders, BURIED, never republish them anywhere. Kevin Lazar IS real (friend, former business partner, active free consulting client): written permission + fresh quote required before any use. Only add quotes with written permission. |
 | Change service pricing | `src/data/services.ts` | Four services. `pricing` field is a free-form string. |
 | Edit availability badge ("Open for projects") | `src/data/site.ts` | `availability.status: "open"\|"limited"\|"booked"` + label. Drives HirePill. |
-| Add or edit a Studio Note | `src/data/notes.ts` | Each note gets a static `/notes/<slug>/` page and a homepage row. Keep claims evidence-based and connect one relevant service. |
+| Add or edit a Studio Note | `src/data/notes.ts` | Only `status: "published"` records reach routes, homepage, Notes, RSS, sitemap, or AI text. Keep drafts in the Content Engine until exact approval. |
 | Change the qualification route | `src/data/site.ts` | Edit `booking.intakePath`. Keep public scheduling disabled. |
 | Add a book | `src/data/books.ts` + drop cover at `public/media/book-<slug>.webp` | Cover convention is `book-${book.slug}.webp` at 600×900. |
 | Update the bio | `src/components/About.astro` | Three paragraphs. Keep the drop cap on paragraph 1. |
@@ -193,18 +192,18 @@ A scheduled task is set for **Aug 15, 2026** to start a Canva → Vercel transfe
 
 - **Sandbox mount can't delete files** in Keith's Desktop folder. `rm -rf .git` etc. will fail. Build in `/tmp/kss-verify` and copy back, or have Keith run destructive commands in his Terminal.
 - **Spotify iframes can't autoplay.** That's a browser policy, not a bug. The featured album section uses a tall embed (height=400) so the play button is visible.
-- **Vercel auto-detects Astro** — no `vercel.json` needed. Don't add one unless you need to override.
+- **Vercel runs the explicit quality gate in `vercel.json`.** Preserve `buildCommand: npm run build`, canonical-host redirects, RSS and plaintext headers, PDF noindex, and bounded media caching.
 - **Keep `compressHTML: true` in `astro.config.mjs`.** Astro 7 defaults to JSX whitespace compression, which removes visible spaces between split text nodes across this site.
 - **GitHub repo is public.** Don't commit secrets, API keys, .env files, or anything you wouldn't want on someone's homepage. The .gitignore covers the usual suspects.
 
 ## Current production handoff: AI creator studio homepage
 
-Updated July 14, 2026. Keith chose the portrait-and-music Studio homepage as the production direction and rejected the broader Future Wow signal-rain candidate. The live site keeps `public/media/keith-photo-9.webp` as the driving identity image, the approved photo-led Finish Loop presentation, and the project-fit buffer before calendar access.
+Updated July 25, 2026. Keith chose the portrait-and-music Studio homepage as the production direction and rejected the broader Future Wow signal-rain candidate. The site keeps `public/media/keith-photo-9.webp` as the driving identity image, the approved photo-led Finish Loop presentation, and the project-fit buffer before calendar access.
 
 ### Git and rollback
 
 - Authoritative branch: `main`
-- Last functional production merge: `db687ca670553cfbbf0bc97de311c28cfe506f8f`
+- Pre-SEO-release `origin/main` baseline: `4416a72d7ac08180083a79b3b8310d106cf8bd6d`. Verify GitHub and Vercel before recording a newer production commit.
 - Explicit pre-redesign rollback commit: `de5bf27`
 - Do not overwrite or stage the user-owned untracked files listed later in this document.
 - The Studio design and project-fit gate were published to production through PR #3 on July 13, 2026.
@@ -255,7 +254,7 @@ The design spec includes the desktop and mobile concepts, responsive rules, moti
 - The Finish Loop page was also verified at an exact 390px viewport with a 390px document width after replacing implicit grid minimums with `minmax(0, 1fr)`.
 - Desktop native client viewport has no page-level horizontal overflow.
 - Mobile browser console and page errors were clean during the interaction pass.
-- The current release builds 16 static HTML pages. Fifteen are indexable and the Finish Loop thank-you page remains `noindex`.
+- The July 25 release candidate builds 18 static HTML pages. Seventeen are indexable and the Finish Loop thank-you page remains `noindex`.
 - `npx astro check` passes with 0 errors and 0 warnings, plus 5 existing inactive legacy hints. `npm run build` now includes the committed SEO release gate.
 - A clean `npm ci` and `npm audit` report zero vulnerabilities.
 - Production desktop at 1440 pixels and mobile at 390 pixels have no page-level horizontal overflow, visible broken images, or relevant browser console errors.
@@ -266,32 +265,33 @@ Before future publishing, rerun `npx astro check` and `npm run build`, commit on
 
 ## Current public discovery state
 
-Updated July 23, 2026. This section supersedes older route-count, test-checkout, and discovery status below.
+Updated July 25, 2026. This section supersedes older route-count and discovery status below.
 
 - The broad Studio homepage remains the primary identity. Do not replace it with a cohort-first or employer-led homepage.
-- Canonical authority hubs now live at `/about/`, `/services/`, and `/notes/`. Homepage sections link into those hubs, and detail-page breadcrumbs link back to them.
-- The build contains 16 static HTML pages, with 15 indexable URLs in the generated sitemap. `/finish-loop/thank-you/` remains excluded and `noindex`.
-- Canonical URLs use trailing slashes. Astro and Vercel both enforce the same policy.
-- Global `WebSite`, `Person`, and `ProfessionalService` entities connect to page-specific ProfilePage, Service, FAQPage, Article, Product, ItemList, CollectionPage or Blog, WebPage, and BreadcrumbList markup as appropriate.
-- The verified Apple Music artist URL includes artist ID `1743790202`. LinkedIn, Facebook, Instagram, YouTube, Spotify, and Apple Music are connected through the public Person entity.
-- Studio Note publication metadata uses the verified July 11 Git history. Visible freshness dates remain omitted under the no-dated-content rule.
-- The homepage does not eagerly download portfolio video or Spotify media. Film previews stay static until a visitor opens one. The only audio-bearing film has a verified full-duration music caption.
-- Small blue text uses the accessible text-blue token while the original cobalt remains for large display type, borders, and backgrounds.
-- Every page has a keyboard skip link and addressable main region. Breadcrumbs expose current-page state without reading decorative separators.
-- `npm run build` runs the generated-site SEO verifier. It checks sitemap parity, titles, descriptions, canonicals, social metadata, schema presence, internal references, employer and staged-product exclusions, the live Finish Loop checkout, the secure project-fit endpoint, and media-loading controls.
+- Canonical authority hubs live at `/about/`, `/services/`, and `/notes/`.
+- The release candidate contains 18 static HTML pages, with 17 indexable URLs in the generated sitemap. `/finish-loop/thank-you/` remains excluded and `noindex`.
+- Canonical URLs use the www host and trailing slashes. Astro and Vercel enforce the route policy. The Vercel Project Domains apex redirect still requires a post-deploy change from 307 to 308.
+- Global `WebSite`, `Person`, and Studio `Organization` entities use stable IDs. Page-specific ProfilePage, Service, FAQPage, BlogPosting, Product, ItemList, CollectionPage or Blog, WebPage, and BreadcrumbList markup connect to them as appropriate.
+- Published Notes have visible author and date records, unique 1200 by 630 images, direct-answer summaries, curated related reading, and contextual internal resources.
+- A draft status gate prevents unapproved Notes from appearing in routes, homepage rows, `/notes/`, RSS, sitemap, `llms.txt`, or `llms-full.txt`.
+- RSS, truthful route modification dates, AI-readable plaintext indexes, Bing IndexNow, a non-mutating production smoke test, and pinned GitHub Actions quality checks are part of the release.
+- `/ai-workflow-guide.pdf` remains available but receives `X-Robots-Tag: noindex, follow`; the accessible HTML readiness page is the preferred search surface.
+- The homepage does not eagerly download portfolio video or Spotify media. The primary portrait now has responsive 360, 720, and 1080 pixel sources.
+- Meaningful portfolio and book images have descriptive alt text. The homepage and representative Notes score 100 accessibility and 100 SEO in mobile Lighthouse QA.
+- `npm run build` checks sitemap parity, metadata, canonicals, social images, schema, dates, author links, internal references, RSS, AI text, deployment headers, host redirects, exclusions, checkout, project-fit, and media loading.
 - Google Search Console uses the permanent URL-prefix verification token in the shared page head. Do not remove it while the property is active.
 - The live Finish Loop checkout URL is `https://keithstaggers.lemonsqueezy.com/checkout/buy/b7bc50dd-cd89-4371-8227-4c85c36c0591`. Preserve it unless a later verified merchant change replaces it.
 - CharterRN remains staged and absent. Employer projects, employer data, patient information, and internal healthcare workflows remain excluded.
 
-Release verification:
+Release-candidate verification:
 
 - `npm run verify`: passed
-- `npm audit --audit-level=high`: zero vulnerabilities
-- SEO release gate: 16 HTML pages, 15 indexable URLs
-- Desktop and 390-pixel mobile rendered QA: no horizontal overflow
-- Live $49 checkout: opens outside test mode
+- `npm audit --omit=dev --audit-level=high`: zero vulnerabilities
+- SEO release gate: 18 HTML pages, 17 indexable URLs
+- Mobile Lighthouse: 97 to 98 performance, 100 accessibility, 100 SEO, and 96 best practices. The best-practices deduction is the expected local-only Vercel Analytics 404.
+- Desktop and 390-pixel mobile rendered QA: no visible overflow or broken interaction in checked paths
 - Project-fit form: still posts to the verified Formspree endpoint
-- Independent SEO and accessibility red-team passes: no P1 or P2 blockers
+- Production smoke, canonical-host 308, and IndexNow proof remain post-deployment checks
 
 ## Historical revenue handoff: Finish Loop launch
 
@@ -346,14 +346,14 @@ The new media is supporting material. The business offer and conversion path rem
 - PR #11 merged the Astro 7 upgrade as `db687ca670553cfbbf0bc97de311c28cfe506f8f`.
 - Production currently contains The Finish Loop page and the Lemon Squeezy test checkout URL
 - The approved photo-led Creator Operating System presentation is live at `https://www.keithstaggers.com/finish-loop/`, with near-black branded planner previews and the homepage Photo 9 in the About block.
-- Production desktop, 390-pixel mobile, all 11 routes, thank-you page, image loads, overflow, and browser console were verified after deployment.
+- Historical production desktop, 390-pixel mobile, 11-route release, thank-you page, image loads, overflow, and browser console were verified after that deployment.
 
 Do not replace the test checkout URL with a live checkout URL until Lemon Squeezy approves the store and the live product is configured and verified.
 
 Latest Astro 7 release verification:
 
 - `npx astro check`: zero errors, zero warnings, five existing hints
-- `npm run build`: passed, 11 static pages
+- `npm run build`: passed, 11 static pages in that historical release
 - The July 14 Astro 7 upgrade cleared the previous eight dependency advisories without using a forced audit fix. A clean `npm ci` and `npm audit` now report zero vulnerabilities.
 
 ### Lemon Squeezy state
@@ -427,7 +427,7 @@ The following untracked items predate or sit outside the Finish Loop commits. Pr
 
 - Newsletter is intentionally off the homepage. Do not restore it until there is a real publishing cadence and at least four issues drafted.
 - `business-launch-kit-2026-07-11.md` contains the Facebook cadence, six ready posts, and LinkedIn profile starter copy. No external posts were published as part of the site build.
-- Three Studio Notes are now ready as canonical source material for Facebook and future LinkedIn posts: finishing, practical team training, and reinvention.
+- Five published-state Studio Notes are in the July 25 release candidate: finishing, practical team training, reinvention, workflow handoff, and the six-job content system. Future Notes remain outside the site until exact approval.
 - Local rollback point before the July 11 redesign: `backup/pre-phenomenal-redesign-2026-07-11`.
 - AI-workflow lead magnet PDF — discussed but not built. Captures emails from visitors not ready to book.
 - Vercel Speed Insights — separate from Web Analytics, currently off. Could enable in Vercel dashboard if Keith wants Lighthouse-style perf data.

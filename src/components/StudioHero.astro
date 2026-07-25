@@ -46,8 +46,9 @@ const ctaHref = site.booking.intakePath;
     </div>
   </div>
 
-  <div class="production-ticker" aria-label="Keith's workflow loop">
-    <div class="production-ticker-track">
+  <div class="production-ticker">
+    <p class="sr-only">Keith's workflow loop: find friction, define done, build, verify, document, and use again.</p>
+    <div class="production-ticker-track" aria-hidden="true">
       {[0, 1].map(() => (
         <span aria-hidden="true">
           <b>Workflow loop</b><i>Find friction</i><em>→</em><i>Define done</i><em>→</em><i>Build</i><em>→</em><i>Verify</i><em>→</em><i>Document</i><em>→</em><i>Use again</i><em>→</em>
