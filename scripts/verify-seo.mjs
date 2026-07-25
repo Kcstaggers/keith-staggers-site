@@ -72,19 +72,20 @@ const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) =>
 const sitemapLastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1]);
 const sitemapRoutes = sitemapUrls.map((url) => new URL(url).pathname).sort();
 
-if (sitemapUrls.length !== 15) fail(`sitemap: expected 15 URLs, found ${sitemapUrls.length}`);
+if (sitemapUrls.length === 0) fail("sitemap: no URLs found");
 if (sitemapLastmods.length !== sitemapUrls.length) fail("sitemap: every URL must have lastmod");
 const today = new Date().toISOString().slice(0, 10);
 if (sitemapLastmods.some((value) => !/^\d{4}-\d{2}-\d{2}$/.test(value) || value > today)) {
   fail("sitemap: lastmod values must be valid, non-future ISO dates");
 }
 if (sitemapRoutes.includes("/finish-loop/thank-you/")) fail("sitemap: thank-you route must be excluded");
+if (sitemapRoutes.includes("/ai-workflow-guide.pdf")) fail("sitemap: PDF must remain excluded");
 
 const titles = new Map();
 const descriptions = new Map();
 const indexableRoutes = [];
 const requiredSchema = new Map([
-  ["/", ["WebSite", "Person", "ProfessionalService"]],
+  ["/", ["WebSite", "Person", "Organization"]],
   ["/about/", ["ProfilePage", "BreadcrumbList"]],
   ["/finish-loop/", ["Product", "FAQPage", "BreadcrumbList"]],
   ["/notes/", ["Blog", "ItemList", "BreadcrumbList"]],
@@ -107,6 +108,7 @@ for (const page of pages) {
   const ogImageAlt = metaContent(html, "property", "og:image:alt");
   const twitterCard = metaContent(html, "name", "twitter:card");
   const twitterImageAlt = metaContent(html, "name", "twitter:image:alt");
+  const robotsMeta = metaContent(html, "name", "robots");
   const h1Count = (html.match(/<h1\b/gi) ?? []).length;
   const expectedCanonical = `${siteUrl}${route}`;
   const types = schemaTypes(html, route);
@@ -135,6 +137,7 @@ for (const page of pages) {
   }
   if (twitterCard !== "summary_large_image") fail(`${route}: missing summary_large_image card`);
   if (!twitterImageAlt) fail(`${route}: missing twitter:image:alt`);
+  if (!robotsMeta) fail(`${route}: missing robots directive`);
 
   if (!noindex) {
     indexableRoutes.push(route);
@@ -150,6 +153,9 @@ for (const page of pages) {
 
   if (route === "/finish-loop/thank-you/" && !noindex) fail(`${route}: expected noindex`);
   if (route !== "/finish-loop/thank-you/" && noindex) fail(`${route}: unexpected noindex`);
+  if (!noindex && !robotsMeta.includes("max-image-preview:large")) {
+    fail(`${route}: missing max-image-preview:large`);
+  }
   if (!html.includes('href="#main-content"') || !/<main\s+[^>]*id="main-content"/i.test(html)) {
     fail(`${route}: skip link or main target is missing`);
   }
@@ -160,7 +166,14 @@ for (const page of pages) {
     routeSchema.push("Service", "FAQPage", "BreadcrumbList");
   }
   if (route.startsWith("/notes/") && route !== "/notes/") {
-    routeSchema.push("Article", "BreadcrumbList");
+    routeSchema.push("BlogPosting", "BreadcrumbList");
+    if (!/<a\b(?=[^>]*\brel=["']author["'])(?=[^>]*\bhref=["']\/about\/["'])[^>]*>/i.test(html)) {
+      fail(`${route}: linked author byline is missing`);
+    }
+    if ((html.match(/<time\b/gi) ?? []).length === 0) fail(`${route}: visible publication date is missing`);
+    if (metaContent(html, "property", "og:image:width") !== "1200") {
+      fail(`${route}: representative image must be 1200 pixels wide`);
+    }
   }
   for (const expectedType of routeSchema) {
     if (!types.has(expectedType)) fail(`${route}: missing ${expectedType} schema`);
@@ -184,6 +197,10 @@ for (const page of pages) {
   }
 }
 
+if (pages.some((page) => schemaTypes(page.html, page.route).has("ProfessionalService"))) {
+  fail("schema: deprecated ProfessionalService remains in the release");
+}
+
 if (indexableRoutes.sort().join("\n") !== sitemapRoutes.join("\n")) {
   fail("sitemap: routes do not exactly match indexable HTML routes");
 }
@@ -203,6 +220,29 @@ if (!homepage.includes("https://music.apple.com/us/artist/keith-staggers/1743790
 }
 if (!homepage.includes("https://www.youtube.com/@kcstaggers")) {
   fail("homepage: YouTube identity is missing");
+}
+if (!homepage.includes('rel="alternate" type="application/rss+xml"')) {
+  fail("homepage: RSS autodiscovery is missing");
+}
+if (!homepage.includes(`"@id":"${siteUrl}/#keith","name":"Keith Staggers","url":"${siteUrl}/about/"`)) {
+  fail("homepage: Person schema must use the About page as its identity URL");
+}
+if (homepage.includes(`"@id":"${siteUrl}/#studio","name":"Keith Staggers Studio","alternateName":"Keith Staggers"`)) {
+  fail("homepage: Person and Studio identities must not be conflated");
+}
+const meaningfulHomepageImages = [
+  "/media/keith-neon-pink.webp",
+  "/media/keith-noir.webp",
+  "/media/keith-diner.webp",
+  "/media/keith-neon-violet.webp",
+  "/media/book-nurse-the-fck-up.webp",
+  "/media/book-beyond-burnout.webp",
+  "/media/book-leading-with-care.webp",
+];
+for (const imagePath of meaningfulHomepageImages) {
+  const escapedPath = imagePath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const tag = homepage.match(new RegExp(`<img\\s+[^>]*src="${escapedPath}"[^>]*>`, "i"))?.[0] ?? "";
+  if (!tag || !/\balt="[^"]+"/i.test(tag)) fail(`homepage: meaningful image ${imagePath} needs descriptive alt text`);
 }
 if (/advent\s*health|charter\s*rn|4\s*east|\bhuron\b/i.test(pages.map((page) => page.html).join("\n"))) {
   fail("release: excluded public material is present");
@@ -230,6 +270,57 @@ if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) fail("robots.txt: canon
 
 const vercelConfig = JSON.parse(fs.readFileSync("vercel.json", "utf8"));
 if (vercelConfig.trailingSlash !== true) fail("vercel.json: trailingSlash must be true");
+if (vercelConfig.buildCommand !== "npm run build") fail("vercel.json: buildCommand must run the full verifier");
+const pdfHeaders = vercelConfig.headers?.find((rule) => rule.source === "/ai-workflow-guide.pdf")?.headers ?? [];
+if (!pdfHeaders.some((header) => header.key === "X-Robots-Tag" && header.value.includes("noindex"))) {
+  fail("vercel.json: PDF noindex header is missing");
+}
+const expectedHostPatterns = new Map([
+  ["keithstaggers.com", "^keithstaggers\\.com$"],
+  ["keith-staggers-site.vercel.app", "^keith-staggers-site\\.vercel\\.app$"],
+]);
+for (const [host, pattern] of expectedHostPatterns) {
+  const redirect = vercelConfig.redirects?.find((rule) =>
+    rule.has?.some((condition) => condition.type === "host" && condition.value === pattern)
+  );
+  if (!redirect?.permanent || redirect.destination !== "https://www.keithstaggers.com/:path*") {
+    fail(`vercel.json: permanent canonical redirect is missing for ${host}`);
+  }
+}
+const rssHeaders = vercelConfig.headers?.find((rule) => rule.source === "/rss.xml")?.headers ?? [];
+if (!rssHeaders.some((header) => header.key === "Content-Type" && header.value.includes("application/rss+xml"))) {
+  fail("vercel.json: RSS content-type header is missing");
+}
+for (const fileName of ["/llms.txt", "/llms-full.txt"]) {
+  const headers = vercelConfig.headers?.find((rule) => rule.source === fileName)?.headers ?? [];
+  if (!headers.some((header) => header.key === "X-Robots-Tag" && header.value.includes("noindex"))) {
+    fail(`vercel.json: ${fileName} noindex header is missing`);
+  }
+}
+
+const rssPath = path.join(distDir, "rss.xml");
+if (!fs.existsSync(rssPath)) fail("rss.xml is missing");
+const rss = fs.existsSync(rssPath) ? fs.readFileSync(rssPath, "utf8") : "";
+const rssItems = rss.match(/<item>/g)?.length ?? 0;
+const noteRoutes = sitemapRoutes.filter((route) => /^\/notes\/[^/]+\/$/.test(route));
+if (rssItems !== noteRoutes.length) fail(`rss.xml: expected ${noteRoutes.length} items, found ${rssItems}`);
+if (!rss.includes(`${siteUrl}/rss.xml`) || !rss.includes("application/rss+xml")) {
+  fail("rss.xml: canonical self link is missing");
+}
+
+for (const fileName of ["llms.txt", "llms-full.txt"]) {
+  const filePath = path.join(distDir, fileName);
+  if (!fs.existsSync(filePath)) {
+    fail(`${fileName} is missing`);
+    continue;
+  }
+  const content = fs.readFileSync(filePath, "utf8");
+  if (!content.includes(siteUrl) || !content.includes("Project Fit")) {
+    fail(`${fileName}: canonical identity or inquiry path is missing`);
+  }
+}
+const llms = fs.readFileSync(path.join(distDir, "llms.txt"), "utf8");
+if (!llms.includes(`${siteUrl}/llms-full.txt`)) fail("llms.txt: full public text index link is missing");
 
 if (errors.length > 0) {
   console.error(`SEO verification failed with ${errors.length} issue${errors.length === 1 ? "" : "s"}:`);

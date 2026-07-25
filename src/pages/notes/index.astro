@@ -1,30 +1,46 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { notes } from "../../data/notes";
+import { publishedNotes } from "../../data/notes";
 import { site } from "../../data/site";
 
 const canonicalUrl = `${site.url}/notes/`;
+const orderedNotes = [...publishedNotes].sort(
+  (a, b) => b.datePublished.localeCompare(a.datePublished) || b.number.localeCompare(a.number)
+);
+const latestModified = orderedNotes.reduce(
+  (latest, note) => (note.dateModified > latest ? note.dateModified : latest),
+  "1970-01-01"
+);
+const formatDate = (value: string) =>
+  new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${value}T00:00:00Z`));
 const notesJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": ["CollectionPage", "Blog"],
-      "@id": `${canonicalUrl}#page`,
+      "@id": `${canonicalUrl}#blog`,
       name: "Studio Notes on Practical AI Work",
       description:
         "Essays from Keith Staggers on practical AI workflows, team training, creative production, professional reinvention and finishing the work.",
       url: canonicalUrl,
-      dateModified: "2026-07-23",
+      dateModified: latestModified,
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       author: { "@id": `${site.url}/#keith` },
+      publisher: { "@id": `${site.url}/#studio` },
       mainEntity: { "@id": `${canonicalUrl}#list` },
+      blogPost: orderedNotes.map((note) => ({ "@id": `${site.url}/notes/${note.slug}/#article` })),
     },
     {
       "@type": "ItemList",
       "@id": `${canonicalUrl}#list`,
-      numberOfItems: notes.length,
-      itemListElement: notes.map((note, index) => ({
+      numberOfItems: orderedNotes.length,
+      itemListElement: orderedNotes.map((note, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: note.title,
@@ -54,6 +70,11 @@ const notesJsonLd = {
 
 const startingPoints = [
   {
+    problem: "A workflow still depends on its builder.",
+    move: "Use the handoff test: run it, stop it, recover it, and own it.",
+    href: "/notes/ai-workflow-handoff-run-stop-recover/",
+  },
+  {
     problem: "A workflow keeps circling.",
     move: "Read the finishing note, then check whether the job is ready.",
     href: "/notes/the-finishing-problem/",
@@ -62,11 +83,6 @@ const startingPoints = [
     problem: "Training is not changing behavior.",
     move: "Read the Monday-morning test, then review practical team training.",
     href: "/notes/the-monday-morning-test/",
-  },
-  {
-    problem: "You are building the next chapter.",
-    move: "Read the three-career story, then see the operating code behind it.",
-    href: "/notes/three-careers-one-standard/",
   },
 ];
 ---
@@ -105,21 +121,26 @@ const startingPoints = [
             <p class="studio-kicker">All notes</p>
             <h2 id="all-notes-title" class="studio-display mt-4 text-[clamp(34px,4vw,58px)]">Read the <strong>record</strong><span class="text-signal">.</span></h2>
           </div>
-          <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">{notes.length} published notes</span>
+          <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">{orderedNotes.length} published notes</span>
         </div>
 
         <div class="divide-y divide-rule border-y border-rule">
-          {notes.map((note) => (
+          {orderedNotes.map((note) => (
             <article class="grid gap-7 py-9 lg:grid-cols-[72px_minmax(0,1fr)_220px] lg:items-start">
               <span class="font-mono text-[12px] tracking-[0.16em] text-cobalt-text">{note.number}</span>
-              <div>
-                <p class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">
-                  {note.category} · {note.readingTime}
-                </p>
-                <h3 class="mt-4 serif text-[clamp(28px,3.5vw,46px)] leading-[1.02]">
-                  <a href={`/notes/${note.slug}/`} class="transition-colors hover:text-cobalt">{note.title}</a>
-                </h3>
-                <p class="mt-4 max-w-[760px] text-[16px] leading-[1.7] text-paper-dim">{note.excerpt}</p>
+              <div class="grid gap-6 sm:grid-cols-[160px_minmax(0,1fr)]">
+                <div class="overflow-hidden border border-rule bg-panel">
+                  <img src={note.image.src} alt={note.image.alt} width={note.image.width} height={note.image.height} loading="lazy" decoding="async" class="aspect-[1.9/1] h-full w-full object-cover" />
+                </div>
+                <div>
+                  <p class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">
+                    {note.category} · {note.readingTime} · <time datetime={note.datePublished}>{formatDate(note.datePublished)}</time>
+                  </p>
+                  <h3 class="mt-4 serif text-[clamp(28px,3.5vw,46px)] leading-[1.02]">
+                    <a href={`/notes/${note.slug}/`} class="transition-colors hover:text-cobalt">{note.title}</a>
+                  </h3>
+                  <p class="mt-4 max-w-[760px] text-[16px] leading-[1.7] text-paper-dim">{note.excerpt}</p>
+                </div>
               </div>
               <div class="lg:text-right">
                 <a href={`/notes/${note.slug}/`} class="block font-mono text-[11px] tracking-[0.12em] uppercase text-paper hover:text-cobalt-text">Read note →</a>

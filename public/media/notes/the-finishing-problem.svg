@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Define done before generating more</title>
+  <desc id="desc">A Keith Staggers Studio diagram showing a finish loop of define, make, judge, revise, and ship.</desc>
+  <rect width="1200" height="630" fill="#050608"/>
+  <g stroke="#282c36" stroke-width="1" opacity=".65"><path d="M40 108h1120M40 204h1120M40 300h1120M40 396h1120M40 492h1120"/><path d="M120 36v558M312 36v558M504 36v558M696 36v558M888 36v558M1080 36v558"/></g>
+  <circle cx="66" cy="64" r="7" fill="#2851ff"/><text x="88" y="72" fill="#f4f6fb" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="700">KEITH STAGGERS</text><text x="1135" y="72" fill="#727786" text-anchor="end" font-family="monospace" font-size="14">STUDIO NOTE 01</text>
+  <text x="64" y="164" fill="#f4f6fb" font-family="Inter,Arial,sans-serif" font-size="58" font-weight="760">Define done before you</text><text x="64" y="228" fill="#2851ff" font-family="Inter,Arial,sans-serif" font-size="58" font-weight="760">generate more.</text>
+  <text x="64" y="274" fill="#a8abb7" font-family="Inter,Arial,sans-serif" font-size="23">More options are not the same as finished work.</text>
+  <g transform="translate(64 358)" font-family="Inter,Arial,sans-serif" font-size="17" font-weight="700">
+    <rect width="170" height="82" rx="4" fill="#0b0d13" stroke="#2851ff" stroke-width="2"/><text x="85" y="50" fill="#f4f6fb" text-anchor="middle">DEFINE</text><path d="M184 41h60" stroke="#2851ff" stroke-width="3"/><path d="m232 31 14 10-14 10" fill="none" stroke="#2851ff" stroke-width="3"/>
+    <rect x="258" width="170" height="82" rx="4" fill="#0b0d13" stroke="#7139ff" stroke-width="2"/><text x="343" y="50" fill="#f4f6fb" text-anchor="middle">MAKE</text><path d="M442 41h60" stroke="#7139ff" stroke-width="3"/><path d="m490 31 14 10-14 10" fill="none" stroke="#7139ff" stroke-width="3"/>
+    <rect x="516" width="170" height="82" rx="4" fill="#0b0d13" stroke="#7139ff" stroke-width="2"/><text x="601" y="50" fill="#f4f6fb" text-anchor="middle">JUDGE</text><path d="M700 41h60" stroke="#ff604d" stroke-width="3"/><path d="m748 31 14 10-14 10" fill="none" stroke="#ff604d" stroke-width="3"/>
+    <rect x="774" width="170" height="82" rx="4" fill="#0b0d13" stroke="#ff604d" stroke-width="3"/><text x="859" y="50" fill="#f4f6fb" text-anchor="middle">SHIP</text>
+  </g>
+  <text x="64" y="582" fill="#727786" font-family="monospace" font-size="14">BUILD THE WORKFLOW. KEEP THE JUDGMENT.</text><text x="1136" y="582" fill="#a8abb7" text-anchor="end" font-family="monospace" font-size="14">KEITHSTAGGERS.COM</text>
+</svg>

@@ -30,13 +30,14 @@ const productJsonLd = {
       description: finishLoop.description,
       url: `${site.url}/finish-loop/`,
       image: `${site.url}/media/finish-loop/field-manual-cover.webp`,
-      brand: { "@type": "Brand", name: site.name },
+      brand: { "@id": `${site.url}/#studio` },
       offers: {
         "@type": "Offer",
         price: String(finishLoop.price),
         priceCurrency: finishLoop.currency,
         availability: "https://schema.org/InStock",
         url: `${site.url}/finish-loop/`,
+        seller: { "@id": `${site.url}/#studio` },
       },
     },
     {

@@ -63,7 +63,7 @@ const catalog = albums.filter((album) => album.slug !== featured.slug);
       <div>
         {books.map((book) => (
           <a href={book.amazonUrl} class="studio-book-mini" aria-label={`${book.title} on Amazon`}>
-            <img src={`/media/book-${book.slug}.webp`} alt="" width="600" height="900" loading="lazy" decoding="async" />
+            <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} by Keith Staggers book cover`} width="600" height="900" loading="lazy" decoding="async" />
             <span>{book.title}</span>
           </a>
         ))}

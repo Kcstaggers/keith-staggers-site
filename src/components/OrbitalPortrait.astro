@@ -14,6 +14,13 @@ const {
   src = "/media/keith-photo-9.webp",
   alt = "Keith Staggers wearing black sunglasses and a dark suit",
 } = Astro.props;
+const responsiveSrcSet =
+  src === "/media/keith-photo-9.webp"
+    ? "/media/keith-photo-9-360.webp 360w, /media/keith-photo-9-720.webp 720w, /media/keith-photo-9.webp 1080w"
+    : undefined;
+const responsiveSizes = compact
+  ? "(max-width: 640px) 34vw, 180px"
+  : "(max-width: 640px) 86vw, 430px";
 ---
 
 <div class:list={["portrait-portal", compact && "portrait-portal--compact", className]} data-portrait-portal>
@@ -24,6 +31,8 @@ const {
   <div class="portrait-image-wrap">
     <img
       src={src}
+      srcset={responsiveSrcSet}
+      sizes={responsiveSrcSet ? responsiveSizes : undefined}
       alt={alt}
       width="1080"
       height="1080"

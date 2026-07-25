@@ -1,5 +1,5 @@
 ---
-import { notes } from "../data/notes";
+import { publishedNotes } from "../data/notes";
 ---
 
 <section id="notes" class="px-6 lg:px-12 py-20 lg:py-28 max-w-[1536px] mx-auto scroll-mt-24">
@@ -15,7 +15,7 @@ import { notes } from "../data/notes";
     </header>
 
     <div class="lg:col-span-8 border-t border-paper/80">
-      {notes.map((note) => (
+      {publishedNotes.map((note) => (
         <a
           href={`/notes/${note.slug}/`}
           class="note-row group grid sm:grid-cols-[3rem_1fr_auto] gap-4 sm:gap-7 py-7 lg:py-9 border-b border-paper/70"
