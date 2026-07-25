@@ -275,12 +275,13 @@ const pdfHeaders = vercelConfig.headers?.find((rule) => rule.source === "/ai-wor
 if (!pdfHeaders.some((header) => header.key === "X-Robots-Tag" && header.value.includes("noindex"))) {
   fail("vercel.json: PDF noindex header is missing");
 }
-const expectedCanonicalHosts = ["keithstaggers.com", "keith-staggers-site.vercel.app"];
-for (const host of expectedCanonicalHosts) {
+const expectedHostPatterns = new Map([
+  ["keithstaggers.com", "^keithstaggers\\.com$"],
+  ["keith-staggers-site.vercel.app", "^keith-staggers-site\\.vercel\\.app$"],
+]);
+for (const [host, pattern] of expectedHostPatterns) {
   const redirect = vercelConfig.redirects?.find((rule) =>
-    rule.has?.some(
-      (condition) => condition.type === "host" && condition.value?.eq === host
-    )
+    rule.has?.some((condition) => condition.type === "host" && condition.value === pattern)
   );
   if (!redirect?.permanent || redirect.destination !== "https://www.keithstaggers.com/:path*") {
     fail(`vercel.json: permanent canonical redirect is missing for ${host}`);
