@@ -12,7 +12,7 @@ export const finishLoop = {
     "Choose one outcome, direct the work, close the last 10 percent, and leave with a release system you can repeat.",
   proof: [
     { value: "50+", label: "albums" },
-    { value: "3", label: "published books" },
+    { value: "2", label: "primary books" },
     { value: "1,000+", label: "images & films" },
   ],
   steps: [

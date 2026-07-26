@@ -1,0 +1,250 @@
+---
+import Base from "../../layouts/Base.astro";
+import { books, type Book } from "../../data/books";
+import { site } from "../../data/site";
+
+export function getStaticPaths() {
+  return books.map((book) => ({
+    params: { slug: book.slug },
+    props: { book },
+  }));
+}
+
+const { book } = Astro.props as { book: Book };
+const canonicalUrl = `${site.url}/books/${book.slug}/`;
+const displayDate = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${book.datePublished}T12:00:00Z`));
+const displayIsbn = `${book.isbn13.slice(0, 3)}-${book.isbn13.slice(3)}`;
+const bookJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${canonicalUrl}#page`,
+      name: `${book.title}: ${book.subtitle}`,
+      description: book.seoDescription,
+      url: canonicalUrl,
+      datePublished: book.datePublished,
+      dateModified: book.dateModified,
+      inLanguage: book.languageCode,
+      isPartOf: { "@id": `${site.url}/#website` },
+      about: { "@id": `${canonicalUrl}#book` },
+      mainEntity: { "@id": `${canonicalUrl}#book` },
+      primaryImageOfPage: { "@id": `${canonicalUrl}#cover` },
+    },
+    {
+      "@type": "Book",
+      "@id": `${canonicalUrl}#book`,
+      name: book.title,
+      alternateName: book.subtitle,
+      description: book.blurb,
+      url: canonicalUrl,
+      sameAs: [book.amazonUrl],
+      author: { "@id": `${site.url}/#keith` },
+      mainEntityOfPage: { "@id": `${canonicalUrl}#page` },
+      image: { "@id": `${canonicalUrl}#cover` },
+      datePublished: book.datePublished,
+      inLanguage: book.languageCode,
+      isbn: book.isbn13,
+      numberOfPages: book.pageCount,
+      bookFormat: "https://schema.org/Paperback",
+      publisher: {
+        "@type": "Organization",
+        name: book.publisher,
+      },
+      identifier: [
+        {
+          "@type": "PropertyValue",
+          propertyID: "ASIN",
+          name: "Amazon Standard Identification Number",
+          value: book.asin,
+          url: book.amazonUrl,
+        },
+        {
+          "@type": "PropertyValue",
+          propertyID: "ISBN-13",
+          value: book.isbn13,
+        },
+      ],
+      keywords: book.themes,
+      audience: book.audience.map((audienceType) => ({
+        "@type": "Audience",
+        audienceType,
+      })),
+    },
+    {
+      "@type": "ImageObject",
+      "@id": `${canonicalUrl}#cover`,
+      url: `${site.url}/media/book-${book.slug}.webp`,
+      contentUrl: `${site.url}/media/book-${book.slug}.webp`,
+      width: 600,
+      height: 900,
+      caption: `${book.title}: ${book.subtitle} by Keith Staggers`,
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Books",
+          item: `${site.url}/books/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: book.title,
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title={book.seoTitle}
+  description={book.seoDescription}
+  ogType="book"
+  ogImage={`/media/book-${book.slug}.webp`}
+  ogImageAlt={`${book.title}: ${book.subtitle} by Keith Staggers book cover`}
+  ogImageWidth={600}
+  ogImageHeight={900}
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(bookJsonLd)} />
+  </Fragment>
+
+  <article class="px-6 pb-20 pt-10 lg:px-12 lg:pb-28 lg:pt-16">
+    <div class="mx-auto max-w-[1280px]">
+      <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+        <a href="/" class="transition-colors hover:text-paper">Home</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <a href="/books/" class="transition-colors hover:text-paper">Books</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <span class="text-cobalt-text" aria-current="page">{book.title}</span>
+      </nav>
+
+      <header class="grid gap-12 border-b border-rule pb-16 lg:grid-cols-12 lg:items-center lg:gap-16 lg:pb-24">
+        <div class="lg:col-span-7">
+          <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt-text">
+            {book.featured ? "Primary book" : "Earlier work"} · By <a href="/about/" rel="author" class="underline decoration-rule underline-offset-4 transition-colors hover:text-paper">Keith Staggers</a>
+          </p>
+          <h1 class="studio-display mt-6 text-[clamp(54px,8vw,108px)] leading-[0.87]">{book.title}<span class="text-signal">.</span></h1>
+          <p class="mt-6 max-w-[760px] serif text-[clamp(24px,3vw,38px)] leading-tight italic text-paper-dim">{book.subtitle}</p>
+          <p class="mt-8 max-w-[740px] text-[18px] leading-[1.75] text-paper-dim">{book.blurb}</p>
+          <div class="mt-9 flex flex-wrap gap-3">
+            <a
+              href={book.amazonUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="studio-button studio-button--primary"
+              data-amazon-book={book.slug}
+              data-amazon-placement="book-hero"
+            >See the paperback on Amazon</a>
+            <a href="#book-details" class="studio-button studio-button--secondary">Book details</a>
+          </div>
+        </div>
+
+        <figure class="mx-auto w-full max-w-[420px] lg:col-span-5">
+          <img
+            src={`/media/book-${book.slug}.webp`}
+            alt={`${book.title}: ${book.subtitle} by Keith Staggers book cover`}
+            width="600"
+            height="900"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="aspect-[2/3] w-full border border-rule object-cover shadow-2xl"
+          />
+          <figcaption class="mt-4 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint">
+            {book.format} · {book.pageCount} pages · {book.publisher}
+          </figcaption>
+        </figure>
+      </header>
+
+      <div class="grid gap-14 py-16 lg:grid-cols-12 lg:py-24">
+        <div class="lg:col-span-7">
+          <section aria-labelledby="about-book-title">
+            <h2 id="about-book-title" class="studio-display text-[clamp(38px,5vw,66px)] leading-[0.98]">
+              About the <strong>book</strong><span class="text-signal">.</span>
+            </h2>
+            <div class="mt-8 space-y-6 text-[17px] leading-[1.8] text-paper-dim">
+              {book.overview.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </section>
+
+          <section class="mt-16 border-t border-rule pt-14" aria-labelledby="themes-title">
+            <h2 id="themes-title" class="serif text-[32px] leading-tight">What it addresses</h2>
+            <ul class="mt-7 space-y-5">
+              {book.themes.map((theme) => (
+                <li class="flex gap-4 text-[16px] leading-[1.7] text-paper-dim">
+                  <span class="mt-0.5 text-cobalt-text" aria-hidden="true">→</span>
+                  <span>{theme}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section class="mt-16 border-t border-rule pt-14" aria-labelledby="audience-title">
+            <h2 id="audience-title" class="serif text-[32px] leading-tight">Who it is for</h2>
+            <ul class="mt-7 grid gap-px bg-rule/70 sm:grid-cols-3">
+              {book.audience.map((audience, index) => (
+                <li class="bg-ink p-6 text-[15px] leading-[1.7] text-paper-dim">
+                  <span class="mb-4 block font-mono text-[10px] tracking-[0.16em] text-cobalt-text">{String(index + 1).padStart(2, "0")}</span>
+                  {audience}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        <aside id="book-details" class="scroll-mt-28 lg:col-span-4 lg:col-start-9" aria-labelledby="book-details-title">
+          <div class="border border-rule bg-panel/70 p-7 lg:sticky lg:top-28 lg:p-8">
+            <h2 id="book-details-title" class="studio-kicker">Verified edition details</h2>
+            <dl class="divide-y divide-rule">
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Published</dt><dd class="text-sm text-paper-dim">{displayDate}</dd></div>
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Publisher</dt><dd class="text-sm text-paper-dim">{book.publisher}</dd></div>
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Format</dt><dd class="text-sm text-paper-dim">{book.format}</dd></div>
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Length</dt><dd class="text-sm text-paper-dim">{book.pageCount} pages</dd></div>
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Language</dt><dd class="text-sm text-paper-dim">{book.language}</dd></div>
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">ISBN-13</dt><dd class="break-all font-mono text-[12px] text-paper-dim">{displayIsbn}</dd></div>
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">ASIN</dt><dd class="font-mono text-[12px] text-paper-dim">{book.asin}</dd></div>
+            </dl>
+            <a
+              href={book.amazonUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="studio-button studio-button--cobalt mt-7 w-full"
+              data-amazon-book={book.slug}
+              data-amazon-placement="book-details"
+            >Open Amazon listing</a>
+          </div>
+        </aside>
+      </div>
+
+      <section class="grid items-end gap-10 border-t border-rule pt-16 lg:grid-cols-12 lg:pt-24">
+        <div class="lg:col-span-8">
+          <h2 class="studio-display text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
+            Read the record. Then see the <strong>work around it</strong><span class="text-signal">.</span>
+          </h2>
+        </div>
+        <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+          <a href="/books/" class="studio-button studio-button--secondary">All books</a>
+          <a href="/notes/" class="studio-button studio-button--secondary">Read Studio Notes</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>

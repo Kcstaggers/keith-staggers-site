@@ -1,0 +1,447 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site";
+import { workflowTestCases } from "../data/workflow-testing";
+
+const canonicalUrl = `${site.url}/workflow-testing-template/`;
+const templateJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${canonicalUrl}#page`,
+      name: "10-Case AI Workflow Testing Template",
+      description:
+        "A free, practical worksheet for testing an AI-assisted workflow across normal work, exceptions, safety stops, duplicate runs, human rejection, and recovery.",
+      url: canonicalUrl,
+      datePublished: "2026-07-25",
+      dateModified: "2026-07-25",
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${site.url}/#website` },
+      about: ["AI workflow testing", "human review", "manual recovery"],
+      mainEntity: { "@id": `${canonicalUrl}#worksheet` },
+      author: { "@id": `${site.url}/#keith` },
+    },
+    {
+      "@type": "LearningResource",
+      "@id": `${canonicalUrl}#worksheet`,
+      name: "10-Case AI Workflow Testing Worksheet",
+      description:
+        "A browser-based worksheet with ten representative tests, expected behaviors, outcome fields, local autosave, CSV export, and print-to-PDF support.",
+      url: canonicalUrl,
+      author: { "@id": `${site.url}/#keith` },
+      creator: { "@id": `${site.url}/#keith` },
+      publisher: { "@id": `${site.url}/#studio` },
+      datePublished: "2026-07-25",
+      dateModified: "2026-07-25",
+      inLanguage: "en-US",
+      learningResourceType: "Worksheet",
+      educationalUse: "Workflow testing and documentation",
+      isAccessibleForFree: true,
+      numberOfItems: workflowTestCases.length,
+      hasPart: workflowTestCases.map((testCase) => ({
+        "@type": "LearningResource",
+        name: `${testCase.number}. ${testCase.name}`,
+        description: testCase.purpose,
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "10-Case AI Workflow Testing Template",
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
+
+const setupFields = [
+  { id: "workflow-name", label: "Workflow name", placeholder: "The repeated job being tested" },
+  { id: "workflow-owner", label: "Owner", placeholder: "One person accountable for the result" },
+  { id: "workflow-trigger", label: "Trigger and approved input", placeholder: "What starts the job and what may go in" },
+  { id: "workflow-finish", label: "Finish line", placeholder: "How a reviewer knows the result is usable" },
+  { id: "workflow-reviewer", label: "Human reviewer", placeholder: "Who checks what before the result is used" },
+  { id: "workflow-boundary", label: "Data boundary", placeholder: "Allowed, redacted, synthetic, and prohibited material" },
+  { id: "workflow-stops", label: "Stop conditions", placeholder: "Observable events that stop or redirect the run" },
+  { id: "workflow-fallback", label: "Manual fallback", placeholder: "How the owner completes the job without this workflow" },
+];
+---
+
+<Base
+  title="10-Case AI Workflow Testing Template"
+  description="Use this free 10-case worksheet to test normal work, exceptions, safety stops, human review, duplicate runs, and recovery before trusting an AI workflow."
+  ogImage="/media/notes/workflow-handoff.png"
+  ogImageAlt="AI workflow testing path showing run, stop, recover, and owner checks"
+  ogImageWidth={1200}
+  ogImageHeight={630}
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(templateJsonLd)} />
+  </Fragment>
+
+  <article class="workflow-test-page px-6 pb-20 pt-10 lg:px-12 lg:pb-28 lg:pt-16">
+    <div class="mx-auto max-w-[1280px]">
+      <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb" data-no-print>
+        <a href="/" class="transition-colors hover:text-paper">Home</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <span class="text-cobalt-text" aria-current="page">Workflow testing template</span>
+      </nav>
+
+      <header class="grid gap-10 border-b border-rule pb-14 lg:grid-cols-12 lg:items-end lg:pb-20">
+        <div class="lg:col-span-8">
+          <h1 class="studio-display text-[clamp(52px,8vw,108px)] leading-[0.88]">
+            Test the workflow<br /><strong>before you trust it</strong><span class="text-signal">.</span>
+          </h1>
+        </div>
+        <div class="lg:col-span-4">
+          <p class="text-[18px] leading-[1.7] text-paper-dim">
+            A ten-case worksheet for the normal path, known exceptions, safety stops, duplicate runs, human rejection, and manual recovery.
+          </p>
+          <p class="mt-5 font-mono text-[11px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">
+            Free · No email gate · Saves only in this browser
+          </p>
+        </div>
+      </header>
+
+      <section class="grid gap-8 border-b border-rule py-12 lg:grid-cols-12" aria-labelledby="how-to-use-title">
+        <div class="lg:col-span-4">
+          <h2 id="how-to-use-title" class="studio-display text-[clamp(34px,4vw,52px)] leading-[1]">Use real patterns.<br /><strong>Keep the data safe.</strong></h2>
+        </div>
+        <div class="space-y-5 text-[16px] leading-[1.75] text-paper-dim lg:col-span-8">
+          <p>Start with approved past examples or synthetic cases. Write the finish line and human decision before you run anything. A polished output is not a pass unless it meets the stated check.</p>
+          <p><strong class="text-paper">Do not enter protected health information, employer or client data, passwords, credentials, or other restricted material here.</strong> This worksheet saves locally in your browser for convenience. Use synthetic markers to test blocked-data behavior.</p>
+          <ol class="grid gap-px bg-rule/70 sm:grid-cols-3">
+            <li class="bg-ink p-5"><span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">01</span><b class="mt-3 block">Define the job</b><span class="mt-2 block text-sm">Name the owner, finish line, reviewer, stops, and fallback.</span></li>
+            <li class="bg-ink p-5"><span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">02</span><b class="mt-3 block">Run all ten</b><span class="mt-2 block text-sm">Record actual behavior and evidence, not a general impression.</span></li>
+            <li class="bg-ink p-5"><span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">03</span><b class="mt-3 block">Resolve the misses</b><span class="mt-2 block text-sm">Fix, accept, or stop every failed and blocked case before use.</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <form class="workflow-test-form" data-workflow-test-form autocomplete="off">
+        <section class="border-b border-rule py-14 lg:py-20" aria-labelledby="workflow-setup-title">
+          <div class="grid gap-10 lg:grid-cols-12">
+            <header class="lg:col-span-4">
+              <h2 id="workflow-setup-title" class="studio-display text-[clamp(36px,4vw,58px)] leading-[1]">Define the <strong>test boundary</strong><span class="text-signal">.</span></h2>
+              <p class="mt-5 max-w-sm text-[15px] leading-[1.7] text-paper-dim">If these fields are vague, the result will be vague too.</p>
+            </header>
+            <div class="grid gap-px bg-rule/70 sm:grid-cols-2 lg:col-span-8">
+              {setupFields.map((field) => (
+                <label class="bg-ink p-5" for={field.id}>
+                  <span class="font-mono text-[10px] tracking-[0.15em] uppercase text-paper-faint">{field.label}</span>
+                  <textarea id={field.id} name={field.id} rows="3" placeholder={field.placeholder} class="mt-3 block w-full resize-y border border-rule bg-panel p-3 text-[15px] leading-[1.6] text-paper placeholder:text-paper-faint/70"></textarea>
+                </label>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section class="py-14 lg:py-20" aria-labelledby="test-cases-title">
+          <header class="grid gap-7 border-b border-rule pb-10 lg:grid-cols-12 lg:items-end">
+            <div class="lg:col-span-8">
+              <h2 id="test-cases-title" class="studio-display text-[clamp(42px,6vw,82px)] leading-[0.94]">The <strong>ten cases</strong><span class="text-signal">.</span></h2>
+            </div>
+            <p class="text-[15px] leading-[1.7] text-paper-dim lg:col-span-4">Pass means the observed behavior matches the written expectation. Blocked means the case could not be run. Neither counts as evidence of readiness.</p>
+          </header>
+
+          <ol class="divide-y divide-rule">
+            {workflowTestCases.map((testCase) => (
+              <li class="workflow-test-case py-12" data-test-case>
+                <fieldset>
+                  <legend class="grid w-full gap-5 sm:grid-cols-[4rem_1fr]">
+                    <span class="font-mono text-[12px] tracking-[0.16em] text-cobalt-text">{testCase.number}</span>
+                    <span class="studio-display text-[clamp(28px,3vw,42px)] leading-tight">{testCase.name}</span>
+                  </legend>
+                  <p class="mt-4 max-w-[820px] text-[15px] leading-[1.7] text-paper-dim sm:ml-[5.25rem]">{testCase.purpose}</p>
+
+                  <div class="mt-8 grid gap-5 lg:grid-cols-2 sm:ml-[5.25rem]">
+                    <label for={`case-${testCase.number}-setup`}>
+                      <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Test input or setup</span>
+                      <textarea id={`case-${testCase.number}-setup`} name={`case-${testCase.number}-setup`} rows="4" placeholder="Describe the approved or synthetic case you will run." class="mt-3 block w-full resize-y border border-rule bg-panel p-4 text-[15px] leading-[1.6] text-paper placeholder:text-paper-faint/70"></textarea>
+                    </label>
+                    <label for={`case-${testCase.number}-expected`}>
+                      <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Expected behavior</span>
+                      <textarea id={`case-${testCase.number}-expected`} name={`case-${testCase.number}-expected`} rows="4" class="mt-3 block w-full resize-y border border-rule bg-panel p-4 text-[15px] leading-[1.6] text-paper">{testCase.expected}</textarea>
+                    </label>
+                    <label for={`case-${testCase.number}-actual`}>
+                      <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Actual result and evidence</span>
+                      <textarea id={`case-${testCase.number}-actual`} name={`case-${testCase.number}-actual`} rows="4" placeholder="Record what happened, where the evidence lives, and what needs to change." class="mt-3 block w-full resize-y border border-rule bg-panel p-4 text-[15px] leading-[1.6] text-paper placeholder:text-paper-faint/70"></textarea>
+                    </label>
+                    <label for={`case-${testCase.number}-outcome`}>
+                      <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Outcome</span>
+                      <select id={`case-${testCase.number}-outcome`} name={`case-${testCase.number}-outcome`} class="mt-3 block min-h-14 w-full border border-rule bg-panel px-4 text-[15px] text-paper">
+                        <option value="">Choose after the run</option>
+                        <option value="Pass">Pass</option>
+                        <option value="Fail">Fail</option>
+                        <option value="Blocked">Blocked</option>
+                        <option value="Not run">Not run</option>
+                      </select>
+                    </label>
+                  </div>
+                </fieldset>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="grid gap-8 border-y border-rule py-12 lg:grid-cols-12" aria-labelledby="decision-title">
+          <div class="lg:col-span-4">
+            <h2 id="decision-title" class="studio-display text-[clamp(34px,4vw,54px)] leading-[1]">Make the <strong>decision visible</strong><span class="text-signal">.</span></h2>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2 lg:col-span-8">
+            <label for="test-decision">
+              <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Release decision</span>
+              <select id="test-decision" name="test-decision" class="mt-3 block min-h-14 w-full border border-rule bg-panel px-4 text-[15px] text-paper">
+                <option value="">Choose after review</option>
+                <option value="Ready for bounded use">Ready for bounded use</option>
+                <option value="Revise and retest">Revise and retest</option>
+                <option value="Keep manual">Keep manual</option>
+                <option value="Stop">Stop</option>
+              </select>
+            </label>
+            <label for="test-approved-by">
+              <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Reviewed by and date</span>
+              <input id="test-approved-by" name="test-approved-by" type="text" placeholder="Name · YYYY-MM-DD" class="mt-3 block min-h-14 w-full border border-rule bg-panel px-4 text-[15px] text-paper placeholder:text-paper-faint/70" />
+            </label>
+            <label for="test-known-limits" class="sm:col-span-2">
+              <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Known limits, required fixes, and next test</span>
+              <textarea id="test-known-limits" name="test-known-limits" rows="5" placeholder="Record every accepted limit and every failed or blocked case that still needs resolution." class="mt-3 block w-full resize-y border border-rule bg-panel p-4 text-[15px] leading-[1.6] text-paper placeholder:text-paper-faint/70"></textarea>
+            </label>
+          </div>
+        </section>
+
+        <div class="flex flex-col gap-6 pt-10 sm:flex-row sm:items-center sm:justify-between" data-no-print>
+          <p class="max-w-xl font-mono text-[11px] leading-[1.7] text-paper-faint" data-workflow-save-status aria-live="polite">Nothing is sent to Keith or any server. Your entries save only in this browser.</p>
+          <div class="flex flex-wrap gap-3">
+            <button type="button" class="studio-button studio-button--secondary" data-workflow-clear data-workflow-template-action="clear">Clear worksheet</button>
+            <button type="button" class="studio-button studio-button--secondary" data-workflow-download data-workflow-template-action="csv">Download CSV</button>
+            <button type="button" class="studio-button studio-button--primary" data-workflow-print data-workflow-template-action="print">Print or save PDF</button>
+          </div>
+        </div>
+      </form>
+
+      <section class="grid items-end gap-10 border-t border-rule pt-16 lg:mt-20 lg:grid-cols-12 lg:pt-24" data-no-print>
+        <div class="lg:col-span-8">
+          <h2 class="studio-display text-[clamp(40px,5.5vw,76px)] leading-[0.96]">Need the workflow built and <strong>handed over</strong><span class="text-signal">?</span></h2>
+        </div>
+        <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+          <a href="/services/done-for-you/" class="studio-button studio-button--secondary">See the Install Sprint</a>
+          <a href="/notes/ai-workflow-handoff-run-stop-recover/" class="studio-button studio-button--secondary">Read the handoff Note</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<script>
+  const worksheet = document.querySelector<HTMLFormElement>("[data-workflow-test-form]");
+  const saveStatus = document.querySelector<HTMLElement>("[data-workflow-save-status]");
+  const clearButton = document.querySelector<HTMLButtonElement>("[data-workflow-clear]");
+  const downloadButton = document.querySelector<HTMLButtonElement>("[data-workflow-download]");
+  const printButton = document.querySelector<HTMLButtonElement>("[data-workflow-print]");
+  const storageKey = "keith-staggers-workflow-test-v1";
+
+  const worksheetControls = () =>
+    worksheet
+      ? Array.from(worksheet.elements).filter(
+          (element): element is HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement =>
+            element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement || element instanceof HTMLSelectElement
+        )
+      : [];
+
+  const valuesForWorksheet = () =>
+    Object.fromEntries(worksheetControls().filter((control) => control.name).map((control) => [control.name, control.value]));
+
+  const updateStatus = (message: string) => {
+    if (saveStatus) saveStatus.textContent = message;
+  };
+
+  const saveWorksheet = () => {
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify(valuesForWorksheet()));
+      const time = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(new Date());
+      updateStatus(`Saved in this browser at ${time}. Nothing was sent.`);
+    } catch {
+      updateStatus("This browser blocked local saving. Download a CSV or print a copy before leaving.");
+    }
+  };
+
+  if (worksheet) {
+    try {
+      const saved = window.localStorage.getItem(storageKey);
+      if (saved) {
+        const values = JSON.parse(saved) as Record<string, unknown>;
+        worksheetControls().forEach((control) => {
+          if (typeof values[control.name] === "string") control.value = values[control.name] as string;
+        });
+        updateStatus("Restored from this browser. Nothing was sent.");
+      }
+    } catch {
+      updateStatus("Saved entries could not be restored. Start a new worksheet or import your last CSV manually.");
+    }
+
+    worksheet.addEventListener("input", saveWorksheet);
+    worksheet.addEventListener("change", saveWorksheet);
+  }
+
+  clearButton?.addEventListener("click", () => {
+    if (!worksheet || !window.confirm("Clear every saved entry in this worksheet? This cannot be undone.")) return;
+    worksheet.reset();
+    try {
+      window.localStorage.removeItem(storageKey);
+    } catch {
+      // The form is still cleared even if browser storage is unavailable.
+    }
+    updateStatus("Worksheet cleared. Nothing was sent.");
+    worksheet.querySelector<HTMLElement>("input, textarea, select")?.focus();
+  });
+
+  const csvCell = (value: string) => `"${value.replaceAll('"', '""')}"`;
+  downloadButton?.addEventListener("click", () => {
+    if (!worksheet) return;
+    const values = valuesForWorksheet();
+    const rows: string[][] = [
+      ["10-Case AI Workflow Testing Record", "Keith Staggers", window.location.href],
+      [],
+      ["Workflow field", "Entry"],
+      ...[
+        ["Workflow name", "workflow-name"],
+        ["Owner", "workflow-owner"],
+        ["Trigger and approved input", "workflow-trigger"],
+        ["Finish line", "workflow-finish"],
+        ["Human reviewer", "workflow-reviewer"],
+        ["Data boundary", "workflow-boundary"],
+        ["Stop conditions", "workflow-stops"],
+        ["Manual fallback", "workflow-fallback"],
+      ].map(([label, name]) => [label, values[name] ?? ""]),
+      [],
+      ["Case", "Test input or setup", "Expected behavior", "Actual result and evidence", "Outcome"],
+      ...Array.from({ length: 10 }, (_, index) => {
+        const number = String(index + 1).padStart(2, "0");
+        return [
+          number,
+          values[`case-${number}-setup`] ?? "",
+          values[`case-${number}-expected`] ?? "",
+          values[`case-${number}-actual`] ?? "",
+          values[`case-${number}-outcome`] ?? "",
+        ];
+      }),
+      [],
+      ["Release decision", values["test-decision"] ?? ""],
+      ["Reviewed by and date", values["test-approved-by"] ?? ""],
+      ["Known limits, required fixes, and next test", values["test-known-limits"] ?? ""],
+    ];
+    const csv = `\uFEFF${rows.map((row) => row.map((cell) => csvCell(String(cell))).join(",")).join("\r\n")}`;
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "keith-staggers-10-case-workflow-test.csv";
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    updateStatus("CSV downloaded. Your browser copy is still saved locally.");
+  });
+
+  const resizeForPrint = () => {
+    worksheet?.querySelectorAll<HTMLTextAreaElement>("textarea").forEach((field) => {
+      field.dataset.printHeight = field.style.height;
+      field.style.height = `${field.scrollHeight}px`;
+    });
+  };
+  const restoreAfterPrint = () => {
+    worksheet?.querySelectorAll<HTMLTextAreaElement>("textarea").forEach((field) => {
+      field.style.height = field.dataset.printHeight ?? "";
+      delete field.dataset.printHeight;
+    });
+  };
+
+  window.addEventListener("beforeprint", resizeForPrint);
+  window.addEventListener("afterprint", restoreAfterPrint);
+  printButton?.addEventListener("click", () => window.print());
+</script>
+
+<style is:global>
+  @media print {
+    @page { margin: 0.55in; }
+
+    html,
+    body {
+      overflow: visible !important;
+      background: white !important;
+      color: #111 !important;
+      color-scheme: light !important;
+    }
+
+    .skip-link,
+    .studio-nav-wrap,
+    .studio-footer,
+    .workflow-test-page [data-no-print] {
+      display: none !important;
+    }
+
+    .workflow-test-page {
+      padding: 0 !important;
+    }
+
+    .workflow-test-page *,
+    .workflow-test-page .text-paper,
+    .workflow-test-page .text-paper-dim,
+    .workflow-test-page .text-paper-faint,
+    .workflow-test-page .text-cobalt-text,
+    .workflow-test-page .text-signal {
+      color: #111 !important;
+      border-color: #aaa !important;
+      box-shadow: none !important;
+    }
+
+    .workflow-test-page .bg-ink,
+    .workflow-test-page .bg-panel,
+    .workflow-test-page .bg-rule\/70 {
+      background: white !important;
+    }
+
+    .workflow-test-page header {
+      padding-bottom: 1rem !important;
+    }
+
+    .workflow-test-page h1 {
+      font-size: 34pt !important;
+      line-height: 1 !important;
+    }
+
+    .workflow-test-page h2 {
+      font-size: 22pt !important;
+    }
+
+    .workflow-test-case {
+      break-inside: avoid;
+      padding-block: 1rem !important;
+    }
+
+    .workflow-test-form > section {
+      break-before: page;
+    }
+
+    .workflow-test-page input,
+    .workflow-test-page textarea,
+    .workflow-test-page select {
+      min-height: 0 !important;
+      background: white !important;
+      color: #111 !important;
+      border: 1px solid #aaa !important;
+      print-color-adjust: exact;
+    }
+  }
+</style>

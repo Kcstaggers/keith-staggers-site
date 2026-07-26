@@ -1,0 +1,152 @@
+---
+import Base from "../../layouts/Base.astro";
+import { books } from "../../data/books";
+import { site } from "../../data/site";
+
+const canonicalUrl = `${site.url}/books/`;
+const booksJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${canonicalUrl}#page`,
+      name: "Books by Keith Staggers",
+      description:
+        "The primary public book catalog from Keith Staggers: Nurse the F*ck Up and Leading with Care.",
+      url: canonicalUrl,
+      dateModified: "2026-07-25",
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${site.url}/#website` },
+      about: { "@id": `${site.url}/#keith` },
+      mainEntity: { "@id": `${canonicalUrl}#books` },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${canonicalUrl}#books`,
+      name: "Primary books by Keith Staggers",
+      numberOfItems: books.length,
+      itemListElement: books.map((book, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: `${site.url}/books/${book.slug}/`,
+        item: { "@id": `${site.url}/books/${book.slug}/#book` },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Books",
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Books by Keith Staggers"
+  description="Explore Keith Staggers' two primary healthcare books: Nurse the F*ck Up on surviving med-surg and Leading with Care on healthcare leadership."
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(booksJsonLd)} />
+  </Fragment>
+
+  <article class="px-6 pb-20 pt-10 lg:px-12 lg:pb-28 lg:pt-16">
+    <div class="mx-auto max-w-[1280px]">
+      <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+        <a href="/" class="transition-colors hover:text-paper">Home</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <span class="text-cobalt-text" aria-current="page">Books</span>
+      </nav>
+
+      <header class="grid gap-10 border-b border-rule pb-16 lg:grid-cols-12 lg:items-end lg:pb-24">
+        <div class="lg:col-span-8">
+          <h1 class="studio-display text-[clamp(58px,9vw,124px)] leading-[0.86]">
+            Books from<br /><strong>inside the work</strong><span class="text-signal">.</span>
+          </h1>
+        </div>
+        <div class="lg:col-span-4">
+          <p class="text-[18px] leading-[1.7] text-paper-dim">
+            Two independently published healthcare books from Keith Staggers. One is a direct account of surviving med-surg. The other looks at leadership, conflict, change, and retention.
+          </p>
+          <p class="mt-5 font-mono text-[11px] tracking-[0.14em] uppercase text-paper-faint">
+            Paperback · English · Published in 2023
+          </p>
+        </div>
+      </header>
+
+      <section class="divide-y divide-rule" aria-label="Books by Keith Staggers">
+        {books.map((book, index) => (
+          <article class="grid gap-10 py-16 lg:grid-cols-12 lg:items-center lg:py-24">
+            <a
+              href={`/books/${book.slug}/`}
+              class="group mx-auto block w-full max-w-[360px] lg:col-span-4 lg:mx-0"
+              aria-label={`Read about ${book.title}`}
+            >
+              <img
+                src={`/media/book-${book.slug}.webp`}
+                alt={`${book.title}: ${book.subtitle} by Keith Staggers book cover`}
+                width="600"
+                height="900"
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchpriority={index === 0 ? "high" : undefined}
+                decoding="async"
+                class="aspect-[2/3] w-full border border-rule object-cover shadow-2xl transition duration-300 group-hover:-translate-y-1 group-hover:border-cobalt"
+              />
+            </a>
+
+            <div class="lg:col-span-7 lg:col-start-6">
+              <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text">
+                {book.featured ? "Primary book" : "Earlier work"} · {new Date(`${book.datePublished}T12:00:00Z`).getUTCFullYear()}
+              </p>
+              <h2 class="studio-display mt-5 text-[clamp(38px,5vw,70px)] leading-[0.96]">
+                <a href={`/books/${book.slug}/`} class="transition-colors hover:text-cobalt-text">{book.title}</a>
+              </h2>
+              <p class="mt-4 serif text-[clamp(21px,2vw,28px)] italic text-paper-dim">{book.subtitle}</p>
+              <p class="mt-7 max-w-[720px] text-[17px] leading-[1.75] text-paper-dim">{book.blurb}</p>
+              <dl class="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-y border-rule py-5 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint">
+                <div><dt class="sr-only">Format</dt><dd>{book.format}</dd></div>
+                <div><dt class="sr-only">Page count</dt><dd>{book.pageCount} pages</dd></div>
+                <div><dt class="sr-only">ISBN-13</dt><dd>ISBN {book.isbn13}</dd></div>
+              </dl>
+              <div class="mt-8 flex flex-wrap gap-3">
+                <a href={`/books/${book.slug}/`} class="studio-button studio-button--cobalt">Read about the book</a>
+                <a
+                  href={book.amazonUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="studio-button studio-button--secondary"
+                  data-amazon-book={book.slug}
+                  data-amazon-placement="books-hub"
+                >See the paperback on Amazon</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section class="grid gap-8 border-t border-rule pt-16 lg:grid-cols-12 lg:items-end lg:pt-24">
+        <div class="lg:col-span-8">
+          <h2 class="studio-display text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
+            The books are one part of the <strong>public record</strong><span class="text-signal">.</span>
+          </h2>
+        </div>
+        <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+          <a href="/proof/" class="studio-button studio-button--secondary">See the proof</a>
+          <a href="/about/" class="studio-button studio-button--secondary">About Keith</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>

@@ -7,7 +7,7 @@ import SectionCTA from "./SectionCTA.astro";
   <header class="mb-16">
     <p class="eyebrow mb-6">Pillar · 03 / Books</p>
     <h2 class="serif text-[clamp(40px,5.5vw,72px)] leading-[1] tracking-[-0.01em] mb-6">
-      Three published.
+      Two primary works.
       <span class="text-paper-dim/80 ml-3">written from inside the room</span>
     </h2>
     <p class="serif italic text-[20px] lg:text-[22px] text-paper-dim max-w-[640px] leading-[1.5]">
@@ -19,7 +19,7 @@ import SectionCTA from "./SectionCTA.astro";
     {books.map((book, i) => (
       <article class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
         <div class="lg:col-span-4 lg:col-start-1">
-          <a href={book.amazonUrl} class="block aspect-[2/3] bg-[#15110d] border border-rule/80 rounded-sm relative overflow-hidden group" aria-label={`${book.title} on Amazon`}>
+          <a href={`/books/${book.slug}/`} class="block aspect-[2/3] bg-[#15110d] border border-rule/80 rounded-sm relative overflow-hidden group" aria-label={`Read about ${book.title}`}>
             <img
               src={`/media/book-${book.slug}.webp`}
               alt={`${book.title} cover`}
@@ -47,11 +47,11 @@ import SectionCTA from "./SectionCTA.astro";
           </p>
           <div class="flex flex-wrap gap-3">
             <a
-              href={book.amazonUrl}
+              href={`/books/${book.slug}/`}
               class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase px-6 py-3 rounded-full border border-cobalt bg-cobalt text-ink hover:bg-transparent hover:text-cobalt transition-colors"
             >
-              Read on Amazon
-              <span aria-hidden="true">↗</span>
+              Read about the book
+              <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>

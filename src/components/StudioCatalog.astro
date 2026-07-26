@@ -59,10 +59,10 @@ const catalog = albums.filter((album) => album.slug !== featured.slug);
     </div>
 
     <div class="studio-book-strip" aria-label="Keith Staggers books">
-      <p><b>Also published</b><span>3 books</span></p>
+      <p><b>Also published</b><a href="/books/">Explore the books →</a></p>
       <div>
         {books.map((book) => (
-          <a href={book.amazonUrl} class="studio-book-mini" aria-label={`${book.title} on Amazon`}>
+          <a href={`/books/${book.slug}/`} class="studio-book-mini" aria-label={`Read about ${book.title}`}>
             <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} by Keith Staggers book cover`} width="600" height="900" loading="lazy" decoding="async" />
             <span>{book.title}</span>
           </a>

@@ -42,6 +42,7 @@ export const site = {
     { label: "The Finish Loop", href: "/finish-loop/" },
     { label: "Services", href: "/services/" },
     { label: "Notes", href: "/notes/" },
+    { label: "Books", href: "/books/" },
     { label: "About", href: "/about/" },
   ],
 };

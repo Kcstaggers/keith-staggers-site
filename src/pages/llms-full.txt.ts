@@ -1,7 +1,9 @@
 import type { APIRoute } from "astro";
+import { books } from "../data/books";
 import { publishedNotes } from "../data/notes";
 import { services } from "../data/services";
 import { site } from "../data/site";
+import { workflowTestCases } from "../data/workflow-testing";
 
 export const prerender = true;
 
@@ -35,6 +37,29 @@ export const GET: APIRoute = () => {
         ...section.paragraphs.flatMap((paragraph) => [paragraph, ""]),
       ]),
     ]);
+  const bookSections = books.flatMap((book) => [
+    `## ${book.title}: ${book.subtitle}`,
+    "",
+    `Canonical URL: ${site.url}/books/${book.slug}/`,
+    "",
+    `Author: Keith Staggers. Published: ${book.datePublished}. Publisher: ${book.publisher}. Format: ${book.format}. Language: ${book.language}. Length: ${book.pageCount} pages. ISBN-13: ${book.isbn13}. ASIN: ${book.asin}. Amazon record: ${book.amazonUrl}.`,
+    "",
+    ...book.overview.flatMap((paragraph) => [paragraph, ""]),
+    "What the book addresses:",
+    ...book.themes.map((theme) => `- ${theme}`),
+    "",
+    "Intended readers:",
+    ...book.audience.map((audience) => `- ${audience}`),
+    "",
+  ]);
+  const workflowTestSections = workflowTestCases.flatMap((testCase) => [
+    `### ${testCase.number}. ${testCase.name}`,
+    "",
+    testCase.purpose,
+    "",
+    `Expected behavior: ${testCase.expected}`,
+    "",
+  ]);
   const body = [
     "# Keith Staggers Studio: full public text index",
     "",
@@ -42,7 +67,7 @@ export const GET: APIRoute = () => {
     "",
     "# Identity",
     "",
-    "Keith Staggers is an AI creator, trainer, workflow builder, working nurse leader, author, and independent producer. He builds practical AI-assisted systems, trains people to use them responsibly, and documents where human judgment stays in control.",
+    "Keith Staggers is an AI creator, trainer, workflow builder, working nurse leader, author, and independent producer. He builds practical AI-assisted systems, trains people to use them responsibly, and documents where human judgment stays in control. His primary public book catalog contains Nurse the F*ck Up and Leading with Care.",
     "",
     `About: ${site.url}/about/`,
     `Proof: ${site.url}/proof/`,
@@ -51,6 +76,16 @@ export const GET: APIRoute = () => {
     "# Services",
     "",
     ...serviceSections,
+    "# Books",
+    "",
+    ...bookSections,
+    "# Free workflow testing resource",
+    "",
+    `Canonical URL: ${site.url}/workflow-testing-template/`,
+    "",
+    "The 10-Case AI Workflow Testing Template is a free browser worksheet. It records the workflow owner, trigger, approved inputs, finish line, human reviewer, data boundary, stop conditions, manual fallback, expected behavior, actual evidence, outcome, release decision, known limits, and next test. Entries remain in the visitor's browser and can be exported as CSV or printed to PDF.",
+    "",
+    ...workflowTestSections,
     "# Studio Notes",
     "",
     ...noteSections,

@@ -155,6 +155,11 @@ const serviceJsonLd = {
             </p>
             <h3 class="serif text-[22px] lg:text-[24px] leading-tight mb-3">{d.name}</h3>
             <p class="text-paper-dim text-[14.5px] leading-[1.7]">{d.detail}</p>
+            {service.slug === "done-for-you" && d.name === "Test evidence" && (
+              <a href="/workflow-testing-template/" class="mt-5 inline-block font-mono text-[10px] tracking-[0.13em] uppercase text-cobalt-text transition-colors hover:text-paper">
+                Use the free ten-case worksheet →
+              </a>
+            )}
           </div>
         ))}
       </div>

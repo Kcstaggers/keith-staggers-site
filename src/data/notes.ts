@@ -300,6 +300,11 @@ export const notes: StudioNote[] = [
         context: "Confirm the job has an owner, finish line, test cases, and safe operating path.",
       },
       {
+        title: "Use the ten-case testing worksheet",
+        href: "/workflow-testing-template/",
+        context: "Run the normal path, exceptions, safety stops, duplicate protection, human rejection, and manual recovery.",
+      },
+      {
         title: "See the public build record",
         href: "/proof/",
         context: "Bounded evidence from independent builds and finished production.",
