@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { books } from "../data/books";
 import { publishedNotes } from "../data/notes";
 import { fixedRouteLastModified } from "../data/route-metadata";
 import { services } from "../data/services";
@@ -14,6 +15,7 @@ const homepageRoute = {
     fixedHomepageDate,
     ...publishedNotes.map((note) => note.dateModified),
     ...services.map((service) => service.lastModified),
+    ...books.map((book) => book.dateModified),
   ]),
 };
 const collectionRoutes = [
@@ -24,6 +26,10 @@ const collectionRoutes = [
   {
     route: "/notes/",
     lastModified: newestDate(publishedNotes.map((note) => note.dateModified)),
+  },
+  {
+    route: "/books/",
+    lastModified: newestDate(books.map((book) => book.dateModified)),
   },
 ];
 
@@ -38,6 +44,10 @@ const routes = [
   ...publishedNotes.map((note) => ({
     route: `/notes/${note.slug}/`,
     lastModified: note.dateModified,
+  })),
+  ...books.map((book) => ({
+    route: `/books/${book.slug}/`,
+    lastModified: book.dateModified,
   })),
 ];
 

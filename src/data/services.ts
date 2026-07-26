@@ -26,7 +26,7 @@ export const services: Service[] = [
     blurb:
       "One repeated job turned into a tested, documented AI-assisted workflow in a client-owned path. You own the system and the human decision stays visible.",
     pricing: "Projects from $2,500",
-    lastModified: "2026-07-23",
+    lastModified: "2026-07-25",
     seoTitle: "AI Workflow Consulting for Small Teams",
     seoDescription:
       "Turn one repeated job into a tested, documented AI-assisted workflow in a client-owned path. Projects from $2,500.",

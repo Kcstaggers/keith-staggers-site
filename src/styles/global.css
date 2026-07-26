@@ -1391,11 +1391,17 @@ svg circle {
 }
 
 .studio-book-strip > p b { color: var(--color-paper); }
-.studio-book-strip > p span { color: var(--color-signal); }
+.studio-book-strip > p a {
+  color: var(--color-signal);
+  transition: color 180ms ease;
+}
+
+.studio-book-strip > p a:hover,
+.studio-book-strip > p a:focus-visible { color: var(--color-paper); }
 
 .studio-book-strip > div {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -2364,7 +2370,7 @@ svg circle {
 
 .proof-book-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 3rem);
   margin-top: clamp(3rem, 6vw, 6rem);
 }
@@ -2595,7 +2601,7 @@ svg circle {
   .studio-sound-copy { padding: 1.5rem; }
   .studio-music-feature iframe { min-height: 352px; }
   .studio-book-strip { grid-template-columns: 1fr; }
-  .studio-book-strip > div { overflow-x: auto; grid-template-columns: repeat(3, minmax(165px, 48vw)); }
+  .studio-book-strip > div { overflow-x: auto; grid-template-columns: repeat(2, minmax(165px, 48vw)); }
 
   .studio-story-head { grid-template-columns: 1fr; gap: 2rem; }
   .studio-life-path { grid-template-columns: 1fr 1fr; min-height: 700px; gap: 2rem 1rem; }
@@ -2730,7 +2736,7 @@ svg circle {
   .proof-case-grid h3 { margin-top: 2.5rem; }
   .proof-book-list {
     overflow-x: auto;
-    grid-template-columns: repeat(3, minmax(190px, 74vw));
+    grid-template-columns: repeat(2, minmax(190px, 74vw));
     padding-bottom: 1rem;
   }
   .proof-record dl { grid-template-columns: 1fr; }

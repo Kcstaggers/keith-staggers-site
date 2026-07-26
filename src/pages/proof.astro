@@ -30,15 +30,7 @@ const proofItems = [
     creator: { "@id": `${site.url}/#keith` },
   },
   ...books.map((book) => ({
-    "@type": "Book",
-    "@id": `${canonicalUrl}#book-${book.slug}`,
-    name: book.title,
-    alternateName: book.subtitle,
-    description: book.blurb,
-    datePublished: "2023",
-    author: { "@id": `${site.url}/#keith` },
-    url: book.amazonUrl,
-    image: `${site.url}/media/book-${book.slug}.webp`,
+    "@id": `${site.url}/books/${book.slug}/#book`,
   })),
 ];
 const proofJsonLd = {
@@ -49,9 +41,9 @@ const proofJsonLd = {
       "@id": `${canonicalUrl}#page`,
       name: "Proof · AI Builds, Books and Finished Work",
       description:
-        "Independent AI builds, test records, three healthcare books, and a finished-work record from Keith Staggers.",
+        "Independent AI builds, test records, two primary healthcare books, and a finished-work record from Keith Staggers.",
       url: canonicalUrl,
-      dateModified: "2026-07-23",
+      dateModified: "2026-07-25",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       about: { "@id": `${site.url}/#keith` },
@@ -91,7 +83,7 @@ const proofJsonLd = {
 
 <Base
   title="Proof · AI Builds, Books and Finished Work"
-  description="See Keith Staggers' independent AI builds, test records, three healthcare books, and finished-work record. No client outcomes are claimed."
+  description="See Keith Staggers' independent AI builds, test records, two primary healthcare books, and finished-work record. No client outcomes are claimed."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(proofJsonLd)} />
@@ -186,12 +178,12 @@ const proofJsonLd = {
     <section class="proof-books" aria-labelledby="proof-books-title">
       <div class="studio-shell">
         <header class="proof-books-head">
-          <h2 id="proof-books-title" class="studio-display">Three healthcare books.<br /><strong>Published in 2023</strong><span class="text-signal">.</span></h2>
-          <p>Leadership, burnout, and the reality of med-surg, written from inside the work.</p>
+          <h2 id="proof-books-title" class="studio-display">Two primary books.<br /><strong>Published in 2023</strong><span class="text-signal">.</span></h2>
+          <p>Healthcare leadership and the reality of med-surg, written from inside the work. <a href="/books/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">See full book records.</a></p>
         </header>
         <div class="proof-book-list">
           {books.map((book) => (
-            <a href={book.amazonUrl} target="_blank" rel="noreferrer" class="proof-book">
+            <a href={`/books/${book.slug}/`} class="proof-book">
               <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} book cover`} width="600" height="900" loading="lazy" decoding="async" />
               <span><b>{book.title}</b><small>{book.subtitle}</small></span>
             </a>

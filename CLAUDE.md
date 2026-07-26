@@ -4,7 +4,7 @@ This file gets you (the AI assistant) up to speed on Keith Staggers' personal si
 
 ## What this is
 
-Personal/portfolio site for Keith Staggers — Tampa-based retired Baltimore detective (1992-2013), nurse then nurse leader (2014-now, he still leads a med-surg unit today), and AI-native digital creator / consultant (2022-now). 50+ albums, 800+ songs, 3 published books, 1000+ AI-generated images/films. The site exists to **get him hired and make him money** through done-for-you AI work, coaching, training, and speaking.
+Personal/portfolio site for Keith Staggers, a Tampa-based retired Baltimore detective (1992-2013), nurse then nurse leader (2014-now, he still leads a med-surg unit today), and AI-native digital creator / consultant (2022-now). 50+ albums, 800+ songs, 2 primary books in the current public catalog, 1000+ AI-generated images/films. The site exists to **get him hired and make him money** through done-for-you AI work, coaching, training, and speaking.
 
 **Canonical career dates live in `/Career/career-timeline.md` (workspace root).** July 12, 2026 brand-consistency pass: his public LinkedIn (linkedin.com/in/keithstaggers) says Founder / AI Consultant since 2022 and that he leads nurses today, so the site must not say the creator era started 2023 or imply nursing ended. Fixed that day in CareerTimeline.astro, About.astro, and StudioStory.astro. Do not reintroduce "2023-now" for the creator era or "then nurse" phrasing.
 
@@ -71,7 +71,7 @@ src/
 │   ├── About.astro            # Drop-cap narrative + CareerTimeline + PullQuote
 │   ├── CareerTimeline.astro   # Three-era timeline (Detective / Nurse / AI Creator)
 │   ├── PullQuote.astro        # Reusable big-quote block
-│   ├── Books.astro            # 3 books with cover images linking to Amazon
+│   ├── Books.astro            # Legacy book-section component using the current primary catalog
 │   ├── ClosingCTA.astro       # Legacy qualification close + direct guide download
 │   ├── Newsletter.astro       # Legacy component, intentionally not rendered
 │   ├── Footer.astro           # Giant wordmark + 4-col grid
@@ -80,7 +80,7 @@ src/
 ├── data/                       # CONTENT LIVES HERE. Edit these to change copy.
 │   ├── site.ts                # Name, tagline, email, city, qualification path, availability
 │   ├── albums.ts              # 7 albums with Spotify/Apple/Amazon IDs
-│   ├── books.ts               # 3 books with Amazon URL + blurbs
+│   ├── books.ts               # Verified metadata and substantive copy for the 2 primary books
 │   ├── services.ts            # 4 services with pricing
 │   ├── notes.ts               # Published-state Studio Notes with metadata, images, resources, and curated relations
 │   └── testimonials.ts        # Empty by design; real testimonials only, with written permission
@@ -128,7 +128,7 @@ These are real rules from prior iterations — violating them will require rewor
 - **De-emphasize Tampa in CTAs.** Tampa is biographical (lives there, in the About section). Anywhere customer-facing — CTAs, footer, hero — say "Available worldwide" or "Working worldwide". He doesn't want Tampa narrowing his perceived market for remote work.
 - **Use a qualification step before scheduling.** Public service CTAs lead to `/project-fit/`. Keith reviews the answers first and shares a private calendar link only when the inquiry fits.
 - **Keep recruiter access open.** The project-fit form includes an employment or recruiter path that does not force a sales-budget answer.
-- **Books link straight to Amazon.** Buy-direct via Lemon Squeezy was scrapped — the overhead wasn't worth it for book sales.
+- **Books use owned detail pages with a direct Amazon CTA.** Do not add a separate direct-sale checkout. Track Amazon clicks with the book slug and owned-page placement only.
 
 ## Data files — where to make common changes
 
@@ -217,7 +217,7 @@ Updated July 25, 2026. Keith chose the portrait-and-music Studio homepage as the
 - Inter display type with mono utility text
 - Keith Photo 9 as a recurring circular identity portal with orbit lines and subtle pointer motion
 - Keith Photo 5 is embedded in the actual Finish Loop field-manual cover and drives the homepage product stage, sales page, thank-you page, and social campaign image
-- Music is the dominant catalog proof with a featured Spotify stage and six-release rail. The three books appear only as a compact supporting strip
+- Music is the dominant catalog proof with a featured Spotify stage and six-release rail. The two primary books appear as a compact supporting strip that leads to the owned Books pages
 - Open bands, rails, cinematic stages, and thin rules. No cream background, default bento grid, decorative hero eyebrow, or tint over Keith's face
 - Homepage order: studio hero, production ticker, useful four-part method, Studio Notes, Finish Loop, service selector, interactive work stage, catalog proof, three-lives story, qualification close
 

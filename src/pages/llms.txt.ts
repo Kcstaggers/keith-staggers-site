@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { books } from "../data/books";
 import { publishedNotes } from "../data/notes";
 import { services } from "../data/services";
 import { site } from "../data/site";
@@ -12,6 +13,10 @@ export const GET: APIRoute = () => {
   const noteLines = [...publishedNotes]
     .sort((a, b) => b.datePublished.localeCompare(a.datePublished) || b.number.localeCompare(a.number))
     .map((note) => `- [${note.title}](${site.url}/notes/${note.slug}/): ${note.summary}`);
+  const bookLines = books.map(
+    (book) =>
+      `- [${book.title}: ${book.subtitle}](${site.url}/books/${book.slug}/): ${book.blurb} Paperback published ${book.datePublished}; ISBN-13 ${book.isbn13}; ASIN ${book.asin}.`
+  );
   const body = [
     "# Keith Staggers",
     "",
@@ -22,6 +27,7 @@ export const GET: APIRoute = () => {
     `- [Homepage](${site.url}/): Current identity, offers, and primary navigation.`,
     `- [About Keith Staggers](${site.url}/about/): Career history, operating method, and portfolio boundaries.`,
     `- [Independent proof](${site.url}/proof/): Public build and publication record.`,
+    `- [Books by Keith Staggers](${site.url}/books/): Canonical records for the two primary healthcare books.`,
     `- [Studio Notes](${site.url}/notes/): Canonical editorial archive.`,
     `- [RSS feed](${site.url}/rss.xml): Machine-readable Studio Notes updates.`,
     `- [Full public text index](${site.url}/llms-full.txt): Current public service descriptions and full Studio Notes text.`,
@@ -29,6 +35,14 @@ export const GET: APIRoute = () => {
     "## Services",
     "",
     ...serviceLines,
+    "",
+    "## Books",
+    "",
+    ...bookLines,
+    "",
+    "## Free workflow resource",
+    "",
+    `- [10-Case AI Workflow Testing Template](${site.url}/workflow-testing-template/): A browser worksheet for normal work, exceptions, safety stops, duplicate runs, human rejection, and manual recovery. Entries stay in the visitor's browser and can be exported as CSV or printed to PDF.`,
     "",
     "## Latest Studio Notes",
     "",

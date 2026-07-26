@@ -87,12 +87,14 @@ const indexableRoutes = [];
 const requiredSchema = new Map([
   ["/", ["WebSite", "Person", "Organization"]],
   ["/about/", ["ProfilePage", "BreadcrumbList"]],
+  ["/books/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
   ["/finish-loop/", ["Product", "FAQPage", "BreadcrumbList"]],
   ["/notes/", ["Blog", "ItemList", "BreadcrumbList"]],
   ["/project-fit/", ["WebPage", "BreadcrumbList"]],
   ["/proof/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
   ["/services/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
   ["/workflow-readiness/", ["WebPage", "BreadcrumbList"]],
+  ["/workflow-testing-template/", ["WebPage", "LearningResource", "BreadcrumbList"]],
 ]);
 
 for (const page of pages) {
@@ -175,6 +177,9 @@ for (const page of pages) {
       fail(`${route}: representative image must be 1200 pixels wide`);
     }
   }
+  if (route.startsWith("/books/") && route !== "/books/") {
+    routeSchema.push("WebPage", "Book", "ImageObject", "BreadcrumbList");
+  }
   for (const expectedType of routeSchema) {
     if (!types.has(expectedType)) fail(`${route}: missing ${expectedType} schema`);
   }
@@ -236,7 +241,6 @@ const meaningfulHomepageImages = [
   "/media/keith-diner.webp",
   "/media/keith-neon-violet.webp",
   "/media/book-nurse-the-fck-up.webp",
-  "/media/book-beyond-burnout.webp",
   "/media/book-leading-with-care.webp",
 ];
 for (const imagePath of meaningfulHomepageImages) {
@@ -252,6 +256,93 @@ if (/mailto:|kcstaggers@gmail\.com/i.test(pages.map((page) => page.html).join("\
 }
 if (fs.existsSync(path.join(distDir, "frontline-nurse-leader", "index.html"))) {
   fail("release: staged cohort route must remain absent");
+}
+
+const allPublicHtml = pages.map((page) => page.html).join("\n");
+if (/Beyond Burnout|No Fear Nursing/i.test(allPublicHtml)) {
+  fail("books: retired test or alternate-title records must not appear in the public site");
+}
+if (/\b3 books\b|three healthcare books|three published/i.test(allPublicHtml)) {
+  fail("books: stale three-book public count remains");
+}
+
+const bookExpectations = [
+  {
+    route: "/books/nurse-the-fck-up/",
+    title: "Nurse the F*ck Up",
+    isbn: "9798861621335",
+    asin: "B0CJ44XP81",
+    date: "2023-09-16",
+    pages: 166,
+    amazon: "https://www.amazon.com/dp/B0CJ44XP81",
+  },
+  {
+    route: "/books/leading-with-care/",
+    title: "Leading with Care",
+    isbn: "9798869793935",
+    asin: "B0CNYLZ5FC",
+    date: "2023-11-24",
+    pages: 178,
+    amazon: "https://www.amazon.com/dp/B0CNYLZ5FC",
+  },
+];
+for (const expected of bookExpectations) {
+  const page = pages.find((candidate) => candidate.route === expected.route);
+  if (!page) {
+    fail(`${expected.route}: canonical book page is missing`);
+    continue;
+  }
+  for (const token of [
+    expected.title,
+    expected.isbn,
+    expected.asin,
+    expected.date,
+    String(expected.pages),
+    expected.amazon,
+    "Independently published",
+    "https://schema.org/Paperback",
+  ]) {
+    if (!page.html.includes(token)) fail(`${expected.route}: verified book metadata is missing ${token}`);
+  }
+  if (!page.html.includes(`data-amazon-book="${expected.route.split("/")[2]}"`)) {
+    fail(`${expected.route}: Amazon click attribution is missing`);
+  }
+}
+
+const booksHub = pages.find((page) => page.route === "/books/")?.html ?? "";
+for (const expected of bookExpectations) {
+  if (!booksHub.includes(`href="${expected.route}"`)) fail(`/books/: missing owned link to ${expected.route}`);
+  if (!booksHub.includes(`data-amazon-book="${expected.route.split("/")[2]}"`)) {
+    fail(`/books/: missing Amazon attribution for ${expected.route}`);
+  }
+}
+
+const workflowTemplate = pages.find((page) => page.route === "/workflow-testing-template/")?.html ?? "";
+if ((workflowTemplate.match(/\bdata-test-case\b/g) ?? []).length !== 10) {
+  fail("workflow-testing-template: expected exactly ten test cases");
+}
+for (const requiredControl of ["data-workflow-print", "data-workflow-download", "data-workflow-clear"]) {
+  if (!workflowTemplate.includes(requiredControl)) fail(`workflow-testing-template: missing ${requiredControl} control`);
+}
+for (const caseName of [
+  "Normal path",
+  "Missing input",
+  "Unusual but valid input",
+  "Conflicting information",
+  "Ambiguous or poor-quality input",
+  "Restricted input",
+  "Tool or model unavailable",
+  "Duplicate run",
+  "Human rejection",
+  "Manual recovery",
+]) {
+  if (!workflowTemplate.includes(caseName)) fail(`workflow-testing-template: missing ${caseName}`);
+}
+if (!workflowTemplate.includes("keith-staggers-workflow-test-v1")) {
+  fail("workflow-testing-template: local autosave contract is missing");
+}
+if (!workflowTemplate.includes("keith-staggers-10-case-workflow-test.csv")) {
+  fail("workflow-testing-template: CSV export is missing");
 }
 
 const finishLoopPage = pages.find((page) => page.route === "/finish-loop/")?.html ?? "";
@@ -318,6 +409,22 @@ for (const fileName of ["llms.txt", "llms-full.txt"]) {
 }
 const llms = fs.readFileSync(path.join(distDir, "llms.txt"), "utf8");
 if (!llms.includes(`${siteUrl}/llms-full.txt`)) fail("llms.txt: full public text index link is missing");
+for (const requiredAiRecord of [
+  `${siteUrl}/books/`,
+  `${siteUrl}/books/nurse-the-fck-up/`,
+  `${siteUrl}/books/leading-with-care/`,
+  `${siteUrl}/workflow-testing-template/`,
+  "9798861621335",
+  "9798869793935",
+  "B0CJ44XP81",
+  "B0CNYLZ5FC",
+]) {
+  if (!llms.includes(requiredAiRecord)) fail(`llms.txt: missing public book or resource record ${requiredAiRecord}`);
+}
+const llmsFull = fs.readFileSync(path.join(distDir, "llms-full.txt"), "utf8");
+for (const caseName of ["Normal path", "Restricted input", "Duplicate run", "Manual recovery"]) {
+  if (!llmsFull.includes(caseName)) fail(`llms-full.txt: missing workflow test ${caseName}`);
+}
 
 if (errors.length > 0) {
   console.error(`SEO verification failed with ${errors.length} issue${errors.length === 1 ? "" : "s"}:`);
