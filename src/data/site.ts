@@ -36,6 +36,8 @@ export const site = {
     facebook: "https://www.facebook.com/profile.php?id=61564900019924",
     instagram: "https://www.instagram.com/sta_ggers/",
     youtube: "https://www.youtube.com/@kcstaggers",
+    goodreads: "https://www.goodreads.com/author/show/45798281.Keith_Staggers",
+    openLibrary: "https://openlibrary.org/authors/OL16535970A/Keith_Staggers",
   },
   nav: [
     { label: "Proof", href: "/proof/" },

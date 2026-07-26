@@ -15,6 +15,8 @@ export type Book = {
   languageCode: "en-US";
   pageCount: number;
   amazonUrl: string;
+  goodreadsUrl: string;
+  openLibraryUrl: string;
   featured: boolean;
   overview: string[];
   themes: string[];
@@ -41,6 +43,9 @@ export const books: Book[] = [
     languageCode: "en-US",
     pageCount: 166,
     amazonUrl: "https://www.amazon.com/dp/B0CJ44XP81",
+    goodreadsUrl: "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
+    openLibraryUrl:
+      "https://openlibrary.org/books/OL62365292M/Nurse_the_F%2Ack_Up_The_Raw_Truth_About_Surviving_Med-Surg",
     featured: true,
     overview: [
       "Nurse the F*ck Up is Keith Staggers' plainspoken 2023 book about surviving med-surg nursing. It focuses on the patient loads, red tape, pressure, and emotional weight that make bedside work hard to sustain.",
@@ -78,6 +83,9 @@ export const books: Book[] = [
     languageCode: "en-US",
     pageCount: 178,
     amazonUrl: "https://www.amazon.com/dp/B0CNYLZ5FC",
+    goodreadsUrl: "https://www.goodreads.com/book/show/202652162-leading-with-care",
+    openLibraryUrl:
+      "https://openlibrary.org/books/OL62365304M/Leading_with_Care_Mastering_Healthcare_Management",
     featured: false,
     overview: [
       "Leading with Care is Keith Staggers' earlier 2023 book on practical healthcare leadership. Its core subjects include conflict resolution, change management, staff retention, and operational efficiency.",
