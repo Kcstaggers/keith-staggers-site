@@ -35,12 +35,15 @@ The Lemon Squeezy checkout URL lives in `src/data/products.ts`. Replace it only 
 
 ## Routes
 
-The build generates 18 static HTML pages. Seventeen are indexable and appear in the sitemap. The Finish Loop thank-you page is intentionally noindex.
+The build generates 22 static HTML pages. Twenty-one are indexable and appear in the sitemap. The Finish Loop thank-you page is intentionally noindex.
 
 | Route | Purpose |
 |---|---|
 | `/` | Studio homepage and value-first offer path |
 | `/about/` | Keith's public identity, career arc, and operating method |
+| `/books/` | Owned catalog hub for Keith's two primary books |
+| `/books/nurse-the-fck-up/` | Verified book record and direct Amazon handoff |
+| `/books/leading-with-care/` | Verified book record and direct Amazon handoff |
 | `/finish-loop/` | The Finish Loop sales page |
 | `/finish-loop/thank-you/` | Post-purchase handoff, intentionally excluded from indexing |
 | `/project-fit/` | Qualification form before scheduling |
@@ -51,6 +54,7 @@ The build generates 18 static HTML pages. Seventeen are indexable and appear in 
 | `/services/training/` | AI Training |
 | `/services/speaking/` | Speaking |
 | `/workflow-readiness/` | Seven-question, no-email workflow readiness check |
+| `/workflow-testing-template/` | Free 10-case browser worksheet with CSV and print-to-PDF export |
 | `/notes/` | Studio Notes archive |
 | `/notes/the-finishing-problem/` | Studio Note |
 | `/notes/the-monday-morning-test/` | Studio Note |
@@ -127,7 +131,7 @@ Publishing flow:
 7. Verify the live routes and conversion links at [www.keithstaggers.com](https://www.keithstaggers.com).
 8. Run the live smoke test and submit only changed canonical URLs through IndexNow.
 
-The apex domain redirects to `www`. Vercel generates the site from `main`.
+The apex domain returns a permanent 308 to the matching `www` route. Vercel generates the site from `main`.
 
 Pull requests and pushes to `main` also run the pinned GitHub Actions quality workflow with exact dependencies, Astro checks, SEO verification, and a high-severity production dependency audit.
 
@@ -136,6 +140,6 @@ Pull requests and pushes to `main` also run the pinned GitHub Actions quality wo
 - Keep the public calendar private. Service calls must remain behind `/project-fit/`.
 - Never add personal form answers to analytics.
 - Never commit secrets, environment files, customer ZIPs, or editable paid-product sources.
-- Books link directly to Amazon.
+- Books use owned catalog and detail pages, then link directly to Amazon with privacy-safe click measurement.
 - Keep customer-facing availability worldwide rather than geographically limited.
 - Follow the current operating and deployment record in `CLAUDE.md` before changing checkout, DNS, or production behavior.

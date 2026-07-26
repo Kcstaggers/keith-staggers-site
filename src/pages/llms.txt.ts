@@ -15,7 +15,7 @@ export const GET: APIRoute = () => {
     .map((note) => `- [${note.title}](${site.url}/notes/${note.slug}/): ${note.summary}`);
   const bookLines = books.map(
     (book) =>
-      `- [${book.title}: ${book.subtitle}](${site.url}/books/${book.slug}/): ${book.blurb} Paperback published ${book.datePublished}; ISBN-13 ${book.isbn13}; ASIN ${book.asin}.`
+      `- [${book.title}: ${book.subtitle}](${site.url}/books/${book.slug}/): ${book.blurb} Paperback published ${book.datePublished}; ISBN-13 ${book.isbn13}; ASIN ${book.asin}. [Goodreads](${book.goodreadsUrl}). [Open Library](${book.openLibraryUrl}).`
   );
   const body = [
     "# Keith Staggers",

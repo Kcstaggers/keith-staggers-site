@@ -275,6 +275,9 @@ const bookExpectations = [
     date: "2023-09-16",
     pages: 166,
     amazon: "https://www.amazon.com/dp/B0CJ44XP81",
+    goodreads: "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
+    openLibrary:
+      "https://openlibrary.org/books/OL62365292M/Nurse_the_F%2Ack_Up_The_Raw_Truth_About_Surviving_Med-Surg",
   },
   {
     route: "/books/leading-with-care/",
@@ -284,6 +287,9 @@ const bookExpectations = [
     date: "2023-11-24",
     pages: 178,
     amazon: "https://www.amazon.com/dp/B0CNYLZ5FC",
+    goodreads: "https://www.goodreads.com/book/show/202652162-leading-with-care",
+    openLibrary:
+      "https://openlibrary.org/books/OL62365304M/Leading_with_Care_Mastering_Healthcare_Management",
   },
 ];
 for (const expected of bookExpectations) {
@@ -299,6 +305,8 @@ for (const expected of bookExpectations) {
     expected.date,
     String(expected.pages),
     expected.amazon,
+    expected.goodreads,
+    expected.openLibrary,
     "Independently published",
     "https://schema.org/Paperback",
   ]) {
@@ -306,6 +314,14 @@ for (const expected of bookExpectations) {
   }
   if (!page.html.includes(`data-amazon-book="${expected.route.split("/")[2]}"`)) {
     fail(`${expected.route}: Amazon click attribution is missing`);
+  }
+  const expectedSameAs = `"sameAs":["${expected.amazon}","${expected.goodreads}","${expected.openLibrary}"]`;
+  if (!page.html.includes(expectedSameAs)) fail(`${expected.route}: verified Book sameAs records are missing`);
+  if ((page.html.match(new RegExp(expected.goodreads.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length < 2) {
+    fail(`${expected.route}: visible Goodreads catalog record is missing`);
+  }
+  if ((page.html.match(new RegExp(expected.openLibrary.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length < 2) {
+    fail(`${expected.route}: visible Open Library catalog record is missing`);
   }
 }
 
@@ -418,10 +434,21 @@ for (const requiredAiRecord of [
   "9798869793935",
   "B0CJ44XP81",
   "B0CNYLZ5FC",
+  "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
+  "https://openlibrary.org/books/OL62365292M/Nurse_the_F%2Ack_Up_The_Raw_Truth_About_Surviving_Med-Surg",
+  "https://www.goodreads.com/book/show/202652162-leading-with-care",
+  "https://openlibrary.org/books/OL62365304M/Leading_with_Care_Mastering_Healthcare_Management",
 ]) {
   if (!llms.includes(requiredAiRecord)) fail(`llms.txt: missing public book or resource record ${requiredAiRecord}`);
 }
 const llmsFull = fs.readFileSync(path.join(distDir, "llms-full.txt"), "utf8");
+for (const requiredAuthorRecord of [
+  "https://www.goodreads.com/author/show/45798281.Keith_Staggers",
+  "https://openlibrary.org/authors/OL16535970A/Keith_Staggers",
+]) {
+  if (!homepage.includes(requiredAuthorRecord)) fail(`homepage: Person sameAs is missing ${requiredAuthorRecord}`);
+  if (!llmsFull.includes(requiredAuthorRecord)) fail(`llms-full.txt: author record is missing ${requiredAuthorRecord}`);
+}
 for (const caseName of ["Normal path", "Restricted input", "Duplicate run", "Manual recovery"]) {
   if (!llmsFull.includes(caseName)) fail(`llms-full.txt: missing workflow test ${caseName}`);
 }

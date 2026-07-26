@@ -43,7 +43,7 @@ const bookJsonLd = {
       alternateName: book.subtitle,
       description: book.blurb,
       url: canonicalUrl,
-      sameAs: [book.amazonUrl],
+      sameAs: [book.amazonUrl, book.goodreadsUrl, book.openLibraryUrl],
       author: { "@id": `${site.url}/#keith` },
       mainEntityOfPage: { "@id": `${canonicalUrl}#page` },
       image: { "@id": `${canonicalUrl}#cover` },
@@ -222,6 +222,23 @@ const bookJsonLd = {
               <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">ISBN-13</dt><dd class="break-all font-mono text-[12px] text-paper-dim">{displayIsbn}</dd></div>
               <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">ASIN</dt><dd class="font-mono text-[12px] text-paper-dim">{book.asin}</dd></div>
             </dl>
+            <div class="border-t border-rule pt-5">
+              <p class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Catalog records</p>
+              <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-paper-dim">
+                <a
+                  href={book.goodreadsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline decoration-rule underline-offset-4 transition-colors hover:text-paper"
+                >Goodreads ↗</a>
+                <a
+                  href={book.openLibraryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline decoration-rule underline-offset-4 transition-colors hover:text-paper"
+                >Open Library ↗</a>
+              </div>
+            </div>
             <a
               href={book.amazonUrl}
               target="_blank"
