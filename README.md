@@ -133,7 +133,7 @@ Publishing flow:
 
 The apex domain returns a permanent 308 to the matching `www` route. Vercel generates the site from `main`.
 
-Pull requests and pushes to `main` also run the pinned GitHub Actions quality workflow with exact dependencies, Astro checks, SEO verification, and a high-severity production dependency audit.
+Vercel previews and production deployments run `npm run build`, including the static build and repository SEO verifier. The release operator also runs `npm run verify` and the high-severity production dependency audit before merge.
 
 ## Guardrails
 
