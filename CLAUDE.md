@@ -203,8 +203,9 @@ Updated July 25, 2026. Keith chose the portrait-and-music Studio homepage as the
 ### Git and rollback
 
 - Authoritative branch: `main`
-- Current production commit: `b4805e52e86092c786703dff577dcc5cfae5e778`, merged through PR #27.
-- Current production Vercel deployment record: `5606204664`, status `success`.
+- Current functional production commit: `b994928c187e83c7b312e1ec7f4a13fd4b116141`, merged through PR #28.
+- Current functional production Vercel deployment record: `5606419003`, status `success`.
+- Books-and-template production commit: `b4805e52e86092c786703dff577dcc5cfae5e778`, merged through PR #27 and deployed successfully as Vercel record `5606204664`.
 - Pre-books-and-template production commit: `fad7ef71c8a3bf8eb8ea59fc79e345c500792c45`, merged through PR #26.
 - Explicit pre-redesign rollback commit: `de5bf27`
 - Do not overwrite or stage the user-owned untracked files listed later in this document.
@@ -281,7 +282,7 @@ Updated July 25, 2026. This section supersedes older route-count and discovery s
 - Global `WebSite`, `Person`, and Studio `Organization` entities use stable IDs. Page-specific ProfilePage, Service, FAQPage, BlogPosting, Product, ItemList, CollectionPage or Blog, WebPage, and BreadcrumbList markup connect to them as appropriate.
 - Published Notes have visible author and date records, unique 1200 by 630 images, direct-answer summaries, curated related reading, and contextual internal resources.
 - A draft status gate prevents unapproved Notes from appearing in routes, homepage rows, `/notes/`, RSS, sitemap, `llms.txt`, or `llms-full.txt`.
-- RSS, truthful route modification dates, AI-readable plaintext indexes, Bing IndexNow, a non-mutating production smoke test, and pinned GitHub Actions quality checks are part of the release.
+- RSS, truthful route modification dates, AI-readable plaintext indexes, Bing IndexNow, a non-mutating production smoke test, and Vercel build checks are part of the release.
 - `/ai-workflow-guide.pdf` remains available but receives `X-Robots-Tag: noindex, follow`; the accessible HTML readiness page is the preferred search surface.
 - The homepage does not eagerly download portfolio video or Spotify media. The primary portrait now has responsive 360, 720, and 1080 pixel sources.
 - Meaningful portfolio and book images have descriptive alt text. The homepage and representative Notes score 100 accessibility and 100 SEO in mobile Lighthouse QA.
@@ -289,6 +290,7 @@ Updated July 25, 2026. This section supersedes older route-count and discovery s
 - Google Search Console uses the permanent URL-prefix verification token in the shared page head. Do not remove it while the property is active.
 - Google Search Console accepted individual indexing requests for `/books/`, both book-detail pages, and `/workflow-testing-template/`, and accepted a refreshed sitemap submission. These confirmations place the URLs in a priority crawl queue. They do not prove indexing.
 - Bing IndexNow accepted the same four changed canonical URLs with HTTP 200. That submission does not prove indexing.
+- After PR #28 added the verified catalog identifiers, Bing IndexNow accepted only the two changed book-detail URLs with HTTP 200. Google indexing requests were not repeated.
 - The live Finish Loop checkout URL is `https://keithstaggers.lemonsqueezy.com/checkout/buy/b7bc50dd-cd89-4371-8227-4c85c36c0591`. Preserve it unless a later verified merchant change replaces it.
 - CharterRN remains staged and absent. Employer projects, employer data, patient information, and internal healthcare workflows remain excluded.
 
@@ -300,9 +302,11 @@ Production release verification:
 - Mobile Lighthouse: 97 to 98 performance, 100 accessibility, 100 SEO, and 96 best practices. The best-practices deduction is the expected local-only Vercel Analytics 404.
 - Desktop and 390-pixel mobile rendered QA: no visible overflow or broken interaction in checked paths
 - Project-fit form: still posts to the verified Formspree endpoint
-- Production deployment `5606204664`: success
+- PR #27 production deployment `5606204664`: success
+- PR #28 functional production deployment `5606419003`: success
 - `npm run verify:live`: passed for all 21 indexable URLs and the supporting discovery files
-- Canonical-host 308 and four-URL Bing IndexNow submission: passed
+- Both live book pages expose the verified Goodreads and Open Library links in visible records and Book `sameAs`; the homepage Person `sameAs` exposes both verified author records
+- Canonical-host 308, the original four-URL Bing submission, and the PR #28 two-book Bing resubmission: passed
 
 ## Historical revenue handoff: Finish Loop launch
 
