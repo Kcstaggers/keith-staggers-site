@@ -32,7 +32,7 @@ GitHub-based auto-deploy. Every push to `main` triggers Vercel.
 - **Default branch:** `main`
 - **Build command:** `npm run build` through `vercel.json`, including the SEO release verifier
 - **Output:** `dist/`
-- **Custom domains:** `keithstaggers.com` (307s to www), `www.keithstaggers.com` (production), `keith-staggers-site.vercel.app` (Vercel default)
+- **Custom domains:** `keithstaggers.com` (permanent 308 to www), `www.keithstaggers.com` (production), `keith-staggers-site.vercel.app` (Vercel default)
 
 Keith pushes from his Mac terminal. macOS Keychain holds the GitHub credential — `git push` is silent. There is no PAT or SSH key needed.
 
@@ -173,7 +173,7 @@ Use the compatibility helpers in `src/utils/booking.ts`:
 
 ## Conversion measurement
 
-`Base.astro` records privacy-safe custom events through Vercel Web Analytics. Current events are Booking Intent, Service Interest, Guide Download, Facebook Follow Intent, Pathway Selected, Studio Note Opened, and Media Opened. Properties contain only the page, destination slug, visible link label, or media title. Do not add names, email addresses, form fields, or other personal data.
+`Base.astro` records privacy-safe custom events through Vercel Web Analytics. The release adds Workflow Template Action and Amazon Book Click to the existing pathway, media, product, readiness, qualification, guide, Facebook, service, and Studio Note events. Properties contain only the page, action, destination slug, book slug, placement, visible link label, or media title. Do not add names, email addresses, form fields, or other personal data.
 
 ## DNS (don't break this)
 
@@ -203,7 +203,9 @@ Updated July 25, 2026. Keith chose the portrait-and-music Studio homepage as the
 ### Git and rollback
 
 - Authoritative branch: `main`
-- Pre-SEO-release `origin/main` baseline: `4416a72d7ac08180083a79b3b8310d106cf8bd6d`. Verify GitHub and Vercel before recording a newer production commit.
+- Current production commit: `b4805e52e86092c786703dff577dcc5cfae5e778`, merged through PR #27.
+- Current production Vercel deployment record: `5606204664`, status `success`.
+- Pre-books-and-template production commit: `fad7ef71c8a3bf8eb8ea59fc79e345c500792c45`, merged through PR #26.
 - Explicit pre-redesign rollback commit: `de5bf27`
 - Do not overwrite or stage the user-owned untracked files listed later in this document.
 - The Studio design and project-fit gate were published to production through PR #3 on July 13, 2026.
@@ -254,9 +256,11 @@ The design spec includes the desktop and mobile concepts, responsive rules, moti
 - The Finish Loop page was also verified at an exact 390px viewport with a 390px document width after replacing implicit grid minimums with `minmax(0, 1fr)`.
 - Desktop native client viewport has no page-level horizontal overflow.
 - Mobile browser console and page errors were clean during the interaction pass.
-- The July 25 release candidate builds 18 static HTML pages. Seventeen are indexable and the Finish Loop thank-you page remains `noindex`.
+- Current production builds 22 static HTML pages. Twenty-one are indexable and the Finish Loop thank-you page remains `noindex`.
 - `npx astro check` passes with 0 errors and 0 warnings, plus 5 existing inactive legacy hints. `npm run build` now includes the committed SEO release gate.
 - A clean `npm ci` and `npm audit` report zero vulnerabilities.
+- `npm run verify:live` passes all 21 indexable URLs, canonical-host handling, RSS, AI text, PDF, caching, and bot-access checks.
+- `/books/`, both owned book-detail pages, and `/workflow-testing-template/` return HTTP 200 in production. The apex `/books/` request returns an exact permanent 308 to the matching www URL.
 - Production desktop at 1440 pixels and mobile at 390 pixels have no page-level horizontal overflow, visible broken images, or relevant browser console errors.
 - Latest QA screenshots are under `/Users/keithstaggers/.codex/visualizations/2026/07/12/019f57c3-3582-7623-9d6a-ffa5103b48ca/` with the `website-value-funnel-` prefix.
 - Finish Loop comparison and exact-mobile screenshots use the `finish-loop-` prefix in the same folder.
@@ -269,8 +273,10 @@ Updated July 25, 2026. This section supersedes older route-count and discovery s
 
 - The broad Studio homepage remains the primary identity. Do not replace it with a cohort-first or employer-led homepage.
 - Canonical authority hubs live at `/about/`, `/services/`, and `/notes/`.
-- The release candidate contains 18 static HTML pages, with 17 indexable URLs in the generated sitemap. `/finish-loop/thank-you/` remains excluded and `noindex`.
-- Canonical URLs use the www host and trailing slashes. Astro and Vercel enforce the route policy. The Vercel Project Domains apex redirect still requires a post-deploy change from 307 to 308.
+- The live production build contains 22 static HTML pages, with 21 indexable URLs in the generated sitemap. `/finish-loop/thank-you/` remains excluded and `noindex`.
+- Canonical URLs use the www host and trailing slashes. Astro and Vercel enforce the route policy. The apex domain now returns a permanent 308 to the matching www route.
+- `/books/` is the owned catalog hub for the two primary books. `/books/nurse-the-fck-up/` and `/books/leading-with-care/` carry substantive copy, verified ISBN, ASIN, publisher, publication-date, format, and page-count records, connected Book and breadcrumb schema, and measured Amazon calls to action.
+- `/workflow-testing-template/` is the public 10-case workflow-testing asset. It requires no email, stores entries in the visitor's browser, and supports CSV export and printing to PDF with explicit safety and human-review fields.
 - Global `WebSite`, `Person`, and Studio `Organization` entities use stable IDs. Page-specific ProfilePage, Service, FAQPage, BlogPosting, Product, ItemList, CollectionPage or Blog, WebPage, and BreadcrumbList markup connect to them as appropriate.
 - Published Notes have visible author and date records, unique 1200 by 630 images, direct-answer summaries, curated related reading, and contextual internal resources.
 - A draft status gate prevents unapproved Notes from appearing in routes, homepage rows, `/notes/`, RSS, sitemap, `llms.txt`, or `llms-full.txt`.
@@ -280,18 +286,22 @@ Updated July 25, 2026. This section supersedes older route-count and discovery s
 - Meaningful portfolio and book images have descriptive alt text. The homepage and representative Notes score 100 accessibility and 100 SEO in mobile Lighthouse QA.
 - `npm run build` checks sitemap parity, metadata, canonicals, social images, schema, dates, author links, internal references, RSS, AI text, deployment headers, host redirects, exclusions, checkout, project-fit, and media loading.
 - Google Search Console uses the permanent URL-prefix verification token in the shared page head. Do not remove it while the property is active.
+- Google Search Console accepted individual indexing requests for `/books/`, both book-detail pages, and `/workflow-testing-template/`, and accepted a refreshed sitemap submission. These confirmations place the URLs in a priority crawl queue. They do not prove indexing.
+- Bing IndexNow accepted the same four changed canonical URLs with HTTP 200. That submission does not prove indexing.
 - The live Finish Loop checkout URL is `https://keithstaggers.lemonsqueezy.com/checkout/buy/b7bc50dd-cd89-4371-8227-4c85c36c0591`. Preserve it unless a later verified merchant change replaces it.
 - CharterRN remains staged and absent. Employer projects, employer data, patient information, and internal healthcare workflows remain excluded.
 
-Release-candidate verification:
+Production release verification:
 
 - `npm run verify`: passed
 - `npm audit --omit=dev --audit-level=high`: zero vulnerabilities
-- SEO release gate: 18 HTML pages, 17 indexable URLs
+- SEO release gate: 22 HTML pages, 21 indexable URLs
 - Mobile Lighthouse: 97 to 98 performance, 100 accessibility, 100 SEO, and 96 best practices. The best-practices deduction is the expected local-only Vercel Analytics 404.
 - Desktop and 390-pixel mobile rendered QA: no visible overflow or broken interaction in checked paths
 - Project-fit form: still posts to the verified Formspree endpoint
-- Production smoke, canonical-host 308, and IndexNow proof remain post-deployment checks
+- Production deployment `5606204664`: success
+- `npm run verify:live`: passed for all 21 indexable URLs and the supporting discovery files
+- Canonical-host 308 and four-URL Bing IndexNow submission: passed
 
 ## Historical revenue handoff: Finish Loop launch
 
@@ -427,7 +437,7 @@ The following untracked items predate or sit outside the Finish Loop commits. Pr
 
 - Newsletter is intentionally off the homepage. Do not restore it until there is a real publishing cadence and at least four issues drafted.
 - `business-launch-kit-2026-07-11.md` contains the Facebook cadence, six ready posts, and LinkedIn profile starter copy. No external posts were published as part of the site build.
-- Five published-state Studio Notes are in the July 25 release candidate: finishing, practical team training, reinvention, workflow handoff, and the six-job content system. Future Notes remain outside the site until exact approval.
+- Five published-state Studio Notes are in production: finishing, practical team training, reinvention, workflow handoff, and the six-job content system. Future Notes remain outside the site until exact approval.
 - Local rollback point before the July 11 redesign: `backup/pre-phenomenal-redesign-2026-07-11`.
 - AI-workflow lead magnet PDF — discussed but not built. Captures emails from visitors not ready to book.
 - Vercel Speed Insights — separate from Web Analytics, currently off. Could enable in Vercel dashboard if Keith wants Lighthouse-style perf data.
