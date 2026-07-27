@@ -198,13 +198,14 @@ A scheduled task is set for **Aug 15, 2026** to start a Canva → Vercel transfe
 
 ## Current production handoff: AI creator studio homepage
 
-Updated July 25, 2026. Keith chose the portrait-and-music Studio homepage as the production direction and rejected the broader Future Wow signal-rain candidate. The site keeps `public/media/keith-photo-9.webp` as the driving identity image, the approved photo-led Finish Loop presentation, and the project-fit buffer before calendar access.
+Updated July 26, 2026. Keith chose the portrait-and-music Studio homepage as the production direction and rejected the broader Future Wow signal-rain candidate. The site keeps `public/media/keith-photo-9.webp` as the driving identity image, the approved photo-led Finish Loop presentation, and the project-fit buffer before calendar access. Finish Log is retired as a public campaign. The Proof page retains the static bounded AI Canvas record but has no Finish Log label, public-video link, release date, countdown, or timed unlock.
 
 ### Git and rollback
 
 - Authoritative branch: `main`
-- Current functional production commit: `b994928c187e83c7b312e1ec7f4a13fd4b116141`, merged through PR #28.
-- Current functional production Vercel deployment record: `5606419003`, status `success`.
+- Current production commit: `b4251ecde30a0e10a1c6c18bcf2e51bebb44e0e1`, merged through PR #30.
+- Current production Vercel target: `EmBc5ikyTedPuBfBFdA8P9qxrPNT`, status `success`.
+- PR #30 removed the cancelled Finish Log 002 release promise and automatic unlock while preserving the static bounded AI Canvas proof record.
 - Books-and-template production commit: `b4805e52e86092c786703dff577dcc5cfae5e778`, merged through PR #27 and deployed successfully as Vercel record `5606204664`.
 - Pre-books-and-template production commit: `fad7ef71c8a3bf8eb8ea59fc79e345c500792c45`, merged through PR #26.
 - Explicit pre-redesign rollback commit: `de5bf27`
@@ -258,6 +259,7 @@ The design spec includes the desktop and mobile concepts, responsive rules, moti
 - Desktop native client viewport has no page-level horizontal overflow.
 - Mobile browser console and page errors were clean during the interaction pass.
 - Current production builds 22 static HTML pages. Twenty-one are indexable and the Finish Loop thank-you page remains `noindex`.
+- The canonical Proof page contains no Finish Log 002 label, cancelled YouTube URL, August 2 promise, countdown, or timed unlock code.
 - `npx astro check` passes with 0 errors and 0 warnings, plus 5 existing inactive legacy hints. `npm run build` now includes the committed SEO release gate.
 - A clean `npm ci` and `npm audit` report zero vulnerabilities.
 - `npm run verify:live` passes all 21 indexable URLs, canonical-host handling, RSS, AI text, PDF, caching, and bot-access checks.
