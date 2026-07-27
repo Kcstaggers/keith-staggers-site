@@ -24,25 +24,32 @@ const stages = [
 
 const examples = [
   {
-    work: "Team huddle",
-    input: "Rough notes",
-    output: "Structured agenda",
-    check: "Leader verifies priorities",
-    asset: "Reusable huddle template",
+    problem: "Leadership decision",
+    startingPoint: "Notes, constraints, options",
+    aiContribution: "Surfaces themes and drafts choices",
+    humanDecision: "Leader sets priorities and tradeoffs",
+    result: "Decision brief",
   },
   {
-    work: "Rounding follow-up",
-    input: "Synthetic observations",
-    output: "Grouped themes",
-    check: "Leader assigns owners",
-    asset: "Action tracker",
+    problem: "Team training",
+    startingPoint: "Source material and real questions",
+    aiContribution: "Builds scenarios and exercises",
+    humanDecision: "Expert verifies accuracy and fit",
+    result: "Reusable workshop",
   },
   {
-    work: "Content launch",
-    input: "Brief and source material",
-    output: "Draft sequence",
-    check: "Creator checks tone and claims",
-    asset: "Finished campaign",
+    problem: "Creative release",
+    startingPoint: "Idea, references, raw media",
+    aiContribution: "Develops directions and variations",
+    humanDecision: "Creator chooses taste and final cut",
+    result: "Finished campaign",
+  },
+  {
+    problem: "Repeated business task",
+    startingPoint: "Steps, files, and rules",
+    aiContribution: "Maps and handles repeatable work",
+    humanDecision: "Owner approves exceptions",
+    result: "Tested workflow",
   },
 ];
 ---
@@ -76,17 +83,17 @@ const examples = [
       Not more prompts. A loop your team can use again.
     </p>
 
-    <div class="method-examples" aria-label="Examples of the method in practice">
+    <div class="method-examples" aria-label="Examples of the method across different kinds of work">
       <div class="method-example-row method-example-head" aria-hidden="true">
-        <span>Work</span><span>Input</span><span>AI assists</span><span>Human checks</span><span>Asset</span>
+        <span>Problem</span><span>What you have</span><span>AI contributes</span><span>Human decides</span><span>Useful result</span>
       </div>
       {examples.map((example) => (
         <div class="method-example-row">
-          <b>{example.work}</b>
-          <span data-label="Input">{example.input}</span>
-          <span data-label="AI assists">{example.output}</span>
-          <span data-label="Human checks">{example.check}</span>
-          <span data-label="Asset">{example.asset}</span>
+          <b>{example.problem}</b>
+          <span data-label="What you have">{example.startingPoint}</span>
+          <span data-label="AI contributes">{example.aiContribution}</span>
+          <span data-label="Human decides">{example.humanDecision}</span>
+          <span data-label="Useful result">{example.result}</span>
         </div>
       ))}
     </div>
