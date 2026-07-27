@@ -2115,25 +2115,8 @@ svg circle {
   color: var(--color-paper);
 }
 
-.proof-reel-poster[aria-disabled="true"] {
-  cursor: default;
-  pointer-events: none;
-}
-
-.proof-reel-poster:not([aria-disabled="true"]) {
-  cursor: pointer;
-}
-
-.proof-reel-poster:not([aria-disabled="true"]):hover .proof-reel-play,
-.proof-reel-poster:not([aria-disabled="true"]):focus-visible .proof-reel-play {
-  background: var(--color-cobalt);
-  color: white;
-  transform: scale(1.08);
-}
-
 .proof-reel-label,
-.proof-reel-caption,
-.proof-reel-status {
+.proof-reel-caption {
   font-family: var(--font-mono);
   text-transform: uppercase;
 }
@@ -2172,66 +2155,6 @@ svg circle {
   color: var(--color-paper);
   font-size: 0.72rem;
   letter-spacing: 0.13em;
-}
-
-.proof-reel-date,
-.proof-reel-play {
-  position: absolute;
-  right: clamp(1.5rem, 4vw, 3rem);
-  bottom: clamp(4.4rem, 7vw, 5.2rem);
-  display: grid;
-  width: clamp(4.6rem, 8vw, 6.4rem);
-  aspect-ratio: 1;
-  place-content: center;
-  border: 1px solid var(--color-signal);
-  border-radius: 50%;
-}
-
-.proof-reel-date b,
-.proof-reel-date small {
-  display: block;
-  color: var(--color-paper);
-  font-family: var(--font-mono);
-  line-height: 1;
-  text-align: center;
-}
-
-.proof-reel-date b {
-  font-size: clamp(1.2rem, 2vw, 1.7rem);
-}
-
-.proof-reel-date small {
-  margin-top: 0.2rem;
-  color: var(--color-signal);
-  font-size: 0.72rem;
-}
-
-.proof-reel-play {
-  background: var(--color-signal);
-  color: var(--color-ink);
-  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
-}
-
-.proof-reel-play[hidden],
-.proof-reel-date[hidden],
-[data-proof-reel-copy-link][hidden] {
-  display: none;
-}
-
-.proof-reel-play svg {
-  width: 1.4rem;
-  fill: currentColor;
-}
-
-.proof-reel-status {
-  position: absolute;
-  z-index: 2;
-  right: clamp(1.5rem, 4vw, 3rem);
-  bottom: clamp(1.25rem, 3vw, 2rem);
-  color: var(--color-paper);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-align: right;
 }
 
 .proof-canvas-copy h2 {
@@ -2726,9 +2649,6 @@ svg circle {
   .proof-video-wrap { min-height: 440px; }
   .proof-reel-poster { padding: 1.5rem; }
   .proof-reel-result { font-size: clamp(4.4rem, 22vw, 6.5rem); }
-  .proof-reel-date,
-  .proof-reel-play { right: 1.25rem; bottom: 4.5rem; }
-  .proof-reel-status { right: 1.25rem; bottom: 1.25rem; max-width: calc(100% - 2.5rem); }
   .proof-canvas-copy h2 { font-size: clamp(2.8rem, 14vw, 4.7rem); }
   .proof-canvas-copy ul { grid-template-columns: 1fr; }
   .proof-case-grid { grid-template-columns: 1fr; }

@@ -43,7 +43,7 @@ const proofJsonLd = {
       description:
         "Independent AI builds, test records, two primary healthcare books, and a finished-work record from Keith Staggers.",
       url: canonicalUrl,
-      dateModified: "2026-07-25",
+      dateModified: "2026-07-26",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       about: { "@id": `${site.url}/#keith` },
@@ -108,22 +108,11 @@ const proofJsonLd = {
     <section class="proof-canvas" aria-labelledby="proof-canvas-title">
       <div class="studio-shell proof-canvas-grid">
         <div class="proof-video-wrap">
-          <a
-            data-proof-reel-link
-            data-href="https://youtu.be/6WyEbSuM7u4"
-            aria-disabled="true"
-            class="proof-reel-poster"
-            aria-label="AI Canvas production test, scheduled for public release August 2 at 11:00 AM ET"
-          >
-            <span class="proof-reel-label">Finish Log 002 · AI Canvas demo reel</span>
+          <div class="proof-reel-poster">
+            <span class="proof-reel-label">AI Canvas · bounded production test</span>
             <span class="proof-reel-result"><b>4¢</b><i>→</i><b>$0</b></span>
-            <span class="proof-reel-caption">The real test · 82 seconds</span>
-            <span class="proof-reel-date" data-proof-reel-date aria-hidden="true"><b>08</b><small>02</small></span>
-            <span class="proof-reel-play" data-proof-reel-play hidden aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-            </span>
-          </a>
-          <p class="proof-reel-status" data-proof-reel-status>The public demo publishes August 2 at 11:00 AM ET.</p>
+            <span class="proof-reel-caption">One controlled run · verified across the system</span>
+          </div>
         </div>
         <div class="proof-canvas-copy">
           <p class="studio-kicker">AI Canvas · owner-run production shadow</p>
@@ -135,13 +124,6 @@ const proofJsonLd = {
             <li><b>$0.04</b><span>price snapshot quoted</span></li>
             <li><b>$0</b><span>reserved, charged, and provider cost</span></li>
           </ul>
-          <a
-            data-proof-reel-copy-link
-            href="https://youtu.be/6WyEbSuM7u4"
-            target="_blank"
-            rel="noreferrer"
-            hidden
-          >Watch the 82-second proof on YouTube ↗</a>
         </div>
       </div>
     </section>
@@ -229,35 +211,4 @@ const proofJsonLd = {
     </section>
   </article>
 
-  <script>
-    const proofReelStatus = document.querySelector<HTMLElement>("[data-proof-reel-status]");
-    const proofReelLink = document.querySelector<HTMLAnchorElement>("[data-proof-reel-link]");
-    const proofReelCopyLink = document.querySelector<HTMLAnchorElement>("[data-proof-reel-copy-link]");
-    const proofReelDate = document.querySelector<HTMLElement>("[data-proof-reel-date]");
-    const proofReelPlay = document.querySelector<HTMLElement>("[data-proof-reel-play]");
-    const proofReelReleaseAt = Date.parse("2026-08-02T11:00:00-04:00");
-
-    const unlockProofReel = () => {
-      if (!proofReelLink) return;
-      const href = proofReelLink.dataset.href;
-      if (href) {
-        proofReelLink.href = href;
-        proofReelLink.target = "_blank";
-        proofReelLink.rel = "noreferrer";
-        proofReelLink.removeAttribute("aria-disabled");
-        proofReelLink.setAttribute("aria-label", "Watch the AI Canvas production test on YouTube");
-        proofReelDate?.setAttribute("hidden", "");
-        proofReelPlay?.removeAttribute("hidden");
-        proofReelCopyLink?.removeAttribute("hidden");
-        if (proofReelStatus) proofReelStatus.textContent = "The public demo is available on YouTube.";
-      }
-    };
-
-    const proofReelUnlockDelay = proofReelReleaseAt - Date.now();
-    if (proofReelUnlockDelay <= 0) {
-      unlockProofReel();
-    } else {
-      window.setTimeout(unlockProofReel, proofReelUnlockDelay);
-    }
-  </script>
 </Base>
