@@ -127,6 +127,27 @@ const serviceJsonLd = {
       </div>
     </header>
 
+    {service.slug === "training" && (
+      <section class="hairline mt-16 grid gap-7 border-b border-rule bg-panel px-6 py-8 sm:px-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end" aria-labelledby="public-cohort-title">
+        <div>
+          <p class="eyebrow mb-4">Founding public cohort</p>
+          <h2 id="public-cohort-title" class="serif text-[clamp(28px,3vw,42px)] leading-[1.05]">
+            AI for the <span class="accent">Frontline Nurse Leader</span>.
+          </h2>
+          <p class="mt-4 max-w-[720px] text-[15px] leading-[1.75] text-paper-dim">
+            September 16, 2026 · Live virtual · 9:00 AM to 1:15 PM ET · $179 · 20 registrations. 4.0 nursing contact hours pending approval.
+          </p>
+        </div>
+        <a
+          href="/frontline-nurse-leader/"
+          data-cohort-interest="frontline-nurse-leader-sept-16"
+          class="inline-flex min-h-12 items-center justify-center bg-cobalt px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:bg-cobalt-dim"
+        >
+          See the September cohort →
+        </a>
+      </section>
+    )}
+
     <!-- Who it's for -->
     <section class="hairline mt-20 pt-12 grid lg:grid-cols-12 gap-10">
       <h2 class="lg:col-span-4 serif text-[clamp(28px,3vw,40px)] leading-[1.05]">

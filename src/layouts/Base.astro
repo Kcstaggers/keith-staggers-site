@@ -166,6 +166,37 @@ const jsonLd = {
           .trim()
           .slice(0, 80);
 
+      const finishLoopAttribution = () => {
+        const params = new URLSearchParams(window.location.search);
+        const campaign = params.get("utm_campaign");
+        const content = params.get("utm_content");
+        const permittedContent = new Set(["01-90-percent", "02-last-10-percent", "03-catalog"]);
+
+        if (
+          params.get("utm_source") !== "facebook" ||
+          params.get("utm_medium") !== "organic_social" ||
+          campaign !== "finish_loop_facebook_2026_08" ||
+          !content ||
+          !permittedContent.has(content)
+        ) {
+          return {};
+        }
+
+        return {
+          campaign,
+          content,
+          channel: "facebook-organic",
+        };
+      };
+
+      const landingAttribution = finishLoopAttribution();
+      if (window.location.pathname === "/finish-loop/" && landingAttribution.campaign) {
+        track("Finish Loop Campaign Landing", {
+          page: window.location.pathname,
+          ...landingAttribution,
+        });
+      }
+
       document.addEventListener("click", (event) => {
         if (!(event.target instanceof Element)) return;
 
@@ -204,7 +235,19 @@ const jsonLd = {
         const source = labelFor(link);
         const page = window.location.pathname;
 
-        if (link.dataset.amazonBook) {
+        if (link.dataset.cohortPurchase) {
+          track("Cohort Checkout Intent", {
+            cohort: link.dataset.cohortPurchase,
+            source,
+            page,
+          });
+        } else if (link.dataset.cohortInterest) {
+          track("Cohort Page Interest", {
+            cohort: link.dataset.cohortInterest,
+            source,
+            page,
+          });
+        } else if (link.dataset.amazonBook) {
           track("Amazon Book Click", {
             book: link.dataset.amazonBook,
             placement: link.dataset.amazonPlacement ?? "unspecified",
@@ -216,6 +259,7 @@ const jsonLd = {
             product: link.dataset.productPurchase,
             source,
             page,
+            ...finishLoopAttribution(),
           });
         } else if (href === "/workflow-readiness/") {
           track("Readiness Started", { source, page });
