@@ -1,0 +1,456 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site";
+
+const checkoutUrl = "https://buy.stripe.com/eVq6oH9wt2iV2B50rF6wE00";
+const cohortPath = "/frontline-nurse-leader/";
+const cohortUrl = new URL(cohortPath, site.url).href;
+const agenda = [
+  {
+    number: "01",
+    title: "The Monday hour",
+    detail: "Practice inbox triage, huddle preparation, and staffing summaries with synthetic data.",
+  },
+  {
+    number: "02",
+    title: "The deck that eats your month",
+    detail: "Turn raw quality and patient-experience data into a presentation-ready story.",
+  },
+  {
+    number: "03",
+    title: "The rounding loop",
+    detail: "Move from audit and rounding data to a themed action plan with owners and dates.",
+  },
+  {
+    number: "04",
+    title: "Guardrails and the library",
+    detail: "Use clear PHI boundaries, verification habits, and a prompt library mapped to your week.",
+  },
+];
+
+const courseJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Course",
+      "@id": `${cohortUrl}#course`,
+      name: "AI for the Frontline Nurse Leader · Founding Cohort",
+      description:
+        "A live virtual working session for nurse managers, assistant managers, and charge nurses using synthetic data and practical AI guardrails.",
+      url: cohortUrl,
+      provider: {
+        "@type": "Person",
+        name: site.name,
+        url: site.url,
+      },
+      offers: {
+        "@type": "Offer",
+        price: "179",
+        priceCurrency: "USD",
+        url: checkoutUrl,
+        availability: "https://schema.org/LimitedAvailability",
+      },
+      hasCourseInstance: {
+        "@type": "CourseInstance",
+        courseMode: "Online",
+        startDate: "2026-09-16T09:00:00-04:00",
+        endDate: "2026-09-16T13:15:00-04:00",
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${cohortUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "AI Training",
+          item: `${site.url}/services/training/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Frontline Nurse Leader Cohort",
+          item: cohortUrl,
+        },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Frontline Nurse Leader AI Cohort · Sept. 16"
+  description="A live virtual AI working session for nurse managers, assistant managers, and charge nurses on September 16, 2026. Founding cohort registration is $179."
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(courseJsonLd)} />
+  </Fragment>
+
+  <article class="cohort-page">
+    <header class="studio-shell cohort-hero">
+      <div class="cohort-hero-copy">
+        <nav class="cohort-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span aria-hidden="true">/</span>
+          <a href="/services/training/">AI Training</a><span aria-hidden="true">/</span>
+          <span aria-current="page">Founding cohort</span>
+        </nav>
+        <p class="cohort-date">September 16, 2026 · 9:00 AM to 1:15 PM ET · Live virtual</p>
+        <h1 class="studio-display">AI for the <strong>Frontline Nurse Leader</strong><span class="text-signal">.</span></h1>
+        <p class="cohort-lede">
+          A hands-on working session for nurse managers, assistant managers, and charge nurses. Practice the weekly work with AI, use synthetic data, and keep the judgment where it belongs.
+        </p>
+        <div class="cohort-actions">
+          <a
+            href={checkoutUrl}
+            data-cohort-purchase="frontline-nurse-leader-sept-16"
+            class="studio-button studio-button--primary"
+          >
+            Register for $179
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          </a>
+          <a href="#agenda" class="studio-button studio-button--secondary">See the agenda</a>
+        </div>
+        <p class="cohort-ce">4.0 nursing contact hours pending approval.</p>
+      </div>
+
+      <aside class="cohort-facts" aria-label="Cohort details">
+        <p><span>Date</span><strong>Wednesday, September 16</strong></p>
+        <p><span>Time</span><strong>9:00 AM to 1:15 PM ET</strong></p>
+        <p><span>Format</span><strong>Live virtual working session</strong></p>
+        <p><span>Capacity</span><strong>20 registrations</strong></p>
+        <p><span>Price</span><strong>$179 USD</strong></p>
+      </aside>
+    </header>
+
+    <section id="agenda" class="studio-shell cohort-agenda" aria-labelledby="cohort-agenda-title">
+      <div class="cohort-section-head">
+        <h2 id="cohort-agenda-title" class="studio-display">Your Monday work.<br /><strong>Built together</strong><span class="text-signal">.</span></h2>
+        <p>Bring a laptop and an approved AI tool or free account. Every exercise uses synthetic data. No patient information and no employer material.</p>
+      </div>
+
+      <ol class="cohort-agenda-list">
+        {agenda.map((item) => (
+          <li>
+            <span>{item.number}</span>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="cohort-outcomes">
+      <div class="studio-shell cohort-outcomes-grid">
+        <div>
+          <h2 class="studio-display">Leave with a method you can <strong>use again</strong><span class="text-signal">.</span></h2>
+        </div>
+        <ul>
+          <li>A personal prompt library mapped to recurring nurse-leader work</li>
+          <li>A practical way to verify output before it becomes a decision</li>
+          <li>Clear boundaries for PHI, public tools, and human approval</li>
+          <li>A repeatable workflow for huddles, quality stories, and follow-up</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="studio-shell cohort-boundary">
+      <div>
+        <p class="studio-kicker">Independent education</p>
+        <h2 class="studio-display">Built from the job.<br /><strong>Separate from the employer</strong><span class="text-signal">.</span></h2>
+      </div>
+      <p>
+        This is an independent Keith Staggers Studio offering. Exercises use synthetic data. Employer documents, internal workflows, patient information, and protected health information are not course material.
+      </p>
+    </section>
+
+    <section class="cohort-close">
+      <div class="studio-shell cohort-close-grid">
+        <div>
+          <h2 class="studio-display">Twenty seats.<br /><strong>One working day</strong><span class="text-signal">.</span></h2>
+          <p>Registration is one seat per payment. Refund, cancellation, and educational-use terms are displayed at checkout.</p>
+          <p class="cohort-ce">4.0 nursing contact hours pending approval.</p>
+        </div>
+        <a
+          href={checkoutUrl}
+          data-cohort-purchase="frontline-nurse-leader-sept-16"
+          class="studio-button studio-button--primary"
+        >
+          Register for $179
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+        </a>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .cohort-page {
+    border-bottom: 1px solid var(--color-rule);
+    background:
+      linear-gradient(90deg, rgb(40 81 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(rgb(40 81 255 / 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 82% 7%, rgb(113 57 255 / 0.18), transparent 29rem),
+      var(--color-ink);
+    background-size: 64px 64px, 64px 64px, auto, auto;
+  }
+
+  .cohort-hero {
+    display: grid;
+    min-height: calc(100svh - 5rem);
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.55fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 8rem);
+    padding-block: clamp(4rem, 7vw, 7rem);
+  }
+
+  .cohort-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: 1.4rem;
+    color: var(--color-paper-faint);
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .cohort-breadcrumb a { transition: color 180ms ease; }
+  .cohort-breadcrumb a:hover,
+  .cohort-breadcrumb a:focus-visible { color: var(--color-paper); }
+
+  .cohort-date {
+    color: var(--color-signal);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cohort-hero h1 {
+    max-width: 980px;
+    margin-top: 1.4rem;
+    font-size: clamp(4rem, 7.4vw, 8rem);
+    line-height: 0.84;
+  }
+
+  .cohort-hero h1 strong,
+  .cohort-section-head h2 strong,
+  .cohort-outcomes h2 strong,
+  .cohort-boundary h2 strong,
+  .cohort-close h2 strong {
+    color: var(--color-cobalt-text);
+    font-weight: inherit;
+  }
+
+  .cohort-lede {
+    max-width: 760px;
+    margin-top: 2rem;
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 1.35vw, 1.22rem);
+    line-height: 1.7;
+  }
+
+  .cohort-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .cohort-ce {
+    margin-top: 1.3rem;
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .cohort-facts { border-top: 1px solid var(--color-rule); }
+
+  .cohort-facts p {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--color-rule);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+
+  .cohort-facts span { color: var(--color-paper-faint); text-transform: uppercase; }
+  .cohort-facts strong { color: var(--color-paper); font-weight: 620; }
+
+  .cohort-agenda {
+    padding-block: clamp(5rem, 9vw, 9rem);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .cohort-section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.55fr);
+    align-items: end;
+    gap: clamp(3rem, 7vw, 8rem);
+  }
+
+  .cohort-section-head h2,
+  .cohort-outcomes h2,
+  .cohort-boundary h2,
+  .cohort-close h2 {
+    font-size: clamp(3.4rem, 6.6vw, 7.1rem);
+    line-height: 0.88;
+  }
+
+  .cohort-section-head > p {
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .cohort-agenda-list {
+    margin-top: clamp(3.5rem, 6vw, 6rem);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .cohort-agenda-list li {
+    display: grid;
+    grid-template-columns: 3rem minmax(220px, 0.75fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: baseline;
+    padding-block: clamp(1.6rem, 3vw, 2.8rem);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .cohort-agenda-list span {
+    color: var(--color-cobalt-text);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .cohort-agenda-list h3 {
+    font-size: clamp(1.5rem, 2.8vw, 2.7rem);
+    font-weight: 620;
+    letter-spacing: -0.04em;
+  }
+
+  .cohort-agenda-list p {
+    max-width: 650px;
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  .cohort-outcomes {
+    padding-block: clamp(5rem, 9vw, 9rem);
+    border-block: 1px solid var(--color-rule);
+    background:
+      radial-gradient(circle at 82% 50%, rgb(40 81 255 / 0.18), transparent 27rem),
+      #030406;
+  }
+
+  .cohort-outcomes-grid,
+  .cohort-boundary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 8rem);
+  }
+
+  .cohort-outcomes ul { border-top: 1px solid var(--color-rule); }
+
+  .cohort-outcomes li {
+    position: relative;
+    padding: 1.25rem 0 1.25rem 1.6rem;
+    border-bottom: 1px solid var(--color-rule);
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .cohort-outcomes li::before {
+    content: "";
+    position: absolute;
+    top: 1.65rem;
+    left: 0;
+    width: 0.45rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--color-signal);
+  }
+
+  .cohort-boundary { padding-block: clamp(5rem, 9vw, 8rem); }
+
+  .cohort-boundary > p {
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    line-height: 1.75;
+  }
+
+  .cohort-close {
+    padding-block: clamp(5rem, 8vw, 8rem);
+    border-top: 1px solid var(--color-rule);
+    background: linear-gradient(110deg, rgb(40 81 255 / 0.14), rgb(113 57 255 / 0.08), rgb(255 96 77 / 0.07));
+  }
+
+  .cohort-close-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: clamp(3rem, 7vw, 8rem);
+  }
+
+  .cohort-close-grid > div > p:not(.cohort-ce) {
+    max-width: 700px;
+    margin-top: 1.5rem;
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1100px) {
+    .cohort-hero { grid-template-columns: minmax(0, 1fr) minmax(260px, 0.5fr); }
+  }
+
+  @media (max-width: 800px) {
+    .cohort-hero,
+    .cohort-section-head,
+    .cohort-outcomes-grid,
+    .cohort-boundary,
+    .cohort-close-grid {
+      min-height: auto;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .cohort-hero { padding-top: 4rem; }
+    .cohort-facts { margin-top: 1rem; }
+    .cohort-agenda-list li { grid-template-columns: 2rem minmax(0, 0.8fr) minmax(0, 1fr); gap: 1.2rem; }
+    .cohort-close :global(.studio-button) { width: min(100%, 420px); }
+  }
+
+  @media (max-width: 520px) {
+    .cohort-hero { padding-top: 3.5rem; }
+    .cohort-hero h1 { font-size: clamp(3.5rem, 17vw, 5.5rem); }
+    .cohort-actions { display: grid; grid-template-columns: 1fr; }
+    .cohort-facts p { grid-template-columns: 4.5rem minmax(0, 1fr); gap: 1rem; }
+    .cohort-section-head h2,
+    .cohort-outcomes h2,
+    .cohort-boundary h2,
+    .cohort-close h2 { font-size: clamp(3rem, 15vw, 5rem); }
+    .cohort-agenda-list li { grid-template-columns: 1.5rem minmax(0, 1fr); }
+    .cohort-agenda-list p { grid-column: 2; }
+  }
+</style>

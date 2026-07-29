@@ -89,6 +89,7 @@ const requiredSchema = new Map([
   ["/about/", ["ProfilePage", "BreadcrumbList"]],
   ["/books/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
   ["/finish-loop/", ["Product", "FAQPage", "BreadcrumbList"]],
+  ["/frontline-nurse-leader/", ["Course", "BreadcrumbList"]],
   ["/notes/", ["Blog", "ItemList", "BreadcrumbList"]],
   ["/project-fit/", ["WebPage", "BreadcrumbList"]],
   ["/proof/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
@@ -254,10 +255,6 @@ if (/advent\s*health|charter\s*rn|4\s*east|\bhuron\b/i.test(pages.map((page) => 
 if (/mailto:|kcstaggers@gmail\.com/i.test(pages.map((page) => page.html).join("\n"))) {
   fail("release: public personal email path is present");
 }
-if (fs.existsSync(path.join(distDir, "frontline-nurse-leader", "index.html"))) {
-  fail("release: staged cohort route must remain absent");
-}
-
 const allPublicHtml = pages.map((page) => page.html).join("\n");
 if (/Beyond Burnout|No Fear Nursing/i.test(allPublicHtml)) {
   fail("books: retired test or alternate-title records must not appear in the public site");
@@ -365,6 +362,34 @@ const finishLoopPage = pages.find((page) => page.route === "/finish-loop/")?.htm
 const liveCheckout =
   "https://keithstaggers.lemonsqueezy.com/checkout/buy/b7bc50dd-cd89-4371-8227-4c85c36c0591";
 if (!finishLoopPage.includes(liveCheckout)) fail("finish-loop: live checkout URL changed or is missing");
+const baseLayoutSource = fs.readFileSync(path.join("src", "layouts", "Base.astro"), "utf8");
+for (const token of [
+  "Finish Loop Campaign Landing",
+  "finish_loop_facebook_2026_08",
+  "01-90-percent",
+  "02-last-10-percent",
+  "03-catalog",
+]) {
+  if (!baseLayoutSource.includes(token)) fail(`finish-loop: campaign attribution is missing ${token}`);
+}
+
+const cohortPage = pages.find((page) => page.route === "/frontline-nurse-leader/")?.html ?? "";
+const cohortCheckout = "https://buy.stripe.com/eVq6oH9wt2iV2B50rF6wE00";
+if (!cohortPage) fail("cohort: secondary route is missing");
+if (!cohortPage.includes(cohortCheckout)) fail("cohort: live Stripe checkout changed or is missing");
+if (!cohortPage.includes('data-cohort-purchase="frontline-nurse-leader-sept-16"')) {
+  fail("cohort: checkout attribution is missing");
+}
+if ((cohortPage.match(/4\.0 nursing contact hours pending approval\./g) ?? []).length !== 2) {
+  fail("cohort: pending contact-hour wording must appear exactly twice");
+}
+for (const token of ["September 16, 2026", "9:00 AM to 1:15 PM ET", "20 registrations", "$179 USD"] ) {
+  if (!cohortPage.includes(token)) fail(`cohort: fixed event detail is missing ${token}`);
+}
+const trainingPage = pages.find((page) => page.route === "/services/training/")?.html ?? "";
+if (!trainingPage.includes('href="/frontline-nurse-leader/"')) {
+  fail("training: secondary cohort route is not linked");
+}
 
 const projectFitPage = pages.find((page) => page.route === "/project-fit/")?.html ?? "";
 if (!projectFitPage.includes('action="https://formspree.io/f/xwvgnryp"')) {
