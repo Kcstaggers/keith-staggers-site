@@ -377,8 +377,14 @@ const cohortPage = pages.find((page) => page.route === "/frontline-nurse-leader/
 const cohortCheckout = "https://buy.stripe.com/eVq6oH9wt2iV2B50rF6wE00";
 if (!cohortPage) fail("cohort: secondary route is missing");
 if (!cohortPage.includes(cohortCheckout)) fail("cohort: live Stripe checkout changed or is missing");
-if (!cohortPage.includes('data-cohort-purchase="frontline-nurse-leader-sept-16"')) {
-  fail("cohort: checkout attribution is missing");
+if ((cohortPage.match(/data-cohort-purchase="frontline-nurse-leader-sept-16"/g) ?? []).length !== 2) {
+  fail("cohort: both Stripe checkout links must carry the cohort marker");
+}
+if (!cohortPage.includes('data-cohort-landing="frontline-nurse-leader-sept-16"')) {
+  fail("cohort: landing attribution marker is missing");
+}
+for (const token of ["Cohort Campaign Landing", "appendValidatedStripeUtm", "getValidatedStripeUtm"]) {
+  if (!baseLayoutSource.includes(token)) fail(`cohort: campaign attribution is missing ${token}`);
 }
 if ((cohortPage.match(/4\.0 nursing contact hours pending approval\./g) ?? []).length !== 2) {
   fail("cohort: pending contact-hour wording must appear exactly twice");

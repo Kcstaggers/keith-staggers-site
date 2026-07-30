@@ -12,6 +12,7 @@
     "check": "astro check",
     "build": "astro build && npm run verify:seo",
     "preview": "astro preview",
+    "test:attribution": "node --test tests/campaign-attribution.test.mjs",
     "verify:seo": "node scripts/verify-seo.mjs",
     "verify:live": "node scripts/verify-live.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs",
