@@ -159,6 +159,10 @@ const jsonLd = {
 
     <script>
       import { track } from "@vercel/analytics";
+      import {
+        appendValidatedStripeUtm,
+        getValidatedStripeUtm,
+      } from "../utils/campaignAttribution";
 
       const labelFor = (element: Element) =>
         (element.textContent ?? "")
@@ -194,6 +198,24 @@ const jsonLd = {
         track("Finish Loop Campaign Landing", {
           page: window.location.pathname,
           ...landingAttribution,
+        });
+      }
+
+      const cohortLanding = document.querySelector<HTMLElement>("[data-cohort-landing]");
+      const cohort = cohortLanding?.dataset.cohortLanding;
+      const cohortAttribution = getValidatedStripeUtm(window.location.search);
+
+      if (cohort) {
+        const checkoutLinks = document.querySelectorAll<HTMLAnchorElement>("a[data-cohort-purchase]");
+        for (const link of checkoutLinks) {
+          if (link.dataset.cohortPurchase !== cohort) continue;
+          link.href = appendValidatedStripeUtm(link.href, cohortAttribution);
+        }
+
+        track("Cohort Campaign Landing", {
+          cohort,
+          page: window.location.pathname,
+          ...cohortAttribution,
         });
       }
 
@@ -240,6 +262,7 @@ const jsonLd = {
             cohort: link.dataset.cohortPurchase,
             source,
             page,
+            ...cohortAttribution,
           });
         } else if (link.dataset.cohortInterest) {
           track("Cohort Page Interest", {
