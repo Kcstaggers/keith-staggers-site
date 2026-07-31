@@ -3,6 +3,10 @@ import { books } from "../data/books";
 import { publishedNotes } from "../data/notes";
 import { services } from "../data/services";
 import { site } from "../data/site";
+import {
+  workflowBookCompanion,
+  workflowBookTemplates,
+} from "../data/workflow-book";
 import { workflowTestCases } from "../data/workflow-testing";
 
 export const prerender = true;
@@ -60,6 +64,14 @@ export const GET: APIRoute = () => {
     `Expected behavior: ${testCase.expected}`,
     "",
   ]);
+  const workflowBookSections = workflowBookTemplates.flatMap((template) => [
+    `## ${template.number}. ${template.title}`,
+    "",
+    `Download: ${site.url}/workflow-book/templates/${template.fileName}`,
+    "",
+    template.purpose,
+    "",
+  ]);
   const body = [
     "# Keith Staggers Studio: full public text index",
     "",
@@ -81,6 +93,17 @@ export const GET: APIRoute = () => {
     "# Books",
     "",
     ...bookSections,
+    "# AI Workflow Book Companion",
+    "",
+    `Canonical URL: ${site.url}${workflowBookCompanion.route}`,
+    "",
+    `Companion version: ${workflowBookCompanion.version}. Updated: ${workflowBookCompanion.dateModified}.`,
+    "",
+    "This is the living companion resource for Keith Staggers's forthcoming field guide to controlled AI workflows. The book holds the durable principles. These editable Markdown files cover context, current state, work queues, human approval gates, workflow contracts, testing, proof, automation records, transfer, and recovery.",
+    "",
+    "The templates do not make a workflow secure, compliant, or correct by themselves. The responsible human must adapt them to applicable laws, policies, privacy rules, account controls, contracts, and professional duties.",
+    "",
+    ...workflowBookSections,
     "# Free workflow testing resource",
     "",
     `Canonical URL: ${site.url}/workflow-testing-template/`,
