@@ -2,6 +2,7 @@ export type Book = {
   slug: string;
   title: string;
   subtitle: string;
+  topic: string;
   blurb: string;
   seoTitle: string;
   seoDescription: string;
@@ -28,13 +29,14 @@ export const books: Book[] = [
     slug: "nurse-the-fck-up",
     title: "Nurse the F*ck Up",
     subtitle: "The Raw Truth About Surviving Med-Surg",
+    topic: "Nursing",
     blurb:
       "A plainspoken book about the patient loads, red tape, pressure, and emotional weight of med-surg nursing, written from inside the work.",
     seoTitle: "Nurse the F*ck Up by Keith Staggers",
     seoDescription:
       "Read about Nurse the F*ck Up by Keith Staggers, a candid 2023 paperback on the human and operational reality of surviving med-surg nursing.",
     datePublished: "2023-09-16",
-    dateModified: "2026-07-25",
+    dateModified: "2026-07-31",
     isbn13: "9798861621335",
     asin: "B0CJ44XP81",
     publisher: "Independently published",
@@ -61,20 +63,21 @@ export const books: Book[] = [
     audience: [
       "Working med-surg nurses who want a direct account of the job",
       "New bedside nurses looking for an honest picture of the pressure",
-      "Nurse leaders trying to understand the friction their teams carry",
+      "Nurse leaders trying to understand the problems their teams carry",
     ],
   },
   {
     slug: "leading-with-care",
     title: "Leading with Care",
     subtitle: "Mastering Healthcare Management",
+    topic: "Healthcare leadership",
     blurb:
-      "An earlier healthcare leadership book about conflict, change, staff retention, and efficiency, grounded in a career spanning public safety, nursing, and nurse leadership.",
+      "A practical healthcare leadership book about conflict, change, staff retention, and efficiency, grounded in a career spanning public safety, nursing, and nurse leadership.",
     seoTitle: "Leading with Care by Keith Staggers",
     seoDescription:
       "Read about Leading with Care by Keith Staggers, a 2023 paperback on conflict, change, retention, and practical healthcare leadership.",
     datePublished: "2023-11-24",
-    dateModified: "2026-07-25",
+    dateModified: "2026-07-31",
     isbn13: "9798869793935",
     asin: "B0CNYLZ5FC",
     publisher: "Independently published",
@@ -88,7 +91,7 @@ export const books: Book[] = [
       "https://openlibrary.org/books/OL62365304M/Leading_with_Care_Mastering_Healthcare_Management",
     featured: false,
     overview: [
-      "Leading with Care is Keith Staggers' earlier 2023 book on practical healthcare leadership. Its core subjects include conflict resolution, change management, staff retention, and operational efficiency.",
+      "Leading with Care is Keith Staggers' 2023 book on practical healthcare leadership. Its core subjects include conflict resolution, change management, staff retention, and operational efficiency.",
       "The experience behind the book spans more than three decades across two separate careers: 21 years in public safety, followed by nursing and nurse leadership from 2014 onward. That combined history, not three decades in healthcare management, is the frame for the work.",
       "The book is for leaders who need to make decisions, communicate clearly, and hold standards without losing sight of the people doing the work.",
     ],

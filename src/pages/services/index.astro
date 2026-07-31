@@ -10,11 +10,11 @@ const serviceHubJsonLd = {
     {
       "@type": "CollectionPage",
       "@id": `${canonicalUrl}#page`,
-      name: "AI Workflow Services, Training and Speaking",
+      name: "Practical AI Help, Training and Done-for-You Setup",
       description:
-        "AI workflow installation, one-to-one coaching, hands-on team training and speaking from Keith Staggers.",
+        "Done-for-you AI setup, one-to-one help, hands-on team training, and speaking from Keith Staggers.",
       url: canonicalUrl,
-      dateModified: "2026-07-25",
+      dateModified: "2026-07-31",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       mainEntity: { "@id": `${canonicalUrl}#list` },
@@ -52,17 +52,17 @@ const serviceHubJsonLd = {
 };
 
 const outcomePaths = [
-  { need: "One repeated job built and handed over", service: "AI Workflow Install Sprint", href: "/services/done-for-you/" },
-  { need: "A working first move on one problem", service: "AI Jumpstart", href: "/services/coaching/" },
-  { need: "A team using AI responsibly in real work", service: "AI Training", href: "/services/training/" },
-  { need: "A practical framework for an event or leadership room", service: "Speaking", href: "/services/speaking/" },
-  { need: "A self-serve system for finishing creative work", service: "The Finish Loop", href: "/finish-loop/" },
+  { need: "Build a solution for one repetitive task", service: "Done-for-You AI Setup", href: "/services/done-for-you/" },
+  { need: "Work with Keith on one real problem", service: "One-to-One AI Working Session", href: "/services/coaching/" },
+  { need: "Teach a team to use AI on familiar work", service: "Practical AI Training", href: "/services/training/" },
+  { need: "Give an audience a useful talk about AI or change", service: "Speaking", href: "/services/speaking/" },
+  { need: "Finish and release a creative project on my own", service: "$49 Project-Finishing Toolkit", href: "/finish-loop/" },
 ];
 ---
 
 <Base
-  title="AI Workflow, Training and Speaking Services"
-  description="Explore AI workflow installation, one-to-one coaching, hands-on team training and speaking from Keith Staggers. Practical scope, proof and clear handoff."
+  title="AI Help for Leaders and Small Teams"
+  description="See four clear ways Keith Staggers can help: done-for-you AI setup, a one-to-one working session, team training, or speaking."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceHubJsonLd)} />
@@ -80,22 +80,22 @@ const outcomePaths = [
         <div class="lg:col-span-9">
           <p class="studio-kicker">Services</p>
           <h1 class="studio-display mt-6 text-[clamp(50px,8vw,108px)] leading-[0.92] tracking-[-0.055em]">
-            Practical AI services,<br /><strong>sized to the work</strong><span class="text-signal">.</span>
+            Practical AI help<br /><strong>for real work</strong><span class="text-signal">.</span>
           </h1>
         </div>
         <p class="self-end text-[18px] leading-[1.7] text-paper-dim lg:col-span-3">
-          I help professionals and small teams turn repeated work into usable AI-assisted systems. Start with the smallest service that gets you to a real finish line.
+          Choose what you need Keith to do: build a solution, work through one problem with you, train your team, or speak at your event.
         </p>
       </header>
 
       <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="services-list-title">
         <div class="mb-10 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p class="studio-kicker">Four ways in</p>
-            <h2 id="services-list-title" class="studio-display mt-4 text-[clamp(34px,4vw,58px)]">Choose the <strong>move</strong><span class="text-signal">.</span></h2>
+            <p class="studio-kicker">Four ways Keith can help</p>
+            <h2 id="services-list-title" class="studio-display mt-4 text-[clamp(34px,4vw,58px)]">What do you need <strong>help with</strong><span class="text-signal">?</span></h2>
           </div>
           <a href="/workflow-readiness/" class="font-mono text-[11px] tracking-[0.14em] uppercase text-cobalt-text hover:text-paper">
-            Check one workflow free →
+            See if your task is ready for AI →
           </a>
         </div>
 
@@ -112,7 +112,7 @@ const outcomePaths = [
                 href={`/services/${service.slug}/`}
                 class="mt-auto pt-8 font-mono text-[11px] tracking-[0.14em] uppercase text-paper transition-colors hover:text-cobalt-text"
               >
-                See scope, process and fit →
+                See details, price and what you get →
               </a>
             </article>
           ))}
@@ -121,9 +121,9 @@ const outcomePaths = [
 
       <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="outcome-title">
         <div class="lg:col-span-4">
-          <p class="studio-kicker">Choose by outcome</p>
+          <p class="studio-kicker">Choose by what you need</p>
           <h2 id="outcome-title" class="studio-display mt-5 text-[clamp(36px,4vw,58px)] leading-[1]">
-            Start with what must be <strong>true at the end</strong><span class="text-signal">.</span>
+            Start with the result you <strong>want</strong><span class="text-signal">.</span>
           </h2>
         </div>
         <ul class="divide-y divide-rule border-y border-rule lg:col-span-8">
@@ -141,21 +141,21 @@ const outcomePaths = [
 
       <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="grounded-title">
         <div class="lg:col-span-5">
-          <p class="studio-kicker">How the work stays grounded</p>
+          <p class="studio-kicker">A simple rule</p>
           <h2 id="grounded-title" class="studio-display mt-5 text-[clamp(36px,4.5vw,64px)] leading-[0.98]">
-            The work comes <strong>before the tool</strong><span class="text-signal">.</span>
+            AI should make the work <strong>simpler</strong><span class="text-signal">.</span>
           </h2>
           <p class="mt-6 max-w-lg text-[17px] leading-[1.7] text-paper-dim">
-            Workflow and training engagements begin with the job, the accountable person, and the finish line. The tool is selected only after those decisions are clear.
+            Every project begins with the task, the person responsible, and the result they need. Keith chooses an AI tool only after those basics are clear.
           </p>
         </div>
         <ol class="grid gap-px bg-rule/70 md:grid-cols-2 lg:col-span-7">
           {[
-            "Name the owner and finish line.",
-            "Use synthetic or approved material.",
-            "State what AI may assist and what stays human.",
-            "Keep the accountable person in the final decision.",
-            "Document the operating and recovery steps.",
+            "Name the task and the person responsible.",
+            "Describe what a good result looks like.",
+            "Use safe sample information during testing.",
+            "Write down what AI may do and what a person must check.",
+            "Give the team clear instructions and a backup plan.",
           ].map((item, index) => (
             <li class="bg-ink p-6">
               <span class="font-mono text-[10px] text-cobalt-text">{String(index + 1).padStart(2, "0")}</span>
@@ -167,33 +167,33 @@ const outcomePaths = [
 
       <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24">
         <div class="lg:col-span-7">
-          <p class="studio-kicker">Proof, with boundaries</p>
+          <p class="studio-kicker">Real examples</p>
           <h2 class="studio-display mt-5 text-[clamp(36px,4.5vw,64px)] leading-[0.98]">
-            See what the work proves and <strong>what it does not</strong><span class="text-signal">.</span>
+            See what Keith has <strong>built and finished</strong><span class="text-signal">.</span>
           </h2>
           <p class="mt-6 max-w-[680px] text-[17px] leading-[1.7] text-paper-dim">
-            Review independent build records, books, and finished releases. The Proof page states what each artifact demonstrates without inventing client outcomes.
+            Review independent AI projects, a real client quote, books, and finished creative work. Each example clearly says what it is and what it is not.
           </p>
-          <a href="/proof/" class="studio-button studio-button--secondary mt-7">See the proof</a>
+          <a href="/proof/" class="studio-button studio-button--secondary mt-7">See examples</a>
         </div>
         <aside class="border border-rule p-7 lg:col-span-5">
-          <p class="studio-kicker">Need a smaller door?</p>
+          <p class="studio-kicker">Want to start smaller?</p>
           <div class="mt-6 space-y-4">
-            <a href="/workflow-readiness/" class="block border-b border-rule pb-4 serif text-[24px] hover:text-cobalt">Check one workflow free →</a>
-            <a href="/finish-loop/" class="block border-b border-rule pb-4 serif text-[24px] hover:text-cobalt">Get The Finish Loop for $49 →</a>
+            <a href="/workflow-readiness/" class="block border-b border-rule pb-4 serif text-[24px] hover:text-cobalt">See if one task is ready for AI →</a>
+            <a href="/finish-loop/" class="block border-b border-rule pb-4 serif text-[24px] hover:text-cobalt">Get the $49 project-finishing toolkit →</a>
           </div>
         </aside>
       </section>
 
       <section class="grid items-end gap-10 pt-16 lg:grid-cols-12 lg:pt-24">
         <div class="lg:col-span-8">
-          <p class="studio-kicker">Start with the real job</p>
+          <p class="studio-kicker">Tell Keith what is happening</p>
           <h2 class="studio-display mt-5 text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
-            Tell me what repeats, who owns it, and what <strong>finished means</strong><span class="text-signal">.</span>
+            What task is wasting time or <strong>getting stuck</strong><span class="text-signal">?</span>
           </h2>
         </div>
         <div class="lg:col-span-4 lg:text-right">
-          <a href="/project-fit/" class="studio-button studio-button--primary">Start with fit questions</a>
+          <a href="/project-fit/" class="studio-button studio-button--primary">Tell Keith about your task</a>
         </div>
       </section>
     </div>

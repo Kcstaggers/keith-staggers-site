@@ -21,7 +21,7 @@ const {
   description = site.description,
   ogType = "website",
   ogImage = "/og-keith-staggers-v2.png",
-  ogImageAlt = `${site.name}: AI training, workflow systems, and finished work.`,
+  ogImageAlt = `${site.name}: practical AI training, one-to-one help, and done-for-you solutions.`,
   ogImageWidth = 1200,
   ogImageHeight = 630,
   robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
@@ -35,10 +35,10 @@ const canonicalPath =
 const canonicalUrl = new URL(canonicalPath, site.url).href;
 const socialImage = new URL(ogImage, site.url).href;
 const serviceOffers = [
-  ["AI Workflow Install Sprint", "/services/done-for-you/"],
-  ["AI workflow coaching", "/services/coaching/"],
+  ["Done-for-you AI setup", "/services/done-for-you/"],
+  ["One-to-one AI working session", "/services/coaching/"],
   ["Practical AI training", "/services/training/"],
-  ["Practical AI speaking", "/services/speaking/"],
+  ["AI speaking for leaders and teams", "/services/speaking/"],
 ].map(([name, url]) => ({
   "@type": "Offer",
   url: `${site.url}${url}`,
@@ -68,17 +68,17 @@ const jsonLd = {
       name: site.name,
       url: `${site.url}/about/`,
       image: `${site.url}/media/keith-photo-9.webp`,
-      jobTitle: "AI Creator, Trainer and Workflow Builder",
+      jobTitle: "AI Trainer, Automation Builder and Speaker",
       description: site.description,
       mainEntityOfPage: `${site.url}/about/`,
       worksFor: { "@id": `${site.url}/#studio` },
       knowsAbout: [
-        "Practical AI workflows",
-        "AI training",
-        "Human-in-the-loop systems",
-        "Workflow documentation",
-        "Creative production",
+        "AI training for leaders and teams",
+        "Business process automation",
+        "AI-assisted workplace processes",
+        "Responsible AI use",
         "Nurse leadership",
+        "Professional reinvention",
       ],
       address: { "@type": "PostalAddress", addressLocality: "Tampa", addressRegion: "FL", addressCountry: "US" },
       sameAs: [
@@ -106,6 +106,7 @@ const jsonLd = {
         height: 512,
       },
       founder: { "@id": `${site.url}/#keith` },
+      description: site.description,
       areaServed: "Worldwide",
       hasOfferCatalog: {
         "@type": "OfferCatalog",
@@ -143,7 +144,7 @@ const jsonLd = {
     <meta name="twitter:image:alt" content={ogImageAlt} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap.xml" />
-    <link rel="alternate" type="application/rss+xml" title="Keith Staggers Studio Notes" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Keith Staggers Articles and Guides" href="/rss.xml" />
     <title>{pageTitle}</title>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <slot name="head" />

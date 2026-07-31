@@ -10,13 +10,13 @@ const catalog = albums.filter((album) => album.slug !== featured.slug);
 <section id="music" class="studio-section studio-catalog scroll-mt-24" aria-labelledby="studio-catalog-title">
   <div class="studio-shell">
     <header class="studio-catalog-head">
-      <h2 id="studio-catalog-title" class="studio-display studio-section-title">The <strong>music</strong> is the proof<span class="text-signal">.</span></h2>
-      <p>50+ albums. 800+ songs. A catalog built one finished release at a time.</p>
+      <h2 id="studio-catalog-title" class="studio-display studio-section-title">Music and <strong>books</strong><span class="text-signal">.</span></h2>
+      <p>Keith has also released more than 50 albums, written books about nursing and leadership, and built a large independent creative catalog.</p>
     </header>
 
     <article class="studio-music-feature">
       <div class="studio-sound-copy">
-        <small>Latest release</small>
+        <small>Featured music release</small>
         <h3 class="studio-display">{featured.title}</h3>
         <p>{featured.featuredBlurb}</p>
         <div>
@@ -59,7 +59,7 @@ const catalog = albums.filter((album) => album.slug !== featured.slug);
     </div>
 
     <div class="studio-book-strip" aria-label="Keith Staggers books">
-      <p><b>Also published</b><a href="/books/">Explore the books →</a></p>
+      <p><b>Books by Keith</b><a href="/books/">See the book catalog →</a></p>
       <div>
         {books.map((book) => (
           <a href={`/books/${book.slug}/`} class="studio-book-mini" aria-label={`Read about ${book.title}`}>

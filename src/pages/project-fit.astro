@@ -9,9 +9,9 @@ const projectFitJsonLd = {
     {
       "@type": "WebPage",
       "@id": `${site.url}/project-fit/#page`,
-      name: "Project Fit",
+      name: "Tell Keith What You Need Help With",
       description:
-        "Answer direct questions before requesting time with Keith Staggers. Keith reviews every inquiry before sharing a private booking link.",
+        "Tell Keith Staggers which task or project is taking too much time, what you want instead, and when you need help.",
       url: `${site.url}/project-fit/`,
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
@@ -29,7 +29,7 @@ const projectFitJsonLd = {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Project Fit",
+          name: "Tell Keith About Your Task",
           item: `${site.url}/project-fit/`,
         },
       ],
@@ -39,8 +39,8 @@ const projectFitJsonLd = {
 ---
 
 <Base
-  title="Project fit"
-  description="Answer a few direct questions before requesting time with Keith Staggers. Keith reviews every inquiry before sharing a private booking link."
+  title="Tell Keith What You Need Help With"
+  description="Tell Keith Staggers which task or project is taking too much time, what you want instead, and when you need help."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(projectFitJsonLd)} />
@@ -51,36 +51,36 @@ const projectFitJsonLd = {
       <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
         <a href="/" class="transition-colors hover:text-paper">Home</a>
         <span class="mx-2 text-rule" aria-hidden="true">/</span>
-        <span class="text-cobalt-text" aria-current="page">Project Fit</span>
+        <span class="text-cobalt-text" aria-current="page">Tell Keith About Your Task</span>
       </nav>
 
       <header class="project-fit-head">
         <div>
-          <p class="studio-kicker">Before the calendar</p>
+          <p class="studio-kicker">Start here</p>
           <h1 id="project-fit-title" class="studio-display">
-            Show me the<br /><strong>real problem</strong><span class="text-signal">.</span>
+            What do you want<br />to make <strong>easier</strong><span class="text-signal">?</span>
           </h1>
         </div>
         <div class="project-fit-intro">
-          <p>I review every inquiry before sharing a private booking link. A clear workflow, owner, input, finish line, and human check save both of us a meeting that should have been an email.</p>
-          <a href="/workflow-readiness/">Not sure the job is ready? Take the free readiness check →</a>
+          <p>You do not need a technical explanation. Tell me what happens now, what is taking too much time, and what you want instead. I review every inquiry before sharing a private booking link.</p>
+          <a href="/workflow-readiness/">Not sure AI is right for the task? Take the free five-minute check →</a>
         </div>
       </header>
 
       <ol class="project-fit-steps" aria-label="How the project fit process works">
-        <li><span>01</span><b>Answer</b><p>Name the outcome, timeline, and right level of investment.</p></li>
-        <li><span>02</span><b>Send securely</b><p>Your inquiry goes to Keith's private inbox without publishing an email address.</p></li>
-        <li><span>03</span><b>Then we talk</b><p>If it fits, I reply with the private calendar link and the right next step.</p></li>
+        <li><span>01</span><b>Describe the task</b><p>Tell Keith what is happening now and what you want instead.</p></li>
+        <li><span>02</span><b>Keith reviews it</b><p>Your inquiry goes privately to Keith so he can recommend the right next step.</p></li>
+        <li><span>03</span><b>You hear back</b><p>If a conversation makes sense, Keith replies with a private calendar link.</p></li>
       </ol>
 
       <div class="project-fit-grid">
         <aside class="project-fit-aside">
-          <p class="studio-kicker">A good inquiry includes</p>
+          <p class="studio-kicker">Helpful information to include</p>
           <ul>
-            <li>A specific result, not “help with AI.”</li>
-            <li>A real owner or decision-maker.</li>
-            <li>A timeline tied to actual work.</li>
-            <li>A budget or hiring conversation that matches the ask.</li>
+            <li>The task or project that is taking too much time.</li>
+            <li>What you want to happen instead.</li>
+            <li>Who will use the result.</li>
+            <li>When you need help and the budget range that fits.</li>
           </ul>
           <p class="project-fit-privacy">Your details are used only to evaluate and reply to this inquiry. Do not include protected health information, confidential employer or client data, passwords, or API keys.</p>
         </aside>
@@ -119,20 +119,20 @@ const projectFitJsonLd = {
           </div>
 
           <div class="fit-field fit-field--half">
-            <label for="fit-need">What conversation do you need?</label>
+            <label for="fit-need">How can Keith help?</label>
             <select id="fit-need" name="need" required>
               <option value="">Choose one</option>
-              <option>AI Workflow Install Sprint</option>
-              <option>AI Jumpstart one-to-one session</option>
-              <option>Team training or workshop</option>
-              <option>Speaking or event</option>
-              <option>Employment or recruiter conversation</option>
-              <option>Not sure yet</option>
+              <option value="done-for-you">Build a solution for one repetitive task</option>
+              <option value="one-to-one">Help me solve one problem</option>
+              <option value="training">Train my team</option>
+              <option value="speaking">Speak at my event</option>
+              <option value="employment">Employment or recruiter conversation</option>
+              <option value="not-sure">I am not sure yet</option>
             </select>
           </div>
 
           <div class="fit-field fit-field--half">
-            <label for="fit-timeline">When does this need to move?</label>
+            <label for="fit-timeline">When do you need help?</label>
             <select id="fit-timeline" name="timeline" required>
               <option value="">Choose one</option>
               <option>Within 30 days</option>
@@ -143,34 +143,34 @@ const projectFitJsonLd = {
           </div>
 
           <div class="fit-field">
-            <label for="fit-outcome">What must be true when the work is finished?</label>
-            <textarea id="fit-outcome" name="outcome" rows="5" minlength="40" maxlength="2000" placeholder="Describe the result, who will use it, and what finished means." required></textarea>
+            <label for="fit-tried">What task takes too much time or keeps getting stuck?</label>
+            <textarea id="fit-tried" name="tried" rows="5" minlength="20" maxlength="1600" placeholder="Describe what happens now in ordinary words. You do not need to know the technical solution." required></textarea>
           </div>
 
           <div class="fit-field">
-            <label for="fit-input">What starts the workflow, and what material goes in?</label>
-            <textarea id="fit-input" name="input" rows="3" minlength="20" maxlength="1200" placeholder="Name the trigger, source material, and where it currently lives." required></textarea>
+            <label for="fit-outcome">What should happen when it works?</label>
+            <textarea id="fit-outcome" name="outcome" rows="5" minlength="40" maxlength="2000" placeholder="Describe the result you want and who will use it." required></textarea>
           </div>
 
-          <div class="fit-field">
-            <label for="fit-approval">Who checks or approves the result before it is used or sent?</label>
-            <input id="fit-approval" name="approval" type="text" minlength="5" maxlength="300" placeholder="Name the role, even if that person is you." required />
+          <div class="fit-field" data-build-only hidden>
+            <label for="fit-input">What information starts this task, and where is it now?</label>
+            <textarea id="fit-input" name="input" rows="3" minlength="20" maxlength="1200" placeholder="For example: notes in email, a spreadsheet, a form, or a document folder."></textarea>
           </div>
 
-          <div class="fit-field">
-            <label for="fit-tried">What have you already tried, built, or decided?</label>
-            <textarea id="fit-tried" name="tried" rows="4" minlength="20" maxlength="1600" placeholder="Tools, drafts, internal attempts, approvals, or blockers." required></textarea>
+          <div class="fit-field" data-build-only hidden>
+            <label for="fit-approval">Who checks the result before it is used or sent?</label>
+            <input id="fit-approval" name="approval" type="text" minlength="5" maxlength="300" placeholder="Name the role, even if that person is you." />
           </div>
 
           <div class="fit-field fit-field--half">
-            <label for="fit-investment">Which level fits the conversation?</label>
+            <label for="fit-investment">Which budget range fits?</label>
             <select id="fit-investment" name="investment" required>
               <option value="">Choose one</option>
               <option>Employment or recruiter discussion</option>
-              <option>$250 working session</option>
-              <option>$2,500+ Workflow Install Sprint</option>
-              <option>$3,500+ training or speaking</option>
-              <option>$5,000+ expanded workflow or production build</option>
+              <option>$250 one-to-one working session</option>
+              <option>$2,500+ done-for-you AI setup</option>
+              <option>$3,500+ team training or speaking</option>
+              <option>$5,000+ larger AI or production project</option>
               <option>I need guidance before choosing</option>
             </select>
           </div>
@@ -202,7 +202,7 @@ const projectFitJsonLd = {
           </p>
 
           <button class="studio-button studio-button--primary fit-submit" type="submit" disabled={!formConfigured}>
-            <span data-submit-label>Send inquiry</span>
+            <span data-submit-label>Send Keith my project</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
           </button>
         </form>
@@ -211,10 +211,10 @@ const projectFitJsonLd = {
       <section class="project-fit-review" data-fit-success hidden tabindex="-1" aria-labelledby="fit-success-title">
         <p class="studio-kicker">Sent securely</p>
         <h2 id="fit-success-title" class="studio-display">Inquiry received<span class="text-signal">.</span></h2>
-        <p>Keith will review the fit before offering a private calendar link. If there is a useful next step, the reply will go to the email you provided.</p>
+        <p>Keith will review what you sent. If there is a useful next step, he will reply to the email you provided and share a private calendar link when a conversation makes sense.</p>
         <div class="project-fit-review-actions">
-          <a class="studio-button studio-button--secondary" href="/">Back to the studio</a>
-          <a class="studio-button studio-button--secondary" href="/workflow-readiness/">Check another workflow</a>
+          <a class="studio-button studio-button--secondary" href="/">Back to the homepage</a>
+          <a class="studio-button studio-button--secondary" href="/workflow-readiness/">Check another task</a>
         </div>
       </section>
     </div>
@@ -227,6 +227,21 @@ const projectFitJsonLd = {
   const fitSuccess = document.querySelector<HTMLElement>("[data-fit-success]");
   const fitSubmit = fitForm?.querySelector<HTMLButtonElement>('button[type="submit"]');
   const fitSubmitLabel = fitForm?.querySelector<HTMLElement>("[data-submit-label]");
+  const fitNeed = fitForm?.querySelector<HTMLSelectElement>("#fit-need");
+  const buildOnlyFields = Array.from(fitForm?.querySelectorAll<HTMLElement>("[data-build-only]") ?? []);
+
+  const updateBuildQuestions = () => {
+    const show = fitNeed?.value === "done-for-you";
+    buildOnlyFields.forEach((field) => {
+      field.hidden = !show;
+      field.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("input, textarea").forEach((input) => {
+        input.required = Boolean(show);
+      });
+    });
+  };
+
+  fitNeed?.addEventListener("change", updateBuildQuestions);
+  updateBuildQuestions();
 
   fitForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -266,7 +281,7 @@ const projectFitJsonLd = {
       fitStatus.dataset.state = "error";
       fitStatus.textContent = "That did not send. Check your connection and try again. Your answers are still on this page.";
       fitSubmit.disabled = false;
-      fitSubmitLabel.textContent = "Send inquiry";
+      fitSubmitLabel.textContent = "Send Keith my project";
     } finally {
       fitForm.removeAttribute("aria-busy");
     }

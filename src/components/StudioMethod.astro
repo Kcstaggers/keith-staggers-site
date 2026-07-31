@@ -2,54 +2,54 @@
 const stages = [
   {
     number: "01",
-    title: "Find repeated work",
-    detail: "Name the task, owner, inputs, and finish line before choosing a tool.",
+    title: "Choose one real task",
+    detail: "Start with a task that wastes time, gets repeated, or keeps getting stuck.",
   },
   {
     number: "02",
-    title: "Bound the AI job",
-    detail: "Decide what AI may draft or sort, and what it may never see or decide.",
+    title: "Decide what AI may do",
+    detail: "Write down what AI can help with and what a person must still check or decide.",
   },
   {
     number: "03",
-    title: "Keep the human check",
-    detail: "Verify facts, context, tone, and the final decision with the accountable person.",
+    title: "Build and test it",
+    detail: "Create the simplest useful version and test normal cases, mistakes, and failures.",
   },
   {
     number: "04",
-    title: "Document next use",
-    detail: "Save the inputs, prompt pattern, checks, and handoff so the work can repeat.",
+    title: "Teach the person using it",
+    detail: "Give the team clear instructions, examples, and a way to work without Keith.",
   },
 ];
 
 const examples = [
   {
-    problem: "Leadership decision",
-    startingPoint: "Notes, constraints, options",
-    aiContribution: "Surfaces themes and drafts choices",
-    humanDecision: "Leader sets priorities and tradeoffs",
-    result: "Decision brief",
+    problem: "Weekly reports",
+    startingPoint: "Facts scattered across notes and files",
+    aiContribution: "Organizes information and drafts repeated sections",
+    humanDecision: "A manager checks facts and approves the report",
+    result: "A faster report process the team can repeat",
+  },
+  {
+    problem: "Follow-up messages",
+    startingPoint: "The same messages rewritten each week",
+    aiContribution: "Creates a first draft from approved information",
+    humanDecision: "A person reviews, edits, and sends it",
+    result: "Faster, more consistent follow-up",
   },
   {
     problem: "Team training",
-    startingPoint: "Source material and real questions",
-    aiContribution: "Builds scenarios and exercises",
-    humanDecision: "Expert verifies accuracy and fit",
-    result: "Reusable workshop",
+    startingPoint: "Presentations that do not change daily work",
+    aiContribution: "Creates practice examples around familiar tasks",
+    humanDecision: "The leader checks accuracy and workplace fit",
+    result: "A practical session and reusable guide",
   },
   {
-    problem: "Creative release",
-    startingPoint: "Idea, references, raw media",
-    aiContribution: "Develops directions and variations",
-    humanDecision: "Creator chooses taste and final cut",
-    result: "Finished campaign",
-  },
-  {
-    problem: "Repeated business task",
-    startingPoint: "Steps, files, and rules",
-    aiContribution: "Maps and handles repeatable work",
-    humanDecision: "Owner approves exceptions",
-    result: "Tested workflow",
+    problem: "Content and projects",
+    startingPoint: "Too many drafts and unfinished ideas",
+    aiContribution: "Organizes the source and prepares useful versions",
+    humanDecision: "The creator chooses, edits, and publishes",
+    result: "Finished work that can be reused",
   },
 ];
 ---
@@ -58,17 +58,37 @@ const examples = [
   <div class="studio-shell">
     <header class="studio-method-head">
       <div>
-        <p class="studio-kicker">A method you can use now</p>
+        <p class="studio-kicker">Concrete examples</p>
         <h2 id="studio-method-title" class="studio-display studio-section-title">
-          Useful AI work has<br /><strong>four parts</strong><span class="text-signal">.</span>
+          What can Keith<br /><strong>make easier</strong><span class="text-signal">?</span>
         </h2>
       </div>
       <p>
-        If a workflow cannot survive these four steps, it is not ready for the work. This is the method behind the product, training, and builds.
+        Start with a familiar task, not an AI tool. These examples show the kind of help Keith provides and where a person stays responsible.
       </p>
     </header>
 
-    <ol class="method-loop" aria-label="Four-part AI workflow method">
+    <div class="method-examples" aria-label="Examples of work Keith can make easier">
+      <div class="method-example-row method-example-head" aria-hidden="true">
+        <span>Task</span><span>What happens now</span><span>How AI helps</span><span>What a person checks</span><span>Result</span>
+      </div>
+      {examples.map((example) => (
+        <div class="method-example-row">
+          <b>{example.problem}</b>
+          <span data-label="What happens now">{example.startingPoint}</span>
+          <span data-label="How AI helps">{example.aiContribution}</span>
+          <span data-label="What a person checks">{example.humanDecision}</span>
+          <span data-label="Result">{example.result}</span>
+        </div>
+      ))}
+    </div>
+
+    <p class="method-value-line">
+      <span>How Keith works</span>
+      Make the task easier without hiding who is responsible.
+    </p>
+
+    <ol class="method-loop" aria-label="Keith's four-step approach">
       {stages.map((stage, index) => (
         <li class="method-node" style={`--method-delay: ${index * 120}ms`}>
           <span>{stage.number}</span>
@@ -77,25 +97,5 @@ const examples = [
         </li>
       ))}
     </ol>
-
-    <p class="method-value-line">
-      <span>This is what you are buying</span>
-      Not more prompts. A loop your team can use again.
-    </p>
-
-    <div class="method-examples" aria-label="Examples of the method across different kinds of work">
-      <div class="method-example-row method-example-head" aria-hidden="true">
-        <span>Problem</span><span>What you have</span><span>AI contributes</span><span>Human decides</span><span>Useful result</span>
-      </div>
-      {examples.map((example) => (
-        <div class="method-example-row">
-          <b>{example.problem}</b>
-          <span data-label="What you have">{example.startingPoint}</span>
-          <span data-label="AI contributes">{example.aiContribution}</span>
-          <span data-label="Human decides">{example.humanDecision}</span>
-          <span data-label="Useful result">{example.result}</span>
-        </div>
-      ))}
-    </div>
   </div>
 </section>

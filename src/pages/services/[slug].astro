@@ -102,7 +102,7 @@ const serviceJsonLd = {
       <div class="flex items-center gap-3 mb-8">
         <span class="block h-px w-10 bg-cobalt"></span>
         <span class="font-mono text-[11px] tracking-[0.22em] uppercase text-paper-dim">
-          Service · {service.num} · {service.pricing}
+          Option {service.num} · {service.title} · {service.pricing}
         </span>
       </div>
       <h1 class="serif text-[clamp(40px,6vw,84px)] leading-[1.02] tracking-[-0.015em] mb-8">
@@ -122,7 +122,7 @@ const serviceJsonLd = {
           <span aria-hidden="true">→</span>
         </a>
         <span class="font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">
-          Answer first · Keith reviews every inquiry
+          Tell Keith what you need first · He reviews every inquiry
         </span>
       </div>
     </header>
@@ -130,7 +130,7 @@ const serviceJsonLd = {
     {service.slug === "training" && (
       <section class="hairline mt-16 grid gap-7 border-b border-rule bg-panel px-6 py-8 sm:px-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end" aria-labelledby="public-cohort-title">
         <div>
-          <p class="eyebrow mb-4">Founding public cohort</p>
+          <p class="eyebrow mb-4">Live public class for nurse leaders</p>
           <h2 id="public-cohort-title" class="serif text-[clamp(28px,3vw,42px)] leading-[1.05]">
             AI for the <span class="accent">Frontline Nurse Leader</span>.
           </h2>
@@ -208,9 +208,9 @@ const serviceJsonLd = {
 
     <section class="hairline mt-20 pt-12 grid lg:grid-cols-12 gap-10" aria-labelledby="service-faq-title">
       <div class="lg:col-span-4">
-        <p class="eyebrow mb-5">Before you ask</p>
+          <p class="eyebrow mb-5">Common questions</p>
         <h2 id="service-faq-title" class="serif text-[clamp(28px,3vw,40px)] leading-[1.05]">
-          Practical <span class="accent">questions</span>.
+          What people usually <span class="accent">ask</span>.
         </h2>
       </div>
       <div class="lg:col-span-8 divide-y divide-rule border-y border-rule">
@@ -230,7 +230,7 @@ const serviceJsonLd = {
 
     <!-- Other services -->
     <section class="hairline mt-20 pt-10">
-      <p class="eyebrow mb-6">Other ways in</p>
+      <p class="eyebrow mb-6">Other ways Keith can help</p>
       <div class="flex flex-wrap gap-3">
         <a
           href="/services/"

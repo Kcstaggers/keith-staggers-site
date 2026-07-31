@@ -10,12 +10,12 @@ const templateJsonLd = {
     {
       "@type": "WebPage",
       "@id": `${canonicalUrl}#page`,
-      name: "10-Case AI Workflow Testing Template",
+      name: "10-Example AI Process Testing Worksheet",
       description:
-        "A free, practical worksheet for testing an AI-assisted workflow across normal work, exceptions, safety stops, duplicate runs, human rejection, and recovery.",
+        "A free worksheet for testing an AI-assisted process with normal tasks, missing information, mistakes, safety stops, duplicates, human rejection, and failure recovery.",
       url: canonicalUrl,
       datePublished: "2026-07-25",
-      dateModified: "2026-07-25",
+      dateModified: "2026-07-31",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       about: ["AI workflow testing", "human review", "manual recovery"],
@@ -25,7 +25,7 @@ const templateJsonLd = {
     {
       "@type": "LearningResource",
       "@id": `${canonicalUrl}#worksheet`,
-      name: "10-Case AI Workflow Testing Worksheet",
+      name: "10-Example AI Process Testing Worksheet",
       description:
         "A browser-based worksheet with ten representative tests, expected behaviors, outcome fields, local autosave, CSV export, and print-to-PDF support.",
       url: canonicalUrl,
@@ -33,10 +33,10 @@ const templateJsonLd = {
       creator: { "@id": `${site.url}/#keith` },
       publisher: { "@id": `${site.url}/#studio` },
       datePublished: "2026-07-25",
-      dateModified: "2026-07-25",
+      dateModified: "2026-07-31",
       inLanguage: "en-US",
       learningResourceType: "Worksheet",
-      educationalUse: "Workflow testing and documentation",
+      educationalUse: "Testing and documenting an AI-assisted process",
       isAccessibleForFree: true,
       numberOfItems: workflowTestCases.length,
       hasPart: workflowTestCases.map((testCase) => ({
@@ -58,7 +58,7 @@ const templateJsonLd = {
         {
           "@type": "ListItem",
           position: 2,
-          name: "10-Case AI Workflow Testing Template",
+          name: "10-Example AI Process Testing Worksheet",
           item: canonicalUrl,
         },
       ],
@@ -67,20 +67,20 @@ const templateJsonLd = {
 };
 
 const setupFields = [
-  { id: "workflow-name", label: "Workflow name", placeholder: "The repeated job being tested" },
-  { id: "workflow-owner", label: "Owner", placeholder: "One person accountable for the result" },
-  { id: "workflow-trigger", label: "Trigger and approved input", placeholder: "What starts the job and what may go in" },
-  { id: "workflow-finish", label: "Finish line", placeholder: "How a reviewer knows the result is usable" },
-  { id: "workflow-reviewer", label: "Human reviewer", placeholder: "Who checks what before the result is used" },
-  { id: "workflow-boundary", label: "Data boundary", placeholder: "Allowed, redacted, synthetic, and prohibited material" },
-  { id: "workflow-stops", label: "Stop conditions", placeholder: "Observable events that stop or redirect the run" },
-  { id: "workflow-fallback", label: "Manual fallback", placeholder: "How the owner completes the job without this workflow" },
+  { id: "workflow-name", label: "Process name", placeholder: "The repetitive task being tested" },
+  { id: "workflow-owner", label: "Person responsible", placeholder: "One person who checks and owns the result" },
+  { id: "workflow-trigger", label: "What starts the task", placeholder: "What arrives and what information may be used" },
+  { id: "workflow-finish", label: "A good result", placeholder: "How someone knows the result is correct and useful" },
+  { id: "workflow-reviewer", label: "Person who checks it", placeholder: "Who checks what before the result is used" },
+  { id: "workflow-boundary", label: "Allowed information", placeholder: "What is allowed, removed, made up for testing, or prohibited" },
+  { id: "workflow-stops", label: "When it must stop", placeholder: "Specific events that stop the process or send it to a person" },
+  { id: "workflow-fallback", label: "Manual backup", placeholder: "How the person finishes the task without AI" },
 ];
 ---
 
 <Base
-  title="10-Case AI Workflow Testing Template"
-  description="Use this free 10-case worksheet to test normal work, exceptions, safety stops, human review, duplicate runs, and recovery before trusting an AI workflow."
+  title="10-Example AI Process Testing Worksheet"
+  description="Use this free worksheet to test normal tasks, missing information, mistakes, required stops, duplicate actions, rejected results, and failures."
   ogImage="/media/notes/workflow-handoff.png"
   ogImageAlt="AI workflow testing path showing run, stop, recover, and owner checks"
   ogImageWidth={1200}
@@ -95,18 +95,18 @@ const setupFields = [
       <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb" data-no-print>
         <a href="/" class="transition-colors hover:text-paper">Home</a>
         <span class="mx-2 text-rule" aria-hidden="true">/</span>
-        <span class="text-cobalt-text" aria-current="page">Workflow testing template</span>
+        <span class="text-cobalt-text" aria-current="page">AI process testing worksheet</span>
       </nav>
 
       <header class="grid gap-10 border-b border-rule pb-14 lg:grid-cols-12 lg:items-end lg:pb-20">
         <div class="lg:col-span-8">
           <h1 class="studio-display text-[clamp(52px,8vw,108px)] leading-[0.88]">
-            Test the workflow<br /><strong>before you trust it</strong><span class="text-signal">.</span>
+            Test the AI process<br /><strong>before you depend on it</strong><span class="text-signal">.</span>
           </h1>
         </div>
         <div class="lg:col-span-4">
           <p class="text-[18px] leading-[1.7] text-paper-dim">
-            A ten-case worksheet for the normal path, known exceptions, safety stops, duplicate runs, human rejection, and manual recovery.
+            Use ten examples to see what happens during normal work, missing information, mistakes, safety stops, duplicate actions, human rejection, and a failure.
           </p>
           <p class="mt-5 font-mono text-[11px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">
             Free · No email gate · Saves only in this browser
@@ -119,12 +119,12 @@ const setupFields = [
           <h2 id="how-to-use-title" class="studio-display text-[clamp(34px,4vw,52px)] leading-[1]">Use real patterns.<br /><strong>Keep the data safe.</strong></h2>
         </div>
         <div class="space-y-5 text-[16px] leading-[1.75] text-paper-dim lg:col-span-8">
-          <p>Start with approved past examples or synthetic cases. Write the finish line and human decision before you run anything. A polished output is not a pass unless it meets the stated check.</p>
-          <p><strong class="text-paper">Do not enter protected health information, employer or client data, passwords, credentials, or other restricted material here.</strong> This worksheet saves locally in your browser for convenience. Use synthetic markers to test blocked-data behavior.</p>
+          <p>Start with approved past examples or made-up sample information. Write down what a good result looks like and who checks it before running anything. A polished result does not pass unless it meets the written standard.</p>
+          <p><strong class="text-paper">Do not enter protected health information, employer or client data, passwords, credentials, or other restricted material here.</strong> This worksheet saves only in your browser. Use made-up markers when testing whether private information will be blocked.</p>
           <ol class="grid gap-px bg-rule/70 sm:grid-cols-3">
-            <li class="bg-ink p-5"><span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">01</span><b class="mt-3 block">Define the job</b><span class="mt-2 block text-sm">Name the owner, finish line, reviewer, stops, and fallback.</span></li>
+            <li class="bg-ink p-5"><span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">01</span><b class="mt-3 block">Describe the task</b><span class="mt-2 block text-sm">Name the person responsible, a good result, who checks it, when it stops, and the manual backup.</span></li>
             <li class="bg-ink p-5"><span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">02</span><b class="mt-3 block">Run all ten</b><span class="mt-2 block text-sm">Record actual behavior and evidence, not a general impression.</span></li>
-            <li class="bg-ink p-5"><span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">03</span><b class="mt-3 block">Resolve the misses</b><span class="mt-2 block text-sm">Fix, accept, or stop every failed and blocked case before use.</span></li>
+            <li class="bg-ink p-5"><span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">03</span><b class="mt-3 block">Fix every problem</b><span class="mt-2 block text-sm">Correct, accept, or stop every failed and blocked test before use.</span></li>
           </ol>
         </div>
       </section>
@@ -133,8 +133,8 @@ const setupFields = [
         <section class="border-b border-rule py-14 lg:py-20" aria-labelledby="workflow-setup-title">
           <div class="grid gap-10 lg:grid-cols-12">
             <header class="lg:col-span-4">
-              <h2 id="workflow-setup-title" class="studio-display text-[clamp(36px,4vw,58px)] leading-[1]">Define the <strong>test boundary</strong><span class="text-signal">.</span></h2>
-              <p class="mt-5 max-w-sm text-[15px] leading-[1.7] text-paper-dim">If these fields are vague, the result will be vague too.</p>
+              <h2 id="workflow-setup-title" class="studio-display text-[clamp(36px,4vw,58px)] leading-[1]">Describe what you are <strong>testing</strong><span class="text-signal">.</span></h2>
+              <p class="mt-5 max-w-sm text-[15px] leading-[1.7] text-paper-dim">Clear answers make the test useful. Vague answers produce a vague result.</p>
             </header>
             <div class="grid gap-px bg-rule/70 sm:grid-cols-2 lg:col-span-8">
               {setupFields.map((field) => (
@@ -150,7 +150,7 @@ const setupFields = [
         <section class="py-14 lg:py-20" aria-labelledby="test-cases-title">
           <header class="grid gap-7 border-b border-rule pb-10 lg:grid-cols-12 lg:items-end">
             <div class="lg:col-span-8">
-              <h2 id="test-cases-title" class="studio-display text-[clamp(42px,6vw,82px)] leading-[0.94]">The <strong>ten cases</strong><span class="text-signal">.</span></h2>
+              <h2 id="test-cases-title" class="studio-display text-[clamp(42px,6vw,82px)] leading-[0.94]">The <strong>ten tests</strong><span class="text-signal">.</span></h2>
             </div>
             <p class="text-[15px] leading-[1.7] text-paper-dim lg:col-span-4">Pass means the observed behavior matches the written expectation. Blocked means the case could not be run. Neither counts as evidence of readiness.</p>
           </header>
@@ -168,7 +168,7 @@ const setupFields = [
                   <div class="mt-8 grid gap-5 lg:grid-cols-2 sm:ml-[5.25rem]">
                     <label for={`case-${testCase.number}-setup`}>
                       <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Test input or setup</span>
-                      <textarea id={`case-${testCase.number}-setup`} name={`case-${testCase.number}-setup`} rows="4" placeholder="Describe the approved or synthetic case you will run." class="mt-3 block w-full resize-y border border-rule bg-panel p-4 text-[15px] leading-[1.6] text-paper placeholder:text-paper-faint/70"></textarea>
+                      <textarea id={`case-${testCase.number}-setup`} name={`case-${testCase.number}-setup`} rows="4" placeholder="Describe the approved example or made-up sample you will use." class="mt-3 block w-full resize-y border border-rule bg-panel p-4 text-[15px] leading-[1.6] text-paper placeholder:text-paper-faint/70"></textarea>
                     </label>
                     <label for={`case-${testCase.number}-expected`}>
                       <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Expected behavior</span>
@@ -201,10 +201,10 @@ const setupFields = [
           </div>
           <div class="grid gap-5 sm:grid-cols-2 lg:col-span-8">
             <label for="test-decision">
-              <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Release decision</span>
+              <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">Decision after testing</span>
               <select id="test-decision" name="test-decision" class="mt-3 block min-h-14 w-full border border-rule bg-panel px-4 text-[15px] text-paper">
                 <option value="">Choose after review</option>
-                <option value="Ready for bounded use">Ready for bounded use</option>
+                <option value="Ready for limited use">Ready for limited use</option>
                 <option value="Revise and retest">Revise and retest</option>
                 <option value="Keep manual">Keep manual</option>
                 <option value="Stop">Stop</option>
@@ -233,16 +233,16 @@ const setupFields = [
 
       <section class="grid items-end gap-10 border-t border-rule pt-16 lg:mt-20 lg:grid-cols-12 lg:pt-24" data-no-print>
         <div class="lg:col-span-8">
-          <h2 class="studio-display text-[clamp(40px,5.5vw,76px)] leading-[0.96]">Need the workflow built and <strong>handed over</strong><span class="text-signal">?</span></h2>
+          <h2 class="studio-display text-[clamp(40px,5.5vw,76px)] leading-[0.96]">Want Keith to build the process and <strong>teach your team</strong><span class="text-signal">?</span></h2>
         </div>
         <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
           <a
             href="/workflow-book/"
             class="studio-button studio-button--secondary"
             data-workflow-template-action="companion-set"
-          >Get all 10 companion templates</a>
-          <a href="/services/done-for-you/" class="studio-button studio-button--secondary">See the Install Sprint</a>
-          <a href="/notes/ai-workflow-handoff-run-stop-recover/" class="studio-button studio-button--secondary">Read the handoff Note</a>
+          >Get all ten free templates</a>
+          <a href="/services/done-for-you/" class="studio-button studio-button--secondary">See the done-for-you AI setup</a>
+          <a href="/notes/ai-workflow-handoff-run-stop-recover/" class="studio-button studio-button--secondary">Learn how to teach the next person</a>
         </div>
       </section>
     </div>
@@ -317,18 +317,18 @@ const setupFields = [
     if (!worksheet) return;
     const values = valuesForWorksheet();
     const rows: string[][] = [
-      ["10-Case AI Workflow Testing Record", "Keith Staggers", window.location.href],
+      ["10-Example AI Process Testing Record", "Keith Staggers", window.location.href],
       [],
-      ["Workflow field", "Entry"],
+      ["Process field", "Entry"],
       ...[
-        ["Workflow name", "workflow-name"],
-        ["Owner", "workflow-owner"],
-        ["Trigger and approved input", "workflow-trigger"],
-        ["Finish line", "workflow-finish"],
-        ["Human reviewer", "workflow-reviewer"],
-        ["Data boundary", "workflow-boundary"],
-        ["Stop conditions", "workflow-stops"],
-        ["Manual fallback", "workflow-fallback"],
+        ["Process name", "workflow-name"],
+        ["Person responsible", "workflow-owner"],
+        ["What starts the task and allowed information", "workflow-trigger"],
+        ["A good result", "workflow-finish"],
+        ["Person who checks it", "workflow-reviewer"],
+        ["Allowed information", "workflow-boundary"],
+        ["When it must stop", "workflow-stops"],
+        ["Manual backup", "workflow-fallback"],
       ].map(([label, name]) => [label, values[name] ?? ""]),
       [],
       ["Case", "Test input or setup", "Expected behavior", "Actual result and evidence", "Outcome"],

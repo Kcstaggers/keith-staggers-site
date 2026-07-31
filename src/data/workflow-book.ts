@@ -4,15 +4,15 @@ export interface WorkflowBookTemplate {
   title: string;
   fileName: string;
   purpose: string;
-  stage: "Orient" | "Control" | "Build" | "Prove";
+  stage: "Understand" | "Set rules" | "Build" | "Test";
 }
 
 export const workflowBookCompanion = {
   version: "0.1",
-  dateModified: "2026-07-30",
+  dateModified: "2026-07-31",
   route: "/workflow-book/",
   description:
-    "Ten free Markdown templates for building a controlled AI operating workspace with context, human approval gates, workflow tests, proof, transfer, and recovery.",
+    "Ten free text templates for organizing AI work, recording important approvals, testing results, and planning what to do when something fails.",
 } as const;
 
 export const workflowBookTemplates: WorkflowBookTemplate[] = [
@@ -22,15 +22,15 @@ export const workflowBookTemplates: WorkflowBookTemplate[] = [
     title: "Context",
     fileName: "01-CONTEXT-template.md",
     purpose: "Define who you are, what matters now, how you work, and which facts the assistant must not guess.",
-    stage: "Orient",
+    stage: "Understand",
   },
   {
     number: "02",
     slug: "rules",
     title: "Rules",
     fileName: "02-RULES-template.md",
-    purpose: "Separate automatic internal work, approval-required actions, prohibitions, and the system-wide stop control.",
-    stage: "Control",
+    purpose: "Write down what AI may do automatically, what needs a person's approval, what is prohibited, and how to stop all activity.",
+    stage: "Set rules",
   },
   {
     number: "03",
@@ -38,14 +38,14 @@ export const workflowBookTemplates: WorkflowBookTemplate[] = [
     title: "Current State",
     fileName: "03-CURRENT-STATE-template.md",
     purpose: "Keep current priorities, active work, blockers, review dates, and directly read measurements in one place.",
-    stage: "Orient",
+    stage: "Understand",
   },
   {
     number: "04",
     slug: "work",
     title: "Work Queue",
     fileName: "04-WORK-template.md",
-    purpose: "Limit work in progress and give each item an owner, input, executable action, finish line, and proof requirement.",
+    purpose: "Limit active work and give each item a responsible person, starting information, next action, clear result, and required evidence.",
     stage: "Build",
   },
   {
@@ -54,46 +54,46 @@ export const workflowBookTemplates: WorkflowBookTemplate[] = [
     title: "Proof",
     fileName: "05-PROOF-template.md",
     purpose: "Record what actually happened, the evidence, the external consequence, and what remains unknown.",
-    stage: "Prove",
+    stage: "Test",
   },
   {
     number: "06",
     slug: "automations",
-    title: "Automations",
+    title: "Scheduled Tasks",
     fileName: "06-AUTOMATIONS-template.md",
-    purpose: "Document one scheduled worker with approved sources, limits, evidence, failure handling, and recovery.",
+    purpose: "Document one scheduled task, including its approved sources, limits, evidence, failure handling, and restart steps.",
     stage: "Build",
   },
   {
     number: "07",
     slug: "workflow-contract",
-    title: "Workflow Contract",
+    title: "Repeated Task Plan",
     fileName: "07-WORKFLOW-CONTRACT-template.md",
-    purpose: "Define the trigger, owner, input, finish line, AI boundary, exceptions, proof, and manual fallback for one repeated job.",
+    purpose: "Define what starts one repeated task, who owns it, what information it uses, what AI may do, what a good result looks like, and how to finish manually.",
     stage: "Build",
   },
   {
     number: "08",
     slug: "ten-case-test",
-    title: "Ten-Case Test",
+    title: "Ten-Example Test",
     fileName: "08-TEN-CASE-TEST-template.md",
-    purpose: "Test the normal path, missing and conflicting inputs, private data, money, failure, duplicates, and escalation.",
-    stage: "Prove",
+    purpose: "Test normal work, missing and conflicting information, private data, money, failures, duplicates, and situations that require a person.",
+    stage: "Test",
   },
   {
     number: "09",
     slug: "action-ladder",
-    title: "Action Ladder",
+    title: "Approval Levels",
     fileName: "09-ACTION-LADDER-template.md",
-    purpose: "Assign authority according to consequence, from internal reading through public action, money, contracts, and regulated judgment.",
-    stage: "Control",
+    purpose: "Decide which actions AI may take and which require a person, especially public actions, money, contracts, identity, and professional decisions.",
+    stage: "Set rules",
   },
   {
     number: "10",
     slug: "transfer-recovery",
-    title: "Transfer and Recovery",
+    title: "Team Handoff and Failure Plan",
     fileName: "10-TRANSFER-RECOVERY-checklist.md",
-    purpose: "Check whether another operator can run, inspect, stop, and recover the system without the original builder taking over.",
-    stage: "Prove",
+    purpose: "Check whether another person can use, inspect, stop, and restore the process without the original builder taking over.",
+    stage: "Test",
   },
 ];

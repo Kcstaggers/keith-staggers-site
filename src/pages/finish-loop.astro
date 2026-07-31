@@ -18,7 +18,7 @@ const inclusionAlt = [
   "The Finish Loop offline interactive planner preview",
   "The 30-day shipping calendar release rhythm",
   "A reusable direction brief with outcome, success, constraints, and hard stop fields",
-  "The editable Finish scorecard with production readiness gates",
+  "An editable scorecard that checks whether the project is ready to release",
 ];
 const productJsonLd = {
   "@context": "https://schema.org",
@@ -75,10 +75,10 @@ const productJsonLd = {
 ---
 
 <Base
-  title="The Finish Loop · Creator Operating System"
+  title="The Finish Loop · $49 Project-Finishing Toolkit"
   description={finishLoop.description}
   ogImage="/media/finish-loop/finish-loop-og.png"
-  ogImageAlt="The Finish Loop: Finish the work. Ship the thing. $49 manual, planner, and calendar."
+  ogImageAlt="The Finish Loop: a $49 project-finishing toolkit with a practical guide, planner, calendar, briefs, and scorecard."
 >
   <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
 
@@ -92,9 +92,9 @@ const productJsonLd = {
     <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
       <div class="flex min-h-[670px] min-w-0 flex-col justify-between border-paper px-5 py-12 sm:px-8 lg:border-r lg:px-12 lg:py-16 xl:px-16">
         <div>
-          <p class="eyebrow !text-cobalt-text">The Finish Loop</p>
+          <p class="eyebrow !text-cobalt-text">$49 project-finishing toolkit · The Finish Loop</p>
           <h1 id="finish-loop-title" class="serif mt-6 max-w-[720px] text-[clamp(3rem,12.5vw,8.8rem)] leading-[0.83] tracking-[-0.065em] sm:text-[clamp(4rem,8vw,8.8rem)]">
-            Finish the work.<br />Ship the thing<span class="text-signal">.</span>
+            Finish one project.<br />Release it<span class="text-signal">.</span>
           </h1>
           <p class="serif mt-9 max-w-xl text-xl leading-snug sm:text-2xl">{finishLoop.description}</p>
         </div>
@@ -110,7 +110,7 @@ const productJsonLd = {
               data-product-purchase={finishLoop.slug}
               class="mt-5 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim"
             >
-              Get The Finish Loop →
+              Get the $49 toolkit →
             </a>
           ) : (
             <span class="mt-5 inline-flex min-h-13 items-center justify-center border border-paper-faint px-7 py-3 font-bold text-paper-dim" aria-disabled="true">
@@ -157,9 +157,9 @@ const productJsonLd = {
     <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24 xl:px-16">
       <div class="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)] lg:gap-16">
         <div>
-          <p class="eyebrow !text-cobalt-text">The six-step loop</p>
+          <p class="eyebrow !text-cobalt-text">Six simple steps</p>
           <h2 id="loop-heading" class="serif mt-5 max-w-lg text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">
-            A repeatable system. Built for solo creators.
+            A practical step-by-step toolkit for solo creators.
           </h2>
           <p class="mt-7 max-w-md text-lg leading-relaxed text-ink/70">{finishLoop.promise}</p>
         </div>
@@ -220,8 +220,8 @@ const productJsonLd = {
         <ul class="mt-7 space-y-3 border-t border-ink/30 pt-5">
           <li>Six guided decision stages</li>
           <li>Local autosave and progress tracking</li>
-          <li>Finish-gate scorecard</li>
-          <li>Markdown export and print view</li>
+          <li>Simple progress and quality checks</li>
+          <li>Text-file export and print view</li>
         </ul>
       </div>
       <div class="overflow-hidden border border-ink/40 bg-ink shadow-2xl">
@@ -252,7 +252,7 @@ const productJsonLd = {
           <img src="/media/keith-photo-9.webp" alt="Keith Staggers in a black suit and sunglasses" width="1080" height="1080" class="aspect-square w-full object-cover" />
           <div class="space-y-5 text-lg leading-relaxed text-paper-dim">
             <p>I spent decades making decisions where details mattered, first as a detective, then as a nurse. Now I use the same discipline to build music, books, films, and visual work with AI.</p>
-            <p>The Finish Loop is the process underneath that catalog. It exists because generating is easy and closing the loop is rare.</p>
+            <p>The Finish Loop is the step-by-step approach behind that catalog. It exists because generating ideas is easy and finishing them is rare.</p>
           </div>
         </div>
       </div>
@@ -262,13 +262,13 @@ const productJsonLd = {
   <section class="border-b border-paper bg-paper text-ink" aria-labelledby="coaching-heading">
     <div class="mx-auto grid max-w-[1600px] grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,0.7fr)]">
       <div class="flex min-h-80 flex-col justify-center bg-ink px-5 py-12 text-paper sm:px-8 lg:px-10" aria-label="The three-part working session">
-        <p class="eyebrow !text-paper-dim">The working session</p>
+        <p class="eyebrow !text-paper-dim">One-to-one help</p>
         <ol class="mt-7 border-t border-rule">
           <li class="grid grid-cols-[42px_1fr] gap-3 border-b border-rule py-4">
             <span class="font-mono text-xs font-bold text-cobalt-text">01</span>
             <span>
               <strong class="block text-paper">Bring the project</strong>
-              <span class="mt-1 block text-sm leading-relaxed text-paper-dim">One real project, workflow, or decision.</span>
+              <span class="mt-1 block text-sm leading-relaxed text-paper-dim">One real project, task, or decision.</span>
             </span>
           </li>
           <li class="grid grid-cols-[42px_1fr] gap-3 border-b border-rule py-4">
@@ -290,12 +290,12 @@ const productJsonLd = {
       <div class="border-ink/30 px-5 py-14 sm:px-8 lg:border-r lg:px-12">
         <p class="eyebrow !text-cobalt-text">Work with Keith</p>
         <h2 id="coaching-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-5xl">60-minute working session</h2>
-        <p class="mt-6 text-lg leading-relaxed text-ink/70">Bring the real project. We find the block, apply the system live, and leave with a concrete next move.</p>
+        <p class="mt-6 text-lg leading-relaxed text-ink/70">Bring the real project. We find what is blocking it, work through the steps together, and leave with a concrete next move.</p>
       </div>
       <div class="flex flex-col justify-center px-5 py-14 sm:px-8 lg:px-12">
         <p><span class="serif text-6xl tracking-[-0.05em]">$250</span> <span class="eyebrow ml-3 !text-ink/60">One-time session</span></p>
         <a href={getBookingHref()} {...bookingAttrs} class="mt-6 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim">
-          Start a project inquiry →
+          Tell Keith about your project →
         </a>
       </div>
     </div>
@@ -306,7 +306,7 @@ const productJsonLd = {
       <p class="eyebrow !text-cobalt-text">FAQ</p>
       <h2 id="faq-heading" class="serif mt-5 text-[2.5rem] leading-[0.94] tracking-[-0.045em] sm:text-6xl">Before you buy.</h2>
       <p class="mt-6 max-w-2xl text-paper-dim">
-        Want the operating idea first? Read <a href="/notes/the-finishing-problem/" class="text-cobalt-text hover:text-paper">why more prompts do not fix a process with no finish line</a>.
+        Want the main idea first? Read <a href="/notes/the-finishing-problem/" class="text-cobalt-text hover:text-paper">why AI often creates more drafts instead of a finished result</a>.
       </p>
       <div class="mt-10 grid border-l border-t border-rule md:grid-cols-2 xl:grid-cols-5">
         {finishLoop.faqs.map((item) => (
@@ -330,7 +330,7 @@ const productJsonLd = {
         <p class="serif text-6xl tracking-[-0.05em]">${finishLoop.price}</p>
         {checkoutReady ? (
           <a href={finishLoop.checkoutUrl} data-product-purchase={finishLoop.slug} class="mt-5 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim">
-            Get The Finish Loop →
+            Get the $49 toolkit →
           </a>
         ) : (
           <span class="mt-5 inline-flex min-h-13 items-center justify-center border border-ink/40 px-7 py-3 font-bold text-ink/60" aria-disabled="true">Secure checkout being connected</span>
