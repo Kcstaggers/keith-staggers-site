@@ -270,6 +270,13 @@ const jsonLd = {
             source,
             page,
           });
+        } else if (link.dataset.workflowBookDownload) {
+          track("Workflow Book Template Download", {
+            resource: link.dataset.workflowBookDownload,
+            placement: link.dataset.workflowBookPlacement ?? "unspecified",
+            format: "markdown",
+            page,
+          });
         } else if (link.dataset.amazonBook) {
           track("Amazon Book Click", {
             book: link.dataset.amazonBook,

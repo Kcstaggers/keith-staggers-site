@@ -4,6 +4,7 @@ export const fixedRouteLastModified = [
   { route: "/finish-loop/", lastModified: "2026-07-25" },
   { route: "/frontline-nurse-leader/", lastModified: "2026-07-28" },
   { route: "/proof/", lastModified: "2026-07-25" },
+  { route: "/workflow-book/", lastModified: "2026-07-30" },
   { route: "/workflow-readiness/", lastModified: "2026-07-25" },
   { route: "/workflow-testing-template/", lastModified: "2026-07-25" },
   { route: "/project-fit/", lastModified: "2026-07-22" },

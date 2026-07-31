@@ -94,6 +94,7 @@ const requiredSchema = new Map([
   ["/project-fit/", ["WebPage", "BreadcrumbList"]],
   ["/proof/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
   ["/services/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
+  ["/workflow-book/", ["WebPage", "LearningResource", "ItemList", "FAQPage", "BreadcrumbList"]],
   ["/workflow-readiness/", ["WebPage", "BreadcrumbList"]],
   ["/workflow-testing-template/", ["WebPage", "LearningResource", "BreadcrumbList"]],
 ]);
@@ -322,6 +323,7 @@ for (const expected of bookExpectations) {
   }
 }
 
+const baseLayoutSource = fs.readFileSync(path.join("src", "layouts", "Base.astro"), "utf8");
 const booksHub = pages.find((page) => page.route === "/books/")?.html ?? "";
 for (const expected of bookExpectations) {
   if (!booksHub.includes(`href="${expected.route}"`)) fail(`/books/: missing owned link to ${expected.route}`);
@@ -357,12 +359,45 @@ if (!workflowTemplate.includes("keith-staggers-workflow-test-v1")) {
 if (!workflowTemplate.includes("keith-staggers-10-case-workflow-test.csv")) {
   fail("workflow-testing-template: CSV export is missing");
 }
+if (!workflowTemplate.includes('href="/workflow-book/"')) {
+  fail("workflow-testing-template: companion template collection is not linked");
+}
+
+const workflowBookPage = pages.find((page) => page.route === "/workflow-book/")?.html ?? "";
+const workflowBookTemplateFiles = [
+  "01-CONTEXT-template.md",
+  "02-RULES-template.md",
+  "03-CURRENT-STATE-template.md",
+  "04-WORK-template.md",
+  "05-PROOF-template.md",
+  "06-AUTOMATIONS-template.md",
+  "07-WORKFLOW-CONTRACT-template.md",
+  "08-TEN-CASE-TEST-template.md",
+  "09-ACTION-LADDER-template.md",
+  "10-TRANSFER-RECOVERY-checklist.md",
+];
+if ((workflowBookPage.match(/\bdata-workflow-book-download=/g) ?? []).length !== 10) {
+  fail("workflow-book: expected exactly ten measured template downloads");
+}
+for (const fileName of workflowBookTemplateFiles) {
+  if (!workflowBookPage.includes(`/workflow-book/templates/${fileName}`)) {
+    fail(`workflow-book: missing companion template ${fileName}`);
+  }
+}
+if (!workflowBookPage.includes("forthcoming field guide")) {
+  fail("workflow-book: forthcoming status is not clear");
+}
+if (!baseLayoutSource.includes("Workflow Book Template Download")) {
+  fail("workflow-book: download attribution is missing");
+}
+if (!booksHub.includes('href="/workflow-book/"')) {
+  fail("books: forthcoming workflow book companion is not linked");
+}
 
 const finishLoopPage = pages.find((page) => page.route === "/finish-loop/")?.html ?? "";
 const liveCheckout =
   "https://keithstaggers.lemonsqueezy.com/checkout/buy/b7bc50dd-cd89-4371-8227-4c85c36c0591";
 if (!finishLoopPage.includes(liveCheckout)) fail("finish-loop: live checkout URL changed or is missing");
-const baseLayoutSource = fs.readFileSync(path.join("src", "layouts", "Base.astro"), "utf8");
 for (const token of [
   "Finish Loop Campaign Landing",
   "finish_loop_facebook_2026_08",
@@ -461,6 +496,7 @@ for (const requiredAiRecord of [
   `${siteUrl}/books/nurse-the-fck-up/`,
   `${siteUrl}/books/leading-with-care/`,
   `${siteUrl}/workflow-testing-template/`,
+  `${siteUrl}/workflow-book/`,
   "9798861621335",
   "9798869793935",
   "B0CJ44XP81",

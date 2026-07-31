@@ -3,6 +3,10 @@ import { books } from "../data/books";
 import { publishedNotes } from "../data/notes";
 import { services } from "../data/services";
 import { site } from "../data/site";
+import {
+  workflowBookCompanion,
+  workflowBookTemplates,
+} from "../data/workflow-book";
 
 export const prerender = true;
 
@@ -17,6 +21,10 @@ export const GET: APIRoute = () => {
     (book) =>
       `- [${book.title}: ${book.subtitle}](${site.url}/books/${book.slug}/): ${book.blurb} Paperback published ${book.datePublished}; ISBN-13 ${book.isbn13}; ASIN ${book.asin}. [Goodreads](${book.goodreadsUrl}). [Open Library](${book.openLibraryUrl}).`
   );
+  const workflowBookLines = workflowBookTemplates.map(
+    (template) =>
+      `- [${template.number}. ${template.title}](${site.url}/workflow-book/templates/${template.fileName}): ${template.purpose}`
+  );
   const body = [
     "# Keith Staggers",
     "",
@@ -28,6 +36,7 @@ export const GET: APIRoute = () => {
     `- [About Keith Staggers](${site.url}/about/): Career history, operating method, and portfolio boundaries.`,
     `- [Independent proof](${site.url}/proof/): Public build and publication record.`,
     `- [Books by Keith Staggers](${site.url}/books/): Canonical records for the two primary healthcare books.`,
+    `- [AI Workflow Book Companion](${site.url}${workflowBookCompanion.route}): Ten free Markdown templates for Keith's forthcoming field guide to controlled AI workflows.`,
     `- [Studio Notes](${site.url}/notes/): Canonical editorial archive.`,
     `- [RSS feed](${site.url}/rss.xml): Machine-readable Studio Notes updates.`,
     `- [Full public text index](${site.url}/llms-full.txt): Current public service descriptions and full Studio Notes text.`,
@@ -40,9 +49,11 @@ export const GET: APIRoute = () => {
     "",
     ...bookLines,
     "",
-    "## Free workflow resource",
+    "## Free workflow resources",
     "",
     `- [10-Case AI Workflow Testing Template](${site.url}/workflow-testing-template/): A browser worksheet for normal work, exceptions, safety stops, duplicate runs, human rejection, and manual recovery. Entries stay in the visitor's browser and can be exported as CSV or printed to PDF.`,
+    `- [AI Workflow Book Companion](${site.url}${workflowBookCompanion.route}): Version ${workflowBookCompanion.version}. A living companion for a forthcoming field guide. The durable principles stay in the book while these editable files can be corrected and versioned.`,
+    ...workflowBookLines,
     "",
     "## Latest Studio Notes",
     "",
