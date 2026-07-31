@@ -8,23 +8,23 @@ const cohortUrl = new URL(cohortPath, site.url).href;
 const agenda = [
   {
     number: "01",
-    title: "The Monday hour",
-    detail: "Practice inbox triage, huddle preparation, and staffing summaries with synthetic data.",
+    title: "Save time on Monday morning",
+    detail: "Practice sorting an inbox, preparing a huddle, and drafting a staffing summary with safe sample information.",
   },
   {
     number: "02",
-    title: "The deck that eats your month",
-    detail: "Turn raw quality and patient-experience data into a presentation-ready story.",
+    title: "Build a clear presentation",
+    detail: "Turn sample quality and patient-experience numbers into a presentation people can understand.",
   },
   {
     number: "03",
-    title: "The rounding loop",
-    detail: "Move from audit and rounding data to a themed action plan with owners and dates.",
+    title: "Turn rounding notes into an action plan",
+    detail: "Group common themes, name the person responsible, and add a due date.",
   },
   {
     number: "04",
-    title: "Guardrails and the library",
-    detail: "Use clear PHI boundaries, verification habits, and a prompt library mapped to your week.",
+    title: "Use AI safely",
+    detail: "Learn what information must stay out, what to check, and how to save useful prompts for weekly work.",
   },
 ];
 
@@ -34,9 +34,9 @@ const courseJsonLd = {
     {
       "@type": "Course",
       "@id": `${cohortUrl}#course`,
-      name: "AI for the Frontline Nurse Leader · Founding Cohort",
+      name: "Practical AI for Frontline Nurse Leaders · Live Class",
       description:
-        "A live virtual working session for nurse managers, assistant managers, and charge nurses using synthetic data and practical AI guardrails.",
+        "A live virtual class for nurse managers, assistant managers, and charge nurses using safe sample information and practical AI safety rules.",
       url: cohortUrl,
       provider: {
         "@type": "Person",
@@ -76,7 +76,7 @@ const courseJsonLd = {
         {
           "@type": "ListItem",
           position: 3,
-          name: "Frontline Nurse Leader Cohort",
+          name: "Frontline Nurse Leader Live Class",
           item: cohortUrl,
         },
       ],
@@ -86,8 +86,8 @@ const courseJsonLd = {
 ---
 
 <Base
-  title="Frontline Nurse Leader AI Cohort · Sept. 16"
-  description="A live virtual AI working session for nurse managers, assistant managers, and charge nurses on September 16, 2026. Founding cohort registration is $179."
+  title="Live AI Class for Nurse Leaders · Sept. 16"
+  description="A live virtual class for nurse managers, assistant managers, and charge nurses on September 16, 2026. Registration is $179."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(courseJsonLd)} />
@@ -99,12 +99,12 @@ const courseJsonLd = {
         <nav class="cohort-breadcrumb" aria-label="Breadcrumb">
           <a href="/">Home</a><span aria-hidden="true">/</span>
           <a href="/services/training/">AI Training</a><span aria-hidden="true">/</span>
-          <span aria-current="page">Founding cohort</span>
+          <span aria-current="page">Live public class</span>
         </nav>
         <p class="cohort-date">September 16, 2026 · 9:00 AM to 1:15 PM ET · Live virtual</p>
-        <h1 class="studio-display">AI for the <strong>Frontline Nurse Leader</strong><span class="text-signal">.</span></h1>
+        <h1 class="studio-display">Use AI for the work nurse leaders do <strong>every week</strong><span class="text-signal">.</span></h1>
         <p class="cohort-lede">
-          A hands-on working session for nurse managers, assistant managers, and charge nurses. Practice the weekly work with AI, use synthetic data, and keep the judgment where it belongs.
+          A hands-on class for nurse managers, assistant managers, and charge nurses. Practice familiar weekly tasks using safe sample information with no real patients or private records. A person still checks every result and makes the decisions.
         </p>
         <div class="cohort-actions">
           <a
@@ -131,8 +131,8 @@ const courseJsonLd = {
 
     <section id="agenda" class="studio-shell cohort-agenda" aria-labelledby="cohort-agenda-title">
       <div class="cohort-section-head">
-        <h2 id="cohort-agenda-title" class="studio-display">Your Monday work.<br /><strong>Built together</strong><span class="text-signal">.</span></h2>
-        <p>Bring a laptop and an approved AI tool or free account. Every exercise uses synthetic data. No patient information and no employer material.</p>
+        <h2 id="cohort-agenda-title" class="studio-display">Practice the work you do<br /><strong>every week</strong><span class="text-signal">.</span></h2>
+        <p>Bring a laptop and an approved AI tool or free account. Every exercise uses safe sample information. No patient information and no employer material.</p>
       </div>
 
       <ol class="cohort-agenda-list">
@@ -149,13 +149,13 @@ const courseJsonLd = {
     <section class="cohort-outcomes">
       <div class="studio-shell cohort-outcomes-grid">
         <div>
-          <h2 class="studio-display">Leave with a method you can <strong>use again</strong><span class="text-signal">.</span></h2>
+          <h2 class="studio-display">Leave knowing what to do on the <strong>next workday</strong><span class="text-signal">.</span></h2>
         </div>
         <ul>
-          <li>A personal prompt library mapped to recurring nurse-leader work</li>
-          <li>A practical way to verify output before it becomes a decision</li>
-          <li>Clear boundaries for PHI, public tools, and human approval</li>
-          <li>A repeatable workflow for huddles, quality stories, and follow-up</li>
+          <li>A personal set of prompts for work nurse leaders repeat</li>
+          <li>A simple way to check AI output before using it</li>
+          <li>Clear rules for private health information, public tools, and approval</li>
+          <li>A step-by-step process for huddles, quality stories, and follow-up</li>
         </ul>
       </div>
     </section>
@@ -166,14 +166,14 @@ const courseJsonLd = {
         <h2 class="studio-display">Built from the job.<br /><strong>Separate from the employer</strong><span class="text-signal">.</span></h2>
       </div>
       <p>
-        This is an independent Keith Staggers Studio offering. Exercises use synthetic data. Employer documents, internal workflows, patient information, and protected health information are not course material.
+        This is an independent Keith Staggers Studio offering. Exercises use made-up sample information with no real people or private records. Employer documents, internal processes, patient information, and protected health information are not course material.
       </p>
     </section>
 
     <section class="cohort-close">
       <div class="studio-shell cohort-close-grid">
         <div>
-          <h2 class="studio-display">Twenty seats.<br /><strong>One working day</strong><span class="text-signal">.</span></h2>
+          <h2 class="studio-display">Twenty seats.<br /><strong>Four hours of hands-on work</strong><span class="text-signal">.</span></h2>
           <p>Registration is one seat per payment. Refund, cancellation, and educational-use terms are displayed at checkout.</p>
           <p class="cohort-ce">4.0 nursing contact hours pending approval.</p>
         </div>

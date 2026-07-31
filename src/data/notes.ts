@@ -42,18 +42,18 @@ export const notes: StudioNote[] = [
     status: "published",
     slug: "the-finishing-problem",
     number: "01",
-    category: "AI practice",
-    title: "Most people do not have an AI problem. They have a finishing problem.",
-    seoTitle: "The AI Finishing Problem",
+    category: "Finishing projects",
+    title: "Why AI keeps giving you more drafts instead of a finished result.",
+    seoTitle: "How to Finish AI-Assisted Projects",
     excerpt:
-      "More prompts will not rescue a process with no finish line. The advantage is knowing what done looks like, then building backward from there.",
+      "AI can create ideas quickly, but it cannot decide what finished means for you. Choose the result first, then use AI to help you reach it.",
     summary:
-      "AI creates useful leverage only after the purpose, audience, deadline, and standard are clear. Define the finish line first, then use AI inside a loop of making, judging, revising, and shipping.",
-    answerHeading: "Define finished before you generate.",
+      "Before asking AI for more options, decide the purpose, audience, deadline, and quality standard. Then use AI to help make, review, revise, and finish the work.",
+    answerHeading: "Decide what finished looks like before asking AI for more.",
     keyPoints: [
-      "Define the purpose, audience, deadline, and standard before generating more options.",
-      "Work backward from where the finished asset must land.",
-      "Keep human taste and judgment inside the make, judge, revise, and ship loop.",
+      "Write down the purpose, audience, deadline, and quality standard before generating more options.",
+      "Start with where the finished work needs to be used or published.",
+      "Let AI help with drafts while you choose, edit, and approve the final result.",
     ],
     tags: ["AI workflows", "creative production", "finishing systems"],
     image: {
@@ -69,19 +69,19 @@ export const notes: StudioNote[] = [
       title: "The Finish Loop",
       href: "/finish-loop/",
     },
-    ctaHeading: "Turn the unfinished work into a finish line.",
+    ctaHeading: "Choose one project and decide what finished looks like.",
     primaryCtaLabel: "Finish the project",
     relatedNoteSlugs: ["ai-workflow-handoff-run-stop-recover", "the-monday-morning-test"],
     resources: [
       {
         title: "Use The Finish Loop",
         href: "/finish-loop/",
-        context: "A field system for defining done, making, judging, and shipping.",
+        context: "A $49 do-it-yourself toolkit for choosing, finishing, and releasing a creative project.",
       },
       {
-        title: "Check a workflow first",
+        title: "See if a task is ready for AI",
         href: "/workflow-readiness/",
-        context: "Seven questions for deciding whether a repeated job is ready to scope.",
+        context: "Answer seven plain questions before you spend money or add another tool.",
       },
     ],
     sections: [
@@ -113,17 +113,17 @@ export const notes: StudioNote[] = [
     slug: "the-monday-morning-test",
     number: "02",
     category: "Team training",
-    title: "AI training should change Monday morning.",
-    seoTitle: "AI Training That Changes Monday Morning",
+    title: "How to make AI training useful on the next workday.",
+    seoTitle: "How to Make AI Training Useful at Work",
     excerpt:
       "If nobody uses anything the next day, the session was entertainment. Good training ends with a working habit, not a folder full of slides.",
     summary:
       "Practical AI training should change one real task on the next workday. Teams need to practice on work they already own, leave with one repeatable process, and know the boundaries they should not cross.",
     answerHeading: "Make one workday different.",
     keyPoints: [
-      "A polished demonstration is not evidence that a team can use the method.",
-      "Train on real work with synthetic or specifically approved material.",
-      "End with one task, one repeatable process, and one clear boundary for the next workday.",
+      "A polished demonstration does not prove that a team can use AI afterward.",
+      "Practice on familiar tasks using sample information with no real people or private records.",
+      "End with one task people can repeat and one clear safety rule for the next workday.",
     ],
     tags: ["AI training", "team adoption", "responsible AI"],
     image: {
@@ -146,12 +146,12 @@ export const notes: StudioNote[] = [
       {
         title: "Explore practical AI training",
         href: "/services/training/",
-        context: "Hands-on sessions built around approved or synthetic work.",
+        context: "Hands-on sessions built around familiar tasks and safe sample information.",
       },
       {
-        title: "Check workflow readiness",
+        title: "See if a task is ready for AI",
         href: "/workflow-readiness/",
-        context: "Use the seven-question check before turning a training example into a system.",
+        context: "Use the seven-question check before turning a training example into a daily process.",
       },
     ],
     sections: [
@@ -165,8 +165,8 @@ export const notes: StudioNote[] = [
       {
         heading: "Train on the work people already own.",
         paragraphs: [
-          "The fastest way to make AI useful is to bring it close to a real workflow. Use synthetic or specifically approved examples shaped around the documents, decisions, and constraints the team faces every week. Generic examples teach a feature. Realistic practice teaches judgment without exposing material that does not belong in the room.",
-          "People also need permission to ask basic questions and room to make a mess. A workshop should make the technology less mysterious without pretending it is harmless or automatic. Clear guardrails create confidence. Hype creates hesitation later.",
+          "The fastest way to make AI useful is to connect it to a task people already know. Use sample information with no real people or private records, shaped around the documents and decisions the team sees every week. Generic examples teach a feature. Familiar practice teaches people how to use it responsibly.",
+          "People also need permission to ask basic questions and room to make mistakes. A workshop should make the technology less mysterious without pretending it is harmless or automatic. Clear safety rules create confidence. Hype creates hesitation later.",
         ],
       },
       {
@@ -183,13 +183,13 @@ export const notes: StudioNote[] = [
     slug: "three-careers-one-standard",
     number: "03",
     category: "Reinvention",
-    title: "Three careers. One standard.",
-    seoTitle: "Three Careers, One Operating Standard",
+    title: "What a detective, nurse leader, and AI builder have in common.",
+    seoTitle: "From Detective to Nurse Leader to AI Builder",
     excerpt:
-      "Detective, nurse leader, creator. The titles changed. The real work stayed the same: read the room, find the pattern, use the tool, finish the job.",
+      "Keith's job titles changed, but the useful skills did not: observe carefully, explain clearly, use the right tool, and finish the job.",
     summary:
       "Career changes do not erase the skills that came before them. Observation, judgment, clear communication, and follow-through connect Keith Staggers' work in investigation, nursing leadership, and AI production.",
-    answerHeading: "Carry the operating standard forward.",
+    answerHeading: "Carry useful skills into the next career.",
     keyPoints: [
       "Reinvention carries forward the skills your earlier work trained you to use.",
       "The durable standard matters more than any one job title.",
@@ -209,24 +209,24 @@ export const notes: StudioNote[] = [
       title: "Keynotes and speaking",
       href: "/services/speaking/",
     },
-    ctaHeading: "Turn the throughline into a useful room.",
-    primaryCtaLabel: "Bring Keith in",
+    ctaHeading: "Give your audience a practical story about reinvention and change.",
+    primaryCtaLabel: "Book Keith to speak",
     relatedNoteSlugs: ["the-finishing-problem", "one-idea-six-content-jobs"],
     resources: [
       {
         title: "Read Keith's full story",
         href: "/about/",
-        context: "The public career arc and the operating method that connects it.",
+        context: "Keith's career story and the practical skills that connect each chapter.",
       },
       {
-        title: "Review the work record",
+        title: "See examples of Keith's work",
         href: "/proof/",
-        context: "Independent builds, books, and finished production with bounded claims.",
+        context: "Independent AI projects, client work, books, and finished creative projects.",
       },
       {
         title: "Explore speaking",
         href: "/services/speaking/",
-        context: "Practical talks on adoption, leadership, responsible workflows, and reinvention.",
+        context: "Practical talks about using AI at work, leadership, responsibility, and reinvention.",
       },
     ],
     sections: [
@@ -257,19 +257,19 @@ export const notes: StudioNote[] = [
     status: "published",
     slug: "ai-workflow-handoff-run-stop-recover",
     number: "04",
-    category: "Workflow ownership",
-    title: "A workflow is not finished until someone else can run, stop, and recover it.",
-    seoTitle: "AI Workflow Handoff: Run, Stop, and Recover",
+    category: "Using AI at work",
+    title: "How to know an AI process is ready for someone else to use.",
+    seoTitle: "How to Hand Off an AI Process to Your Team",
     excerpt:
-      "A working demo is still builder-dependent until another capable person can run it, recognize a stop condition, use the manual path, and recover from failure.",
+      "A demonstration is not enough. Another person must be able to use the process, know when to stop, return to the manual method, and handle a failure.",
     summary:
-      "An AI-assisted workflow is ready for handoff only when a new owner can complete the normal path, stop an unsafe or incomplete run, use the manual fallback, and restore the process without the builder taking over.",
-    answerHeading: "Test the owner, stop, and recovery paths.",
+      "An AI-assisted process is ready for a team only when the person responsible can use it without the builder, recognize a problem, stop safely, finish the task manually, and restore the process.",
+    answerHeading: "Make sure another person can use it and handle a failure.",
     keyPoints: [
-      "Name the owner, approved inputs, finish line, and verification step in one short map.",
-      "Write stop conditions as observable events, not vague cautions.",
-      "Keep a usable manual fallback and recovery path beside the automated one.",
-      "Require a reverse demonstration where the new owner runs, stops, and recovers the workflow.",
+      "Write a one-page guide naming the person responsible, the allowed information, a good result, and the required check.",
+      "List clear events that mean the process must stop instead of saying only 'be careful.'",
+      "Keep the manual way to finish the task available beside the AI-assisted version.",
+      "Have the new owner demonstrate that they can use it, stop it, and handle a failure.",
     ],
     tags: ["AI workflow handoff", "workflow documentation", "operational resilience"],
     image: {
@@ -282,83 +282,82 @@ export const notes: StudioNote[] = [
     datePublished: "2026-07-25",
     dateModified: "2026-07-25",
     related: {
-      title: "AI Workflow Install Sprint",
+      title: "Done-for-You AI Setup",
       href: "/services/done-for-you/",
     },
-    ctaHeading: "Make the workflow usable without its builder.",
-    primaryCtaLabel: "Start with fit questions",
+    ctaHeading: "Make the process usable without Keith standing beside it.",
+    primaryCtaLabel: "Tell Keith about your task",
     relatedNoteSlugs: ["the-finishing-problem", "the-monday-morning-test"],
     resources: [
       {
-        title: "Review the Install Sprint",
+        title: "See the done-for-you AI setup",
         href: "/services/done-for-you/",
-        context: "A tested, documented workflow delivered through a client-owned path.",
+        context: "Keith builds and tests one repetitive task in tools and accounts your team controls.",
       },
       {
-        title: "Check workflow readiness",
+        title: "See if a task is ready for AI",
         href: "/workflow-readiness/",
-        context: "Confirm the job has an owner, finish line, test cases, and safe operating path.",
+        context: "Confirm that the task has a responsible person, a clear result, test examples, and a backup plan.",
       },
       {
         title: "Use the ten-case testing worksheet",
         href: "/workflow-testing-template/",
-        context: "Run the normal path, exceptions, safety stops, duplicate protection, human rejection, and manual recovery.",
+        context: "Test normal work, mistakes, safety stops, duplicate work, human rejection, and the manual backup plan.",
       },
       {
-        title: "See the public build record",
+        title: "See examples of Keith's work",
         href: "/proof/",
-        context: "Bounded evidence from independent builds and finished production.",
+        context: "Plain-English records of independent AI projects and finished work.",
       },
     ],
     sections: [
       {
-        heading: "Completion belongs to the next operator.",
+        heading: "The real test is whether the next person can use it.",
         paragraphs: [
-          "A builder can make almost any system look ready while standing beside it. They know which input is clean, which button matters, which warning can be ignored, and how to repair the run when the happy path breaks. That knowledge can hide inside the person instead of the workflow.",
-          "The handoff test changes the definition of done. A workflow is not finished because the builder can demonstrate it. It is finished when the person who owns the work can use it without the builder quietly steering from the next chair. For a solo operator, that person may be future you returning after a month away.",
+          "A builder can make almost any AI process look ready while standing beside it. The builder already knows which information to use, which button matters, and how to fix a problem. That knowledge may exist only in the builder's head.",
+          "The process is ready only when the person responsible for the task can use it without quiet help from the builder. For someone working alone, that person may be you returning to the process a month later.",
         ],
       },
       {
-        heading: "Start with a one-page operating map.",
+        heading: "Write a one-page guide.",
         paragraphs: [
-          "The map should name the trigger, owner, permitted inputs, AI job, human decision, finish line, output location, and next use. One page is enough when every label is concrete. A long manual cannot rescue a process whose basic ownership is unclear.",
-          "Write this map for the person doing the work, not for the person who built the automation. Replace system nicknames with plain actions. Link the approved source location. State where the finished asset appears. If the operator has to remember an unwritten sequence, the handoff is still incomplete.",
+          "The guide should name what starts the task, who is responsible, what information is allowed, what AI does, what a person checks, what a good result looks like, and where that result goes.",
+          "Write for the person doing the work. Replace project nicknames with plain actions. Link to the correct source. State where the finished item appears. If someone has to remember an unwritten step, the guide is not complete.",
         ],
       },
       {
-        heading: "Make stop conditions observable.",
+        heading: "Write clear rules for when to stop.",
         paragraphs: [
-          "Be careful is not a stop condition. Missing source, unexpected file type, conflicting instruction, failed acceptance check, unavailable destination, and unapproved input are conditions an operator can recognize. Each one needs a visible state and a next action.",
-          "The useful question is not whether the system can fail. It will. The useful question is whether the person using it can tell that it failed before the output becomes ordinary work. A quiet guess is more dangerous than a visible stop because it asks the operator to trust appearance instead of evidence.",
+          "Saying 'be careful' is not enough. A missing source, unexpected file, conflicting instruction, failed check, unavailable destination, or unapproved input is a specific event a person can recognize. Each event needs a clear next action.",
+          "Every AI process can fail. The important question is whether the person using it can recognize the failure before using the result. A visible stop is safer than a quiet guess.",
         ],
       },
       {
-        heading: "Keep the manual path beside the automated one.",
+        heading: "Keep the manual process available.",
         paragraphs: [
-          "A fallback is not a sentence that says do it manually. It is the actual short path for finishing the job when the model, integration, account, or reviewer is unavailable. The operator should know where the source lives, which template to use, what must be checked, and where the result belongs.",
-          "This path protects continuity and also exposes bad automation. If the manual process is faster, clearer, or safer for most cases, the automated version may not deserve to become the default. The fallback gives the owner a real comparison instead of forcing every job through the newest path.",
+          "The backup plan must explain how to finish the task when the AI tool, connection, account, or reviewer is unavailable. The person should know where the source lives, which template to use, what to check, and where to save the result.",
+          "The manual process also provides an honest comparison. If it is faster, clearer, or safer for most cases, the AI-assisted version may not deserve to become the default.",
         ],
       },
       {
-        heading: "Teach recovery, not only restart.",
+        heading: "Explain what to do after a failure.",
         paragraphs: [
-          "Restarting from the beginning can duplicate a message, overwrite a record, or leave two versions of the same output. Recovery begins by showing what already happened. The operator needs a run record, a known output location, and a way to tell whether an external consequence occurred.",
-          "Then document the safe choice: resume from a verified checkpoint, move the item to manual handling, or close the failed run and begin again. The exact path depends on the system. The principle is stable. Never make a person guess whether the first attempt already crossed the line.",
+          "Starting over can send a duplicate message, overwrite a record, or create two versions of the same result. Begin by checking what already happened and where the first result went.",
+          "Then choose the safe action: continue from a confirmed step, finish the task manually, or close the failed attempt and begin again. Never make a person guess whether the first attempt already changed something outside the tool.",
         ],
       },
       {
-        heading: "Use a reverse demonstration as acceptance.",
+        heading: "Have the new owner demonstrate it.",
         paragraphs: [
-          "At handoff, the new owner shares the screen and the builder stays quiet. The owner completes one normal run, explains the verification step, triggers or identifies a stop condition, uses the fallback, and walks through recovery. Questions are recorded and the instructions are corrected after the attempt.",
-          "This is stronger than asking whether the documentation makes sense. People often understand a page while reading it and still discover a missing assumption during use. The reverse demonstration turns those assumptions into visible repair work before the workflow carries real volume.",
+          "The new owner should share the screen while the builder stays quiet. They complete a normal task, explain the required check, identify a reason to stop, use the manual backup, and explain what they would do after a failure.",
+          "This is more useful than asking whether the instructions make sense. Missing assumptions become visible during use, while there is still time to correct the guide.",
         ],
       },
       {
-        heading: "The publishing workflow for this Note is the example.",
+        heading: "This website article follows the same rule.",
         paragraphs: [
-          "This Studio Note begins as one reviewed content record and one image. The site generator turns that record into the article page, Notes archive, homepage entry, RSS item, sitemap entry, social metadata, and AI-readable text. The human decision is approval of the exact public copy and image. The automated job is consistent production, not editorial authority.",
-          "The operating map names the files, the approved source, the canonical URL, and the release checks. A verifier confirms titles, descriptions, structured data, internal references, image dimensions, index rules, RSS coverage, and sitemap coverage before a release can pass. The manual path is editing the same content record and running the checks locally. Recovery starts by checking the public URL and deployment record before retrying anything.",
-          "A future operator should be able to publish an approved Note from that record, recognize a failed gate, stop the release, and prove what reached production. If that still requires undocumented knowledge from the builder, this workflow is not finished either.",
+          "This article begins as one approved content record and one image. The website then uses that record to create the article page, article list, homepage link, RSS update, sitemap entry, social preview, and AI-readable text. A person approves the public message. Automation handles the repeated publishing steps.",
+          "A future operator should be able to publish an approved article, recognize a failed check, stop the release, and confirm what reached the public website. If that still requires undocumented knowledge from the builder, the process is not ready.",
         ],
       },
     ],
@@ -367,18 +366,18 @@ export const notes: StudioNote[] = [
     status: "published",
     slug: "one-idea-six-content-jobs",
     number: "05",
-    category: "Content systems",
-    title: "One finished idea can do six different content jobs.",
-    seoTitle: "Repurpose One Idea Into Six Content Jobs",
+    category: "Content marketing",
+    title: "How to turn one strong idea into content for six channels.",
+    seoTitle: "How to Repurpose One Idea Across Six Channels",
     excerpt:
-      "Useful content repurposing starts with one finished source, gives each channel a different job, and keeps approval and provenance attached to every public version.",
+      "Finish and verify one strong source first. Then adapt it for each channel without changing the facts or copying the same post everywhere.",
     summary:
-      "Repurpose one evidence-backed source by adapting the lesson to the role of each channel. Keep the website Note canonical, write every version natively, and require exact approval before any social, newsletter, or visual item is published.",
-    answerHeading: "Keep one source. Change the job.",
+      "Use one accurate website article or finished project as the main source. Give LinkedIn, Facebook, Instagram, X, email, and YouTube different versions, and approve each public item before it is published.",
+    answerHeading: "Keep one accurate source. Adapt the message for each channel.",
     keyPoints: [
-      "Finish and verify one canonical source before creating channel versions.",
+      "Finish and verify one main source before creating versions for other channels.",
       "Give LinkedIn, Facebook, Instagram, X, newsletter, and YouTube different roles.",
-      "Preserve the claim source, approval state, visual record, date, and public proof for every item.",
+      "Keep the fact source, approval, visual, date, and public link with every item.",
       "Measure each channel by the useful next action it was designed to support.",
     ],
     tags: ["content repurposing", "content workflow", "creator operations"],
@@ -395,46 +394,46 @@ export const notes: StudioNote[] = [
       title: "The Finish Loop",
       href: "/finish-loop/",
     },
-    ctaHeading: "Build one source worth carrying across the week.",
+    ctaHeading: "Finish one strong source before creating six more posts.",
     primaryCtaLabel: "Finish the source",
     relatedNoteSlugs: ["the-finishing-problem", "three-careers-one-standard"],
     resources: [
       {
-        title: "Read all Studio Notes",
+        title: "Read all articles and guides",
         href: "/notes/",
-        context: "The canonical archive for Keith's practical AI and production writing.",
+        context: "Keith's main archive of practical writing about AI, work, and finishing projects.",
       },
       {
         title: "Use The Finish Loop",
         href: "/finish-loop/",
-        context: "Define, make, judge, revise, and ship the source before multiplying versions.",
+        context: "Choose, make, review, revise, and finish the source before creating more versions.",
       },
       {
-        title: "Review the finished-work record",
+        title: "See examples of Keith's work",
         href: "/proof/",
-        context: "Public evidence for the work behind the content rather than unsupported outcomes.",
+        context: "Independent AI projects, client work, books, and finished creative projects.",
       },
     ],
     sections: [
       {
-        heading: "Repurposing begins after the source is finished.",
+        heading: "Finish the main source first.",
         paragraphs: [
-          "Turning a loose thought into six drafts is not a content system. It is six places for the same uncertainty to spread. The source needs a clear claim, verified facts, a useful structure, and a finish line before the channel work begins.",
-          "For this system, a Studio Note is the strongest canonical source when the idea needs a durable explanation. A finished build record, a public video, or a released product can also lead when it carries the evidence. The source is where the complete version lives and where later corrections begin.",
+          "Turning a loose thought into six drafts creates six places for confusion to spread. Finish one strong source with a clear point, checked facts, a useful structure, and a defined ending before adapting it for other channels.",
+          "A website article works well when the idea needs a full explanation. A finished project, public video, or released product can also be the main source. Keep the complete version in one place so later corrections begin there.",
         ],
       },
       {
-        heading: "Canonical does not mean copied everywhere.",
+        heading: "Do not copy the same post everywhere.",
         paragraphs: [
-          "The source protects the full argument and the evidence. The channel version earns attention in the language and format people expect there. Copying the same caption across every platform ignores why somebody opened that platform in the first place.",
-          "Adapt the idea, not the facts. The central claim, limits, and source record stay stable. The hook, pacing, example, visual, and call to action may change because each version has a different job. If a shorter version cannot preserve an important limit, it should point to the source or not run.",
+          "The main source protects the full explanation and the facts. Each channel needs the language and format people expect there. Copying the same caption across every platform ignores why someone opened that platform.",
+          "Adapt the presentation, not the facts. The main point and important limits stay the same. The opening, pacing, example, visual, and next action can change because each channel has a different job.",
         ],
       },
       {
         heading: "LinkedIn teaches the professional lesson.",
         paragraphs: [
-          "LinkedIn should contain a complete native lesson, not a teaser that withholds the useful part. Lead with the work problem, show the method or decision, name the limit, and give the reader one move they can use. One link to the canonical Note is enough when deeper context helps.",
-          "The professional version should connect the idea to adoption, leadership, production, or workflow ownership. It does not need a résumé paragraph or an invented business result. Authority comes from making the decision clearer and showing the operating logic behind it.",
+          "LinkedIn should contain a complete useful lesson, not a teaser that withholds the important part. Lead with a familiar work problem, explain the choice, name the limit, and give the reader one action they can use. One link to the full article is enough when more context helps.",
+          "The professional version should connect the idea to using AI at work, leadership, or production. It does not need a résumé paragraph or an invented business result. Credibility comes from making the decision clearer and explaining why it works.",
         ],
       },
       {
@@ -448,7 +447,7 @@ export const notes: StudioNote[] = [
         heading: "X isolates the insight. The newsletter installs the habit.",
         paragraphs: [
           "X works when one sentence carries a useful distinction, or when a short thread earns each next post. It does not need the full setup from LinkedIn. The strongest line may be the rule, the exception, or the mistake that changed the process.",
-          "The newsletter has a different promise. It enters an inbox, so it should give the reader one workflow, one guardrail, and one action. The canonical Note can hold the full system. The email should make one part easier to use this week.",
+          "The newsletter has a different promise. It enters an inbox, so it should give the reader one repeatable process, one safety rule, and one action. The full article can hold the complete explanation. The email should make one part easier to use this week.",
         ],
       },
       {
@@ -459,17 +458,17 @@ export const notes: StudioNote[] = [
         ],
       },
       {
-        heading: "Approval and provenance travel with every version.",
+        heading: "Keep the source and approval with every version.",
         paragraphs: [
-          "Each draft should retain the source moment, claim evidence, channel, exact copy, visual record when present, target time, approval state, and final public proof. If the copy or image changes after approval, that item returns to review. Approval of a text post does not approve a visual package.",
-          "This is where automation helps without taking over editorial judgment. It can create the channel-specific files, check required fields, move exact approved items into a queue, and log the public URL. It cannot decide that silence means yes, invent a result, or turn one approval into permission for every derivative.",
+          "Each draft should keep a link to the fact source, the channel, exact words, visual when present, planned time, approval, and final public link. If the words or image change after approval, the item must be reviewed again. Approval of a text post does not approve a visual post.",
+          "Automation can create files for each channel, check required information, place exact approved items in a queue, and record the public link. It cannot treat silence as approval, invent a result, or turn approval of one item into permission for every later version.",
         ],
       },
       {
-        heading: "This Note is the bounded example.",
+        heading: "This article is the example.",
         paragraphs: [
-          "The source idea is simple: one finished idea can perform different jobs without becoming six unrelated messages. The canonical version is this Note. A LinkedIn adaptation would teach the professional content-system lesson. Facebook would need a genuine personal bridge. Instagram would use the six-job diagram. X would isolate one rule. The newsletter would give one reusable workflow. YouTube would demonstrate the queue only if the screen contains no private material.",
-          "Not every version has to publish. Each one must earn its place, pass its own approval rule, and preserve the source boundary. The useful measure is not how many channels received something. It is whether each published version completed the job it was designed to do without weakening the truth of the original.",
+          "The main idea is simple: one finished idea can do different jobs without becoming six unrelated messages. This article is the full source. LinkedIn would teach the professional lesson. Facebook would need a real personal connection. Instagram would use the diagram. X would isolate one rule. The newsletter would give one repeatable action. YouTube would demonstrate the process only if the screen contained no private material.",
+          "Not every version needs to be published. The useful measure is not the number of channels. It is whether each published version did its intended job without weakening the truth of the original.",
         ],
       },
     ],

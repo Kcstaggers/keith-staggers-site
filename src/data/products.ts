@@ -5,44 +5,44 @@ export const finishLoop = {
   currency: "USD",
   checkoutUrl:
     "https://keithstaggers.lemonsqueezy.com/checkout/buy/b7bc50dd-cd89-4371-8227-4c85c36c0591",
-  headline: "Finish the work. Ship the thing.",
+  headline: "Finish one creative project and release it.",
   description:
-    "A complete creator operating system for directing, finishing, and releasing AI-assisted work. Built for solo creators who are done collecting drafts.",
+    "A $49 do-it-yourself toolkit for solo creators who have plenty of ideas and drafts but need a practical way to choose one project, finish it, and release it.",
   promise:
-    "Choose one outcome, direct the work, close the last 10 percent, and leave with a release system you can repeat.",
+    "Choose one project, decide what finished looks like, complete the final work, release it, and save a process you can use again.",
   proof: [
     { value: "50+", label: "albums" },
     { value: "2", label: "primary books" },
     { value: "1,000+", label: "images & films" },
   ],
   steps: [
-    { num: "01", name: "Decide", detail: "Choose the outcome, person, action, format, and hard stop." },
-    { num: "02", name: "Calibrate", detail: "Turn references into specific project rules." },
-    { num: "03", name: "Test", detail: "Run the smallest batch that answers the riskiest question." },
-    { num: "04", name: "Direct", detail: "Preserve what works and correct one defect at a time." },
-    { num: "05", name: "Finish", detail: "Close the production gaps and pass six finish gates." },
-    { num: "06", name: "Release", detail: "Ship it, ask for one action, and record the lesson." },
+    { num: "01", name: "Choose", detail: "Pick one project, audience, action, format, and deadline." },
+    { num: "02", name: "Set the rules", detail: "Use your best examples to decide what the project should look and sound like." },
+    { num: "03", name: "Test", detail: "Create a small sample that answers the biggest unanswered question." },
+    { num: "04", name: "Improve", detail: "Keep what works and fix one clear problem at a time." },
+    { num: "05", name: "Finish", detail: "Complete the missing production steps and check the final result." },
+    { num: "06", name: "Release", detail: "Publish it, ask the audience to take one action, and record what you learned." },
   ],
   includes: [
     {
-      name: "26-page field manual",
-      detail: "The complete six-step system with examples, checklists, guardrails, and a seven-day release plan.",
+      name: "26-page practical guide",
+      detail: "The complete six-step method with examples, checklists, safety rules, and a seven-day release plan.",
     },
     {
       name: "Offline interactive planner",
-      detail: "A private browser tool that autosaves locally, builds your finish plan, and exports it as Markdown.",
+      detail: "A private browser tool that saves on your device, builds your project plan, and exports it as a simple text file.",
     },
     {
-      name: "30-day shipping calendar",
-      detail: "A daily plan for closing one loop, repeating it, building a series, and turning output into an asset.",
+      name: "30-day finishing calendar",
+      detail: "A daily plan for finishing one project, repeating the useful process, and building a connected body of work.",
     },
     {
-      name: "Direction brief library",
-      detail: "Reusable briefs for images, video, writing, offers, presentations, revisions, and final quality checks.",
+      name: "Project brief templates",
+      detail: "Reusable planning pages for images, video, writing, offers, presentations, revisions, and final quality checks.",
     },
     {
-      name: "Finish scorecard",
-      detail: "A simple editable CSV for checking outcome, truth, craft, production, format, and release readiness.",
+      name: "Progress scorecard",
+      detail: "A simple editable spreadsheet for checking the result, accuracy, quality, production, format, and readiness to release.",
     },
   ],
   fit: [
@@ -54,7 +54,7 @@ export const finishLoop = {
   faqs: [
     {
       question: "Is this a course?",
-      answer: "No. It is a practical digital system with a field manual, working planner, calendar, briefs, and scorecard. There are no video modules to sit through.",
+      answer: "No. It is a practical digital toolkit with a guide, working planner, calendar, project briefs, and scorecard. There are no video modules to sit through.",
     },
     {
       question: "Is it downloadable?",
@@ -62,11 +62,11 @@ export const finishLoop = {
     },
     {
       question: "Do I need experience with AI?",
-      answer: "No. The system is tool-independent. It works whether you are starting or already producing AI-assisted work.",
+      answer: "No. The toolkit does not require a specific AI product. It works whether you are beginning or already making AI-assisted work.",
     },
     {
       question: "Can I use it for any project?",
-      answer: "Yes. The examples cover images, writing, video, offers, presentations, and client work. The operating loop stays the same.",
+      answer: "Yes. The examples cover images, writing, video, offers, presentations, and client work. The six steps stay the same.",
     },
     {
       question: "What if I need help?",

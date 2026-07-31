@@ -139,7 +139,7 @@ const bookJsonLd = {
       <header class="grid gap-12 border-b border-rule pb-16 lg:grid-cols-12 lg:items-center lg:gap-16 lg:pb-24">
         <div class="lg:col-span-7">
           <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt-text">
-            {book.featured ? "Primary book" : "Earlier work"} · By <a href="/about/" rel="author" class="underline decoration-rule underline-offset-4 transition-colors hover:text-paper">Keith Staggers</a>
+            {book.topic} · By <a href="/about/" rel="author" class="underline decoration-rule underline-offset-4 transition-colors hover:text-paper">Keith Staggers</a>
           </p>
           <h1 class="studio-display mt-6 text-[clamp(54px,8vw,108px)] leading-[0.87]">{book.title}<span class="text-signal">.</span></h1>
           <p class="mt-6 max-w-[760px] serif text-[clamp(24px,3vw,38px)] leading-tight italic text-paper-dim">{book.subtitle}</p>
@@ -254,12 +254,12 @@ const bookJsonLd = {
       <section class="grid items-end gap-10 border-t border-rule pt-16 lg:grid-cols-12 lg:pt-24">
         <div class="lg:col-span-8">
           <h2 class="studio-display text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
-            Read the record. Then see the <strong>work around it</strong><span class="text-signal">.</span>
+            Learn more about Keith and his <strong>other work</strong><span class="text-signal">.</span>
           </h2>
         </div>
         <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
           <a href="/books/" class="studio-button studio-button--secondary">All books</a>
-          <a href="/notes/" class="studio-button studio-button--secondary">Read Studio Notes</a>
+          <a href="/notes/" class="studio-button studio-button--secondary">Read articles and guides</a>
         </div>
       </section>
     </div>

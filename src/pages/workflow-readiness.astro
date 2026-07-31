@@ -7,44 +7,44 @@ const questions = [
   {
     id: "repeated",
     number: "01",
-    title: "Does the job repeat in a recognizable way?",
-    help: "You can point to recent examples and describe when it happens.",
+    title: "Does this task repeat?",
+    help: "You can name recent examples and explain when the task happens.",
   },
   {
     id: "owner",
     number: "02",
-    title: "Is one person accountable for the result?",
-    help: "A named owner can make decisions, answer questions, and accept the handoff.",
+    title: "Is one person responsible for the result?",
+    help: "That person can answer questions, make decisions, and check the final result.",
   },
   {
     id: "input",
     number: "03",
-    title: "Do you know what starts the work and what goes in?",
-    help: "The trigger, source material, format, and current location are clear.",
+    title: "Do you know what information starts the task?",
+    help: "You know what arrives, what format it uses, and where it is stored now.",
   },
   {
     id: "finish",
     number: "04",
-    title: "Can you state what finished looks like?",
-    help: "A reviewer can tell whether the result is usable without guessing.",
+    title: "Can you describe a good result?",
+    help: "Another person can tell whether the result is correct and useful without guessing.",
   },
   {
     id: "approval",
     number: "05",
-    title: "Is a human check named before the result is used?",
-    help: "The approver and the decision they make are visible in the workflow.",
+    title: "Will a person check the result before it is used or sent?",
+    help: "You know who checks it and what that person must decide.",
   },
   {
     id: "tests",
     number: "06",
-    title: "Can you assemble ten representative test cases?",
-    help: "Past examples or safe synthetic cases cover normal work and known exceptions.",
+    title: "Do you have examples you can use to test it?",
+    help: "Past examples or safe sample information cover normal work, mistakes, and unusual cases.",
   },
   {
     id: "safety",
     number: "07",
-    title: "Can the job use approved data, client-owned tools, and a manual fallback?",
-    help: "The workflow can stop safely, avoid restricted material, and return to a known manual path.",
+    title: "Can you use safe information and return to the manual process if needed?",
+    help: "The task can avoid private or restricted material, stop safely, and still be finished without AI.",
   },
 ];
 
@@ -54,10 +54,10 @@ const readinessJsonLd = {
     {
       "@type": "WebPage",
       "@id": `${site.url}/workflow-readiness/#page`,
-      name: "AI Workflow Readiness Check",
-      description: "A free seven-question check that helps teams decide whether one repeated job is ready for an AI workflow, needs a working session, or should stay manual.",
+      name: "Is This Task Ready for AI? Free Check",
+      description: "A free seven-question check that helps you decide whether one repetitive task is ready for AI, needs more thought, or should stay manual.",
       url: `${site.url}/workflow-readiness/`,
-      dateModified: "2026-07-25",
+      dateModified: "2026-07-31",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
     },
@@ -74,7 +74,7 @@ const readinessJsonLd = {
         {
           "@type": "ListItem",
           position: 2,
-          name: "AI Workflow Readiness Check",
+          name: "Is This Task Ready for AI?",
           item: `${site.url}/workflow-readiness/`,
         },
       ],
@@ -84,8 +84,8 @@ const readinessJsonLd = {
 ---
 
 <Base
-  title="AI Workflow Readiness Check"
-  description="Answer seven direct questions and learn whether one repeated job is ready for an AI workflow, needs a working session, or should stay manual."
+  title="Is This Task Ready for AI? Free Check"
+  description="Answer seven plain questions and learn whether one repetitive task is ready for AI, needs more thought, or should stay manual."
 >
   <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(readinessJsonLd)} />
 
@@ -94,30 +94,30 @@ const readinessJsonLd = {
       <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
         <a href="/" class="transition-colors hover:text-paper">Home</a>
         <span class="mx-2 text-rule" aria-hidden="true">/</span>
-        <span class="text-cobalt-text" aria-current="page">AI Workflow Readiness Check</span>
+        <span class="text-cobalt-text" aria-current="page">Is This Task Ready for AI?</span>
       </nav>
 
       <header class="readiness-head">
         <div>
-          <p class="studio-kicker">AI workflow readiness check</p>
+          <p class="studio-kicker">Free five-minute check</p>
           <h1 id="readiness-title" class="studio-display">
-            Is this job<br /><strong>ready to build</strong><span class="text-signal">?</span>
+            Is this task<br /><strong>ready for AI</strong><span class="text-signal">?</span>
           </h1>
         </div>
         <div class="readiness-intro">
-          <p>Seven questions. Five minutes. No email gate before your score. Choose yes only when the evidence exists today.</p>
-          <p>Your result points to the smallest useful next move: Project Fit, an AI Jumpstart, or a free guide.</p>
-          <a href="/workflow-testing-template/" class="inline-block font-mono text-[11px] tracking-[0.11em] uppercase text-cobalt-text underline decoration-rule underline-offset-4 transition-colors hover:text-paper">Need the ten cases? Use the free testing worksheet →</a>
+          <p>Answer seven plain questions. You will see your result immediately, with no email required.</p>
+          <p>Your result will tell you whether to discuss the task with Keith, work through it one-to-one, prepare it more carefully, or keep it manual for now.</p>
+          <a href="/workflow-testing-template/" class="inline-block font-mono text-[11px] tracking-[0.11em] uppercase text-cobalt-text underline decoration-rule underline-offset-4 transition-colors hover:text-paper">Already building? Use the free ten-example testing worksheet →</a>
         </div>
       </header>
 
       <noscript>
         <section class="readiness-noscript" aria-labelledby="readiness-noscript-title">
           <h2 id="readiness-noscript-title">The scored check needs JavaScript.</h2>
-          <p>You can still use the free guide now or go directly to Project Fit if the workflow is already clear.</p>
+          <p>You can still use the free guide or tell Keith about the task.</p>
           <div>
             <a class="studio-button studio-button--cobalt" href="/ai-workflow-guide.pdf">Open the free guide</a>
-            <a class="studio-button studio-button--secondary" href="/project-fit/">Start Project Fit</a>
+            <a class="studio-button studio-button--secondary" href="/project-fit/">Tell Keith about your task</a>
           </div>
         </section>
         <style>.readiness-score-form { display: none; }</style>
@@ -167,10 +167,10 @@ const readinessJsonLd = {
           <p data-readiness-description></p>
           <div class="readiness-result-actions">
             <a class="studio-button studio-button--cobalt" data-readiness-cta href="/project-fit/">
-              <span data-readiness-cta-label>Start Project Fit</span>
+              <span data-readiness-cta-label>Tell Keith about your task</span>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
             </a>
-            <button class="studio-button studio-button--secondary" data-readiness-reset type="button">Check another workflow</button>
+            <button class="studio-button studio-button--secondary" data-readiness-reset type="button">Check another task</button>
           </div>
         </div>
 
@@ -196,8 +196,8 @@ const readinessJsonLd = {
 
           <header class="readiness-followup-head">
             <p class="studio-kicker">Optional follow-up</p>
-            <h3>Want Keith to look at the result?</h3>
-            <p>Send the score and one sentence about the job. If there is a useful next step, Keith will reply to the address you provide.</p>
+            <h3>Want Keith to look at your result?</h3>
+            <p>Send the score and one sentence about the task. If there is a useful next step, Keith will reply to the address you provide.</p>
             <p>Do not include protected health information, confidential employer or client data, passwords, or API keys.</p>
           </header>
 
@@ -212,8 +212,8 @@ const readinessJsonLd = {
           </div>
 
           <div class="fit-field">
-            <label for="readiness-job">What job are you considering?</label>
-            <textarea id="readiness-job" name="workflow_summary" rows="3" minlength="20" maxlength="800" placeholder="Name the repeated job and the part that still feels unclear." required></textarea>
+            <label for="readiness-job">What task are you considering?</label>
+            <textarea id="readiness-job" name="workflow_summary" rows="3" minlength="20" maxlength="800" placeholder="Describe the repetitive task and the part that still feels unclear." required></textarea>
           </div>
 
           <label class="fit-confirm" for="readiness-confidentiality">
@@ -273,30 +273,30 @@ const readinessJsonLd = {
 
   const outcomes = {
     ready: {
-      band: "6 to 7 yes answers, with both critical gates",
-      title: "Ready for a fit review.",
-      description: "You have enough structure to scope a workflow without starting with a vague tool conversation. Use Project Fit to name the job, owner, input, finish line, and investment level.",
+      band: "6 to 7 yes answers, including a person checking and a safe backup plan",
+      title: "This task may be ready to discuss.",
+      description: "You have a repeated task, a responsible person, clear starting information, a good result, examples to test, and a safe manual backup. Tell Keith about the task and what you want instead.",
       href: "/project-fit/",
-      label: "Start Project Fit",
+      label: "Tell Keith about your task",
     },
     gated: {
-      band: "Critical gate missing",
-      title: "Close the approval or safety gap first.",
-      description: "A high total is not enough when human approval or a safe, client-owned path is still missing. Name the reviewer, permitted data, approved tools, and manual fallback before treating this job as install-ready.",
+      band: "A required check or safety step is missing",
+      title: "Add a person to check it and a safe backup plan first.",
+      description: "A high score is not enough if no person checks the result or if the task cannot return to a safe manual process. Decide who reviews it, what information is allowed, and how the task will be finished if AI fails.",
       href: "/services/coaching/",
-      label: "See the AI Jumpstart",
+      label: "See the one-to-one working session",
     },
     unclear: {
       band: "3 to 5 yes answers",
-      title: "Useful, but not install-ready.",
-      description: "The job is real, but one or more ownership, input, finish-line, approval, or safety decisions are still loose. A $250 AI Jumpstart is the smaller useful move.",
+      title: "The task is real, but it needs more definition.",
+      description: "One or more basics are still unclear: who is responsible, what information starts the task, what a good result looks like, who checks it, or how to finish manually. A $250 one-to-one working session may be the simplest next step.",
       href: "/services/coaching/",
-      label: "See the AI Jumpstart",
+      label: "See the one-to-one working session",
     },
     early: {
       band: "0 to 2 yes answers",
       title: "Keep this one manual for now.",
-      description: "You do not need a build yet. Use the free guide to define the work, then revisit this check when the owner, input, finish line, and human decision are clearer.",
+      description: "You do not need an AI setup yet. Use the free guide to define the task, the person responsible, the starting information, the result, and the required check. Then return to this page.",
       href: "/ai-workflow-guide.pdf",
       label: "Open the free guide",
     },

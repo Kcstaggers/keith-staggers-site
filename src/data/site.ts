@@ -1,8 +1,8 @@
 export const site = {
   name: "Keith Staggers",
-  tagline: "AI creator, trainer, and workflow builder.",
+  tagline: "Practical AI help for real work.",
   description:
-    "Keith Staggers turns repeated work into tested, documented AI workflows people can own, with practical training and speaking for teams. Available worldwide.",
+    "Keith Staggers helps leaders and small teams use AI. He builds solutions for repetitive tasks, works one-to-one on real problems, and trains teams.",
   url: "https://www.keithstaggers.com",
   city: "Tampa, FL",
   availability: {
@@ -26,7 +26,7 @@ export const site = {
     username: "",
     eventSlug: "",
     intakePath: "/project-fit/",
-    buttonLabel: "Start with fit questions",
+    buttonLabel: "Tell Keith about your task",
   },
   social: {
     linkedin: "https://www.linkedin.com/in/keithstaggers/",
@@ -40,10 +40,9 @@ export const site = {
     openLibrary: "https://openlibrary.org/authors/OL16535970A/Keith_Staggers",
   },
   nav: [
-    { label: "Proof", href: "/proof/" },
-    { label: "The Finish Loop", href: "/finish-loop/" },
-    { label: "Services", href: "/services/" },
-    { label: "Notes", href: "/notes/" },
+    { label: "How I Help", href: "/services/" },
+    { label: "Examples", href: "/proof/" },
+    { label: "Articles", href: "/notes/" },
     { label: "Books", href: "/books/" },
     { label: "About", href: "/about/" },
   ],

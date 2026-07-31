@@ -30,6 +30,21 @@ const linkHref = (html, rel) =>
     html,
     new RegExp(`<link\\s+[^>]*rel="${rel}"[^>]*href="([^"]+)"[^>]*>`, "i")
   );
+const visibleText = (html) =>
+  html
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&(?:nbsp|#160);/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/(?:&#39;|&#x27;|&apos;)/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/\s+/g, " ")
+    .replace(/\s+([.,!?;:])/g, "$1")
+    .trim();
 const schemaTypes = (html, route) => {
   const types = new Set();
   const scripts = [...html.matchAll(/<script\s+[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
@@ -64,6 +79,9 @@ const htmlFiles = walk(distDir).filter((file) => file.endsWith(".html"));
 const pages = htmlFiles
   .map((file) => ({ file, route: routeFor(file), html: fs.readFileSync(file, "utf8") }))
   .sort((a, b) => a.route.localeCompare(b.route));
+const visibleTextByRoute = new Map(
+  pages.map((page) => [page.route, visibleText(page.html)])
+);
 
 const sitemapPath = path.join(distDir, "sitemap.xml");
 if (!fs.existsSync(sitemapPath)) fail("sitemap.xml is missing");
@@ -129,13 +147,13 @@ for (const page of pages) {
   if (!ogImageAlt) fail(`${route}: missing og:image:alt`);
   if (
     ogImage === `${siteUrl}/og-keith-staggers-v2.png` &&
-    ogImageAlt !== "Keith Staggers: AI training, workflow systems, and finished work."
+    ogImageAlt !== "Keith Staggers: practical AI training, one-to-one help, and done-for-you solutions."
   ) {
     fail(`${route}: shared Studio social image has inaccurate alt text`);
   }
   if (
     ogImage === `${siteUrl}/media/finish-loop/finish-loop-og.png` &&
-    ogImageAlt !== "The Finish Loop: Finish the work. Ship the thing. $49 manual, planner, and calendar."
+    ogImageAlt !== "The Finish Loop: a $49 project-finishing toolkit with a practical guide, planner, calendar, briefs, and scorecard."
   ) {
     fail(`${route}: Finish Loop social image has inaccurate alt text`);
   }
@@ -213,7 +231,152 @@ if (indexableRoutes.sort().join("\n") !== sitemapRoutes.join("\n")) {
 }
 
 const homepage = pages.find((page) => page.route === "/")?.html ?? "";
-if (!homepage.includes("Build the workflow.")) fail("homepage: broad Studio identity is missing");
+const homepageText = visibleTextByRoute.get("/") ?? "";
+const plainLanguageContracts = new Map([
+  [
+    "/",
+    [
+      "Practical AI help for real work.",
+      "I help leaders and small teams use AI to save time.",
+      "Build it for me",
+      "Done-for-you AI setup",
+      "Help me one-to-one",
+      "One-to-one AI working session",
+      "Train my team",
+      "Practical AI training",
+      "Bring Keith to my event",
+      "AI speaking for leaders and teams",
+      "See how I can help",
+      "Tell me about your task",
+    ],
+  ],
+  [
+    "/services/",
+    [
+      "Practical AI help for real work.",
+      "Done-for-You AI Setup",
+      "One-to-One AI Working Session",
+      "Practical AI Training",
+      "AI Speaking for Leaders and Teams",
+    ],
+  ],
+  [
+    "/project-fit/",
+    [
+      "What do you want to make easier?",
+      "You do not need a technical explanation.",
+      "Tell Keith about your task",
+    ],
+  ],
+  [
+    "/proof/",
+    [
+      "Examples of what Keith has built.",
+      "Each example says plainly what it proves and what it does not.",
+    ],
+  ],
+  [
+    "/notes/",
+    [
+      "Articles and guides",
+      "Plain-English articles about using AI at work",
+    ],
+  ],
+  [
+    "/books/",
+    [
+      "Books about nursing and leadership.",
+      "Keith has written two healthcare books.",
+    ],
+  ],
+  [
+    "/finish-loop/",
+    [
+      "$49 project-finishing toolkit · The Finish Loop",
+      "Finish one project. Release it.",
+      "Get the $49 toolkit",
+    ],
+  ],
+  ["/services/done-for-you/", ["Done-for-You AI Setup"]],
+  ["/services/coaching/", ["One-to-One AI Working Session"]],
+  ["/services/training/", ["Practical AI Training"]],
+  ["/services/speaking/", ["AI Speaking for Leaders and Teams"]],
+]);
+
+for (const [route, requiredPhrases] of plainLanguageContracts) {
+  const routeText = visibleTextByRoute.get(route) ?? "";
+  for (const phrase of requiredPhrases) {
+    if (!routeText.toLowerCase().includes(phrase.toLowerCase())) {
+      fail(`${route}: plain-language contract is missing "${phrase}"`);
+    }
+  }
+}
+
+const retiredBuyerPhrases = [
+  "See the install sprint",
+  "Bring me the workflow",
+  "Start with fit questions",
+  "Choose the move",
+  "Use the smallest door",
+  "client-owned path",
+  "The music is the proof",
+  "The work moves",
+  "One operating code",
+  "No recycled prompts",
+  "Put the thinking to work",
+  "Read the record",
+  "cross the line",
+  "smallest useful next move",
+  "AI studio · Training, systems, and finished work",
+];
+const buyerFacingRoutes = [
+  "/",
+  "/about/",
+  "/books/",
+  "/finish-loop/",
+  "/notes/",
+  "/project-fit/",
+  "/proof/",
+  "/services/",
+  "/services/done-for-you/",
+  "/services/coaching/",
+  "/services/training/",
+  "/services/speaking/",
+];
+for (const route of buyerFacingRoutes) {
+  const routeText = (visibleTextByRoute.get(route) ?? "").toLowerCase();
+  for (const phrase of retiredBuyerPhrases) {
+    if (routeText.includes(phrase.toLowerCase())) {
+      fail(`${route}: retired cryptic buyer phrase remains "${phrase}"`);
+    }
+  }
+}
+
+const directAnswerPosition = homepageText.indexOf("Practical AI help for real work.");
+const brandTaglinePosition = homepageText.indexOf("Build the workflow. Keep the judgment.");
+if (
+  directAnswerPosition < 0 ||
+  (brandTaglinePosition >= 0 && directAnswerPosition > brandTaglinePosition)
+) {
+  fail("homepage: plain-English answer must appear before the brand tagline");
+}
+const serviceChoicePosition = homepageText.indexOf("Build it for me");
+const methodPosition = homepageText.indexOf("What can Keith make easier?");
+if (serviceChoicePosition < 0 || methodPosition < 0 || serviceChoicePosition > methodPosition) {
+  fail("homepage: clear service choices must appear before the method section");
+}
+
+const homepageDescription = metaContent(homepage, "name", "description").toLowerCase();
+for (const phrase of [
+  "leaders and small teams",
+  "builds solutions for repetitive tasks",
+  "works one-to-one",
+  "trains teams",
+]) {
+  if (!homepageDescription.includes(phrase)) {
+    fail(`homepage: metadata does not explain the offer in plain language (${phrase})`);
+  }
+}
 if (
   metaContent(homepage, "name", "google-site-verification") !==
   "rgjOz-yffU1GPVoW7egiohALY7BiR2sCpCCV8zsojkY"
@@ -340,7 +503,7 @@ for (const requiredControl of ["data-workflow-print", "data-workflow-download", 
   if (!workflowTemplate.includes(requiredControl)) fail(`workflow-testing-template: missing ${requiredControl} control`);
 }
 for (const caseName of [
-  "Normal path",
+  "Normal task",
   "Missing input",
   "Unusual but valid input",
   "Conflicting information",
@@ -349,7 +512,7 @@ for (const caseName of [
   "Tool or model unavailable",
   "Duplicate run",
   "Human rejection",
-  "Manual recovery",
+  "Finish manually after a failure",
 ]) {
   if (!workflowTemplate.includes(caseName)) fail(`workflow-testing-template: missing ${caseName}`);
 }
@@ -384,8 +547,8 @@ for (const fileName of workflowBookTemplateFiles) {
     fail(`workflow-book: missing companion template ${fileName}`);
   }
 }
-if (!workflowBookPage.includes("forthcoming field guide")) {
-  fail("workflow-book: forthcoming status is not clear");
+if (!workflowBookPage.includes("does not yet have a verified public retail record")) {
+  fail("workflow-book: current book status is not clear");
 }
 if (!baseLayoutSource.includes("Workflow Book Template Download")) {
   fail("workflow-book: download attribution is missing");
@@ -485,12 +648,19 @@ for (const fileName of ["llms.txt", "llms-full.txt"]) {
     continue;
   }
   const content = fs.readFileSync(filePath, "utf8");
-  if (!content.includes(siteUrl) || !content.includes("Project Fit")) {
+  if (
+    !content.includes(siteUrl) ||
+    !content.includes(`${siteUrl}/project-fit/`) ||
+    !content.toLowerCase().includes("tell keith about your task")
+  ) {
     fail(`${fileName}: canonical identity or inquiry path is missing`);
   }
 }
 const llms = fs.readFileSync(path.join(distDir, "llms.txt"), "utf8");
 if (!llms.includes(`${siteUrl}/llms-full.txt`)) fail("llms.txt: full public text index link is missing");
+const plainAiIdentity =
+  "Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem in a one-to-one session, and builds practical AI tools for repetitive tasks.";
+if (!llms.includes(plainAiIdentity)) fail("llms.txt: plain-language identity is missing");
 for (const requiredAiRecord of [
   `${siteUrl}/books/`,
   `${siteUrl}/books/nurse-the-fck-up/`,
@@ -509,6 +679,7 @@ for (const requiredAiRecord of [
   if (!llms.includes(requiredAiRecord)) fail(`llms.txt: missing public book or resource record ${requiredAiRecord}`);
 }
 const llmsFull = fs.readFileSync(path.join(distDir, "llms-full.txt"), "utf8");
+if (!llmsFull.includes(plainAiIdentity)) fail("llms-full.txt: plain-language identity is missing");
 for (const requiredAuthorRecord of [
   "https://www.goodreads.com/author/show/45798281.Keith_Staggers",
   "https://openlibrary.org/authors/OL16535970A/Keith_Staggers",
@@ -516,7 +687,7 @@ for (const requiredAuthorRecord of [
   if (!homepage.includes(requiredAuthorRecord)) fail(`homepage: Person sameAs is missing ${requiredAuthorRecord}`);
   if (!llmsFull.includes(requiredAuthorRecord)) fail(`llms-full.txt: author record is missing ${requiredAuthorRecord}`);
 }
-for (const caseName of ["Normal path", "Restricted input", "Duplicate run", "Manual recovery"]) {
+for (const caseName of ["Normal task", "Restricted input", "Duplicate run", "Finish manually after a failure"]) {
   if (!llmsFull.includes(caseName)) fail(`llms-full.txt: missing workflow test ${caseName}`);
 }
 

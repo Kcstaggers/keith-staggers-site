@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import StudioTestimonial from "../components/StudioTestimonial.astro";
 import { books } from "../data/books";
 import { site } from "../data/site";
 
@@ -16,17 +17,17 @@ const proofItems = [
   {
     "@type": "CreativeWork",
     "@id": `${canonicalUrl}#ai-canvas`,
-    name: "AI Canvas production shadow",
+    name: "AI Canvas independent test project",
     description:
-      "An owner-run production shadow that proved a durable mock-only execution path with billing, paid providers, and public execution off.",
+      "An independent AI test project that could estimate a cost but was prevented from spending money or using paid services.",
     creator: { "@id": `${site.url}/#keith` },
   },
   {
     "@type": "CreativeWork",
     "@id": `${canonicalUrl}#gearstat`,
-    name: "GearSTAT simulated portfolio build",
+    name: "GearSTAT sample equipment-finding app",
     description:
-      "An independent nurse-facing simulator built with simulated data. It is not a hospital deployment, client result, or active venture.",
+      "An independent sample app for nurses, built and tested with made-up data. It has not been used in a hospital.",
     creator: { "@id": `${site.url}/#keith` },
   },
   ...books.map((book) => ({
@@ -39,11 +40,11 @@ const proofJsonLd = {
     {
       "@type": "CollectionPage",
       "@id": `${canonicalUrl}#page`,
-      name: "Proof · AI Builds, Books and Finished Work",
+      name: "Examples of Keith Staggers' AI Builds, Books and Client Work",
       description:
-        "Independent AI builds, test records, two primary healthcare books, and a finished-work record from Keith Staggers.",
+        "Plain-English examples of Keith Staggers' independent AI projects, client work, healthcare books, and finished creative work.",
       url: canonicalUrl,
-      dateModified: "2026-07-26",
+      dateModified: "2026-07-31",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       about: { "@id": `${site.url}/#keith` },
@@ -82,8 +83,8 @@ const proofJsonLd = {
 ---
 
 <Base
-  title="Proof · AI Builds, Books and Finished Work"
-  description="See Keith Staggers' independent AI builds, test records, two primary healthcare books, and finished-work record. No client outcomes are claimed."
+  title="AI Projects, Client Work and Books"
+  description="See plain-English examples of Keith Staggers' independent AI projects, client work, healthcare books, and finished creative work."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(proofJsonLd)} />
@@ -98,10 +99,10 @@ const proofJsonLd = {
 
     <header class="studio-shell proof-hero">
       <div>
-        <h1 class="studio-display">The work is the <strong>proof</strong><span class="text-signal">.</span></h1>
+        <h1 class="studio-display">Examples of what Keith has <strong>built</strong><span class="text-signal">.</span></h1>
       </div>
       <p>
-        Independent portfolio work: builds, test records, books, and finished releases. No client outcomes are claimed.
+        These are real examples of independent AI projects, client work, books, and finished creative projects. Each example says plainly what it proves and what it does not.
       </p>
     </header>
 
@@ -109,20 +110,20 @@ const proofJsonLd = {
       <div class="studio-shell proof-canvas-grid">
         <div class="proof-video-wrap">
           <div class="proof-reel-poster">
-            <span class="proof-reel-label">AI Canvas · bounded production test</span>
+            <span class="proof-reel-label">AI Canvas · independent test project</span>
             <span class="proof-reel-result"><b>4¢</b><i>→</i><b>$0</b></span>
-            <span class="proof-reel-caption">One controlled run · verified across the system</span>
+            <span class="proof-reel-caption">One full practice run · spending disabled</span>
           </div>
         </div>
         <div class="proof-canvas-copy">
-          <p class="studio-kicker">AI Canvas · owner-run production shadow</p>
-          <h2 id="proof-canvas-title" class="studio-display">A system that knew the price and still could not <strong>spend the money</strong><span class="text-signal">.</span></h2>
-          <p>Keith put a durable production queue behind AI Canvas, then proved the path with one worker, mock mode on, provider keys off, billing off, and public execution off.</p>
+          <p class="studio-kicker">AI Canvas · independent test project</p>
+          <h2 id="proof-canvas-title" class="studio-display">A test system that could estimate a cost but could not <strong>spend money</strong><span class="text-signal">.</span></h2>
+          <p>Keith built and tested a controlled AI production process. It could show an estimated price, but paid services, billing, and public use were turned off.</p>
           <ul>
-            <li><b>2,016</b><span>tests passed before production</span></li>
-            <li><b>0 retries</b><span>accepted production canary completed</span></li>
-            <li><b>$0.04</b><span>price snapshot quoted</span></li>
-            <li><b>$0</b><span>reserved, charged, and provider cost</span></li>
+            <li><b>2,016</b><span>automated checks passed</span></li>
+            <li><b>1 run</b><span>full practice run completed</span></li>
+            <li><b>$0.04</b><span>estimated cost shown</span></li>
+            <li><b>$0</b><span>actually reserved or spent</span></li>
           </ul>
         </div>
       </div>
@@ -130,38 +131,40 @@ const proofJsonLd = {
 
     <section class="studio-shell proof-gearstat" aria-labelledby="proof-gearstat-title">
       <header>
-        <p class="studio-kicker">GearSTAT · independent simulated portfolio build</p>
-        <h2 id="proof-gearstat-title" class="studio-display">Useful proof.<br /><strong>Hard boundaries</strong><span class="text-signal">.</span></h2>
+        <p class="studio-kicker">GearSTAT · independent sample app</p>
+        <h2 id="proof-gearstat-title" class="studio-display">A sample equipment finder<br />built for <strong>nurses</strong><span class="text-signal">.</span></h2>
       </header>
       <div class="proof-case-grid">
         <article>
           <span>01</span>
-          <h3>The problem shaped</h3>
-          <p>A nurse-facing simulator using simulated data to find hospital equipment and record whether the nurse actually found it.</p>
+          <h3>The problem</h3>
+          <p>Nurses can lose time trying to find shared equipment. GearSTAT explored a simpler way to search and record whether an item was found.</p>
         </article>
         <article>
           <span>02</span>
-          <h3>The build record</h3>
-          <p>The recorded July 9 checkpoint reached 206 of 206 tests and 23 of 23 static pages.</p>
+          <h3>What Keith built</h3>
+          <p>A nurse-facing sample app using made-up information, with a search path and a way to record the result.</p>
         </article>
         <article>
           <span>03</span>
-          <h3>The honest limit</h3>
-          <p>No PHI, no staff-location display, and no live hospital integration. It is not market proof, a client result, or a hospital deployment.</p>
+          <h3>What passed</h3>
+          <p>The recorded test point passed 206 of 206 checks and generated all 23 planned pages.</p>
         </article>
         <article>
           <span>04</span>
-          <h3>The current role</h3>
-          <p>GearSTAT is a parked portfolio build, not an active venture. The simulator and documentation show workflow thinking without overstating provenance.</p>
+          <h3>What it is not</h3>
+          <p>It used no patient information, did not show staff locations, and was not connected to a hospital. It is a portfolio example, not a hospital deployment or client result.</p>
         </article>
       </div>
     </section>
 
+    <StudioTestimonial />
+
     <section class="proof-books" aria-labelledby="proof-books-title">
       <div class="studio-shell">
         <header class="proof-books-head">
-          <h2 id="proof-books-title" class="studio-display">Two primary books.<br /><strong>Published in 2023</strong><span class="text-signal">.</span></h2>
-          <p>Healthcare leadership and the reality of med-surg, written from inside the work. <a href="/books/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">See full book records.</a></p>
+          <h2 id="proof-books-title" class="studio-display">Books about nursing<br />and <strong>leadership</strong><span class="text-signal">.</span></h2>
+          <p>Two books written from Keith's experience in nursing and nurse leadership. <a href="/books/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">See each book and where to buy it.</a></p>
         </header>
         <div class="proof-book-list">
           {books.map((book) => (
@@ -176,8 +179,8 @@ const proofJsonLd = {
 
     <section class="studio-shell proof-record" aria-labelledby="proof-record-title">
       <header>
-        <h2 id="proof-record-title" class="studio-display">The build <strong>record</strong><span class="text-signal">.</span></h2>
-        <p>Three careers, one standard: observe carefully, build the useful thing, verify it, and finish.</p>
+        <h2 id="proof-record-title" class="studio-display">Experience behind the <strong>work</strong><span class="text-signal">.</span></h2>
+        <p>Keith's three careers share a practical standard: observe carefully, make the useful thing, check it, and finish it.</p>
       </header>
       <dl>
         {buildRecord.map((item) => (
@@ -192,8 +195,8 @@ const proofJsonLd = {
     <section class="proof-boundary">
       <div class="studio-shell proof-boundary-grid">
         <div>
-          <p class="studio-kicker">Portfolio boundary</p>
-          <h2 class="studio-display">Independent work only<span class="text-signal">.</span></h2>
+          <p class="studio-kicker">What is excluded</p>
+          <h2 class="studio-display">Only independent work is shown<span class="text-signal">.</span></h2>
         </div>
         <p>Employer projects, employer data, patient information, and internal healthcare workflows are excluded from this portfolio.</p>
       </div>
@@ -201,12 +204,12 @@ const proofJsonLd = {
 
     <section class="studio-shell proof-close">
       <div>
-        <h2 class="studio-display">Bring me the workflow<span class="text-signal">.</span></h2>
-        <p>If you need practical training, a tested workflow, or help finishing the right build, start with the fit questions.</p>
+        <h2 class="studio-display">What do you want to make easier<span class="text-signal">?</span></h2>
+        <p>Tell Keith about the task, project, training need, or event. He will recommend the simplest useful next step.</p>
       </div>
       <div>
-        <a href="/project-fit/" class="studio-button studio-button--primary">Start with fit questions</a>
-        <a href="/services/" class="studio-button studio-button--secondary">Explore services</a>
+        <a href="/project-fit/" class="studio-button studio-button--primary">Tell Keith about your task</a>
+        <a href="/services/" class="studio-button studio-button--secondary">See how Keith can help</a>
       </div>
     </section>
   </article>

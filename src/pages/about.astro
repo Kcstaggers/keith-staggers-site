@@ -12,9 +12,9 @@ const aboutJsonLd = {
       "@id": `${canonicalUrl}#page`,
       name: "About Keith Staggers",
       description:
-        "Keith Staggers is an AI creator, trainer and workflow builder whose work spans investigation, nursing leadership and independent AI production.",
+        "Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem, and builds practical tools for repetitive tasks.",
       url: canonicalUrl,
-      dateModified: "2026-07-25",
+      dateModified: "2026-07-31",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       mainEntity: { "@id": `${site.url}/#keith` },
@@ -53,34 +53,34 @@ const careers = [
   },
   {
     dates: "2022 to now",
-    title: "Founder and AI consultant",
-    copy: "Practical AI systems, training, production, and independent builds shaped around real work rather than tool demonstrations.",
+    title: "AI trainer and builder",
+    copy: "Hands-on training, one-to-one help, speaking, and done-for-you AI solutions built around real tasks rather than product demonstrations.",
   },
 ];
 
 const operatingCode = [
   {
-    title: "Find repeated work.",
-    copy: "Name the task, owner, inputs, and finish line before choosing a tool.",
+    title: "Choose one real task.",
+    copy: "Start with what wastes time, who is responsible, and what a good result looks like before choosing a tool.",
   },
   {
-    title: "Bound the AI job.",
-    copy: "Decide what AI may assist and what it may never see or decide.",
+    title: "Set clear limits.",
+    copy: "Decide what AI may help with, what information it may use, and what a person must decide.",
   },
   {
-    title: "Keep the human check.",
-    copy: "Verify the facts, context, tone, and final decision before the work moves.",
+    title: "Have a person check the result.",
+    copy: "Verify the facts, context, tone, and final decision before the result is used or sent.",
   },
   {
-    title: "Document next use.",
-    copy: "Save the inputs, checks, handoff, and recovery path so the work can repeat.",
+    title: "Teach the next person.",
+    copy: "Save clear instructions, required checks, and a backup plan so the team can use it without Keith.",
   },
 ];
 ---
 
 <Base
-  title="About · Three-Career AI Workflow Builder"
-  description="Keith Staggers is a Tampa-based AI creator, trainer and workflow builder with experience in investigation, nursing leadership and independent AI production."
+  title="About Keith Staggers · AI Trainer and Builder"
+  description="Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem, and builds practical tools for repetitive tasks."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutJsonLd)} />
@@ -98,10 +98,10 @@ const operatingCode = [
         <div>
           <p class="studio-kicker">About Keith Staggers</p>
           <h1 class="studio-display mt-6 text-[clamp(50px,8vw,112px)] leading-[0.92] tracking-[-0.055em]">
-            Three careers.<br />One operating <strong>code</strong><span class="text-signal">.</span>
+            AI trainer.<br />Hands-on <strong>builder</strong><span class="text-signal">.</span>
           </h1>
           <p class="mt-8 max-w-[760px] text-[clamp(18px,2vw,24px)] leading-[1.6] text-paper-dim">
-            I build practical AI systems, train people to use them responsibly, and finish ambitious creative work. The titles changed. The standard did not: read the room, find the pattern, use the tool, finish the job.
+            I teach leaders and small teams how to use AI at work, help people solve one real problem, and build practical tools for repetitive tasks. I am also a working nurse leader, speaker, author, and retired Baltimore detective.
           </p>
           <p class="mt-7 font-mono text-[11px] tracking-[0.16em] uppercase text-paper-faint">
             {site.city} · Available worldwide
@@ -114,9 +114,9 @@ const operatingCode = [
 
       <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="career-title">
         <div class="lg:col-span-4">
-          <p class="studio-kicker">The throughline</p>
+          <p class="studio-kicker">Three careers</p>
           <h2 id="career-title" class="studio-display mt-5 text-[clamp(34px,4vw,58px)] leading-[1]">
-            The work changed.<br /><strong>The standard did not.</strong>
+            Each career shaped<br /><strong>how Keith works.</strong>
           </h2>
         </div>
         <div class="grid gap-px bg-rule/70 md:grid-cols-3 lg:col-span-8">
@@ -134,16 +134,16 @@ const operatingCode = [
 
       <section class="grid gap-12 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="builder-title">
         <div class="lg:col-span-7">
-          <p class="studio-kicker">Builder, not commentator</p>
+          <p class="studio-kicker">Keith does the work he teaches</p>
           <h2 id="builder-title" class="studio-display mt-5 text-[clamp(38px,5vw,70px)] leading-[0.98]">
-            The method comes from <strong>finished work</strong><span class="text-signal">.</span>
+            Practical lessons from <strong>building and finishing</strong><span class="text-signal">.</span>
           </h2>
           <div class="mt-8 max-w-[760px] space-y-5 text-[17px] leading-[1.75] text-paper-dim">
-            <p>I use AI as part of real production. The public record includes more than 50 albums, more than 800 songs, two primary healthcare books published in 2023, more than 1,000 AI-created images and films, and independent software builds.</p>
-            <p>The point is not volume alone. It is learning what makes work survive the last mile from promising draft to finished release.</p>
+            <p>I use AI in real production. My public work includes more than 50 albums, more than 800 songs, two healthcare books, more than 1,000 AI-created images and films, client creative work, and independent software projects.</p>
+            <p>Finishing that work taught me where AI genuinely helps, where it creates more confusion, and why a person must still check the result and make the important decisions.</p>
           </div>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/proof/" class="studio-button studio-button--secondary">See the build record</a>
+            <a href="/proof/" class="studio-button studio-button--secondary">See examples of Keith's work</a>
             <a href="/books/" class="studio-button studio-button--secondary">Read the books</a>
           </div>
         </div>
@@ -158,11 +158,11 @@ const operatingCode = [
       <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="code-title">
         <div class="grid gap-10 lg:grid-cols-12">
           <header class="lg:col-span-4">
-            <p class="studio-kicker">How I work</p>
+            <p class="studio-kicker">How Keith works</p>
             <h2 id="code-title" class="studio-display mt-5 text-[clamp(36px,4vw,60px)] leading-[1]">
-              Four rules.<br /><strong>Every build.</strong>
+              Four simple<br /><strong>steps.</strong>
             </h2>
-            <p class="mt-6 max-w-sm text-paper-dim">Tools change. These four rules do not.</p>
+            <p class="mt-6 max-w-sm text-paper-dim">The tools will change. This practical approach stays useful.</p>
           </header>
           <ol class="grid gap-px bg-rule/70 md:grid-cols-2 lg:col-span-8">
             {operatingCode.map((item, index) => (
@@ -179,24 +179,24 @@ const operatingCode = [
       <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="shared-title">
         <div class="lg:col-span-5">
           <h2 id="shared-title" class="studio-display text-[clamp(36px,4.5vw,64px)] leading-[0.98]">
-            What the three careers <strong>share</strong><span class="text-signal">.</span>
+            What Keith can <strong>help with today</strong><span class="text-signal">.</span>
           </h2>
         </div>
         <div class="space-y-6 text-[18px] leading-[1.75] text-paper-dim lg:col-span-7">
-          <p>Detective work taught me to observe before acting. Nursing taught me that judgment has consequences. Production taught me that an idea has no value until it survives the last mile. The common thread is accountable follow-through.</p>
-          <p>I install practical AI workflows, coach people through stuck projects, train teams, speak on adoption and reinvention, and take on selected production work. The Finish Loop is the self-serve starting point for creators who need a system for finishing and releasing their work.</p>
+          <p>Detective work taught me to observe before acting. Nursing taught me that important decisions have consequences. Production taught me that an idea has little value until it is finished and released.</p>
+          <p>Today I build AI-assisted solutions for repetitive tasks, help people one-to-one, train teams, speak about AI and reinvention, and take on selected creative production work. The Finish Loop is a $49 do-it-yourself toolkit for creators who need help finishing and releasing a project.</p>
           <div class="flex flex-wrap gap-3 pt-2">
-            <a href="/services/" class="studio-button studio-button--secondary">Explore services</a>
-            <a href="/finish-loop/" class="studio-button studio-button--secondary">See The Finish Loop</a>
-            <a href="/notes/" class="studio-button studio-button--secondary">Read Studio Notes</a>
+            <a href="/services/" class="studio-button studio-button--secondary">See how Keith can help</a>
+            <a href="/finish-loop/" class="studio-button studio-button--secondary">See the project-finishing toolkit</a>
+            <a href="/notes/" class="studio-button studio-button--secondary">Read articles and guides</a>
           </div>
         </div>
       </section>
 
       <section class="grid gap-8 border-b border-rule py-12 lg:grid-cols-12" aria-labelledby="boundary-title">
         <div class="lg:col-span-4">
-          <p class="studio-kicker">Portfolio boundary</p>
-          <h2 id="boundary-title" class="mt-4 serif text-[30px]">Independent work only.</h2>
+          <p class="studio-kicker">What is excluded</p>
+          <h2 id="boundary-title" class="mt-4 serif text-[30px]">Only independent work is shown.</h2>
         </div>
         <p class="max-w-[720px] text-[16px] leading-[1.75] text-paper-dim lg:col-span-8">
           Everything shown here is independent work. Employer projects, employer data, patient information, and internal healthcare workflows are excluded.
@@ -207,12 +207,12 @@ const operatingCode = [
         <div class="lg:col-span-8">
           <p class="studio-kicker">Work with me</p>
           <h2 class="studio-display mt-5 text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
-            Bring one repeated job or one idea that needs to <strong>cross the line</strong><span class="text-signal">.</span>
+            What task or project do you want to make <strong>easier</strong><span class="text-signal">?</span>
           </h2>
         </div>
         <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
-          <a href="/project-fit/" class="studio-button studio-button--primary">Start with fit questions</a>
-          <a href="/proof/" class="studio-button studio-button--secondary">See the proof</a>
+          <a href="/project-fit/" class="studio-button studio-button--primary">Tell Keith about your task</a>
+          <a href="/proof/" class="studio-button studio-button--secondary">See examples</a>
         </div>
       </section>
     </div>

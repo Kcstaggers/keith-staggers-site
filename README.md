@@ -1,8 +1,8 @@
 # Keith Staggers Studio
 
-Production website for [Keith Staggers](https://www.keithstaggers.com), an AI creator, trainer, workflow builder, nurse leader, author, and music producer.
+Production website for [Keith Staggers](https://www.keithstaggers.com). Keith helps leaders and small teams use AI to save time. He builds solutions for repetitive tasks, works one-to-one on real problems, trains teams, and speaks at events.
 
-The site is a value-first storefront. It teaches Keith's working method, publishes Studio Notes, sells The Finish Loop, presents service offers, and routes serious inquiries through a qualification step.
+The site is a plain-language storefront. It explains how Keith can help before introducing his method, products, career story, books, or creative work.
 
 ## Stack
 
@@ -18,58 +18,74 @@ There is no server-side rendering, database, CMS, or public calendar integration
 
 ## Offer funnel
 
-1. The homepage teaches Keith's method and presents Studio Notes.
-2. The Finish Loop offers a $49 entry product through Lemon Squeezy.
-3. Visitors can explore four paid service paths:
-   - AI Jumpstart at $250
-   - Done-for-You Builds from $2,500
-   - AI Training, including a $179 public cohort and team workshops from $3,500
-   - Speaking from $3,500
-4. Every service inquiry goes through `/project-fit/`.
-5. The form sends only after the visitor intentionally submits it through the approved Formspree route.
-6. Keith reviews the inquiry and shares a private calendar link only when the conversation fits.
+1. The homepage answers what Keith does, who he helps, and how to start.
+2. Visitors see four recognizable service categories immediately:
+   - Done-for-You AI Setup from $2,500
+   - One-to-One AI Working Session at $250
+   - Practical AI Training, including a $179 public class and team workshops from $3,500
+   - AI Speaking for Leaders and Teams from $3,500
+3. Concrete examples explain how AI can help with familiar work before the site explains Keith's method.
+4. The Finish Loop is introduced as a $49 project-finishing toolkit for solo creators before its product name is used on its own.
+5. Every service inquiry goes through `/project-fit/`, presented to visitors as `Tell Keith about your task`.
+6. The form sends only after the visitor intentionally submits it through the approved Formspree route.
+7. Keith reviews the inquiry and shares a private calendar link only when the conversation fits.
 
 Recruiters and employment inquiries can use the same form without being forced into a sales-budget answer.
 
 The Lemon Squeezy checkout URL lives in `src/data/products.ts`. Replace it only after the live product and fulfillment path have been verified. Current activation details live in `CLAUDE.md`.
 
+## Copy clarity release standard
+
+Every public surface is written for a cold reader who does not know Keith, his product names, or AI consulting terms.
+
+- State the service category before a branded offer name.
+- Lead with the buyer's problem and the result, then explain the method.
+- Use concrete examples before technical terms.
+- Make buttons say what happens next.
+- Keep the same plain-English identity in visible copy, metadata, structured data, RSS, `llms.txt`, and `llms-full.txt`.
+- Preserve the tagline `Build the workflow. Keep the judgment.` as supporting language, not the primary explanation.
+
+Before release, view the rendered homepage as a new visitor. Within ten seconds it must answer: who Keith helps, what he does, and which action to take. `npm run build` runs the permanent copy-clarity checks in `scripts/verify-seo.mjs`. Those automated checks are the minimum. A rendered cold-reader review is still required.
+
 ## Routes
 
-The build generates 22 static HTML pages. Twenty-one are indexable and appear in the sitemap. The Finish Loop thank-you page is intentionally noindex.
+The build generates 24 static HTML pages. Twenty-three are indexable and appear in the sitemap. The Finish Loop thank-you page is intentionally noindex.
 
 | Route | Purpose |
 |---|---|
-| `/` | Studio homepage and value-first offer path |
+| `/` | Plain-English homepage and four service choices |
 | `/about/` | Keith's public identity, career arc, and operating method |
 | `/books/` | Owned catalog hub for Keith's two primary books |
 | `/books/nurse-the-fck-up/` | Verified book record and direct Amazon handoff |
 | `/books/leading-with-care/` | Verified book record and direct Amazon handoff |
-| `/finish-loop/` | The Finish Loop sales page |
+| `/finish-loop/` | $49 project-finishing toolkit sales page |
 | `/finish-loop/thank-you/` | Post-purchase handoff, intentionally excluded from indexing |
-| `/project-fit/` | Qualification form before scheduling |
-| `/proof/` | Independent build, book, and finished-work record |
-| `/services/` | Service collection and buyer paths |
-| `/services/done-for-you/` | Done-for-You Builds |
-| `/services/coaching/` | AI Jumpstart |
-| `/services/training/` | AI Training |
-| `/services/speaking/` | Speaking |
+| `/frontline-nurse-leader/` | Live practical AI class for frontline nurse leaders |
+| `/project-fit/` | Tell Keith about your task form before scheduling |
+| `/proof/` | Plain-English examples of independent work |
+| `/services/` | Four clear ways Keith can help |
+| `/services/done-for-you/` | Done-for-You AI Setup |
+| `/services/coaching/` | One-to-One AI Working Session |
+| `/services/training/` | Practical AI Training |
+| `/services/speaking/` | AI Speaking for Leaders and Teams |
 | `/workflow-readiness/` | Seven-question, no-email workflow readiness check |
 | `/workflow-testing-template/` | Free 10-case browser worksheet with CSV and print-to-PDF export |
-| `/notes/` | Studio Notes archive |
-| `/notes/the-finishing-problem/` | Studio Note |
-| `/notes/the-monday-morning-test/` | Studio Note |
-| `/notes/three-careers-one-standard/` | Studio Note |
-| `/notes/ai-workflow-handoff-run-stop-recover/` | Studio Note |
-| `/notes/one-idea-six-content-jobs/` | Studio Note |
+| `/workflow-book/` | Ten free companion templates for Keith's next AI book |
+| `/notes/` | Practical AI articles and guides |
+| `/notes/the-finishing-problem/` | Article and guide |
+| `/notes/the-monday-morning-test/` | Article and guide |
+| `/notes/three-careers-one-standard/` | Article and guide |
+| `/notes/ai-workflow-handoff-run-stop-recover/` | Article and guide |
+| `/notes/one-idea-six-content-jobs/` | Article and guide |
 
-Service and published Studio Note routes are generated from their data files with Astro `getStaticPaths()`. Draft Notes are filtered from every public surface.
+Service and published article routes are generated from their data files with Astro `getStaticPaths()`. Draft articles are filtered from every public surface.
 
 Additional machine-readable routes:
 
 - `/sitemap.xml` with truthful per-route modification dates.
-- `/rss.xml` with every published Studio Note.
-- `/llms.txt` as a concise canonical-source map.
-- `/llms-full.txt` as a full public service and Notes text index.
+- `/rss.xml` with every published article.
+- `/llms.txt` as a concise canonical-source map with the plain-English identity.
+- `/llms-full.txt` as a full public service and article text index.
 - `/robots.txt` with the canonical sitemap location.
 
 ## Local development
@@ -100,7 +116,7 @@ npm run preview
 | Site identity, navigation, email, social links, and qualification path | `src/data/site.ts` |
 | Finish Loop price, content, and checkout URL | `src/data/products.ts` |
 | Service offers, pricing, and detail pages | `src/data/services.ts` |
-| Studio Notes | `src/data/notes.ts` |
+| Articles and guides | `src/data/notes.ts` |
 | Albums, tracks, and books | `src/data/albums.ts`, `src/data/tracks.ts`, `src/data/books.ts` |
 | Homepage order | `src/pages/index.astro` |
 | Homepage sections | `src/components/Studio*.astro` |

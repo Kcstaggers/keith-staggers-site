@@ -24,9 +24,9 @@ const notesJsonLd = {
     {
       "@type": ["CollectionPage", "Blog"],
       "@id": `${canonicalUrl}#blog`,
-      name: "Studio Notes on Practical AI Work",
+      name: "Practical AI Articles and Guides by Keith Staggers",
       description:
-        "Essays from Keith Staggers on practical AI workflows, team training, creative production, professional reinvention and finishing the work.",
+        "Plain-English articles from Keith Staggers about using AI at work, team training, finishing projects, and professional reinvention.",
       url: canonicalUrl,
       dateModified: latestModified,
       inLanguage: "en-US",
@@ -60,7 +60,7 @@ const notesJsonLd = {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Studio Notes",
+          name: "Articles and Guides",
           item: canonicalUrl,
         },
       ],
@@ -70,26 +70,26 @@ const notesJsonLd = {
 
 const startingPoints = [
   {
-    problem: "A workflow still depends on its builder.",
-    move: "Use the handoff test: run it, stop it, recover it, and own it.",
+    problem: "Only the person who built the AI process can use it.",
+    move: "Learn how to teach someone else to use it, stop it, and handle a failure.",
     href: "/notes/ai-workflow-handoff-run-stop-recover/",
   },
   {
-    problem: "A workflow keeps circling.",
-    move: "Read the finishing note, then check whether the job is ready.",
+    problem: "A project keeps producing drafts but never gets finished.",
+    move: "Learn how to define a finished result before asking AI for more ideas.",
     href: "/notes/the-finishing-problem/",
   },
   {
-    problem: "Training is not changing behavior.",
-    move: "Read the Monday-morning test, then review practical team training.",
+    problem: "People attend AI training but do not use it afterward.",
+    move: "Learn how to connect training to a task people face on the next workday.",
     href: "/notes/the-monday-morning-test/",
   },
 ];
 ---
 
 <Base
-  title="Studio Notes · Practical AI and Finishing"
-  description="Essays from Keith Staggers on practical AI workflows, team training, creative production, professional reinvention and finishing the work."
+  title="Practical AI Articles and Guides"
+  description="Plain-English articles from Keith Staggers about using AI at work, team training, finishing projects, and professional reinvention."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(notesJsonLd)} />
@@ -100,28 +100,28 @@ const startingPoints = [
       <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
         <a href="/" class="transition-colors hover:text-paper">Home</a>
         <span class="mx-2 text-rule" aria-hidden="true">/</span>
-        <span class="text-cobalt-text" aria-current="page">Studio Notes</span>
+        <span class="text-cobalt-text" aria-current="page">Articles and Guides</span>
       </nav>
 
       <header class="grid gap-10 border-b border-rule pb-16 lg:grid-cols-12 lg:pb-24">
         <div class="lg:col-span-9">
-          <p class="studio-kicker">Studio Notes</p>
+          <p class="studio-kicker">Articles and guides</p>
           <h1 class="studio-display mt-6 text-[clamp(52px,8vw,112px)] leading-[0.92] tracking-[-0.055em]">
-            Notes for people<br /><strong>doing the work</strong><span class="text-signal">.</span>
+            Practical help<br /><strong>you can use</strong><span class="text-signal">.</span>
           </h1>
         </div>
         <p class="self-end text-[18px] leading-[1.7] text-paper-dim lg:col-span-3">
-          Short, practical essays on AI, creative production, training, and reinvention. Where AI helps, where judgment stays human, and what finishing requires. No recycled prompt lists.
+          Plain-English articles about using AI at work, training a team, finishing projects, and changing careers. Each article explains the problem, gives an example, and points to a useful next step.
         </p>
       </header>
 
       <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="all-notes-title">
         <div class="mb-10 flex items-end justify-between gap-5">
           <div>
-            <p class="studio-kicker">All notes</p>
-            <h2 id="all-notes-title" class="studio-display mt-4 text-[clamp(34px,4vw,58px)]">Read the <strong>record</strong><span class="text-signal">.</span></h2>
+            <p class="studio-kicker">All articles</p>
+            <h2 id="all-notes-title" class="studio-display mt-4 text-[clamp(34px,4vw,58px)]">Choose a problem you <strong>recognize</strong><span class="text-signal">.</span></h2>
           </div>
-          <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">{orderedNotes.length} published notes</span>
+          <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">{orderedNotes.length} published articles</span>
         </div>
 
         <div class="divide-y divide-rule border-y border-rule">
@@ -143,9 +143,9 @@ const startingPoints = [
                 </div>
               </div>
               <div class="lg:text-right">
-                <a href={`/notes/${note.slug}/`} class="block font-mono text-[11px] tracking-[0.12em] uppercase text-paper hover:text-cobalt-text">Read note →</a>
+                <a href={`/notes/${note.slug}/`} class="block font-mono text-[11px] tracking-[0.12em] uppercase text-paper hover:text-cobalt-text">Read article →</a>
                 <a href={note.related.href} class="mt-4 block font-mono text-[10px] leading-[1.5] tracking-[0.1em] uppercase text-paper-faint hover:text-paper">
-                  Put it to work: {note.related.title} →
+                  Next step: {note.related.title} →
                 </a>
               </div>
             </article>
@@ -155,9 +155,9 @@ const startingPoints = [
 
       <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="start-title">
         <div class="lg:col-span-4">
-          <p class="studio-kicker">Start with the problem</p>
+          <p class="studio-kicker">Not sure where to begin?</p>
           <h2 id="start-title" class="studio-display mt-5 text-[clamp(36px,4vw,60px)] leading-[1]">
-            Read what matches the <strong>work in front of you</strong><span class="text-signal">.</span>
+            Start with the problem in <strong>front of you</strong><span class="text-signal">.</span>
           </h2>
         </div>
         <div class="grid gap-px bg-rule/70 lg:col-span-8">
@@ -175,16 +175,16 @@ const startingPoints = [
 
       <section class="grid items-end gap-10 pt-16 lg:grid-cols-12 lg:pt-24">
         <div class="lg:col-span-7">
-          <p class="studio-kicker">Put the thinking to work</p>
+          <p class="studio-kicker">Choose what to do next</p>
           <h2 class="studio-display mt-5 text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
-            Choose the smallest useful <strong>next move</strong><span class="text-signal">.</span>
+            Use the idea on a <strong>real task</strong><span class="text-signal">.</span>
           </h2>
         </div>
         <div class="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
-          <a href="/workflow-readiness/" class="studio-button studio-button--primary">Check a workflow</a>
-          <a href="/finish-loop/" class="studio-button studio-button--secondary">Finish a project</a>
-          <a href="/services/" class="studio-button studio-button--secondary">Explore services</a>
-          <a href="/proof/" class="studio-button studio-button--secondary">See the proof</a>
+          <a href="/workflow-readiness/" class="studio-button studio-button--primary">See if a task is ready for AI</a>
+          <a href="/finish-loop/" class="studio-button studio-button--secondary">Use the project-finishing toolkit</a>
+          <a href="/services/" class="studio-button studio-button--secondary">See how Keith can help</a>
+          <a href="/proof/" class="studio-button studio-button--secondary">See examples</a>
         </div>
       </section>
     </div>

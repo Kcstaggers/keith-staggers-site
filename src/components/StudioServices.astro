@@ -1,36 +1,42 @@
 ---
 const paths = [
   {
-    id: "made",
     number: "01",
-    tab: "Make it for me",
-    title: "AI Workflow Install Sprint",
-    detail: "One repeated job turned into a tested, documented AI-assisted workflow in a client-owned path. You own the system and the human decision stays visible.",
+    label: "Build it for me",
+    title: "Done-for-you AI setup",
+    detail: "Choose one task your team repeats. Keith builds a practical AI-assisted process, tests it, documents it, and teaches your team how to use it.",
     price: "Projects from $2,500",
     href: "/services/done-for-you/",
-    cta: "See the install sprint",
+    cta: "See the done-for-you service",
   },
   {
-    id: "teach",
     number: "02",
-    tab: "Teach us",
-    title: "Coaching + training",
-    detail: "One-to-one help for a stuck project or hands-on training for a team. Leave with a working method, not a tool tour.",
-    price: "Sessions from $250 · Workshops from $3,500",
-    href: "/services/training/",
-    cta: "See the training offer",
-    secondaryHref: "/services/coaching/",
-    secondaryCta: "Or start with a one-hour Jumpstart",
+    label: "Help me one-to-one",
+    title: "One-to-one AI working session",
+    detail: "Solve one real problem. Bring one task, business problem, or stuck project. Work with Keith for 60 minutes and leave with a useful first version and a written next-step plan.",
+    price: "$250 · 60 minutes",
+    href: "/services/coaching/",
+    cta: "See the one-to-one session",
   },
   {
-    id: "bring",
     number: "03",
-    tab: "Bring Keith in",
-    title: "Speaking",
-    detail: "A detective, working nurse leader, and AI builder in one room. The story earns attention. The framework gives people a next move.",
+    label: "Train my team",
+    title: "Practical AI training",
+    detail: "Your team practices using AI on recognizable work. People leave knowing what AI can help with, what they must check, and what to do next.",
+    price: "Public class $179 · Team workshops from $3,500",
+    href: "/services/training/",
+    cta: "See the training options",
+    secondaryHref: "/frontline-nurse-leader/",
+    secondaryCta: "Nurse leader? See the September class",
+  },
+  {
+    number: "04",
+    label: "Bring Keith to my event",
+    title: "AI speaking for leaders and teams",
+    detail: "Book a practical talk about using AI safely at work, leading through change, or changing careers without losing what you already know.",
     price: "Keynotes from $3,500",
     href: "/services/speaking/",
-    cta: "See the speaking offer",
+    cta: "See speaking topics and formats",
   },
 ];
 ---
@@ -38,81 +44,29 @@ const paths = [
 <section id="services" class="studio-section studio-services scroll-mt-24" aria-labelledby="studio-services-title">
   <div class="studio-shell">
     <div class="studio-services-head">
-      <h2 id="studio-services-title" class="studio-display studio-section-title">Choose the <strong>move</strong><span class="text-signal">.</span></h2>
+      <h2 id="studio-services-title" class="studio-display studio-section-title">Choose the help<br /><strong>you need</strong><span class="text-signal">.</span></h2>
       <p>
-        Start with one repeated job. Use the smallest door that solves it.
-        <a href="/services/" class="mt-4 block text-cobalt-text transition-colors hover:text-paper">View all services →</a>
+        You do not need to know the right AI term. Start with what you want to make easier.
+        <a href="/services/" class="mt-4 block text-cobalt-text transition-colors hover:text-paper">Compare every option →</a>
       </p>
     </div>
 
-    <div class="service-selector" role="tablist" aria-label="Choose how to work with Keith">
-      {paths.map((path, index) => (
-        <button
-          type="button"
-          role="tab"
-          id={`studio-service-tab-${path.id}`}
-          aria-controls={`studio-service-panel-${path.id}`}
-          aria-selected={index === 0 ? "true" : "false"}
-          tabindex={index === 0 ? "0" : "-1"}
-          data-studio-service-tab={path.id}
-          class="service-selector-tab"
-        >
-          <span>{path.number}</span>
-          <b>{path.tab}</b>
-        </button>
-      ))}
-    </div>
-
-    <div class="service-panels">
-      {paths.map((path, index) => (
-        <div
-          role="tabpanel"
-          id={`studio-service-panel-${path.id}`}
-          aria-labelledby={`studio-service-tab-${path.id}`}
-          data-studio-service-panel={path.id}
-          hidden={index !== 0}
-          class="service-panel"
-        >
-          <div>
-            <h3 class="studio-display">{path.title}</h3>
-            <p>{path.detail}</p>
+    <div class="service-clarity-grid">
+      {paths.map((path) => (
+        <article class="service-clarity-card">
+          <div class="service-clarity-meta">
+            <span>{path.number}</span>
+            <b>{path.label}</b>
           </div>
-          <div class="service-panel-action">
+          <h3 class="studio-display">{path.title}</h3>
+          <p>{path.detail}</p>
+          <div class="service-clarity-action">
             <span>{path.price}</span>
             <a href={path.href}>{path.cta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg></a>
             {path.secondaryHref && <a class="service-secondary" href={path.secondaryHref}>{path.secondaryCta}</a>}
           </div>
-        </div>
+        </article>
       ))}
     </div>
   </div>
 </section>
-
-<script>
-  const studioServiceTabs = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-studio-service-tab]"));
-  const studioServicePanels = Array.from(document.querySelectorAll<HTMLElement>("[data-studio-service-panel]"));
-
-  const activateStudioService = (tab: HTMLButtonElement) => {
-    const id = tab.dataset.studioServiceTab;
-    studioServiceTabs.forEach((candidate) => {
-      const selected = candidate === tab;
-      candidate.setAttribute("aria-selected", String(selected));
-      candidate.tabIndex = selected ? 0 : -1;
-    });
-    studioServicePanels.forEach((panel) => {
-      panel.hidden = panel.dataset.studioServicePanel !== id;
-    });
-  };
-
-  studioServiceTabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => activateStudioService(tab));
-    tab.addEventListener("keydown", (event) => {
-      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-      event.preventDefault();
-      const direction = event.key === "ArrowRight" ? 1 : -1;
-      const next = studioServiceTabs[(index + direction + studioServiceTabs.length) % studioServiceTabs.length];
-      next.focus();
-      activateStudioService(next);
-    });
-  });
-</script>

@@ -97,9 +97,26 @@ preview-build/                  # Local file:// preview output. GITIGNORED.
 
 ## Page order (src/pages/index.astro)
 
-`StudioHero → StudioMethod → StudioNotes → StudioProduct → StudioServices → StudioWork → StudioCatalog → StudioStory → StudioClosing`
+`StudioHero → StudioServices → StudioMethod → StudioTestimonial → StudioReadiness → StudioProduct → StudioNotes → StudioStory → StudioWork → StudioCatalog → StudioClosing`
 
-Rationale: the site provides value before the service pitch. The free method and Notes teach the operating idea. The $49 Finish Loop is the low-risk product. Paid services then split by intent: make it for me, teach us, or bring Keith in. Work, catalog, and story provide proof before the direct close.
+Rationale: a cold visitor must understand what Keith does before being asked to learn his method, products, or story. The four service choices appear directly after the plain-English hero. Concrete examples and verified proof come next. The self-serve product, articles, story, and creative catalog remain available without interrupting the answer to "What can Keith help me with?"
+
+## Plain-language release standard
+
+Write every public page for a cold reader who has never heard Keith's product names and does not know AI consulting vocabulary.
+
+- Lead with the category, audience, problem, and useful result. A branded name may follow only after the reader knows what the thing is. Example: `$49 project-finishing toolkit · The Finish Loop`.
+- The first screen must answer three questions in ordinary language: who Keith helps, what he can do, and what the visitor should do next.
+- Name services by the help a buyer recognizes: done-for-you AI setup, a one-to-one working session, practical team training, or speaking.
+- Use familiar examples such as weekly reports, follow-up messages, team training, routine documents, and stuck projects before explaining a method.
+- Keep the signature line `Build the workflow. Keep the judgment.` as supporting brand language. It never replaces the direct explanation.
+- Buttons must describe the action a visitor is taking. Use labels such as `See how I can help`, `Tell Keith about your task`, and `Get the $49 toolkit`.
+- Keep visible copy, metadata, structured data, RSS, and both AI-readable text files aligned around the same plain-English description.
+- Technical terms are allowed when a technical resource genuinely needs them. Define them in ordinary language before relying on them.
+
+Before a release, run the cold-reader test on the rendered preview. After ten seconds, a new visitor should be able to say: "Keith teaches teams to use AI, works one-to-one on real problems, and builds practical AI solutions for repetitive work." If the visitor cannot answer that, the copy is not ready.
+
+`scripts/verify-seo.mjs` enforces the minimum category-first contract, service labels, copy order, machine-readable identity, and retired cryptic phrases. Do not weaken that gate to make a build pass. Update it only when an approved positioning change replaces the standard across every public surface. The automated check is a floor, not a substitute for the rendered cold-reader review.
 
 ## Design system
 

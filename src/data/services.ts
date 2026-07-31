@@ -5,7 +5,6 @@ export type Service = {
   blurb: string;
   pricing: string;
   lastModified: string;
-  // Landing page fields
   seoTitle: string;
   seoDescription: string;
   headline: string;
@@ -22,227 +21,239 @@ export const services: Service[] = [
   {
     num: "01",
     slug: "done-for-you",
-    title: "AI Workflow Install Sprint",
+    title: "Done-for-You AI Setup",
     blurb:
-      "One repeated job turned into a tested, documented AI-assisted workflow in a client-owned path. You own the system and the human decision stays visible.",
+      "Keith takes one task your team repeats and builds a practical AI-assisted process for it. He tests it, documents it, and teaches your team how to use it.",
     pricing: "Projects from $2,500",
-    lastModified: "2026-07-25",
-    seoTitle: "AI Workflow Consulting for Small Teams",
+    lastModified: "2026-07-31",
+    seoTitle: "Done-for-You AI Automation for Small Teams",
     seoDescription:
-      "Turn one repeated job into a tested, documented AI-assisted workflow in a client-owned path. Projects from $2,500.",
-    headline: "One repeated job.",
-    headlineAccent: "One working system your team can own.",
+      "Keith Staggers builds a tested AI-assisted process for one repetitive task, documents it, and teaches your team how to run it. Projects from $2,500.",
+    headline: "Make one repetitive task easier.",
+    headlineAccent: "Keith builds the solution for you.",
     intro:
-      "Buy this when repeated work keeps living in inboxes, notes, copied prompts, or one person's memory. I map the job, build the smallest useful workflow in your stack, test it against an agreed finish line, and hand it over with documentation and a recovery path.",
+      "Choose this service when your team keeps copying the same information, rewriting the same document, or depending on one person to remember every step. Keith builds the simplest useful solution in tools your team controls, tests it with you, and provides clear instructions.",
     audience: [
-      "Consultants, creators, educators, and small service teams with one repeated operational job",
-      "Leaders who know the outcome but do not have an internal workflow builder",
-      "Teams willing to test with synthetic or approved redacted material",
-      "Buyers who can own the production accounts, subscriptions, data connections, and final decisions",
+      "Leaders and small teams with one task that wastes time every week",
+      "Consultants, creators, educators, and service businesses that repeat the same steps",
+      "Teams willing to test with sample information that contains no private or restricted records",
+      "Organizations that can provide the person, tools, and accounts needed to run the final setup",
     ],
     deliverables: [
-      { name: "Workflow map and boundary", detail: "The current job, owner, input, finish line, AI role, human check, and manual fallback written clearly." },
-      { name: "Installed working system", detail: "The smallest complete workflow built inside a client-owned path whenever possible." },
-      { name: "Test evidence", detail: "A ten-case golden set, results, known limits, stop conditions, and recovery checks." },
-      { name: "Documented handoff", detail: "Quick start, full operating procedure, recorded walkthrough, owner training, and fourteen days of stabilization." },
+      {
+        name: "A plain task plan",
+        detail: "A short explanation of what happens now, what AI will help with, what a person must check, and what a good result looks like.",
+      },
+      {
+        name: "A working setup",
+        detail: "A complete first version built in your team's own accounts and tools whenever possible.",
+      },
+      {
+        name: "Test results",
+        detail: "Ten realistic tests showing what worked, what failed, when the process must stop, and what still needs a person's decision.",
+      },
+      {
+        name: "Instructions and team training",
+        detail: "A quick-start guide, full instructions, a recorded walkthrough, owner training, and fourteen days of support after delivery.",
+      },
     ],
     process: [
-      { step: "Fit", detail: "Name one repeated job, who owns it, what goes in, and what finished means." },
-      { step: "Scope", detail: "Fix the workflow, human check, exclusions, timeline, client responsibilities, and price in writing." },
-      { step: "Build and prove", detail: "Review the smallest complete loop and test it against the agreed cases before expansion." },
-      { step: "Own it", detail: "Run, check, stop, and recover the workflow without Keith controlling the screen." },
+      { step: "Choose the task", detail: "Describe one repeated task, who does it, what information starts it, and what a good result looks like." },
+      { step: "Agree on the project", detail: "Keith confirms what will be built, what will not be built, the timeline, your responsibilities, and the price in writing." },
+      { step: "Build and test", detail: "Keith creates the smallest complete version and checks it against the agreed examples before adding more." },
+      { step: "Teach your team", detail: "The person who owns the task learns how to use it, check it, stop it, and return to the manual process if something fails." },
     ],
     faqs: [
       {
-        question: "What kind of workflow fits an Install Sprint?",
+        question: "What kind of task is a good fit?",
         answer:
-          "One repeated job with a clear owner, recognizable inputs, a finish line, and a named human check. A broad request to automate a department is not ready until one job is isolated.",
+          "A good task repeats, has a clear owner, starts with recognizable information, and produces a result that a person can check. Examples include recurring reports, follow-up drafts, content preparation, and routine document work.",
       },
       {
-        question: "Will the system live in my accounts?",
+        question: "Will the setup use my team's accounts?",
         answer:
-          "The preferred path is client-owned accounts, subscriptions, and data connections. The handoff is designed so your team can run, stop, and recover the workflow without Keith controlling the screen.",
+          "Yes, whenever possible. The goal is to build in accounts and tools your team controls so you are not dependent on Keith after the project ends.",
       },
       {
-        question: "What material can be used during the build?",
+        question: "What information can we use during testing?",
         answer:
-          "Testing starts with synthetic or specifically approved redacted material. Protected, confidential, credential, and restricted data should not be submitted through the public inquiry form.",
+          "Testing begins with sample information that contains no real people, private records, passwords, or restricted material. Do not submit confidential information through the public inquiry form.",
       },
       {
-        question: "What happens after handoff?",
+        question: "What happens after the setup is delivered?",
         answer:
-          "You receive the operating procedure, recorded walkthrough, owner training, known limits, recovery steps, and fourteen days of stabilization.",
+          "You receive written instructions, a recorded walkthrough, training for the person who owns the task, a list of known limits, and fourteen days of support.",
       },
     ],
-    ctaPrompt: "Name the repeated job, who owns it, and what finished means. I will tell you whether it is ready for an install sprint.",
+    ctaPrompt: "Tell me which task wastes time, how it works today, and what you want instead. I will tell you whether a done-for-you setup makes sense.",
   },
   {
     num: "02",
     slug: "coaching",
-    title: "AI Jumpstart",
+    title: "One-to-One AI Working Session",
     blurb:
-      "One hour on your actual workflow, business problem, or stuck project. Leave with a first solution, a roadmap, and a starter prompt pack.",
+      "Bring one task, business problem, or stuck project. Work with Keith for 60 minutes and leave with a useful first version and a written next-step plan.",
     pricing: "$250 · 60 minutes",
-    lastModified: "2026-07-23",
-    seoTitle: "One-to-One AI Workflow Coaching",
+    lastModified: "2026-07-31",
+    seoTitle: "One-to-One AI Help with Keith Staggers",
     seoDescription:
-      "Work directly with Keith Staggers for one hour on an AI workflow or project. Leave with a recording, written roadmap, and starter prompt pack. $250.",
-    headline: "Bring one stuck workflow.",
-    headlineAccent: "Leave with the first working version.",
+      "Work directly with Keith Staggers for 60 minutes on one real task or AI project. Leave with a useful first version, recording, and written next-step plan. $250.",
+    headline: "Bring one real problem.",
+    headlineAccent: "Leave with a useful first version.",
     intro:
-      "Buy this when there are too many tools, no clear first move, and an actual project waiting. We work the problem live, identify what AI can assist and what stays human, then leave with a working start and an ordered next-step plan.",
+      "Choose this session when you have a real task to solve but do not know which tool to use or what to do first. Keith works on the task with you, shows where AI can help, and gives you a short plan for what to do next.",
     audience: [
-      "Leaders who need a safe first AI workflow",
-      "Professionals with one repeated task that keeps stealing time",
-      "Builders with an AI project that has stalled",
-      "Small teams deciding what to do themselves and what to hire out",
+      "Leaders who want practical help with their first useful AI task",
+      "Professionals losing time to one repetitive task",
+      "Creators or builders whose project has stalled",
+      "Small teams deciding what they can do themselves and what they need built",
     ],
     deliverables: [
-      { name: "Workflow diagnosis", detail: "We identify the repeated work, friction, risk, and actual outcome." },
-      { name: "Live build", detail: "We create the first useful prompt, workflow, or prototype together." },
-      { name: "Recording and roadmap", detail: "A session recording, three ordered next steps, named tools, and clear DIY and done-for-you boundaries." },
-      { name: "Starter prompt pack", detail: "A small set of prompts tailored to the problem we worked." },
+      { name: "A clear diagnosis", detail: "Keith helps identify what is wasting time, what result matters, and where AI could help." },
+      { name: "A live first version", detail: "You create the first useful prompt, process, or prototype together during the session." },
+      { name: "Recording and next-step plan", detail: "You receive the recording, three ordered next steps, and the tools needed to continue." },
+      { name: "A small prompt pack", detail: "You receive a focused set of prompts written for the problem you worked on." },
     ],
     process: [
-      { step: "Book", detail: "Bring one workflow, business problem, or stuck project." },
-      { step: "Work", detail: "Sixty minutes, screens shared, focused on the real task." },
-      { step: "Roadmap", detail: "Receive the written plan and starter prompt pack within 48 hours." },
+      { step: "Bring one problem", detail: "Share one task, business problem, or stuck project before the session." },
+      { step: "Work together", detail: "Spend 60 minutes sharing screens and working on the real task." },
+      { step: "Continue with a plan", detail: "Receive the recording, prompts, and three ordered next steps within 48 hours." },
     ],
     faqs: [
       {
         question: "What should I bring?",
         answer:
-          "Bring one real workflow, business problem, or stuck project and enough nonconfidential context to work on it. A focused problem produces a better hour than a general tour of AI tools.",
+          "Bring one real task or project and enough nonconfidential information to work on it. A focused problem produces a more useful hour than a general tour of AI tools.",
       },
       {
-        question: "Is this a tool demonstration?",
+        question: "Is this a demonstration of AI products?",
         answer:
-          "No. The session is built around your actual task. We identify the useful AI role, keep the human decisions visible, and build the first working move together.",
+          "No. The session focuses on your task. Keith helps you decide what AI can do, what you must check, and how to create the first useful version.",
       },
       {
         question: "What do I receive afterward?",
         answer:
-          "You receive the session recording, a written roadmap with three ordered next steps, and a small starter prompt pack tailored to the problem.",
+          "You receive the session recording, a written plan with three ordered next steps, and a small set of prompts tailored to your problem.",
       },
       {
-        question: "Is this the right format for a team?",
+        question: "Is this the right option for a team?",
         answer:
-          "AI Jumpstart is a one-to-one working session. Teams that need a shared method, exercises, and follow-up should use the training offer.",
+          "This is a one-to-one working session. Choose team training when several people need shared practice, examples, and follow-up support.",
       },
     ],
-    ctaPrompt: "Bring the workflow or project that keeps circling. Leave with a working first move.",
+    ctaPrompt: "Tell me which task or project is stuck. We will work on one useful first version together.",
   },
   {
     num: "03",
     slug: "training",
-    title: "AI Training",
+    title: "Practical AI Training",
     blurb:
-      "Hands-on training built around real work. Teams practice with synthetic or approved material and leave with a repeatable playbook.",
-    pricing: "Public cohort $179 · Team workshops from $3,500",
-    lastModified: "2026-07-23",
+      "Hands-on training using recognizable work. Your team practices with safe sample information and leaves knowing what AI can help with and what people must still check.",
+    pricing: "Public class $179 · Team workshops from $3,500",
+    lastModified: "2026-07-31",
     seoTitle: "Practical AI Training for Leaders and Teams",
     seoDescription:
-      "Hands-on AI training for nurse leaders, operations teams, educators, administrators, and small teams. Build responsible workflows using practical guardrails.",
-    headline: "A workshop should change",
-    headlineAccent: "the next workday.",
+      "Hands-on AI training for nurse leaders, operations teams, educators, administrators, and small teams. Practice on real-world tasks using safe sample information.",
+    headline: "AI training should be useful",
+    headlineAccent: "on the next workday.",
     intro:
-      "Buy training when capable people are experimenting alone, repeating the same mistakes, or avoiding AI because nobody has connected it to their real work. We choose the tasks first, use synthetic or approved material, build live, and leave with a playbook.",
+      "Choose training when people are experimenting alone, making the same mistakes, or avoiding AI because no one has connected it to their work. Participants practice during the session and leave with clear examples, safety rules, and a guide they can use again.",
     audience: [
-      "Nurse leaders and healthcare teams who need practical, responsible adoption",
-      "Operations and administrative teams carrying repeated work",
-      "Education and professional-development teams building internal capability",
-      "Small organizations that need a shared method before buying more tools",
+      "Nurse leaders and healthcare teams learning to use AI responsibly",
+      "Operations and administrative teams carrying repetitive work",
+      "Education and professional-development teams building practical skills",
+      "Small organizations that want shared rules before buying more tools",
     ],
     deliverables: [
-      { name: "Hands-on working session", detail: "Participants build during the session. This is not a product tour or AI overview." },
-      { name: "Three mapped workflows", detail: "The team applies the method to tasks selected before the session." },
-      { name: "Playbook and prompt patterns", detail: "Reusable inputs, checks, guardrails, and handoff steps for the chosen work." },
-      { name: "30-day follow-up", detail: "A structured check so the workflows survive outside the demonstration." },
+      { name: "Hands-on practice", detail: "Participants work during the session. This is not a product tour or a presentation filled with theory." },
+      { name: "Three familiar tasks", detail: "The team applies the lesson to tasks selected before the session." },
+      { name: "A reusable guide", detail: "Participants receive example prompts, required checks, safety rules, and clear steps for the chosen work." },
+      { name: "A 30-day follow-up", detail: "Keith checks what people used, what got stuck, and what should change after the training." },
     ],
     process: [
-      { step: "Scope", detail: "Identify the repeated work, approved tools, audience, and operating boundaries." },
-      { step: "Prepare", detail: "Build exercises, synthetic examples, and checks around the selected workflows." },
-      { step: "Build live", detail: "Participants work through the method with direct coaching." },
-      { step: "Embed", detail: "Leave with documented systems and a clear next-use plan." },
+      { step: "Choose the work", detail: "Identify the audience, approved tools, and tasks people should be able to handle after the session." },
+      { step: "Prepare safe examples", detail: "Keith creates exercises using sample information with no real people or private records." },
+      { step: "Practice together", detail: "Participants work through the selected tasks with direct help from Keith." },
+      { step: "Use it again", detail: "The team leaves with written instructions and a clear plan for the next workday." },
     ],
     faqs: [
       {
-        question: "Is this a general AI overview?",
+        question: "Is this a general introduction to AI?",
         answer:
-          "No. Participants work through selected tasks during the session. The goal is a repeatable habit and playbook, not a product tour or a folder of slides.",
+          "No. Participants practice selected tasks during the session. The goal is to help people do useful work, not simply show them a list of tools.",
       },
       {
         question: "Can the workshop use examples from our work?",
         answer:
-          "Yes, when the examples are synthetic or specifically approved for the session. The scope identifies the permitted material, approved tools, and human checks before exercises are built.",
+          "Yes, when those examples are safe and specifically approved. Exercises use sample information with no real people or private records unless another source is explicitly cleared in advance.",
       },
       {
-        question: "What does the team leave with?",
+        question: "What does the team receive?",
         answer:
-          "The team leaves with three mapped workflows, reusable prompt and check patterns, documented boundaries, and a structured thirty-day follow-up.",
+          "The team receives three task examples, reusable prompts, required checks, written safety rules, and a structured 30-day follow-up.",
       },
       {
-        question: "Are public and private formats available?",
+        question: "Are public and private options available?",
         answer:
-          "Yes. Public cohort seats are $179. Private team workshops start at $3,500 and are scoped around the audience, selected work, and operating boundaries.",
+          "Yes. Public class seats are $179. Private team workshops start at $3,500 and are planned around the audience, selected tasks, and workplace rules.",
       },
     ],
-    ctaPrompt: "Tell me what work the team keeps repeating. I will show you what a practical session can change.",
+    ctaPrompt: "Tell me what your team needs to do more easily after the training. I will recommend the right format.",
   },
   {
     num: "04",
     slug: "speaking",
-    title: "Speaking",
+    title: "AI Speaking for Leaders and Teams",
     blurb:
-      "Practical talks on AI adoption, leadership, responsible workflows, and reinvention from someone doing the work now.",
+      "Practical talks about using AI safely at work, leading through change, and changing careers without losing what you already know.",
     pricing: "Keynotes from $3,500",
-    lastModified: "2026-07-23",
+    lastModified: "2026-07-31",
     seoTitle: "Practical AI Speaker for Leaders and Teams",
     seoDescription:
-      "Book Keith Staggers to speak on practical AI adoption, leadership, responsible workflows, and professional reinvention. Keynotes from $3,500.",
-    headline: "The story earns the room.",
-    headlineAccent: "The framework earns the next move.",
+      "Book Keith Staggers to speak about using AI safely at work, leadership, and changing careers without losing what you already know. Keynotes from $3,500.",
+    headline: "Give your audience a practical way",
+    headlineAccent: "to understand AI and change.",
     intro:
-      "I speak from three careers where judgment matters: 21 years as a Baltimore detective, 11 years in nursing, and years building AI applications and production systems. The story earns attention. The practical framework gives people something useful to do next.",
+      "Keith speaks from three careers where careful decisions matter: 21 years as a Baltimore detective, more than a decade in nursing, and years building with AI. His talks use familiar stories and clear examples so the audience leaves knowing what to do next.",
     audience: [
-      "Healthcare conferences that need AI made concrete for leaders and clinicians",
-      "Leadership teams navigating adoption, verification, and responsibility",
+      "Healthcare conferences that want AI explained clearly for leaders and clinicians",
+      "Leadership teams working through new technology and responsibility",
       "Nursing associations and professional-development events",
-      "Organizations exploring reinvention, second careers, and practical resilience",
+      "Organizations discussing reinvention, second careers, and practical resilience",
     ],
     deliverables: [
-      { name: "Keynote", detail: "A 45 to 60 minute talk tailored to the room and event outcome." },
-      { name: "Fireside or Q&A", detail: "A moderated format where the audience can push into the practical questions." },
-      { name: "Workshop add-on", detail: "Pair the talk with a working session for a smaller leadership group." },
-      { name: "Custom angle", detail: "Practical AI, leadership, responsible adoption, or reinvention shaped to the room." },
+      { name: "Keynote", detail: "A 45 to 60 minute talk tailored to the audience and the result the event needs." },
+      { name: "Fireside conversation or Q&A", detail: "A moderated format where the audience can ask practical questions." },
+      { name: "Workshop add-on", detail: "Pair the talk with a smaller hands-on session for leaders or teams." },
+      { name: "A topic shaped to the room", detail: "Choose practical AI, responsible use, leadership, or professional reinvention." },
     ],
     process: [
-      { step: "Call", detail: "Fifteen minutes on the event, audience, and desired outcome." },
-      { step: "Tailor", detail: "The examples, stories, and action framework are shaped to the room." },
-      { step: "Deliver", detail: "On stage or virtual, with simple production requirements." },
+      { step: "Discuss the event", detail: "Spend 15 minutes on the audience, format, and result you want." },
+      { step: "Shape the talk", detail: "Keith selects the stories, examples, and actions that fit the room." },
+      { step: "Deliver", detail: "The talk can be delivered on stage or online with simple production needs." },
     ],
     faqs: [
       {
         question: "What speaking formats are available?",
         answer:
-          "Formats include a forty-five to sixty-minute keynote, a moderated fireside or Q&A, and a workshop add-on for a smaller group.",
+          "Options include a 45 to 60 minute keynote, a moderated fireside conversation or Q&A, and a smaller hands-on workshop.",
       },
       {
         question: "What topics does Keith speak about?",
         answer:
-          "Core topics are practical AI adoption, responsible workflows, leadership, professional reinvention, and the judgment required to finish useful work.",
+          "Core topics include using AI in real work, responsible AI use, leadership, professional reinvention, and the discipline required to finish useful work.",
       },
       {
-        question: "Can the session be delivered virtually?",
+        question: "Can the talk be delivered online?",
         answer:
-          "Yes. Speaking can be delivered on stage or virtually. The format and production requirements are fixed during the event call.",
+          "Yes. Talks can be delivered on stage or online. The format and production needs are confirmed during the event conversation.",
       },
       {
-        question: "Is the talk tailored to the audience?",
+        question: "Will the talk be tailored to our audience?",
         answer:
-          "Yes. The event, audience, desired outcome, examples, stories, and action framework are discussed before the talk is finalized.",
+          "Yes. Keith discusses the audience, desired result, examples, and stories before finalizing the talk.",
       },
     ],
-    ctaPrompt: "Tell me about the event and the room. I will tell you the practical angle I would bring.",
+    ctaPrompt: "Tell me about the event, the audience, and what you want people to understand or do afterward.",
   },
 ];

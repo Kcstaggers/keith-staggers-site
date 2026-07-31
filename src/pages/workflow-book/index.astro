@@ -13,27 +13,27 @@ const faqs = [
   {
     question: "Is the book available now?",
     answer:
-      "The book is forthcoming. This page is its living companion resource and the templates can be used independently before the retail release.",
+      "The book does not yet have a verified public retail record. These free templates can be used on their own now.",
   },
   {
     question: "Why keep the templates outside the book?",
     answer:
-      "The book holds the durable operating principles. These files can be corrected, versioned, and expanded without making the printed explanation depend on a specific AI tool or interface.",
+      "The book explains decisions that should remain useful over time. The downloadable files can be corrected and improved as AI tools change.",
   },
   {
     question: "Do these templates require a specific AI product?",
     answer:
-      "No. They are plain Markdown files built around sources, boundaries, approvals, finish lines, testing, evidence, and recovery. Adapt them to the tools and policies that apply to your work.",
+      "No. They are simple text files for recording sources, limits, approvals, a good result, tests, evidence, and what to do after a failure. Adapt them to the rules that apply to your work.",
   },
   {
     question: "Does this page collect the information I put in the templates?",
     answer:
-      "No. The links download blank files. Complete and store them in a workspace you control. Do not place credentials, protected information, or material you lack permission to use in an AI-assisted system.",
+      "No. The links download blank text files. Complete and store them in a folder or app you control. Do not place passwords, protected information, or material you lack permission to use in an AI tool or process.",
   },
   {
     question: "Do the templates make an AI workflow secure or compliant?",
     answer:
-      "No. They help make decisions and failure handling visible. You remain responsible for the laws, contracts, privacy rules, professional duties, account controls, and human review that apply to your work.",
+      "No. They help make decisions, approvals, and failure steps visible. You remain responsible for the laws, contracts, privacy rules, professional duties, account controls, and human review that apply to your work.",
   },
 ];
 const companionJsonLd = {
@@ -42,7 +42,7 @@ const companionJsonLd = {
     {
       "@type": "WebPage",
       "@id": `${canonicalUrl}#page`,
-      name: "AI Workflow Book Companion Templates",
+      name: "Ten Free Templates for Organizing AI Work",
       description: workflowBookCompanion.description,
       url: canonicalUrl,
       dateModified: workflowBookCompanion.dateModified,
@@ -61,7 +61,7 @@ const companionJsonLd = {
     {
       "@type": "LearningResource",
       "@id": `${canonicalUrl}#companion`,
-      name: "AI Workflow Book Companion",
+      name: "Free AI Work Templates by Keith Staggers",
       description: workflowBookCompanion.description,
       url: canonicalUrl,
       author: { "@id": `${site.url}/#keith` },
@@ -70,7 +70,7 @@ const companionJsonLd = {
       dateModified: workflowBookCompanion.dateModified,
       inLanguage: "en-US",
       learningResourceType: "Template collection",
-      educationalUse: "Build and test a controlled AI-assisted workflow",
+      educationalUse: "Organize and test an AI-assisted work process",
       isAccessibleForFree: true,
       hasPart: workflowBookTemplates.map((template) => ({
         "@type": "LearningResource",
@@ -86,7 +86,7 @@ const companionJsonLd = {
     {
       "@type": "ItemList",
       "@id": `${canonicalUrl}#templates`,
-      name: "Ten AI workflow companion templates",
+      name: "Ten free templates for organizing AI work",
       numberOfItems: workflowBookTemplates.length,
       itemListElement: workflowBookTemplates.map((template, index) => ({
         "@type": "ListItem",
@@ -126,7 +126,7 @@ const companionJsonLd = {
         {
           "@type": "ListItem",
           position: 3,
-          name: "AI Workflow Book Companion",
+          name: "Free AI Work Templates",
           item: canonicalUrl,
         },
       ],
@@ -136,7 +136,7 @@ const companionJsonLd = {
 ---
 
 <Base
-  title="AI Workflow Book Companion Templates"
+  title="Ten Free Templates for Organizing AI Work"
   description={workflowBookCompanion.description}
 >
   <Fragment slot="head">
@@ -157,22 +157,21 @@ const companionJsonLd = {
         <span class="mx-2 text-rule" aria-hidden="true">/</span>
         <a href="/books/" class="transition-colors hover:text-paper">Books</a>
         <span class="mx-2 text-rule" aria-hidden="true">/</span>
-        <span class="text-cobalt-text" aria-current="page">Workflow book companion</span>
+        <span class="text-cobalt-text" aria-current="page">Free AI work templates</span>
       </nav>
 
       <header class="grid gap-10 border-b border-rule pb-14 lg:grid-cols-12 lg:items-end lg:pb-20">
         <div class="lg:col-span-8">
           <h1 class="studio-display text-[clamp(52px,8vw,108px)] leading-[0.88]">
-            The book stays durable<span class="text-signal">.</span><br />
-            <strong>The tools stay current.</strong>
+            Ten free templates<br />for organizing <strong>AI work</strong><span class="text-signal">.</span>
           </h1>
         </div>
         <div class="lg:col-span-4">
           <p class="text-[18px] leading-[1.7] text-paper-dim">
-            Ten practical Markdown templates for building a controlled AI operating workspace with current truth, human gates, testing, proof, and recovery.
+            Download ten simple text files for organizing priorities, setting approval rules, testing repeated tasks, recording evidence, and explaining what to do when something fails.
           </p>
           <p class="mt-5 font-mono text-[11px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">
-            Forthcoming book companion · Free · No email gate
+            Companion to Keith's next book · Free · No email required
           </p>
         </div>
       </header>
@@ -183,46 +182,46 @@ const companionJsonLd = {
       >
         <div class="lg:col-span-4">
           <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text">
-            Direct answer
+            Plain-English overview
           </p>
           <h2
             id="direct-answer-title"
             class="studio-display mt-4 text-[clamp(34px,4vw,52px)] leading-[1]"
           >
-            What is the <strong>living companion?</strong>
+            What do these files <strong>help you do?</strong>
           </h2>
         </div>
         <div class="space-y-5 text-[16px] leading-[1.75] text-paper-dim lg:col-span-8">
           <p>
-            This is the companion resource for Keith Staggers's forthcoming field guide to controlled AI workflows. The book explains the durable decisions. These files give you an editable starting point and can change as better practices emerge.
+            These files help one person or a small team keep AI work organized. They record the current priority, the rules AI must follow, the tasks in progress, who approves important actions, and the evidence showing what actually happened.
           </p>
           <p>
-            Start with the first six files to create one operating workspace. Then define one repeated job, test ten normal and failure cases, set authority by consequence, and prove that another operator can stop and recover the system.
+            Start with the first six files to organize the work. Then describe one repeated task, test it with ten normal and failure examples, decide which actions require approval, and make sure another person can use it and handle a problem.
           </p>
           <p>
-            The files do not make a workflow secure, compliant, or correct by themselves. Use only material you own or are allowed to use, and keep money, identity, binding commitments, professional judgment, and sensitive information behind the appropriate human decision.
+            The files do not make an AI process safe, legal, or correct by themselves. Use only information you own or are allowed to use. A responsible person must approve money, identity, contracts, professional decisions, and sensitive information.
           </p>
         </div>
       </section>
 
       <section
         class="grid gap-px border-b border-rule bg-rule/70 sm:grid-cols-3"
-        aria-label="Companion workflow"
+        aria-label="Three jobs the templates help with"
       >
         <div class="bg-ink p-6 lg:p-8">
-          <span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">01 · ORIENT</span>
-          <h2 class="mt-4 text-xl font-semibold">Make the work legible</h2>
-          <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">Write stable context, current state, and a short queue without mixing plans with proof.</p>
+          <span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">01 · UNDERSTAND</span>
+          <h2 class="mt-4 text-xl font-semibold">Make the work easy to understand</h2>
+          <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">Write down what matters now, what is in progress, and which facts are confirmed.</p>
         </div>
         <div class="bg-ink p-6 lg:p-8">
-          <span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">02 · CONTROL</span>
-          <h2 class="mt-4 text-xl font-semibold">Put consequences behind gates</h2>
-          <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">Define what AI may do, what it may prepare, and what the responsible human must decide.</p>
+          <span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">02 · SET RULES</span>
+          <h2 class="mt-4 text-xl font-semibold">Decide what needs approval</h2>
+          <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">Write down what AI may do, what it may prepare, and what a responsible person must decide.</p>
         </div>
         <div class="bg-ink p-6 lg:p-8">
-          <span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">03 · PROVE</span>
-          <h2 class="mt-4 text-xl font-semibold">Test, record, transfer, recover</h2>
-          <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">Use observable finish lines and failure cases before depending on the workflow.</p>
+          <span class="font-mono text-[10px] tracking-[0.16em] text-cobalt-text">03 · TEST</span>
+          <h2 class="mt-4 text-xl font-semibold">Test the process and prepare for failure</h2>
+          <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">Test a clear result and common failures before depending on the process.</p>
         </div>
       </section>
 
@@ -236,12 +235,12 @@ const companionJsonLd = {
               id="templates-title"
               class="studio-display mt-4 text-[clamp(42px,6vw,82px)] leading-[0.94]"
             >
-              Ten files<span class="text-signal">.</span><br /><strong>One controlled workspace.</strong>
+              Ten files<span class="text-signal">.</span><br /><strong>One organized workspace.</strong>
             </h2>
           </div>
           <div class="lg:col-span-4">
             <p class="text-[15px] leading-[1.7] text-paper-dim">
-              Plain text travels well. Download each file, complete only what you know, and mark unread facts <code class="text-paper">UNKNOWN</code>.
+              These are simple text files. Download each one, complete only what you know, and mark anything you have not verified as <code class="text-paper">UNKNOWN</code>.
             </p>
             <p class="mt-4 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint">
               Version {workflowBookCompanion.version} · Updated July 30, 2026
@@ -276,7 +275,7 @@ const companionJsonLd = {
                 data-workflow-book-download={template.slug}
                 data-workflow-book-placement="template-list"
               >
-                Download .md
+                Download text template
               </a>
             </li>
           ))}
@@ -288,10 +287,10 @@ const companionJsonLd = {
             class="studio-button studio-button--cobalt"
             data-workflow-template-action="companion-browser-test"
           >
-            Use the browser-based Ten-Case Test
+            Use the ten-example testing worksheet
           </a>
           <p class="max-w-xl text-sm leading-[1.7] text-paper-faint">
-            The browser worksheet saves locally, exports CSV, and prints to PDF. Use synthetic or approved data only.
+            The browser worksheet saves only on your device, exports a spreadsheet file, and prints to PDF. Use made-up or specifically approved information only.
           </p>
         </div>
       </section>
@@ -302,26 +301,26 @@ const companionJsonLd = {
       >
         <div class="lg:col-span-4">
           <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text">
-            Durable core · Living layer
+            Book and companion
           </p>
           <h2
             id="versioning-title"
             class="studio-display mt-4 text-[clamp(34px,4vw,52px)] leading-[1]"
           >
-            Why the system is <strong>split in two.</strong>
+            Why keep the book and <strong>templates separate?</strong>
           </h2>
         </div>
         <div class="grid gap-px bg-rule/70 sm:grid-cols-2 lg:col-span-8">
           <div class="bg-ink p-6">
-            <h3 class="text-lg font-semibold">The durable book</h3>
+            <h3 class="text-lg font-semibold">The book explains the decisions</h3>
             <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">
-              Sources, decision rights, workflow contracts, finish lines, testing, evidence, recovery, and transfer. The ideas should remain useful across tools.
+              The book explains sources, approval rights, repeated-task plans, clear results, testing, evidence, failure handling, and team use. These ideas should remain useful as tools change.
             </p>
           </div>
           <div class="bg-ink p-6">
-            <h3 class="text-lg font-semibold">The living companion</h3>
+            <h3 class="text-lg font-semibold">The templates can keep improving</h3>
             <p class="mt-3 text-[15px] leading-[1.7] text-paper-dim">
-              Editable templates, corrections, dated versions, and implementation notes. This layer can improve without rewriting the durable argument.
+              The editable files can receive corrections, new versions, and practical notes without requiring a new edition of the book.
             </p>
           </div>
         </div>
@@ -356,13 +355,13 @@ const companionJsonLd = {
       <section class="grid items-end gap-10 border-t border-rule pt-16 lg:grid-cols-12 lg:pt-24">
         <div class="lg:col-span-8">
           <h2 class="studio-display text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
-            Build one useful workflow<span class="text-signal">.</span><br />
-            <strong>Keep the consequential judgment.</strong>
+            Build one useful process<span class="text-signal">.</span><br />
+            <strong>Keep people responsible.</strong>
           </h2>
         </div>
         <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
           <a href="/books/" class="studio-button studio-button--secondary">See Keith's current books</a>
-          <a href="/services/training/" class="studio-button studio-button--secondary">Explore practical AI training</a>
+          <a href="/services/training/" class="studio-button studio-button--secondary">See practical AI training</a>
         </div>
       </section>
     </div>
