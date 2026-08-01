@@ -12,12 +12,19 @@ export const site = {
   verification: {
     google: "rgjOz-yffU1GPVoW7egiohALY7BiR2sCpCCV8zsojkY",
   },
+  buy: {
+    bookLabel: "Buy Build the Workflow",
+    bookPath: "/books/build-the-workflow-keep-the-judgment/",
+    productLabel: "Get The Finish Loop",
+    productPath: "/finish-loop/",
+  },
   newsletter: {
-    // Newsletter signups. Create a free account at https://buttondown.com,
-    // then set your Buttondown username here and the form posts straight to it.
-    // While this is empty, the form falls back to opening an email to you so
-    // no signup is ever lost.
+    name: "The Frontline AI Brief",
+    path: "/newsletter/",
+    privacyPath: "/privacy/",
+    provider: "Buttondown",
     buttondownUsername: "staggers",
+    cadence: "At most two emails per month",
   },
   booking: {
     // Public scheduling is intentionally gated. Visitors answer the project-fit
@@ -41,7 +48,8 @@ export const site = {
   },
   nav: [
     { label: "How I Help", href: "/services/" },
-    { label: "Examples", href: "/proof/" },
+    { label: "Proof", href: "/proof/" },
+    { label: "Buy", href: "/#finish-loop" },
     { label: "Articles", href: "/notes/" },
     { label: "Books", href: "/books/" },
     { label: "About", href: "/about/" },

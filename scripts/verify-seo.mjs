@@ -12,6 +12,11 @@ const hasAttributedAmazonLink = (html, amazonUrl, bookSlug, format) =>
     `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(amazonUrl)}["'])(?=[^>]*\\bdata-amazon-book=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-amazon-format=["']${escapeRegExp(format)}["'])[^>]*>`,
     "i"
   ).test(html);
+const hasMarkedInternalLink = (html, marker, href) =>
+  new RegExp(
+    `<a\\b(?=[^>]*\\b${escapeRegExp(marker)}(?:=["'][^"']*["'])?)(?=[^>]*\\bhref=["']${escapeRegExp(href)}["'])[^>]*>`,
+    "i"
+  ).test(html);
 const walk = (directory) =>
   fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const target = path.join(directory, entry.name);
@@ -122,12 +127,15 @@ const today = new Date().toISOString().slice(0, 10);
 if (sitemapLastmods.some((value) => !/^\d{4}-\d{2}-\d{2}$/.test(value) || value > today)) {
   fail("sitemap: lastmod values must be valid, non-future ISO dates");
 }
-if (sitemapRoutes.includes("/finish-loop/thank-you/")) fail("sitemap: thank-you route must be excluded");
+for (const excludedRoute of ["/finish-loop/thank-you/", "/privacy/"]) {
+  if (sitemapRoutes.includes(excludedRoute)) fail(`sitemap: ${excludedRoute} must be excluded`);
+}
 if (sitemapRoutes.includes("/ai-workflow-guide.pdf")) fail("sitemap: PDF must remain excluded");
 
 const titles = new Map();
 const descriptions = new Map();
 const indexableRoutes = [];
+const expectedNoindexRoutes = new Set(["/finish-loop/thank-you/", "/privacy/"]);
 const requiredSchema = new Map([
   ["/", ["WebSite", "Person", "Organization"]],
   ["/about/", ["ProfilePage", "BreadcrumbList"]],
@@ -135,6 +143,8 @@ const requiredSchema = new Map([
   ["/finish-loop/", ["Product", "FAQPage", "BreadcrumbList"]],
   ["/frontline-nurse-leader/", ["Course", "BreadcrumbList"]],
   ["/notes/", ["Blog", "ItemList", "BreadcrumbList"]],
+  ["/newsletter/", ["WebPage", "ItemList", "BreadcrumbList"]],
+  ["/privacy/", ["WebPage", "BreadcrumbList"]],
   ["/project-fit/", ["WebPage", "BreadcrumbList"]],
   ["/proof/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
   ["/services/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
@@ -199,8 +209,8 @@ for (const page of pages) {
     descriptions.set(description, route);
   }
 
-  if (route === "/finish-loop/thank-you/" && !noindex) fail(`${route}: expected noindex`);
-  if (route !== "/finish-loop/thank-you/" && noindex) fail(`${route}: unexpected noindex`);
+  if (expectedNoindexRoutes.has(route) && !noindex) fail(`${route}: expected noindex`);
+  if (!expectedNoindexRoutes.has(route) && noindex) fail(`${route}: unexpected noindex`);
   if (!noindex && !robotsMeta.includes("max-image-preview:large")) {
     fail(`${route}: missing max-image-preview:large`);
   }
@@ -208,6 +218,32 @@ for (const page of pages) {
     fail(`${route}: skip link or main target is missing`);
   }
   if (/<video\b[^>]*\sautoplay/i.test(html)) fail(`${route}: autoplay video is not allowed`);
+
+  for (const [marker, href] of [
+    ["data-global-buy", "/books/build-the-workflow-keep-the-judgment/"],
+    ["data-global-product", "/finish-loop/"],
+    ["data-global-contact", "/project-fit/"],
+    ["data-global-newsletter", "/newsletter/"],
+  ]) {
+    if (!hasMarkedInternalLink(html, marker, href)) {
+      fail(`${route}: global conversion link ${marker} must point to ${href}`);
+    }
+  }
+  const sharedHeader = html.match(/<header\b[^>]*\bclass=["'][^"']*studio-nav-wrap[^"']*["'][^>]*>[\s\S]*?<\/header>/i)?.[0] ?? "";
+  for (const [label, href] of [
+    ["Proof", "/proof/"],
+    ["Buy", "/#finish-loop"],
+    ["Books", "/books/"],
+  ]) {
+    const linkCount = (
+      sharedHeader.match(
+        new RegExp(`<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(href)}["'])[^>]*>\\s*${escapeRegExp(label)}\\s*</a>`, "gi")
+      ) ?? []
+    ).length;
+    if (linkCount < 2) {
+      fail(`${route}: desktop and mobile navigation both need ${label} linking to ${href}`);
+    }
+  }
 
   const routeSchema = requiredSchema.get(route) ?? [];
   if (route.startsWith("/services/") && route !== "/services/") {
@@ -313,6 +349,28 @@ const plainLanguageContracts = new Map([
     [
       "Books for real work and real decisions.",
       "Keith has written three books:",
+    ],
+  ],
+  [
+    "/newsletter/",
+    [
+      "The Frontline AI Brief",
+      "At most two emails per month",
+      "Buttondown will email you a confirmation link",
+      "You are not subscribed unless you use that link",
+      "Five public examples",
+      "The free tools stay free whether you subscribe or not",
+    ],
+  ],
+  [
+    "/privacy/",
+    [
+      "Do not send sensitive information",
+      "Newsletter email through Buttondown",
+      "Inquiries through Formspree",
+      "Hosting and privacy-safe measurement through Vercel",
+      "Purchases happen in external stores",
+      "protected health information or PHI",
     ],
   ],
   [
@@ -440,13 +498,59 @@ for (const imagePath of meaningfulHomepageImages) {
   const tag = homepage.match(new RegExp(`<img\\s+[^>]*src="${escapedPath}"[^>]*>`, "i"))?.[0] ?? "";
   if (!tag || !/\balt="[^"]+"/i.test(tag)) fail(`homepage: meaningful image ${imagePath} needs descriptive alt text`);
 }
-if (/advent\s*health|charter\s*rn|4\s*east|\bhuron\b/i.test(pages.map((page) => page.html).join("\n"))) {
-  fail("release: excluded public material is present");
+const allPublicHtml = pages.map((page) => page.html).join("\n");
+const compiledClientScripts = walk(distDir)
+  .filter((file) => file.endsWith(".js"))
+  .map((file) => fs.readFileSync(file, "utf8"))
+  .join("\n");
+if (!compiledClientScripts.includes("Site Conversion Path Selected")) {
+  fail("conversion: shared book, product, contact, and newsletter paths need an analytics event");
 }
-if (/mailto:|kcstaggers@gmail\.com/i.test(pages.map((page) => page.html).join("\n"))) {
+for (const marker of ["data-global-buy", "data-global-product", "data-global-contact", "data-global-newsletter"]) {
+  if (!compiledClientScripts.includes(marker)) {
+    fail(`conversion: analytics handler does not consume ${marker}`);
+  }
+}
+if (/advent\s*health|4\s*east|\bhuron\b/i.test(allPublicHtml)) {
+  fail("release: excluded employer material is present");
+}
+
+const charterAllowedRoutes = new Set(["/", "/proof/"]);
+for (const page of pages.filter((candidate) => /charter\s*rn/i.test(visibleText(candidate.html)))) {
+  if (!charterAllowedRoutes.has(page.route)) {
+    fail(`${page.route}: CharterRN may appear only on the homepage and Proof page`);
+    continue;
+  }
+
+  const boundaries = [
+    ...page.html.matchAll(
+      /<([a-z][a-z0-9:-]*)\b[^>]*\bdata-charterrn-boundary(?:=["'][^"']*["'])?[^>]*>([\s\S]*?)<\/\1\s*>/gi
+    ),
+  ];
+  if (boundaries.length === 0) {
+    fail(`${page.route}: CharterRN needs a data-charterrn-boundary disclosure`);
+    continue;
+  }
+
+  const boundaryText = boundaries.map((boundary) => visibleText(boundary[0])).join(" ").toLowerCase();
+  for (const phrase of [
+    "charterrn",
+    "separate venture",
+    "synthetic demo data",
+    "not a keith staggers studio service",
+  ]) {
+    if (!boundaryText.includes(phrase)) {
+      fail(`${page.route}: CharterRN boundary is missing "${phrase}"`);
+    }
+  }
+  if (/\b(?:employer|client|customer|result|results|outcome|outcomes)\b|\b(?:built for|used by|delivered to|improved for)\b/i.test(boundaryText)) {
+    fail(`${page.route}: CharterRN boundary implies an employer, client, or result claim`);
+  }
+}
+
+if (/mailto:|kcstaggers@gmail\.com/i.test(allPublicHtml)) {
   fail("release: public personal email path is present");
 }
-const allPublicHtml = pages.map((page) => page.html).join("\n");
 const unavailableWorkflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
 if (/Beyond Burnout|No Fear Nursing/i.test(allPublicHtml)) {
   fail("books: retired test or alternate-title records must not appear in the public site");
@@ -824,6 +928,86 @@ if (!projectFitPage.includes('action="https://formspree.io/f/xwvgnryp"')) {
   fail("project-fit: secure inquiry endpoint changed or is missing");
 }
 
+const newsletterPage = pages.find((page) => page.route === "/newsletter/")?.html ?? "";
+const newsletterText = visibleTextByRoute.get("/newsletter/") ?? "";
+const newsletterFormTag = newsletterPage.match(
+  /<form\b(?=[^>]*\bdata-newsletter-form(?:=["'][^"']*["'])?)(?=[^>]*\bdata-newsletter-placement=["']newsletter-page["'])(?=[^>]*\baction=["']https:\/\/buttondown\.com\/api\/emails\/embed-subscribe\/staggers["'])(?=[^>]*\bmethod=["']post["'])[^>]*>/i
+)?.[0];
+if (!newsletterFormTag) {
+  fail("newsletter: official normal Buttondown POST form is missing");
+}
+if (!/<input\b(?=[^>]*\btype=["']hidden["'])(?=[^>]*\bname=["']embed["'])(?=[^>]*\bvalue=["']1["'])[^>]*>/i.test(newsletterPage)) {
+  fail("newsletter: Buttondown embed=1 field is missing");
+}
+if (!/<input\b(?=[^>]*\btype=["']email["'])(?=[^>]*\bname=["']email["'])(?=[^>]*\brequired(?:\s|=|>))[^>]*>/i.test(newsletterPage)) {
+  fail("newsletter: required email field is missing");
+}
+const newsletterConsent = newsletterPage.match(
+  /<input\b(?=[^>]*\btype=["']checkbox["'])(?=[^>]*\bname=["']newsletter_consent["'])(?=[^>]*\brequired(?:\s|=|>))[^>]*>/i
+)?.[0] ?? "";
+if (!newsletterConsent) fail("newsletter: required consent checkbox is missing");
+if (/\bchecked(?:\s|=|>)/i.test(newsletterConsent)) {
+  fail("newsletter: consent checkbox must be unchecked by default");
+}
+for (const phrase of [
+  "Buttondown will email you a confirmation link",
+  "You are not subscribed unless you use that link",
+  "At most two emails per month",
+]) {
+  if (!newsletterText.toLowerCase().includes(phrase.toLowerCase())) {
+    fail(`newsletter: consent or cadence copy is missing "${phrase}"`);
+  }
+}
+const newsletterExampleRoutes = sitemapRoutes.filter((route) => /^\/notes\/[^/]+\/$/.test(route));
+if (newsletterExampleRoutes.length !== 5) {
+  fail(`newsletter: expected five published Note examples, found ${newsletterExampleRoutes.length}`);
+}
+for (const route of newsletterExampleRoutes) {
+  if (!newsletterPage.includes(`href="${route}"`)) {
+    fail(`newsletter: published Note example is missing ${route}`);
+  }
+}
+for (const freeResource of ["/workflow-book/", "/workflow-testing-template/"]) {
+  if (!newsletterPage.includes(`href="${freeResource}"`)) {
+    fail(`newsletter: ungated public resource is missing ${freeResource}`);
+  }
+}
+const newsletterSource = fs.readFileSync(path.join("src", "pages", "newsletter.astro"), "utf8");
+if (/preventDefault\s*\(|\bfetch\s*\(|data-newsletter-success|thanks for subscribing/i.test(newsletterSource)) {
+  fail("newsletter: fake success or intercepted provider submission is not allowed");
+}
+const newsletterTrackingBlock = baseLayoutSource.match(
+  /track\("Newsletter Subscribe Attempt",\s*\{([\s\S]*?)\}\);/
+)?.[1] ?? "";
+if (!newsletterTrackingBlock.includes("placement:") || !newsletterTrackingBlock.includes("page:")) {
+  fail("newsletter: privacy-safe subscribe-attempt tracking is missing placement or page");
+}
+if (/email|consent|value|formData|provider|response/i.test(newsletterTrackingBlock)) {
+  fail("newsletter: subscribe-attempt analytics must not contain personal or provider-response data");
+}
+
+const privacyPage = pages.find((page) => page.route === "/privacy/")?.html ?? "";
+const privacyText = visibleTextByRoute.get("/privacy/") ?? "";
+for (const phrase of [
+  "Buttondown",
+  "Formspree",
+  "Vercel",
+  "Amazon",
+  "Lemon Squeezy",
+  "Stripe",
+  "protected health information or PHI",
+  "confidential employer or client material",
+  "does not receive or store card numbers",
+  "Submitting an inquiry does not add you to the newsletter",
+]) {
+  if (!privacyText.toLowerCase().includes(phrase.toLowerCase())) {
+    fail(`privacy: disclosure is missing "${phrase}"`);
+  }
+}
+if (!/<meta\s+[^>]*name=["']robots["'][^>]*content=["']noindex, follow["']/i.test(privacyPage)) {
+  fail("privacy: robots directive must be exactly noindex, follow");
+}
+
 const robots = fs.readFileSync(path.join(distDir, "robots.txt"), "utf8");
 if (!robots.includes("User-agent: *") || !robots.includes("Allow: /")) fail("robots.txt: crawl allow rule is missing");
 if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) fail("robots.txt: canonical sitemap is missing");
@@ -847,6 +1031,15 @@ for (const host of expectedCanonicalHosts) {
 const rssHeaders = vercelConfig.headers?.find((rule) => rule.source === "/rss.xml")?.headers ?? [];
 if (!rssHeaders.some((header) => header.key === "Content-Type" && header.value.includes("application/rss+xml"))) {
   fail("vercel.json: RSS content-type header is missing");
+}
+if (!rssHeaders.some((header) => header.key === "X-Robots-Tag" && header.value === "noindex, follow")) {
+  fail("vercel.json: RSS noindex, follow header is missing");
+}
+const workflowTemplateHeaders = vercelConfig.headers?.find(
+  (rule) => rule.source === "/workflow-book/templates/:path*"
+)?.headers ?? [];
+if (!workflowTemplateHeaders.some((header) => header.key === "X-Robots-Tag" && header.value === "noindex, follow")) {
+  fail("vercel.json: raw workflow-book templates need noindex, follow");
 }
 for (const fileName of ["/llms.txt", "/llms-full.txt"]) {
   const headers = vercelConfig.headers?.find((rule) => rule.source === fileName)?.headers ?? [];
@@ -914,6 +1107,16 @@ for (const [fileName, content] of [
   ["llms.txt", llms],
   ["llms-full.txt", llmsFull],
 ]) {
+  for (const requiredDiscoveryPath of [
+    "/finish-loop/",
+    "/frontline-nurse-leader/",
+    "/workflow-readiness/",
+    "/newsletter/",
+  ]) {
+    if (!content.includes(`${siteUrl}${requiredDiscoveryPath}`)) {
+      fail(`${fileName}: missing discovery path ${requiredDiscoveryPath}`);
+    }
+  }
   for (const requiredWorkflowBookRecord of [
     `${siteUrl}/books/build-the-workflow-keep-the-judgment/`,
     "Build the Workflow. Keep the Judgment.",

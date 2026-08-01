@@ -3,13 +3,14 @@ import { publishedNotes } from "../data/notes";
 
 const latestNotes = [...publishedNotes]
   .sort((a, b) => b.datePublished.localeCompare(a.datePublished) || b.number.localeCompare(a.number))
-  .slice(0, 4);
+  .slice(0, 3);
 ---
 
 <section id="notes" class="studio-section studio-notes scroll-mt-24" aria-labelledby="studio-notes-title">
   <div class="studio-shell studio-notes-grid">
     <header>
-      <h2 id="studio-notes-title" class="studio-display studio-section-title">Practical articles<br />and <strong>guides</strong><span class="text-signal">.</span></h2>
+      <h2 id="studio-notes-title" class="studio-display studio-section-title">Practical articles<br />
+        and <strong>guides</strong><span class="text-signal">.</span></h2>
       <p>
         Plain-English help for using AI at work, training a team, finishing projects, and making a career change.
         <a href="/notes/" class="mt-4 block text-cobalt-text transition-colors hover:text-paper">View all articles and guides →</a>
@@ -23,7 +24,6 @@ const latestNotes = [...publishedNotes]
           <span class="studio-note-body">
             <small>{note.category} · {note.readingTime}</small>
             <b>{note.title}</b>
-            <span>{note.excerpt}</span>
           </span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
         </a>

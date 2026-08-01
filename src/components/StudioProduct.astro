@@ -5,19 +5,19 @@ import { finishLoop } from "../data/products";
 <section id="finish-loop" class="studio-section studio-product scroll-mt-24" aria-labelledby="studio-product-title">
   <div class="studio-shell studio-product-grid">
     <div class="studio-product-copy">
-      <p class="studio-kicker">For solo creators · The Finish Loop</p>
+      <p class="studio-kicker">Always-available project toolkit · The Finish Loop</p>
       <h2 id="studio-product-title" class="studio-display studio-section-title">
         A $49 toolkit for<br /><strong>finishing projects</strong><span class="text-signal">.</span>
       </h2>
-      <p class="studio-section-lede">Use this do-it-yourself toolkit when you have plenty of ideas but struggle to choose one, finish it, and release it.</p>
+      <p class="studio-section-lede">Use this do-it-yourself toolkit when you have plenty of ideas or unfinished drafts but need a clear path to choose one, finish it, and release it.</p>
       <ul class="studio-product-benefits">
         <li>Choose one project and decide what finished looks like.</li>
         <li>Use AI for support while you make the creative decisions.</li>
         <li>Follow the 30-day calendar and simple progress scorecard.</li>
       </ul>
       <p class="studio-product-price"><b>${finishLoop.price}</b><span>one time</span></p>
-      <a href="/finish-loop/" class="studio-button studio-button--cobalt">
-        See what the toolkit includes
+      <a href="/finish-loop/" class="studio-button studio-button--primary">
+        See and buy the $49 toolkit
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
       </a>
     </div>
@@ -56,3 +56,21 @@ import { finishLoop } from "../data/products";
     });
   }
 </script>
+
+<style>
+  .studio-product-stage {
+    min-height: 580px;
+  }
+
+  @media (max-width: 800px) {
+    .studio-product-stage {
+      min-height: 500px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .studio-product-stage {
+      min-height: 410px;
+    }
+  }
+</style>

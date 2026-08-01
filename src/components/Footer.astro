@@ -22,7 +22,13 @@ const year = new Date().getFullYear();
         <a href={site.social.spotify} target="_blank" rel="me noreferrer">Spotify</a>
       </nav>
       <div>
-        <a href={site.booking.intakePath}>Tell Keith what you need help with</a>
+        <nav aria-label="Products, contact, newsletter, and privacy">
+          <a href={site.buy.bookPath}>{site.buy.bookLabel}</a>
+          <a href={site.buy.productPath}>{site.buy.productLabel}</a>
+          <a href={site.booking.intakePath}>Tell Keith what you need help with</a>
+          <a href={site.newsletter.path}>Get {site.newsletter.name}</a>
+          <a href={site.newsletter.privacyPath}>Privacy</a>
+        </nav>
         <p>© {year}</p>
       </div>
     </div>

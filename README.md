@@ -29,6 +29,8 @@ There is no server-side rendering, database, CMS, or public calendar integration
 5. Every service inquiry goes through `/project-fit/`, presented to visitors as `Tell Keith about your task`.
 6. The form sends only after the visitor intentionally submits it through the approved Formspree route.
 7. Keith reviews the inquiry and shares a private calendar link only when the conversation fits.
+8. Every HTML page ends with four measured paths: the owned Build the Workflow book page, The Finish Loop, Project Fit, and the newsletter.
+9. `/newsletter/` uses Buttondown's normal double-confirmation POST. It promises at most two emails per month, leaves consent unchecked, and keeps all free resources open without an email gate.
 
 Recruiters and employment inquiries can use the same form without being forced into a sales-budget answer.
 
@@ -49,7 +51,7 @@ Before release, view the rendered homepage as a new visitor. Within ten seconds 
 
 ## Routes
 
-The build generates 25 static HTML pages. Twenty-four are indexable and appear in the sitemap. The Finish Loop thank-you page is intentionally noindex.
+The build generates 27 static HTML pages. Twenty-five are indexable and appear in the sitemap. The Finish Loop thank-you page and privacy notice are intentionally noindex with followed links.
 
 | Route | Purpose |
 |---|---|
@@ -62,6 +64,8 @@ The build generates 25 static HTML pages. Twenty-four are indexable and appear i
 | `/finish-loop/` | $49 project-finishing toolkit sales page |
 | `/finish-loop/thank-you/` | Post-purchase handoff, intentionally excluded from indexing |
 | `/frontline-nurse-leader/` | Live practical AI class for frontline nurse leaders |
+| `/newsletter/` | Indexed Buttondown-confirmed newsletter page with five public Note examples |
+| `/privacy/` | Plain-language provider and data notice, intentionally excluded from indexing |
 | `/project-fit/` | Tell Keith about your task form before scheduling |
 | `/proof/` | Plain-English examples of independent work |
 | `/services/` | Four clear ways Keith can help |
@@ -89,6 +93,8 @@ Additional machine-readable routes:
 - `/llms-full.txt` as a full public service and article text index.
 - `/robots.txt` with the canonical sitemap location.
 
+Vercel sends `X-Robots-Tag: noindex, follow` for RSS, both AI plaintext indexes, the PDF guide, and raw workflow-book template files. Their canonical HTML hubs remain the preferred search surfaces.
+
 ## Local development
 
 Requires Node.js 24.x and npm.
@@ -114,7 +120,7 @@ npm run preview
 
 | Change | File |
 |---|---|
-| Site identity, navigation, email, social links, and qualification path | `src/data/site.ts` |
+| Site identity, navigation, buy paths, newsletter settings, social links, and qualification path | `src/data/site.ts` |
 | Finish Loop price, content, and checkout URL | `src/data/products.ts` |
 | Service offers, pricing, and detail pages | `src/data/services.ts` |
 | Articles and guides | `src/data/notes.ts` |
@@ -122,6 +128,9 @@ npm run preview
 | Homepage order | `src/pages/index.astro` |
 | Homepage sections | `src/components/Studio*.astro` |
 | Shared shell, metadata, structured data, and analytics | `src/layouts/Base.astro` |
+| Global four-path conversion band | `src/components/SiteConversion.astro` |
+| Newsletter signup and public examples | `src/pages/newsletter.astro` |
+| Plain-language privacy notice | `src/pages/privacy.astro` |
 | Fixed-page sitemap modification dates | `src/data/route-metadata.ts` |
 | Build-time SEO release gate | `scripts/verify-seo.mjs` |
 | Read-only production smoke test | `scripts/verify-live.mjs` |

@@ -11,6 +11,6 @@ export const testimonials: Testimonial[] = [
     quote:
       "Keith built the entire visual identity for my podcast in a week. Cover art, episode thumbnails, social cards. Work I'd budgeted three months and an agency for.",
     name: "Kevin Lazar",
-    role: "Podcast host",
+    role: "Nurse practitioner and podcast host",
   },
 ];

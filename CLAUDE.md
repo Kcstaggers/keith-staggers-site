@@ -12,9 +12,19 @@ Live at **https://www.keithstaggers.com** (apex redirects to www).
 
 The current production site uses the near-black AI studio experience built around Keith Photo 9, electric cobalt, ultraviolet depth, and coral actions. It leads with a useful four-part method, then Notes, The Finish Loop, clear buyer-intent services, proof, and Keith's story. Nursing remains a proof-rich specialty without becoming the brand ceiling. The Studio redesign and project-fit gate went live July 13, 2026. The Finish Loop product previews and phone-width corrections went live July 14, 2026. The default social preview is the photo-free 1200 × 630 brand graphic at `public/og-keith-staggers-v2.png`; keep its versioned filename when replacing it so LinkedIn does not reuse an obsolete cached image.
 
-### Pending book-sales release, July 31, 2026
+### Book-sales release merged, July 31, 2026
 
-Branch `codex/book-sales-live-20260731` stages a direct revenue correction and is not production until its exact release gate is approved. It adds the canonical Build the Workflow. Keep the Judgment. page, the verified $9.99 United States Kindle purchase path, current Books hub and companion copy, Work-plus-edition Book schema, AI-readable records, and format-level Amazon click measurement. The $17.99 paperback remains visible as published and propagating but has no link while ASIN `B0HCCG4CTX` still returns Page Not Found on Amazon.com. The staged build contains 25 HTML pages and 24 indexable URLs. It does not redesign the homepage, change an offer or price, advertise, activate the paperback, or spend money.
+PR #37 merged the approved book-sales release to `main` at `ff6fdb5`. It adds the canonical Build the Workflow. Keep the Judgment. page, the verified $9.99 United States Kindle purchase path, current Books hub and companion copy, Work-plus-edition Book schema, AI-readable records, and format-level Amazon click measurement. The $17.99 paperback remains visible as published and propagating but has no link while ASIN `B0HCCG4CTX` still returns Page Not Found on Amazon.com. Production contains 25 HTML pages and 24 indexable URLs. The release did not advertise, activate the paperback, or spend money.
+
+### Current V8 conversion and discovery staging, August 1, 2026
+
+Branch `codex/final-site-v8-20260801` starts from PR #37 and stages the approved V8 revenue experience. It is not production until its own release gate is approved. The expected build contains 27 HTML pages and 25 indexable URLs. `/finish-loop/thank-you/` and `/privacy/` are `noindex, follow` and excluded from the sitemap.
+
+Every HTML page must render the shared `SiteConversion.astro` band after `main`. Preserve its four exact measured destinations: `data-global-buy` to the owned Build the Workflow page, `data-global-product` to `/finish-loop/`, `data-global-contact` to `/project-fit/`, and `data-global-newsletter` to `/newsletter/`.
+
+The indexed `/newsletter/` page uses the official normal Buttondown POST with hidden `embed=1`, required email, and a required consent checkbox that is unchecked by default. Copy must name Buttondown, explain that confirmation is required before subscription, promise at most two emails per month, show all five published Notes, and keep the free workflow resources ungated. Do not add JavaScript submission interception or a fake success state. Vercel Analytics may record only the Newsletter Subscribe Attempt placement and page, never the email, consent choice, or provider response.
+
+The plain-language `/privacy/` notice distinguishes Buttondown newsletter processing, Formspree inquiries, Vercel hosting and privacy-safe analytics, browser-local tools, and Amazon, Lemon Squeezy, and Stripe purchases. It explicitly rejects PHI, patient data, confidential material, passwords, credentials, and secrets. RSS and raw workflow-book templates receive `X-Robots-Tag: noindex, follow` so their canonical HTML hubs remain the preferred discovery surfaces.
 
 ## Tech stack
 
@@ -224,8 +234,8 @@ Updated July 26, 2026. Keith chose the portrait-and-music Studio homepage as the
 ### Git and rollback
 
 - Authoritative branch: `main`
-- Current production commit: `b4251ecde30a0e10a1c6c18bcf2e51bebb44e0e1`, merged through PR #30.
-- Current production Vercel target: `EmBc5ikyTedPuBfBFdA8P9qxrPNT`, status `success`.
+- Current production commit: `ff6fdb5`, merged through PR #37.
+- PR #30 historical Vercel target: `EmBc5ikyTedPuBfBFdA8P9qxrPNT`, status `success`.
 - PR #30 removed the cancelled Finish Log 002 release promise and automatic unlock while preserving the static bounded AI Canvas proof record.
 - Books-and-template production commit: `b4805e52e86092c786703dff577dcc5cfae5e778`, merged through PR #27 and deployed successfully as Vercel record `5606204664`.
 - Pre-books-and-template production commit: `fad7ef71c8a3bf8eb8ea59fc79e345c500792c45`, merged through PR #26.
@@ -242,7 +252,7 @@ Updated July 26, 2026. Keith chose the portrait-and-music Studio homepage as the
 - Inter display type with mono utility text
 - Keith Photo 9 as a recurring circular identity portal with orbit lines and subtle pointer motion
 - Keith Photo 5 is embedded in the actual Finish Loop field-manual cover and drives the homepage product stage, sales page, thank-you page, and social campaign image
-- Music is the dominant catalog proof with a featured Spotify stage and six-release rail. The two primary books appear as a compact supporting strip that leads to the owned Books pages
+- Music is the dominant catalog proof with a featured Spotify stage and six-release rail. The three published books lead to the owned Books pages.
 - Open bands, rails, cinematic stages, and thin rules. No cream background, default bento grid, decorative hero eyebrow, or tint over Keith's face
 - Homepage order: studio hero, production ticker, useful four-part method, Studio Notes, Finish Loop, service selector, interactive work stage, catalog proof, three-lives story, qualification close
 
@@ -279,11 +289,11 @@ The design spec includes the desktop and mobile concepts, responsive rules, moti
 - The Finish Loop page was also verified at an exact 390px viewport with a 390px document width after replacing implicit grid minimums with `minmax(0, 1fr)`.
 - Desktop native client viewport has no page-level horizontal overflow.
 - Mobile browser console and page errors were clean during the interaction pass.
-- Current production builds 22 static HTML pages. Twenty-one are indexable and the Finish Loop thank-you page remains `noindex`.
+- Current production builds 25 static HTML pages. Twenty-four are indexable and the Finish Loop thank-you page remains `noindex`.
 - The canonical Proof page contains no Finish Log 002 label, cancelled YouTube URL, August 2 promise, countdown, or timed unlock code.
 - `npx astro check` passes with 0 errors and 0 warnings, plus 5 existing inactive legacy hints. `npm run build` now includes the committed SEO release gate.
 - A clean `npm ci` and `npm audit` report zero vulnerabilities.
-- `npm run verify:live` passes all 21 indexable URLs, canonical-host handling, RSS, AI text, PDF, caching, and bot-access checks.
+- `npm run verify:live` passes the production discovery surfaces, canonical-host handling, RSS, AI text, PDF, caching, and bot-access checks.
 - `/books/`, both owned book-detail pages, and `/workflow-testing-template/` return HTTP 200 in production. The apex `/books/` request returns an exact permanent 308 to the matching www URL.
 - Production desktop at 1440 pixels and mobile at 390 pixels have no page-level horizontal overflow, visible broken images, or relevant browser console errors.
 - Latest QA screenshots are under `/Users/keithstaggers/.codex/visualizations/2026/07/12/019f57c3-3582-7623-9d6a-ffa5103b48ca/` with the `website-value-funnel-` prefix.
@@ -293,14 +303,14 @@ Before future publishing, rerun `npx astro check` and `npm run build`, commit on
 
 ## Current public discovery state
 
-Updated July 25, 2026. This section supersedes older route-count and discovery status below.
+Updated July 31, 2026. This section describes production before the current V8 staging branch.
 
 - The broad Studio homepage remains the primary identity. Do not replace it with a cohort-first or employer-led homepage.
 - Canonical authority hubs live at `/about/`, `/services/`, and `/notes/`.
-- The live production build contains 22 static HTML pages, with 21 indexable URLs in the generated sitemap. `/finish-loop/thank-you/` remains excluded and `noindex`.
+- The live production build contains 25 static HTML pages, with 24 indexable URLs in the generated sitemap. `/finish-loop/thank-you/` remains excluded and `noindex`.
 - Canonical URLs use the www host and trailing slashes. Astro and Vercel enforce the route policy. The apex domain now returns a permanent 308 to the matching www route.
-- `/books/` is the owned catalog hub for the two primary books. `/books/nurse-the-fck-up/` and `/books/leading-with-care/` carry substantive copy, verified ISBN, ASIN, publisher, publication-date, format, and page-count records, connected Book and breadcrumb schema, and measured Amazon calls to action.
-- Each Book entity and visible book-detail record links to its verified Goodreads and Open Library record. The global Person entity links to Keith's verified Goodreads and Open Library author records. Google Books remains absent because no matching record has been verified.
+- `/books/` is the owned catalog hub for three published books. `/books/build-the-workflow-keep-the-judgment/`, `/books/nurse-the-fck-up/`, and `/books/leading-with-care/` carry substantive copy and connected Book records. Verified live Amazon calls to action are measured by book, format, and placement. The Build the Workflow paperback remains listed as propagating without a public Amazon link.
+- Nurse the F*ck Up and Leading with Care link to their verified Goodreads and Open Library records. The global Person entity links to Keith's verified Goodreads and Open Library author records. Build the Workflow and Google Books remain without catalog links because no matching records have been verified.
 - `/workflow-testing-template/` is the public 10-case workflow-testing asset. It requires no email, stores entries in the visitor's browser, and supports CSV export and printing to PDF with explicit safety and human-review fields.
 - Global `WebSite`, `Person`, and Studio `Organization` entities use stable IDs. Page-specific ProfilePage, Service, FAQPage, BlogPosting, Product, ItemList, CollectionPage or Blog, WebPage, and BreadcrumbList markup connect to them as appropriate.
 - Published Notes have visible author and date records, unique 1200 by 630 images, direct-answer summaries, curated related reading, and contextual internal resources.
@@ -321,14 +331,14 @@ Production release verification:
 
 - `npm run verify`: passed
 - `npm audit --omit=dev --audit-level=high`: zero vulnerabilities
-- SEO release gate: 22 HTML pages, 21 indexable URLs
+- SEO release gate: 25 HTML pages, 24 indexable URLs
 - Mobile Lighthouse: 97 to 98 performance, 100 accessibility, 100 SEO, and 96 best practices. The best-practices deduction is the expected local-only Vercel Analytics 404.
 - Desktop and 390-pixel mobile rendered QA: no visible overflow or broken interaction in checked paths
 - Project-fit form: still posts to the verified Formspree endpoint
 - PR #27 production deployment `5606204664`: success
 - PR #28 functional production deployment `5606419003`: success
-- `npm run verify:live`: passed for all 21 indexable URLs and the supporting discovery files
-- Both live book pages expose the verified Goodreads and Open Library links in visible records and Book `sameAs`; the homepage Person `sameAs` exposes both verified author records
+- `npm run verify:live`: passed for the production indexable URLs and supporting discovery files
+- The Nurse the F*ck Up and Leading with Care pages expose verified Goodreads and Open Library links in visible records and Book `sameAs`; the homepage Person `sameAs` exposes both verified author records
 - Canonical-host 308, the original four-URL Bing submission, and the PR #28 two-book Bing resubmission: passed
 
 ## Historical revenue handoff: Finish Loop launch
@@ -463,7 +473,7 @@ The following untracked items predate or sit outside the Finish Loop commits. Pr
 
 ## Pending / nice-to-haves
 
-- Newsletter is intentionally off the homepage. Do not restore it until there is a real publishing cadence and at least four issues drafted.
+- Keep the legacy `src/components/Newsletter.astro` off the homepage. The approved newsletter now lives at `/newsletter/`, is linked from the shared conversion band and footer, and uses the five published Notes as public examples. Do not add a second embedded homepage form.
 - `business-launch-kit-2026-07-11.md` contains the Facebook cadence, six ready posts, and LinkedIn profile starter copy. No external posts were published as part of the site build.
 - Five published-state Studio Notes are in production: finishing, practical team training, reinvention, workflow handoff, and the six-job content system. Future Notes remain outside the site until exact approval.
 - Local rollback point before the July 11 redesign: `backup/pre-phenomenal-redesign-2026-07-11`.

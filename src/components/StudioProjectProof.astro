@@ -1,0 +1,523 @@
+---
+import { portfolioProjects } from "../data/portfolio";
+
+type Mode = "tabs" | "stacked";
+
+interface Props {
+  mode?: Mode;
+}
+
+const { mode = "tabs" } = Astro.props;
+const isTabbed = mode === "tabs";
+const idPrefix = `studio-project-proof-${mode}`;
+const headingId = `${idPrefix}-title`;
+const sectionId = isTabbed ? "proof" : "project-proof";
+---
+
+<section
+  id={sectionId}
+  class:list={["project-proof", `project-proof--${mode}`]}
+  aria-labelledby={headingId}
+  data-project-proof={mode}
+>
+  <div class="project-proof__shell">
+    <header class="project-proof__head">
+      <div>
+        <p class="project-proof__kicker">Selected independent work</p>
+        <h2 id={headingId}>Real products. <strong>Real screens.</strong></h2>
+      </div>
+      <p>
+        Three working builds show how Keith turns a clear problem into a usable system. Each example names its limits as clearly as its purpose.
+      </p>
+    </header>
+
+    {isTabbed && (
+      <div
+        class="project-proof__tabs"
+        role="tablist"
+        aria-label="Choose a product example"
+        aria-orientation="horizontal"
+      >
+        {portfolioProjects.map((project, index) => (
+          <button
+            id={`${idPrefix}-tab-${project.id}`}
+            class="project-proof__tab"
+            type="button"
+            role="tab"
+            aria-selected={index === 0 ? "true" : "false"}
+            aria-controls={`${idPrefix}-panel-${project.id}`}
+            tabindex={index === 0 ? 0 : -1}
+            data-project-tab
+          >
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            {project.name}
+          </button>
+        ))}
+      </div>
+    )}
+
+    <div class="project-proof__projects">
+      {portfolioProjects.map((project, projectIndex) => {
+        const boundaryId = `${idPrefix}-boundary-${project.id}`;
+
+        return (
+          <article
+            id={isTabbed ? `${idPrefix}-panel-${project.id}` : project.id}
+            class="project-proof__project"
+            role={isTabbed ? "tabpanel" : undefined}
+            aria-labelledby={isTabbed ? `${idPrefix}-tab-${project.id}` : undefined}
+            aria-describedby={boundaryId}
+            hidden={isTabbed && projectIndex > 0}
+            data-project-panel={isTabbed ? "" : undefined}
+            data-project={project.id}
+          >
+            <div class="project-proof__copy">
+              <p class="project-proof__label">{project.label}</p>
+              <h3>{project.name}</h3>
+              <p class="project-proof__description">{project.description}</p>
+              <p
+                id={boundaryId}
+                class="project-proof__boundary"
+                data-charterrn-boundary={project.id === "charterrn" ? "" : undefined}
+              >
+                {project.boundary}
+              </p>
+              {(isTabbed || (project.publicUrl && project.publicLabel)) && (
+                <div class="project-proof__actions">
+                  {project.publicUrl && project.publicLabel && (
+                    <a
+                      class="project-proof__link"
+                      href={project.publicUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {project.publicLabel}
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  {isTabbed && (
+                    <a
+                      class:list={[
+                        "project-proof__link",
+                        "project-proof__link--secondary",
+                      ]}
+                      href={`/proof/#${project.id}`}
+                    >
+                      See the full proof
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div
+              class="project-proof__visual"
+              data-screen-count={String(project.screens.length)}
+              aria-label={`${project.name} screens`}
+            >
+              {project.screens.map((screen) => (
+                <figure class:list={["project-proof__screen", `project-proof__screen--${screen.role}`]}>
+                  <img
+                    src={screen.src}
+                    alt={screen.alt}
+                    width={screen.width}
+                    height={screen.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ))}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+{isTabbed && (
+  <script>
+    const projectProofRoots = document.querySelectorAll<HTMLElement>(
+      '[data-project-proof="tabs"]'
+    );
+
+    for (const root of projectProofRoots) {
+      const tabs = Array.from(
+        root.querySelectorAll<HTMLButtonElement>("[data-project-tab]")
+      );
+      const panels = Array.from(
+        root.querySelectorAll<HTMLElement>("[data-project-panel]")
+      );
+
+      const activateTab = (tab: HTMLButtonElement, moveFocus = false) => {
+        const controlledPanel = tab.getAttribute("aria-controls");
+
+        for (const candidate of tabs) {
+          const selected = candidate === tab;
+          candidate.setAttribute("aria-selected", String(selected));
+          candidate.tabIndex = selected ? 0 : -1;
+        }
+
+        for (const panel of panels) {
+          panel.hidden = panel.id !== controlledPanel;
+        }
+
+        if (moveFocus) tab.focus();
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => activateTab(tab));
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex: number | undefined;
+
+          if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+          if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === "Home") nextIndex = 0;
+          if (event.key === "End") nextIndex = tabs.length - 1;
+          if (nextIndex === undefined) return;
+
+          event.preventDefault();
+          activateTab(tabs[nextIndex], true);
+        });
+      });
+    }
+  </script>
+)}
+
+<style>
+  .project-proof {
+    position: relative;
+    overflow: clip;
+    border-bottom: 1px solid var(--color-rule, #282c36);
+    background:
+      radial-gradient(circle at 78% 18%, rgb(40 81 255 / 0.12), transparent 24rem),
+      linear-gradient(180deg, rgb(8 10 15 / 0.98), rgb(5 6 8 / 0.98));
+    color: var(--color-paper, #f4f6fb);
+  }
+
+  .project-proof__shell {
+    width: min(100%, 1440px);
+    margin-inline: auto;
+    padding: clamp(4.5rem, 7vw, 7rem) clamp(1.25rem, 3.2vw, 3rem);
+  }
+
+  .project-proof__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.65fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: end;
+  }
+
+  .project-proof__kicker,
+  .project-proof__label {
+    margin: 0 0 1rem;
+    color: var(--color-cobalt-text, #6684ff);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .project-proof__head h2 {
+    max-width: 780px;
+    margin: 0;
+    font-size: clamp(2.55rem, 5vw, 4.25rem);
+    font-weight: 760;
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+
+  .project-proof__head h2 strong {
+    color: var(--color-cobalt-text, #6684ff);
+    font-weight: inherit;
+  }
+
+  .project-proof__head > p {
+    max-width: 520px;
+    margin: 0;
+    color: var(--color-paper-dim, #a8abb7);
+    font-size: clamp(0.95rem, 1.25vw, 1.08rem);
+    line-height: 1.65;
+  }
+
+  .project-proof__tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: clamp(2.5rem, 4vw, 4rem);
+    border-block: 1px solid var(--color-rule, #282c36);
+  }
+
+  .project-proof__tab {
+    display: flex;
+    min-height: 3.9rem;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem clamp(0.85rem, 2vw, 1.5rem);
+    border: 0;
+    border-right: 1px solid var(--color-rule, #282c36);
+    background: transparent;
+    color: var(--color-paper-dim, #a8abb7);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 650;
+    text-align: left;
+    transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .project-proof__tab:last-child {
+    border-right: 0;
+  }
+
+  .project-proof__tab span {
+    color: var(--color-paper-faint, #727786);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
+  .project-proof__tab[aria-selected="true"] {
+    background: rgb(40 81 255 / 0.12);
+    box-shadow: inset 0 -2px var(--color-cobalt, #2851ff);
+    color: var(--color-paper, #f4f6fb);
+  }
+
+  .project-proof__tab[aria-selected="true"] span {
+    color: var(--color-cobalt-text, #6684ff);
+  }
+
+  .project-proof__projects {
+    margin-top: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .project-proof__project {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.64fr) minmax(0, 1.36fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .project-proof__project[hidden] {
+    display: none;
+  }
+
+  .project-proof__copy h3 {
+    margin: 0;
+    font-size: clamp(2rem, 3.5vw, 3.3rem);
+    font-weight: 760;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .project-proof__description {
+    margin: 1.2rem 0 0;
+    color: var(--color-paper-dim, #a8abb7);
+    font-size: clamp(0.98rem, 1.3vw, 1.1rem);
+    line-height: 1.65;
+  }
+
+  .project-proof__boundary {
+    position: relative;
+    margin: 1.4rem 0 0;
+    padding: 0.95rem 1rem 0.95rem 2rem;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    background: rgb(255 255 255 / 0.025);
+    color: var(--color-paper-dim, #a8abb7);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.68rem;
+    line-height: 1.55;
+  }
+
+  .project-proof__boundary::before {
+    position: absolute;
+    top: 1.22rem;
+    left: 0.85rem;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 999px;
+    background: var(--color-signal, #ff604d);
+    content: "";
+  }
+
+  .project-proof__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.4rem;
+  }
+
+  .project-proof__link {
+    display: inline-flex;
+    min-height: 3.15rem;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.85rem 1.15rem;
+    background: var(--color-signal, #ff604d);
+    color: var(--color-ink, #050608);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .project-proof__link:hover,
+  .project-proof__link:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgb(255 96 77 / 0.22);
+  }
+
+  .project-proof__link--secondary {
+    border: 1px solid rgb(255 255 255 / 0.24);
+    background: transparent;
+    color: var(--color-paper, #f4f6fb);
+  }
+
+  .project-proof__visual {
+    display: grid;
+    height: clamp(330px, 34vw, 500px);
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 0.46fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.55rem, 1vw, 0.9rem);
+  }
+
+  .project-proof__screen {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid rgb(102 132 255 / 0.42);
+    border-radius: 0.8rem;
+    background: #090b10;
+    box-shadow: 0 18px 45px rgb(0 0 0 / 0.38);
+  }
+
+  .project-proof__screen--primary {
+    grid-row: 1 / -1;
+  }
+
+  .project-proof__screen--portrait {
+    grid-row: 1;
+    width: min(100%, 180px);
+    justify-self: center;
+  }
+
+  .project-proof__visual[data-screen-count="2"] .project-proof__screen--support {
+    grid-row: 1 / -1;
+  }
+
+  .project-proof__screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+  }
+
+  .project-proof--stacked .project-proof__projects {
+    display: grid;
+    gap: clamp(4rem, 7vw, 7rem);
+  }
+
+  .project-proof--stacked .project-proof__project {
+    padding-top: clamp(2.5rem, 4vw, 4rem);
+    border-top: 1px solid var(--color-rule, #282c36);
+    scroll-margin-top: 8rem;
+  }
+
+  .project-proof--stacked .project-proof__project:nth-child(even) .project-proof__copy {
+    order: 2;
+  }
+
+  @media (max-width: 900px) {
+    .project-proof__head {
+      grid-template-columns: 1fr;
+      gap: 1.3rem;
+    }
+
+    .project-proof__project {
+      grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
+      gap: 2rem;
+    }
+
+    .project-proof__visual {
+      height: clamp(310px, 43vw, 430px);
+      grid-template-columns: minmax(0, 1fr) minmax(120px, 0.42fr);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .project-proof__shell {
+      padding-block: 4rem;
+    }
+
+    .project-proof__head h2 {
+      font-size: clamp(2.35rem, 12vw, 3.35rem);
+    }
+
+    .project-proof__tabs {
+      margin-top: 2.25rem;
+      overflow-x: auto;
+      grid-template-columns: repeat(3, minmax(132px, 1fr));
+      scrollbar-width: thin;
+    }
+
+    .project-proof__tab {
+      min-height: 3.45rem;
+      padding-inline: 0.75rem;
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .project-proof__project,
+    .project-proof--stacked .project-proof__project {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.7rem;
+    }
+
+    .project-proof--stacked .project-proof__project:nth-child(even) .project-proof__copy {
+      order: 0;
+    }
+
+    .project-proof__visual {
+      height: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: auto;
+    }
+
+    .project-proof__screen,
+    .project-proof__screen--primary,
+    .project-proof__screen--portrait,
+    .project-proof__visual[data-screen-count="2"] .project-proof__screen--support {
+      grid-row: auto;
+    }
+
+    .project-proof__screen--primary {
+      grid-column: 1 / -1;
+      aspect-ratio: 16 / 10;
+    }
+
+    .project-proof__screen--support {
+      aspect-ratio: 16 / 10;
+    }
+
+    .project-proof__visual[data-screen-count="2"] .project-proof__screen--support {
+      grid-column: 1 / -1;
+    }
+
+    .project-proof__screen--portrait {
+      width: min(100%, 180px);
+      max-height: 275px;
+      justify-self: center;
+      aspect-ratio: 390 / 844;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-proof__tab,
+    .project-proof__link {
+      transition: none;
+    }
+  }
+</style>

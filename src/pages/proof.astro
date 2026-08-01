@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import StudioProjectProof from "../components/StudioProjectProof.astro";
 import StudioTestimonial from "../components/StudioTestimonial.astro";
 import { books } from "../data/books";
 import { site } from "../data/site";
@@ -16,10 +17,18 @@ const canonicalUrl = `${site.url}/proof/`;
 const proofItems = [
   {
     "@type": "CreativeWork",
-    "@id": `${canonicalUrl}#ai-canvas`,
-    name: "AI Canvas independent test project",
+    "@id": `${canonicalUrl}#charterrn`,
+    name: "CharterRN founder-built venture",
     description:
-      "An independent AI test project that could estimate a cost but was prevented from spending money or using paid services.",
+      "A separate founder-built venture shown with synthetic demo data. It is not a Keith Staggers Studio service.",
+    creator: { "@id": `${site.url}/#keith` },
+  },
+  {
+    "@type": "CreativeWork",
+    "@id": `${canonicalUrl}#ai-canvas`,
+    name: "AI Canvas private production app",
+    description:
+      "A private owner-operated production app for connecting images, video, voice, music, and captions. It is not a public software service.",
     creator: { "@id": `${site.url}/#keith` },
   },
   {
@@ -44,7 +53,7 @@ const proofJsonLd = {
       description:
         "Plain-English examples of Keith Staggers' independent AI projects, client work, healthcare books, and finished creative work.",
       url: canonicalUrl,
-      dateModified: "2026-07-31",
+      dateModified: "2026-08-01",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       about: { "@id": `${site.url}/#keith` },
@@ -106,64 +115,15 @@ const proofJsonLd = {
       </p>
     </header>
 
-    <section class="proof-canvas" aria-labelledby="proof-canvas-title">
-      <div class="studio-shell proof-canvas-grid">
-        <div class="proof-video-wrap">
-          <div class="proof-reel-poster">
-            <span class="proof-reel-label">AI Canvas · independent test project</span>
-            <span class="proof-reel-result"><b>4¢</b><i>→</i><b>$0</b></span>
-            <span class="proof-reel-caption">One full practice run · spending disabled</span>
-          </div>
-        </div>
-        <div class="proof-canvas-copy">
-          <p class="studio-kicker">AI Canvas · independent test project</p>
-          <h2 id="proof-canvas-title" class="studio-display">A test system that could estimate a cost but could not <strong>spend money</strong><span class="text-signal">.</span></h2>
-          <p>Keith built and tested a controlled AI production process. It could show an estimated price, but paid services, billing, and public use were turned off.</p>
-          <ul>
-            <li><b>2,016</b><span>automated checks passed</span></li>
-            <li><b>1 run</b><span>full practice run completed</span></li>
-            <li><b>$0.04</b><span>estimated cost shown</span></li>
-            <li><b>$0</b><span>actually reserved or spent</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="studio-shell proof-gearstat" aria-labelledby="proof-gearstat-title">
-      <header>
-        <p class="studio-kicker">GearSTAT · independent sample app</p>
-        <h2 id="proof-gearstat-title" class="studio-display">A sample equipment finder<br />built for <strong>nurses</strong><span class="text-signal">.</span></h2>
-      </header>
-      <div class="proof-case-grid">
-        <article>
-          <span>01</span>
-          <h3>The problem</h3>
-          <p>Nurses can lose time trying to find shared equipment. GearSTAT explored a simpler way to search and record whether an item was found.</p>
-        </article>
-        <article>
-          <span>02</span>
-          <h3>What Keith built</h3>
-          <p>A nurse-facing sample app using made-up information, with a search path and a way to record the result.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <h3>What passed</h3>
-          <p>The recorded test point passed 206 of 206 checks and generated all 23 planned pages.</p>
-        </article>
-        <article>
-          <span>04</span>
-          <h3>What it is not</h3>
-          <p>It used no patient information, did not show staff locations, and was not connected to a hospital. It is a portfolio example, not a hospital deployment or client result.</p>
-        </article>
-      </div>
-    </section>
+    <StudioProjectProof mode="stacked" />
 
     <StudioTestimonial />
 
     <section class="proof-books" aria-labelledby="proof-books-title">
       <div class="studio-shell">
         <header class="proof-books-head">
-          <h2 id="proof-books-title" class="studio-display">Books about AI workflows,<br />nursing, and <strong>leadership</strong><span class="text-signal">.</span></h2>
+          <h2 id="proof-books-title" class="studio-display">Books about AI workflows,<br />
+            nursing, and <strong>leadership</strong><span class="text-signal">.</span></h2>
           <p>Three books drawn from Keith's work as an AI builder, nurse, and nurse leader. <a href="/books/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">See each book and where to buy it.</a></p>
         </header>
         <div class="proof-book-list">

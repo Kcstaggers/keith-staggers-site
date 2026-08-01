@@ -1,9 +1,10 @@
 export const fixedRouteLastModified = [
-  { route: "/", lastModified: "2026-07-31" },
+  { route: "/", lastModified: "2026-08-01" },
   { route: "/about/", lastModified: "2026-07-31" },
   { route: "/finish-loop/", lastModified: "2026-07-31" },
   { route: "/frontline-nurse-leader/", lastModified: "2026-07-31" },
-  { route: "/proof/", lastModified: "2026-07-31" },
+  { route: "/newsletter/", lastModified: "2026-08-01" },
+  { route: "/proof/", lastModified: "2026-08-01" },
   { route: "/workflow-book/", lastModified: "2026-07-31" },
   { route: "/workflow-readiness/", lastModified: "2026-07-31" },
   { route: "/workflow-testing-template/", lastModified: "2026-07-31" },

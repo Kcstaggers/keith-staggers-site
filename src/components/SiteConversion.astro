@@ -1,0 +1,148 @@
+---
+import { site } from "../data/site";
+---
+
+<aside class="site-conversion" aria-labelledby="site-conversion-title">
+  <div class="site-conversion__shell">
+    <div class="site-conversion__intro">
+      <p class="site-conversion__eyebrow">Choose the next step</p>
+      <h2 id="site-conversion-title">Use the work, get the toolkit, or ask Keith for help.</h2>
+    </div>
+
+    <nav class="site-conversion__paths" aria-label="Books, products, contact, and newsletter">
+      <a data-global-buy href={site.buy.bookPath}>
+        <span>Book</span>
+        <strong>{site.buy.bookLabel}</strong>
+      </a>
+      <a data-global-product href={site.buy.productPath}>
+        <span>Toolkit</span>
+        <strong>{site.buy.productLabel}</strong>
+      </a>
+      <a data-global-contact href={site.booking.intakePath}>
+        <span>Work with Keith</span>
+        <strong>Tell Keith about your task</strong>
+      </a>
+      <a data-global-newsletter href={site.newsletter.path}>
+        <span>Newsletter</span>
+        <strong>Get {site.newsletter.name}</strong>
+      </a>
+    </nav>
+  </div>
+</aside>
+
+<style>
+  .site-conversion {
+    border-top: 1px solid var(--color-rule);
+    border-bottom: 1px solid var(--color-rule);
+    background:
+      radial-gradient(circle at 8% 40%, color-mix(in srgb, var(--color-cobalt) 18%, transparent), transparent 32rem),
+      var(--color-ink);
+  }
+
+  .site-conversion__shell {
+    width: min(100% - 2rem, 1280px);
+    margin-inline: auto;
+    padding-block: clamp(2rem, 5vw, 4rem);
+  }
+
+  .site-conversion__intro {
+    display: grid;
+    gap: 0.7rem;
+    max-width: 52rem;
+  }
+
+  .site-conversion__eyebrow {
+    margin: 0;
+    color: var(--color-cobalt-text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .site-conversion h2 {
+    margin: 0;
+    color: var(--color-paper);
+    font-size: clamp(1.55rem, 3.4vw, 2.65rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .site-conversion__paths {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+    background: var(--color-rule);
+    border: 1px solid var(--color-rule);
+  }
+
+  .site-conversion__paths a {
+    display: grid;
+    align-content: space-between;
+    min-width: 0;
+    min-height: 8.5rem;
+    padding: 1.25rem;
+    color: var(--color-paper);
+    background: color-mix(in srgb, var(--color-ink) 90%, var(--color-paper) 10%);
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .site-conversion__paths a:hover,
+  .site-conversion__paths a:focus-visible {
+    color: var(--color-ink);
+    background: var(--color-paper);
+  }
+
+  .site-conversion__paths a:focus-visible {
+    outline: 3px solid var(--color-signal);
+    outline-offset: -3px;
+  }
+
+  .site-conversion__paths span {
+    color: var(--color-paper-faint);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .site-conversion__paths a:hover span,
+  .site-conversion__paths a:focus-visible span {
+    color: color-mix(in srgb, var(--color-ink) 65%, transparent);
+  }
+
+  .site-conversion__paths strong {
+    font-size: clamp(0.98rem, 1.7vw, 1.2rem);
+    line-height: 1.25;
+  }
+
+  @media (max-width: 900px) {
+    .site-conversion__paths {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 520px) {
+    .site-conversion__shell {
+      width: min(100% - 1.25rem, 1280px);
+    }
+
+    .site-conversion__paths {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .site-conversion__paths a {
+      min-height: 6.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-conversion__paths a {
+      transition: none;
+    }
+  }
+</style>

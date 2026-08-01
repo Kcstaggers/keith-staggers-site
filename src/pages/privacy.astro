@@ -1,0 +1,235 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site";
+
+const privacyUrl = `${site.url}${site.newsletter.privacyPath}`;
+const privacyJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${privacyUrl}#page`,
+      url: privacyUrl,
+      name: "Privacy Notice",
+      description:
+        "A plain-language explanation of what Keith Staggers Studio and its service providers receive when someone uses this website.",
+      isPartOf: { "@id": `${site.url}/#website` },
+      about: { "@id": `${site.url}/#studio` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${privacyUrl}#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${site.url}/` },
+        { "@type": "ListItem", position: 2, name: "Privacy", item: privacyUrl },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Privacy Notice"
+  description="A plain-language explanation of what Keith Staggers Studio and its service providers receive when someone uses this website."
+  robots="noindex, follow"
+>
+  <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(privacyJsonLd)} />
+
+  <article class="privacy-page">
+    <header class="privacy-hero studio-shell">
+      <nav class="privacy-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Privacy</span>
+      </nav>
+      <div>
+        <h1 class="studio-display">What this site receives, and <strong>what it does not</strong><span class="text-signal">.</span></h1>
+        <p>This notice explains the small amount of information used to run the website, answer an inquiry, manage the newsletter, and send someone to an outside store.</p>
+      </div>
+    </header>
+
+    <div class="privacy-body studio-shell">
+      <section aria-labelledby="privacy-rule">
+        <p class="privacy-number">01</p>
+        <div>
+          <h2 id="privacy-rule">Do not send sensitive information.</h2>
+          <p>This is not a healthcare system or a secure place for clinical information. Do not submit protected health information or PHI, patient data, confidential employer or client material, passwords, API keys, account credentials, or other secrets through this website.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="privacy-newsletter">
+        <p class="privacy-number">02</p>
+        <div>
+          <h2 id="privacy-newsletter">Newsletter email through Buttondown</h2>
+          <p>If you join {site.newsletter.name}, the newsletter form sends the email address you enter to Buttondown. Buttondown sends a confirmation message. You are not subscribed unless you use the confirmation link.</p>
+          <p>{site.newsletter.cadence}. Every issue includes an unsubscribe link. Joining the newsletter is separate from downloading or using any free resource on this site.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="privacy-inquiries">
+        <p class="privacy-number">03</p>
+        <div>
+          <h2 id="privacy-inquiries">Inquiries through Formspree</h2>
+          <p>The Project Fit form and the optional Workflow Readiness follow-up use Formspree. When you intentionally submit either form, Formspree receives the fields shown in that form and delivers them to Keith's private inbox so he can evaluate and reply to the request.</p>
+          <p>Submitting an inquiry does not add you to the newsletter. The seven-question readiness score stays in your browser unless you choose to submit the separate follow-up form.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="privacy-analytics">
+        <p class="privacy-number">04</p>
+        <div>
+          <h2 id="privacy-analytics">Hosting and privacy-safe measurement through Vercel</h2>
+          <p>Vercel hosts this website and provides page and event analytics. The site measures actions such as opening a page, choosing a service, starting an inquiry, attempting a newsletter signup, or clicking an outside purchase link.</p>
+          <p>Newsletter measurement records only the page and form placement. It does not send the email address, consent choice, inquiry answers, readiness answers, or payment details to Vercel Analytics.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="privacy-local">
+        <p class="privacy-number">05</p>
+        <div>
+          <h2 id="privacy-local">Tools that stay in your browser</h2>
+          <p>The 10-example workflow-testing worksheet stores entries in your browser's local storage so the page can restore your work. Its CSV export and print-to-PDF action happen from your browser. Clear the worksheet to remove its saved entry from that browser.</p>
+          <p>The Workflow Readiness questions and score are calculated in your browser. They are not sent unless you choose to use the optional Formspree follow-up.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="privacy-stores">
+        <p class="privacy-number">06</p>
+        <div>
+          <h2 id="privacy-stores">Purchases happen in external stores</h2>
+          <p>Amazon handles book purchases, Lemon Squeezy handles The Finish Loop purchase, and Stripe handles public-class registration. Those companies receive and process the information needed for their own checkout under their policies.</p>
+          <p>Keith Staggers Studio does not receive or store card numbers through this website. This site records only a privacy-safe click or checkout-intent event before you leave for the store.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="privacy-control">
+        <p class="privacy-number">07</p>
+        <div>
+          <h2 id="privacy-control">Your choices</h2>
+          <p>You can read every public Note and use the free workflow resources without joining the newsletter. You can unsubscribe from the newsletter in any issue, avoid submitting either inquiry form, clear locally saved worksheet entries, or leave before opening an external store.</p>
+          <p>For a privacy question, use <a href="/project-fit/">Tell Keith about your task</a> and write "privacy question" in ordinary words. Do not include sensitive or confidential information.</p>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .privacy-page {
+    overflow: clip;
+    background:
+      radial-gradient(circle at 90% 5%, rgb(40 81 255 / 0.16), transparent 28rem),
+      var(--color-ink);
+  }
+
+  .privacy-hero {
+    padding-block: clamp(3.5rem, 8vw, 7.5rem);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .privacy-breadcrumb {
+    display: flex;
+    gap: 0.7rem;
+    color: var(--color-paper-faint);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .privacy-breadcrumb a:hover,
+  .privacy-breadcrumb a:focus-visible,
+  .privacy-body a:hover,
+  .privacy-body a:focus-visible {
+    color: var(--color-paper);
+  }
+
+  .privacy-hero > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.55fr);
+    align-items: end;
+    gap: clamp(2rem, 7vw, 7rem);
+    margin-top: clamp(3rem, 7vw, 6rem);
+  }
+
+  .privacy-hero h1 {
+    max-width: 14ch;
+    font-size: clamp(3.5rem, 6.8vw, 6.2rem);
+    line-height: 0.88;
+  }
+
+  .privacy-hero h1 strong {
+    color: var(--color-cobalt);
+    font-weight: inherit;
+  }
+
+  .privacy-hero p {
+    color: var(--color-paper-dim);
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.75;
+  }
+
+  .privacy-body {
+    padding-bottom: clamp(4rem, 9vw, 8rem);
+  }
+
+  .privacy-body section {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: clamp(1.25rem, 4vw, 3.5rem);
+    padding-block: clamp(2rem, 5vw, 4rem);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .privacy-number {
+    color: var(--color-cobalt-text);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+
+  .privacy-body section > div {
+    display: grid;
+    gap: 1rem;
+    max-width: 52rem;
+  }
+
+  .privacy-body h2 {
+    font-size: clamp(1.7rem, 3vw, 2.8rem);
+    line-height: 1.05;
+  }
+
+  .privacy-body section:nth-child(2) h2,
+  .privacy-body section:nth-child(4) h2 {
+    color: var(--color-cobalt);
+  }
+
+  .privacy-body p:not(.privacy-number) {
+    color: var(--color-paper-dim);
+    line-height: 1.75;
+  }
+
+  .privacy-body a {
+    color: var(--color-cobalt-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 760px) {
+    .privacy-hero > div,
+    .privacy-body section {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .privacy-number {
+      margin-bottom: -0.4rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .privacy-hero h1 {
+      font-size: clamp(3rem, 16vw, 4.8rem);
+    }
+  }
+</style>
