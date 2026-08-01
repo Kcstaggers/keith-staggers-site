@@ -6,6 +6,12 @@ const siteUrl = "https://www.keithstaggers.com";
 const errors = [];
 
 const fail = (message) => errors.push(message);
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const hasAttributedAmazonLink = (html, amazonUrl, bookSlug, format) =>
+  new RegExp(
+    `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(amazonUrl)}["'])(?=[^>]*\\bdata-amazon-book=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-amazon-format=["']${escapeRegExp(format)}["'])[^>]*>`,
+    "i"
+  ).test(html);
 const walk = (directory) =>
   fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const target = path.join(directory, entry.name);
@@ -62,6 +68,26 @@ const schemaTypes = (html, route) => {
     }
   }
   return types;
+};
+const schemaGraphNodes = (html) =>
+  [...html.matchAll(/<script\s+[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].flatMap(
+    (script) => {
+      try {
+        const json = JSON.parse(script[1]);
+        return Array.isArray(json["@graph"]) ? json["@graph"] : [json];
+      } catch {
+        return [];
+      }
+    }
+  );
+const nestedSchemaObjects = (value) => {
+  if (Array.isArray(value)) return value.flatMap(nestedSchemaObjects);
+  if (!value || typeof value !== "object") return [];
+  return [value, ...Object.values(value).flatMap(nestedSchemaObjects)];
+};
+const hasSchemaType = (node, expectedType) => {
+  const nodeTypes = Array.isArray(node?.["@type"]) ? node["@type"] : [node?.["@type"]];
+  return nodeTypes.includes(expectedType);
 };
 const resolveInternal = (urlPath) => {
   const clean = urlPath.split("#")[0].split("?")[0];
@@ -285,8 +311,8 @@ const plainLanguageContracts = new Map([
   [
     "/books/",
     [
-      "Books about nursing and leadership.",
-      "Keith has written two healthcare books.",
+      "Books for real work and real decisions.",
+      "Keith has written three books:",
     ],
   ],
   [
@@ -405,6 +431,7 @@ const meaningfulHomepageImages = [
   "/media/keith-noir.webp",
   "/media/keith-diner.webp",
   "/media/keith-neon-violet.webp",
+  "/media/book-build-the-workflow-keep-the-judgment.webp",
   "/media/book-nurse-the-fck-up.webp",
   "/media/book-leading-with-care.webp",
 ];
@@ -420,22 +447,66 @@ if (/mailto:|kcstaggers@gmail\.com/i.test(pages.map((page) => page.html).join("\
   fail("release: public personal email path is present");
 }
 const allPublicHtml = pages.map((page) => page.html).join("\n");
+const unavailableWorkflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
 if (/Beyond Burnout|No Fear Nursing/i.test(allPublicHtml)) {
   fail("books: retired test or alternate-title records must not appear in the public site");
 }
-if (/\b3 books\b|three healthcare books|three published/i.test(allPublicHtml)) {
-  fail("books: stale three-book public count remains");
+if (/\b2 primary books\b|two primary works|Keith has written two healthcare books/i.test(allPublicHtml)) {
+  fail("books: stale two-book public count remains");
+}
+if (/Companion to Keith(?:'|&#39;)s next book|does not yet have a verified public retail record/i.test(allPublicHtml)) {
+  fail("books: stale pre-release book language remains");
+}
+if (allPublicHtml.includes(unavailableWorkflowPaperbackUrl)) {
+  fail("books: unavailable United States paperback URL must not appear in public HTML");
 }
 
 const bookExpectations = [
   {
+    route: "/books/build-the-workflow-keep-the-judgment/",
+    title: "Build the Workflow. Keep the Judgment.",
+    date: "2026-07-31",
+    coverWidth: 600,
+    coverHeight: 960,
+    editions: [
+      {
+        format: "Kindle",
+        attributionFormat: "kindle",
+        schemaFormat: "EBook",
+        asin: "B0HCC3L365",
+        price: "9.99",
+        amazon: "https://www.amazon.com/dp/B0HCC3L365",
+      },
+      {
+        format: "Paperback",
+        attributionFormat: "paperback",
+        schemaFormat: "Paperback",
+        asin: "B0HCCG4CTX",
+        isbn: "9798190013788",
+        pages: 88,
+        price: "17.99",
+        status: "propagating",
+      },
+    ],
+    companion: "/workflow-book/",
+  },
+  {
     route: "/books/nurse-the-fck-up/",
     title: "Nurse the F*ck Up",
-    isbn: "9798861621335",
-    asin: "B0CJ44XP81",
     date: "2023-09-16",
-    pages: 166,
-    amazon: "https://www.amazon.com/dp/B0CJ44XP81",
+    coverWidth: 600,
+    coverHeight: 900,
+    editions: [
+      {
+        format: "Paperback",
+        attributionFormat: "paperback",
+        schemaFormat: "Paperback",
+        asin: "B0CJ44XP81",
+        isbn: "9798861621335",
+        pages: 166,
+        amazon: "https://www.amazon.com/dp/B0CJ44XP81",
+      },
+    ],
     goodreads: "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
     openLibrary:
       "https://openlibrary.org/books/OL62365292M/Nurse_the_F%2Ack_Up_The_Raw_Truth_About_Surviving_Med-Surg",
@@ -443,11 +514,20 @@ const bookExpectations = [
   {
     route: "/books/leading-with-care/",
     title: "Leading with Care",
-    isbn: "9798869793935",
-    asin: "B0CNYLZ5FC",
     date: "2023-11-24",
-    pages: 178,
-    amazon: "https://www.amazon.com/dp/B0CNYLZ5FC",
+    coverWidth: 600,
+    coverHeight: 900,
+    editions: [
+      {
+        format: "Paperback",
+        attributionFormat: "paperback",
+        schemaFormat: "Paperback",
+        asin: "B0CNYLZ5FC",
+        isbn: "9798869793935",
+        pages: 178,
+        amazon: "https://www.amazon.com/dp/B0CNYLZ5FC",
+      },
+    ],
     goodreads: "https://www.goodreads.com/book/show/202652162-leading-with-care",
     openLibrary:
       "https://openlibrary.org/books/OL62365304M/Leading_with_Care_Mastering_Healthcare_Management",
@@ -459,30 +539,144 @@ for (const expected of bookExpectations) {
     fail(`${expected.route}: canonical book page is missing`);
     continue;
   }
-  for (const token of [
-    expected.title,
-    expected.isbn,
-    expected.asin,
-    expected.date,
-    String(expected.pages),
-    expected.amazon,
-    expected.goodreads,
-    expected.openLibrary,
-    "Independently published",
-    "https://schema.org/Paperback",
-  ]) {
+  for (const token of [expected.title, expected.date, "Independently published"]) {
     if (!page.html.includes(token)) fail(`${expected.route}: verified book metadata is missing ${token}`);
   }
-  if (!page.html.includes(`data-amazon-book="${expected.route.split("/")[2]}"`)) {
-    fail(`${expected.route}: Amazon click attribution is missing`);
+  const bookSlug = expected.route.split("/")[2];
+  const graphNodes = schemaGraphNodes(page.html);
+  const schemaObjects = graphNodes.flatMap(nestedSchemaObjects);
+  const canonicalBookId = `${siteUrl}${expected.route}#book`;
+  const workNode = graphNodes.find(
+    (node) => node?.["@id"] === canonicalBookId && hasSchemaType(node, "Book")
+  );
+  if (!workNode) fail(`${expected.route}: canonical #book schema node is missing`);
+  const liveCatalogUrls = [];
+  const expectedEditionIds = [];
+  for (const edition of expected.editions) {
+    for (const token of [
+      edition.format,
+      edition.asin,
+      `https://schema.org/${edition.schemaFormat}`,
+      edition.isbn,
+      edition.pages ? String(edition.pages) : undefined,
+      edition.price,
+    ].filter(Boolean)) {
+      if (!page.html.includes(token)) {
+        fail(`${expected.route}: verified ${edition.format} metadata is missing ${token}`);
+      }
+    }
+    const editionId = `${siteUrl}${expected.route}#edition-${edition.format.toLowerCase()}`;
+    expectedEditionIds.push(editionId);
+    const editionSchema = graphNodes.find(
+      (node) =>
+        node?.["@id"] === editionId &&
+        hasSchemaType(node, "Book") &&
+        JSON.stringify(node).includes(edition.asin) &&
+        JSON.stringify(node).includes(`https://schema.org/${edition.schemaFormat}`)
+    );
+    if (!editionSchema) {
+      fail(`${expected.route}: ${edition.format} edition data is not connected to a Book schema node`);
+    } else {
+      const serializedEdition = JSON.stringify(editionSchema);
+      for (const editionIdentifier of [
+        edition.isbn,
+        edition.pages ? String(edition.pages) : undefined,
+      ].filter(Boolean)) {
+        if (!serializedEdition.includes(editionIdentifier)) {
+          fail(`${expected.route}: ${edition.format} Book schema is missing ${editionIdentifier}`);
+        }
+      }
+      if (editionSchema.exampleOfWork?.["@id"] !== canonicalBookId) {
+        fail(`${expected.route}: ${edition.format} edition is not linked to the canonical Book work`);
+      }
+    }
+    if (edition.amazon) {
+      liveCatalogUrls.push(edition.amazon);
+      if (!page.html.includes(edition.amazon)) {
+        fail(`${expected.route}: verified ${edition.format} Amazon URL is missing`);
+      }
+      const offer = schemaObjects.find(
+        (node) => hasSchemaType(node, "Offer") && node.url === edition.amazon
+      );
+      if (!offer) {
+        fail(`${expected.route}: verified ${edition.format} Offer schema is missing`);
+      } else if (edition.price && String(offer.price) !== edition.price) {
+        fail(`${expected.route}: verified ${edition.format} Offer price is incorrect`);
+      }
+      if (!hasAttributedAmazonLink(page.html, edition.amazon, bookSlug, edition.attributionFormat)) {
+        fail(`${expected.route}: ${edition.format} Amazon click attribution is missing`);
+      }
+    } else {
+      const unavailableAmazonUrl = `https://www.amazon.com/dp/${edition.asin}`;
+      if (page.html.includes(unavailableAmazonUrl)) {
+        fail(`${expected.route}: unavailable ${edition.format} Amazon URL must not be published`);
+      }
+    }
+    if (edition.status === "propagating" && !page.html.includes("The U.S. Amazon page is still propagating.")) {
+      fail(`${expected.route}: ${edition.format} propagation status is missing`);
+    }
   }
-  const expectedSameAs = `"sameAs":["${expected.amazon}","${expected.goodreads}","${expected.openLibrary}"]`;
-  if (!page.html.includes(expectedSameAs)) fail(`${expected.route}: verified Book sameAs records are missing`);
-  if ((page.html.match(new RegExp(expected.goodreads.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length < 2) {
+  const workExamples = workNode
+    ? Array.isArray(workNode.workExample)
+      ? workNode.workExample
+      : workNode.workExample
+        ? [workNode.workExample]
+        : []
+    : [];
+  const workExampleIds = workExamples
+    .map((workExample) =>
+      typeof workExample === "string" ? workExample : workExample?.["@id"]
+    )
+    .filter(Boolean);
+  for (const editionId of expectedEditionIds) {
+    if (!workExampleIds.includes(editionId)) {
+      fail(`${expected.route}: canonical Book work does not reference edition ${editionId}`);
+    }
+    if (!graphNodes.some((node) => node?.["@id"] === editionId && hasSchemaType(node, "Book"))) {
+      fail(`${expected.route}: workExample does not resolve to a Book edition node ${editionId}`);
+    }
+  }
+  const sameAsUrls = [
+    ...liveCatalogUrls,
+    expected.goodreads,
+    expected.openLibrary,
+  ].filter(Boolean);
+  const schemaSameAsUrls = schemaObjects.flatMap((node) => {
+    if (!node.sameAs) return [];
+    return Array.isArray(node.sameAs) ? node.sameAs : [node.sameAs];
+  });
+  for (const sameAsUrl of sameAsUrls) {
+    if (!schemaSameAsUrls.includes(sameAsUrl)) {
+      fail(`${expected.route}: verified Book sameAs record is missing ${sameAsUrl}`);
+    }
+  }
+  if (expected.goodreads && (page.html.match(new RegExp(escapeRegExp(expected.goodreads), "g")) ?? []).length < 2) {
     fail(`${expected.route}: visible Goodreads catalog record is missing`);
   }
-  if ((page.html.match(new RegExp(expected.openLibrary.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length < 2) {
+  if (expected.openLibrary && (page.html.match(new RegExp(escapeRegExp(expected.openLibrary), "g")) ?? []).length < 2) {
     fail(`${expected.route}: visible Open Library catalog record is missing`);
+  }
+  const coverSchema = graphNodes.find(
+    (node) =>
+      hasSchemaType(node, "ImageObject") &&
+      node.width === expected.coverWidth &&
+      node.height === expected.coverHeight
+  );
+  if (!coverSchema) {
+    fail(`${expected.route}: cover schema dimensions are incorrect`);
+  }
+  const coverTag = page.html.match(
+    new RegExp(`<img\\b(?=[^>]*\\bsrc=["']/media/book-${escapeRegExp(bookSlug)}\\.webp["'])[^>]*>`, "i")
+  )?.[0] ?? "";
+  if (
+    !coverTag ||
+    !new RegExp(`\\bwidth=["']${expected.coverWidth}["']`, "i").test(coverTag) ||
+    !new RegExp(`\\bheight=["']${expected.coverHeight}["']`, "i").test(coverTag)
+  ) {
+    fail(`${expected.route}: cover image dimensions are incorrect`);
+  }
+  if (expected.companion && !page.html.includes(`href="${expected.companion}"`)) {
+    fail(`${expected.route}: free companion templates are not linked`);
   }
 }
 
@@ -490,8 +684,11 @@ const baseLayoutSource = fs.readFileSync(path.join("src", "layouts", "Base.astro
 const booksHub = pages.find((page) => page.route === "/books/")?.html ?? "";
 for (const expected of bookExpectations) {
   if (!booksHub.includes(`href="${expected.route}"`)) fail(`/books/: missing owned link to ${expected.route}`);
-  if (!booksHub.includes(`data-amazon-book="${expected.route.split("/")[2]}"`)) {
-    fail(`/books/: missing Amazon attribution for ${expected.route}`);
+  const bookSlug = expected.route.split("/")[2];
+  for (const edition of expected.editions.filter((candidate) => candidate.amazon)) {
+    if (!hasAttributedAmazonLink(booksHub, edition.amazon, bookSlug, edition.attributionFormat)) {
+      fail(`/books/: missing ${edition.format} Amazon attribution for ${expected.route}`);
+    }
   }
 }
 
@@ -527,6 +724,7 @@ if (!workflowTemplate.includes('href="/workflow-book/"')) {
 }
 
 const workflowBookPage = pages.find((page) => page.route === "/workflow-book/")?.html ?? "";
+const workflowBookText = visibleTextByRoute.get("/workflow-book/") ?? "";
 const workflowBookTemplateFiles = [
   "01-CONTEXT-template.md",
   "02-RULES-template.md",
@@ -547,14 +745,40 @@ for (const fileName of workflowBookTemplateFiles) {
     fail(`workflow-book: missing companion template ${fileName}`);
   }
 }
-if (!workflowBookPage.includes("does not yet have a verified public retail record")) {
-  fail("workflow-book: current book status is not clear");
+for (const statusText of [
+  "Companion to Build the Workflow. Keep the Judgment.",
+  "The Kindle edition is available on Amazon for $9.99.",
+  "The paperback is published in KDP at $17.99",
+  "United States Amazon page is still propagating.",
+]) {
+  if (!workflowBookText.includes(statusText)) {
+    fail(`workflow-book: current book status is missing ${statusText}`);
+  }
 }
 if (!baseLayoutSource.includes("Workflow Book Template Download")) {
   fail("workflow-book: download attribution is missing");
 }
+if (!baseLayoutSource.includes("format: link.dataset.amazonFormat")) {
+  fail("books: Amazon format attribution is missing from the analytics event");
+}
+const workflowBookRoute = "/books/build-the-workflow-keep-the-judgment/";
+const workflowKindleUrl = "https://www.amazon.com/dp/B0HCC3L365";
+if (!workflowBookPage.includes(`href="${workflowBookRoute}"`)) {
+  fail("workflow-book: canonical book page is not linked");
+}
+if (!hasAttributedAmazonLink(
+  workflowBookPage,
+  workflowKindleUrl,
+  "build-the-workflow-keep-the-judgment",
+  "kindle"
+)) {
+  fail("workflow-book: measured Kindle purchase link is missing");
+}
+if ((workflowBookPage.match(/data-amazon-format="kindle"/g) ?? []).length !== 2) {
+  fail("workflow-book: both Kindle calls to action must carry format attribution");
+}
 if (!booksHub.includes('href="/workflow-book/"')) {
-  fail("books: forthcoming workflow book companion is not linked");
+  fail("books: workflow book companion is not linked");
 }
 
 const finishLoopPage = pages.find((page) => page.route === "/finish-loop/")?.html ?? "";
@@ -663,14 +887,20 @@ const plainAiIdentity =
 if (!llms.includes(plainAiIdentity)) fail("llms.txt: plain-language identity is missing");
 for (const requiredAiRecord of [
   `${siteUrl}/books/`,
+  `${siteUrl}/books/build-the-workflow-keep-the-judgment/`,
   `${siteUrl}/books/nurse-the-fck-up/`,
   `${siteUrl}/books/leading-with-care/`,
   `${siteUrl}/workflow-testing-template/`,
   `${siteUrl}/workflow-book/`,
+  "Build the Workflow. Keep the Judgment.",
+  "9798190013788",
   "9798861621335",
   "9798869793935",
+  "B0HCC3L365",
+  "B0HCCG4CTX",
   "B0CJ44XP81",
   "B0CNYLZ5FC",
+  "https://www.amazon.com/dp/B0HCC3L365",
   "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
   "https://openlibrary.org/books/OL62365292M/Nurse_the_F%2Ack_Up_The_Raw_Truth_About_Surviving_Med-Surg",
   "https://www.goodreads.com/book/show/202652162-leading-with-care",
@@ -680,6 +910,29 @@ for (const requiredAiRecord of [
 }
 const llmsFull = fs.readFileSync(path.join(distDir, "llms-full.txt"), "utf8");
 if (!llmsFull.includes(plainAiIdentity)) fail("llms-full.txt: plain-language identity is missing");
+for (const [fileName, content] of [
+  ["llms.txt", llms],
+  ["llms-full.txt", llmsFull],
+]) {
+  for (const requiredWorkflowBookRecord of [
+    `${siteUrl}/books/build-the-workflow-keep-the-judgment/`,
+    "Build the Workflow. Keep the Judgment.",
+    "9798190013788",
+    "B0HCC3L365",
+    "B0HCCG4CTX",
+    "https://www.amazon.com/dp/B0HCC3L365",
+  ]) {
+    if (!content.includes(requiredWorkflowBookRecord)) {
+      fail(`${fileName}: missing Build the Workflow record ${requiredWorkflowBookRecord}`);
+    }
+  }
+  if (!/Amazon page (?:still )?propagating/i.test(content)) {
+    fail(`${fileName}: United States paperback propagation status is missing`);
+  }
+  if (content.includes(unavailableWorkflowPaperbackUrl)) {
+    fail(`${fileName}: unavailable United States paperback URL must not be published`);
+  }
+}
 for (const requiredAuthorRecord of [
   "https://www.goodreads.com/author/show/45798281.Keith_Staggers",
   "https://openlibrary.org/authors/OL16535970A/Keith_Staggers",

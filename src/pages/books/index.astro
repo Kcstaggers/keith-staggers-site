@@ -1,6 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { books } from "../../data/books";
+import {
+  books,
+  liveEditionsFor,
+  paperbackEditionFor,
+} from "../../data/books";
 import { site } from "../../data/site";
 
 const canonicalUrl = `${site.url}/books/`;
@@ -12,7 +16,7 @@ const booksJsonLd = {
       "@id": `${canonicalUrl}#page`,
       name: "Books by Keith Staggers",
       description:
-        "The primary public book catalog from Keith Staggers: Nurse the F*ck Up and Leading with Care.",
+        "The public book catalog from Keith Staggers: one practical AI workflow guide and two books about nursing and healthcare leadership.",
       url: canonicalUrl,
       dateModified: "2026-07-31",
       inLanguage: "en-US",
@@ -56,7 +60,7 @@ const booksJsonLd = {
 
 <Base
   title="Books by Keith Staggers"
-  description="Explore Keith Staggers' two primary healthcare books: Nurse the F*ck Up on surviving med-surg and Leading with Care on healthcare leadership."
+  description="Explore three books by Keith Staggers about practical AI workflows, surviving med-surg nursing, and leading healthcare teams."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(booksJsonLd)} />
@@ -73,21 +77,24 @@ const booksJsonLd = {
       <header class="grid gap-10 border-b border-rule pb-16 lg:grid-cols-12 lg:items-end lg:pb-24">
         <div class="lg:col-span-8">
           <h1 class="studio-display text-[clamp(58px,9vw,124px)] leading-[0.86]">
-            Books about nursing<br />and <strong>leadership</strong><span class="text-signal">.</span>
+            Books for real work<br />and <strong>real decisions</strong><span class="text-signal">.</span>
           </h1>
         </div>
         <div class="lg:col-span-4">
           <p class="text-[18px] leading-[1.7] text-paper-dim">
-            Keith has written two healthcare books. Nurse the F*ck Up is an honest account of med-surg nursing. Leading with Care covers leadership, conflict, change, and staff retention.
+            Keith has written three books: a practical guide to controlled AI workflows, an honest account of med-surg nursing, and a guide to healthcare leadership.
           </p>
           <p class="mt-5 font-mono text-[11px] tracking-[0.14em] uppercase text-paper-faint">
-            Paperback · English · Published in 2023
+            Kindle and paperback · English · Published from 2023 to 2026
           </p>
         </div>
       </header>
 
       <section class="divide-y divide-rule" aria-label="Books by Keith Staggers">
-        {books.map((book, index) => (
+        {books.map((book, index) => {
+          const liveEditions = liveEditionsFor(book);
+          const paperbackEdition = paperbackEditionFor(book);
+          return (
           <article class="grid gap-10 py-16 lg:grid-cols-12 lg:items-center lg:py-24">
             <a
               href={`/books/${book.slug}/`}
@@ -97,12 +104,12 @@ const booksJsonLd = {
               <img
                 src={`/media/book-${book.slug}.webp`}
                 alt={`${book.title}: ${book.subtitle} by Keith Staggers book cover`}
-                width="600"
-                height="900"
+                width={book.coverWidth}
+                height={book.coverHeight}
                 loading={index === 0 ? "eager" : "lazy"}
                 fetchpriority={index === 0 ? "high" : undefined}
                 decoding="async"
-                class="aspect-[2/3] w-full border border-rule object-cover shadow-2xl transition duration-300 group-hover:-translate-y-1 group-hover:border-cobalt"
+                class="aspect-[2/3] w-full border border-rule bg-ink object-contain shadow-2xl transition duration-300 group-hover:-translate-y-1 group-hover:border-cobalt"
               />
             </a>
 
@@ -116,30 +123,37 @@ const booksJsonLd = {
               <p class="mt-4 serif text-[clamp(21px,2vw,28px)] italic text-paper-dim">{book.subtitle}</p>
               <p class="mt-7 max-w-[720px] text-[17px] leading-[1.75] text-paper-dim">{book.blurb}</p>
               <dl class="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-y border-rule py-5 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint">
-                <div><dt class="sr-only">Format</dt><dd>{book.format}</dd></div>
-                <div><dt class="sr-only">Page count</dt><dd>{book.pageCount} pages</dd></div>
-                <div><dt class="sr-only">ISBN-13</dt><dd>ISBN {book.isbn13}</dd></div>
+                <div><dt class="sr-only">Formats</dt><dd>{book.editions.map((edition) => edition.format).join(" and ")}</dd></div>
+                {paperbackEdition?.pageCount && <div><dt class="sr-only">Print page count</dt><dd>{paperbackEdition.pageCount} print pages</dd></div>}
+                {paperbackEdition?.isbn13 && <div><dt class="sr-only">ISBN-13</dt><dd>ISBN {paperbackEdition.isbn13}</dd></div>}
               </dl>
               <div class="mt-8 flex flex-wrap gap-3">
                 <a href={`/books/${book.slug}/`} class="studio-button studio-button--cobalt">Read about the book</a>
-                <a
-                  href={book.amazonUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="studio-button studio-button--secondary"
-                  data-amazon-book={book.slug}
-                  data-amazon-placement="books-hub"
-                >See the paperback on Amazon</a>
+                {liveEditions.map((edition) => (
+                  <a
+                    href={edition.amazonUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="studio-button studio-button--secondary"
+                    data-amazon-book={book.slug}
+                    data-amazon-format={edition.format.toLowerCase()}
+                    data-amazon-placement="books-hub"
+                  >{edition.format === "Kindle" ? "Buy the Kindle on Amazon" : "See the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
+                ))}
               </div>
+              {paperbackEdition?.status === "propagating" && <p class="mt-4 font-mono text-[10px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">
+                Paperback{paperbackEdition.priceUsd ? ` $${paperbackEdition.priceUsd}` : ""} · Published in KDP · U.S. Amazon page still propagating
+              </p>}
             </div>
           </article>
-        ))}
+          );
+        })}
       </section>
 
       <section class="grid gap-8 border-t border-rule py-16 lg:grid-cols-12 lg:items-end lg:py-24">
         <div class="lg:col-span-8">
           <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text">
-            Free templates for Keith's next book
+            Free companion templates
           </p>
           <h2 class="studio-display mt-4 text-[clamp(40px,5.5vw,76px)] leading-[0.96]">
             Ten practical templates<br />you can <strong>use now</strong><span class="text-signal">.</span>
@@ -147,10 +161,13 @@ const booksJsonLd = {
         </div>
         <div class="lg:col-span-4">
           <p class="text-[16px] leading-[1.75] text-paper-dim">
-            Download ten free text templates for organizing AI work, recording who approves important decisions, testing a process, and explaining what to do when something fails. The companion will be updated when the new book has a verified public record.
+            Download ten free text templates from the companion to Build the Workflow. Keep the Judgment. Use them to organize AI work, record approvals, test a process, and prepare for failures.
           </p>
           <a href="/workflow-book/" class="studio-button studio-button--cobalt mt-7">
             Get the ten free templates
+          </a>
+          <a href="/books/build-the-workflow-keep-the-judgment/" class="studio-button studio-button--secondary mt-3">
+            See the book
           </a>
         </div>
       </section>

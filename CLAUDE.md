@@ -4,13 +4,17 @@ This file gets you (the AI assistant) up to speed on Keith Staggers' personal si
 
 ## What this is
 
-Personal/portfolio site for Keith Staggers, a Tampa-based retired Baltimore detective (1992-2013), nurse then nurse leader (2014-now, he still leads a med-surg unit today), and AI-native digital creator / consultant (2022-now). 50+ albums, 800+ songs, 2 primary books in the current public catalog, 1000+ AI-generated images/films. The site exists to **get him hired and make him money** through done-for-you AI work, coaching, training, and speaking.
+Personal/portfolio site for Keith Staggers, a Tampa-based retired Baltimore detective (1992-2013), nurse then nurse leader (2014-now, he still leads a med-surg unit today), and AI-native digital creator / consultant (2022-now). 50+ albums, 800+ songs, 3 published books, 1000+ AI-generated images/films. The site exists to **get him hired and make him money** through done-for-you AI work, coaching, training, and speaking.
 
 **Canonical career dates live in `/Career/career-timeline.md` (workspace root).** July 12, 2026 brand-consistency pass: his public LinkedIn (linkedin.com/in/keithstaggers) says Founder / AI Consultant since 2022 and that he leads nurses today, so the site must not say the creator era started 2023 or imply nursing ended. Fixed that day in CareerTimeline.astro, About.astro, and StudioStory.astro. Do not reintroduce "2023-now" for the creator era or "then nurse" phrasing.
 
 Live at **https://www.keithstaggers.com** (apex redirects to www).
 
 The current production site uses the near-black AI studio experience built around Keith Photo 9, electric cobalt, ultraviolet depth, and coral actions. It leads with a useful four-part method, then Notes, The Finish Loop, clear buyer-intent services, proof, and Keith's story. Nursing remains a proof-rich specialty without becoming the brand ceiling. The Studio redesign and project-fit gate went live July 13, 2026. The Finish Loop product previews and phone-width corrections went live July 14, 2026. The default social preview is the photo-free 1200 × 630 brand graphic at `public/og-keith-staggers-v2.png`; keep its versioned filename when replacing it so LinkedIn does not reuse an obsolete cached image.
+
+### Pending book-sales release, July 31, 2026
+
+Branch `codex/book-sales-live-20260731` stages a direct revenue correction and is not production until its exact release gate is approved. It adds the canonical Build the Workflow. Keep the Judgment. page, the verified $9.99 United States Kindle purchase path, current Books hub and companion copy, Work-plus-edition Book schema, AI-readable records, and format-level Amazon click measurement. The $17.99 paperback remains visible as published and propagating but has no link while ASIN `B0HCCG4CTX` still returns Page Not Found on Amazon.com. The staged build contains 25 HTML pages and 24 indexable URLs. It does not redesign the homepage, change an offer or price, advertise, activate the paperback, or spend money.
 
 ## Tech stack
 
@@ -80,7 +84,7 @@ src/
 ├── data/                       # CONTENT LIVES HERE. Edit these to change copy.
 │   ├── site.ts                # Name, tagline, email, city, qualification path, availability
 │   ├── albums.ts              # 7 albums with Spotify/Apple/Amazon IDs
-│   ├── books.ts               # Verified metadata and substantive copy for the 2 primary books
+│   ├── books.ts               # Verified metadata, editions, and substantive copy for 3 published books
 │   ├── services.ts            # 4 services with pricing
 │   ├── notes.ts               # Published-state Studio Notes with metadata, images, resources, and curated relations
 │   └── testimonials.ts        # Empty by design; real testimonials only, with written permission

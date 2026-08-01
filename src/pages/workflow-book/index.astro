@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { books, liveEditionsFor } from "../../data/books";
 import { site } from "../../data/site";
 import {
   workflowBookCompanion,
@@ -7,13 +8,22 @@ import {
 } from "../../data/workflow-book";
 
 const canonicalUrl = `${site.url}${workflowBookCompanion.route}`;
+const workflowBook = books.find(
+  (book) => book.slug === "build-the-workflow-keep-the-judgment"
+);
+if (!workflowBook) throw new Error("Build the Workflow book record is missing");
+const kindleEdition = liveEditionsFor(workflowBook).find(
+  (edition) => edition.format === "Kindle"
+);
+if (!kindleEdition) throw new Error("Build the Workflow Kindle record is missing");
+const workflowBookUrl = `${site.url}/books/${workflowBook.slug}/`;
 const templateUrl = (fileName: string) =>
   `${site.url}/workflow-book/templates/${fileName}`;
 const faqs = [
   {
     question: "Is the book available now?",
     answer:
-      "The book does not yet have a verified public retail record. These free templates can be used on their own now.",
+      "Yes. The Kindle edition is available on Amazon for $9.99. The paperback is published in KDP at $17.99, and its United States Amazon page is still propagating. These free templates can also be used on their own.",
   },
   {
     question: "Why keep the templates outside the book?",
@@ -72,6 +82,7 @@ const companionJsonLd = {
       learningResourceType: "Template collection",
       educationalUse: "Organize and test an AI-assisted work process",
       isAccessibleForFree: true,
+      isPartOf: { "@id": `${workflowBookUrl}#book` },
       hasPart: workflowBookTemplates.map((template) => ({
         "@type": "LearningResource",
         "@id": `${canonicalUrl}#${template.slug}`,
@@ -171,8 +182,20 @@ const companionJsonLd = {
             Download ten simple text files for organizing priorities, setting approval rules, testing repeated tasks, recording evidence, and explaining what to do when something fails.
           </p>
           <p class="mt-5 font-mono text-[11px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">
-            Companion to Keith's next book · Free · No email required
+            Companion to Build the Workflow. Keep the Judgment. · Free · No email required
           </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href={`/books/${workflowBook.slug}/`} class="studio-button studio-button--secondary">Read about the book</a>
+            <a
+              href={kindleEdition.amazonUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="studio-button studio-button--cobalt"
+              data-amazon-book={workflowBook.slug}
+              data-amazon-format="kindle"
+              data-amazon-placement="workflow-companion-hero"
+            >Buy the Kindle · $9.99</a>
+          </div>
         </div>
       </header>
 
@@ -360,7 +383,16 @@ const companionJsonLd = {
           </h2>
         </div>
         <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
-          <a href="/books/" class="studio-button studio-button--secondary">See Keith's current books</a>
+          <a href={`/books/${workflowBook.slug}/`} class="studio-button studio-button--secondary">Read the book</a>
+          <a
+            href={kindleEdition.amazonUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="studio-button studio-button--cobalt"
+            data-amazon-book={workflowBook.slug}
+            data-amazon-format="kindle"
+            data-amazon-placement="workflow-companion-close"
+          >Buy the Kindle · $9.99</a>
           <a href="/services/training/" class="studio-button studio-button--secondary">See practical AI training</a>
         </div>
       </section>

@@ -11,7 +11,7 @@ const catalog = albums.filter((album) => album.slug !== featured.slug);
   <div class="studio-shell">
     <header class="studio-catalog-head">
       <h2 id="studio-catalog-title" class="studio-display studio-section-title">Music and <strong>books</strong><span class="text-signal">.</span></h2>
-      <p>Keith has also released more than 50 albums, written books about nursing and leadership, and built a large independent creative catalog.</p>
+      <p>Keith has also released more than 50 albums, written three books about practical AI workflows, nursing, and leadership, and built a large independent creative catalog.</p>
     </header>
 
     <article class="studio-music-feature">
@@ -63,7 +63,7 @@ const catalog = albums.filter((album) => album.slug !== featured.slug);
       <div>
         {books.map((book) => (
           <a href={`/books/${book.slug}/`} class="studio-book-mini" aria-label={`Read about ${book.title}`}>
-            <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} by Keith Staggers book cover`} width="600" height="900" loading="lazy" decoding="async" />
+            <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} by Keith Staggers book cover`} width={book.coverWidth} height={book.coverHeight} loading="lazy" decoding="async" />
             <span>{book.title}</span>
           </a>
         ))}

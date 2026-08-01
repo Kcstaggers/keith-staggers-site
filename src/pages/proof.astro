@@ -163,13 +163,13 @@ const proofJsonLd = {
     <section class="proof-books" aria-labelledby="proof-books-title">
       <div class="studio-shell">
         <header class="proof-books-head">
-          <h2 id="proof-books-title" class="studio-display">Books about nursing<br />and <strong>leadership</strong><span class="text-signal">.</span></h2>
-          <p>Two books written from Keith's experience in nursing and nurse leadership. <a href="/books/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">See each book and where to buy it.</a></p>
+          <h2 id="proof-books-title" class="studio-display">Books about AI workflows,<br />nursing, and <strong>leadership</strong><span class="text-signal">.</span></h2>
+          <p>Three books drawn from Keith's work as an AI builder, nurse, and nurse leader. <a href="/books/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">See each book and where to buy it.</a></p>
         </header>
         <div class="proof-book-list">
           {books.map((book) => (
             <a href={`/books/${book.slug}/`} class="proof-book">
-              <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} book cover`} width="600" height="900" loading="lazy" decoding="async" />
+              <img src={`/media/book-${book.slug}.webp`} alt={`${book.title} book cover`} width={book.coverWidth} height={book.coverHeight} loading="lazy" decoding="async" />
               <span><b>{book.title}</b><small>{book.subtitle}</small></span>
             </a>
           ))}
