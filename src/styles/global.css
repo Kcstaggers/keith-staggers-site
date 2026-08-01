@@ -216,6 +216,53 @@ svg circle {
 }
 
 /* Navigation */
+.studio-product-bar {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.65rem, 1.8vw, 1.5rem);
+  padding: 0.65rem 1rem;
+  background: var(--color-cobalt);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: clamp(0.66rem, 1vw, 0.78rem);
+  letter-spacing: 0.015em;
+  text-align: center;
+  transition: background-color 180ms ease;
+}
+
+.studio-product-bar:hover,
+.studio-product-bar:focus-visible {
+  background: var(--color-cobalt-dim);
+  color: white;
+}
+
+.studio-product-bar strong,
+.studio-product-bar b,
+.studio-product-bar em {
+  font-style: normal;
+  font-weight: 750;
+}
+
+.studio-product-bar span,
+.studio-product-bar b,
+.studio-product-bar em {
+  white-space: nowrap;
+}
+
+.studio-product-bar > span::before,
+.studio-product-bar b::before {
+  margin-right: clamp(0.65rem, 1.8vw, 1.5rem);
+  color: rgb(255 255 255 / 0.68);
+  content: "·";
+}
+
+.studio-product-bar em span {
+  margin-left: 0.65rem;
+  color: var(--color-signal);
+}
+
 .studio-nav-wrap {
   position: sticky;
   z-index: 50;
@@ -286,6 +333,26 @@ svg circle {
 .studio-menu-button,
 .studio-mobile-menu {
   display: none;
+}
+
+@media (max-width: 620px) {
+  .studio-product-bar {
+    min-height: 2.55rem;
+    gap: 0.55rem;
+    padding-inline: 0.75rem;
+  }
+
+  .studio-product-bar > span {
+    display: none;
+  }
+
+  .studio-product-bar b::before {
+    margin-right: 0.55rem;
+  }
+
+  .studio-product-bar em span {
+    margin-left: 0.35rem;
+  }
 }
 
 /* Portrait portal */
@@ -465,7 +532,7 @@ svg circle {
   position: absolute;
   right: 2%;
   bottom: 2%;
-  color: var(--color-cobalt);
+  color: var(--color-cobalt-text);
   font-family: var(--font-mono);
   font-size: 0.61rem;
   letter-spacing: 0.18em;
@@ -500,7 +567,7 @@ svg circle {
   text-transform: uppercase;
 }
 
-.production-ticker-track b { color: var(--color-cobalt); }
+.production-ticker-track b { color: var(--color-cobalt-text); }
 .production-ticker-track i { font-style: normal; }
 .production-ticker-track em { color: var(--color-signal); font-style: normal; }
 .production-ticker:hover .production-ticker-track { animation-play-state: paused; }
@@ -601,7 +668,7 @@ svg circle {
   place-items: center;
   border: 1px solid rgb(40 81 255 / 0.7);
   border-radius: 50%;
-  color: var(--color-cobalt);
+  color: var(--color-cobalt-text);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   box-shadow: 0 0 30px rgb(40 81 255 / 0.15);
@@ -832,7 +899,7 @@ svg circle {
   text-transform: uppercase;
 }
 
-.service-clarity-meta span { color: var(--color-cobalt); }
+.service-clarity-meta span { color: var(--color-cobalt-text); }
 .service-clarity-meta b { color: var(--color-paper-dim); font-weight: 600; }
 
 .service-clarity-card h3 {
@@ -1087,7 +1154,7 @@ svg circle {
   transition: transform 200ms ease;
 }
 
-.studio-note-row:hover b { color: var(--color-cobalt); }
+.studio-note-row:hover b { color: var(--color-cobalt-text); }
 .studio-note-row:hover > svg { transform: translateX(5px); }
 
 /* Free workflow readiness band */
@@ -1172,7 +1239,7 @@ svg circle {
 
 .studio-work-identity .portrait-portal { width: 150px; }
 .studio-work-identity > span { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-paper-faint); }
-.studio-work-identity b { color: var(--color-cobalt); }
+.studio-work-identity b { color: var(--color-cobalt-text); }
 
 .studio-work-stage {
   position: relative;
@@ -1249,7 +1316,7 @@ svg circle {
 .studio-play svg { width: 1.4rem; fill: white; }
 
 .studio-work-meta { display: block; margin-top: 1rem; }
-.studio-work-meta small { display: block; color: var(--color-cobalt); font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.studio-work-meta small { display: block; color: var(--color-cobalt-text); font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .studio-work-meta b { display: block; margin-top: 0.55rem; font-size: 1.05rem; font-weight: 550; }
 
 .studio-work-arrow {
@@ -1283,7 +1350,7 @@ svg circle {
   font-family: var(--font-mono);
 }
 
-.studio-work-status span { color: var(--color-cobalt); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.studio-work-status span { color: var(--color-cobalt-text); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }
 .studio-work-status b { font-size: 0.78rem; font-weight: 430; }
 .studio-work-status small { color: var(--color-paper-faint); font-size: 0.63rem; text-transform: uppercase; }
 
@@ -1410,7 +1477,7 @@ svg circle {
 }
 
 .studio-sound-copy { padding: 1.5rem; }
-.studio-sound-copy small { color: var(--color-cobalt); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.studio-sound-copy small { color: var(--color-cobalt-text); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .studio-sound-copy h3 { margin-top: 1rem; font-size: clamp(2rem, 3vw, 3.4rem); line-height: 0.95; }
 .studio-sound-copy p { margin-top: 1.2rem; color: var(--color-paper-dim); line-height: 1.55; }
 .studio-sound-copy div { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.67rem; }
@@ -1424,7 +1491,7 @@ svg circle {
   margin-top: 3rem;
   padding-bottom: 0.8rem;
   border-bottom: 1px solid var(--color-rule);
-  color: var(--color-cobalt);
+  color: var(--color-cobalt-text);
   font-family: var(--font-mono);
   font-size: 0.67rem;
   letter-spacing: 0.1em;
@@ -1584,7 +1651,7 @@ svg circle {
 .studio-life-icon svg { width: 2rem; fill: none; stroke: currentColor; stroke-width: 1.45; stroke-linecap: round; stroke-linejoin: round; }
 .studio-life h3 { margin-top: 1.4rem; font-family: var(--font-mono); font-size: clamp(1rem, 1.45vw, 1.3rem); }
 .studio-life p { margin-top: 0.4rem; color: var(--color-paper-dim); font-family: var(--font-mono); font-size: 0.72rem; }
-.studio-life--blue { color: var(--color-cobalt); }
+.studio-life--blue { color: var(--color-cobalt-text); }
 .studio-life--violet { color: var(--studio-violet); }
 .studio-life--coral { color: var(--color-signal); }
 
@@ -2776,7 +2843,7 @@ svg circle {
 @utility accent {
   font-family: var(--font-serif);
   font-style: italic;
-  color: var(--color-cobalt);
+  color: var(--color-cobalt-text);
 }
 
 @utility hairline {
@@ -2809,7 +2876,7 @@ svg circle {
 }
 
 .work-filter[aria-pressed="true"] {
-  color: var(--color-cobalt);
+  color: var(--color-cobalt-text);
   border-bottom-color: var(--color-cobalt);
 }
 
@@ -2829,7 +2896,7 @@ svg circle {
 }
 
 .path-tab[aria-selected="true"] {
-  color: var(--color-cobalt);
+  color: var(--color-cobalt-text);
 }
 
 .path-tab[aria-selected="true"]::after {
@@ -2925,6 +2992,23 @@ dialog[open] {
     opacity: 1;
     transform: none;
   }
+}
+
+/* V8 homepage scale. Interior routes retain their established reading scale. */
+.home-v8 .studio-section {
+  padding-block: clamp(4.5rem, 6.5vw, 7rem);
+}
+
+.home-v8 .studio-section-title {
+  font-size: clamp(3rem, 5.3vw, 5.8rem);
+}
+
+.home-v8 .studio-section-lede {
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+}
+
+.home-v8 .studio-kicker {
+  margin-bottom: 1.25rem;
 }
 
 /* Scroll reveal. Classes are added by JS, so no-JS visitors and

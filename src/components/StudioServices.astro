@@ -4,69 +4,247 @@ const paths = [
     number: "01",
     label: "Build it for me",
     title: "Done-for-you AI setup",
-    detail: "Choose one task your team repeats. Keith builds a practical AI-assisted process, tests it, documents it, and teaches your team how to use it.",
+    detail: "Keith builds, tests, documents, and hands off a practical AI-assisted process for repeated work.",
     price: "Projects from $2,500",
     href: "/services/done-for-you/",
-    cta: "See the done-for-you service",
+    cta: "See the service",
   },
   {
     number: "02",
     label: "Help me one-to-one",
     title: "One-to-one AI working session",
-    detail: "Solve one real problem. Bring one task, business problem, or stuck project. Work with Keith for 60 minutes and leave with a useful first version and a written next-step plan.",
+    detail: "Bring one real problem and leave with a useful first version plus a written next-step plan.",
     price: "$250 · 60 minutes",
     href: "/services/coaching/",
-    cta: "See the one-to-one session",
+    cta: "See the session",
   },
   {
     number: "03",
     label: "Train my team",
     title: "Practical AI training",
-    detail: "Your team practices using AI on recognizable work. People leave knowing what AI can help with, what they must check, and what to do next.",
+    detail: "Your team practices on familiar work and learns what AI may do, what people must check, and how to recover.",
     price: "Public class $179 · Team workshops from $3,500",
     href: "/services/training/",
-    cta: "See the training options",
+    cta: "See training",
     secondaryHref: "/frontline-nurse-leader/",
-    secondaryCta: "Nurse leader? See the September class",
+    secondaryCta: "September nurse leader class",
   },
   {
     number: "04",
     label: "Bring Keith to my event",
     title: "AI speaking for leaders and teams",
-    detail: "Book a practical talk about using AI safely at work, leading through change, or changing careers without losing what you already know.",
+    detail: "A practical talk about AI at work, leading change, or carrying useful experience into a new career.",
     price: "Keynotes from $3,500",
     href: "/services/speaking/",
-    cta: "See speaking topics and formats",
+    cta: "See speaking",
   },
 ];
 ---
 
-<section id="services" class="studio-section studio-services scroll-mt-24" aria-labelledby="studio-services-title">
+<section id="services" class="studio-section studio-services v8-services scroll-mt-24" aria-labelledby="studio-services-title">
   <div class="studio-shell">
-    <div class="studio-services-head">
-      <h2 id="studio-services-title" class="studio-display studio-section-title">Choose the help<br /><strong>you need</strong><span class="text-signal">.</span></h2>
-      <p>
-        You do not need to know the right AI term. Start with what you want to make easier.
-        <a href="/services/" class="mt-4 block text-cobalt-text transition-colors hover:text-paper">Compare every option →</a>
-      </p>
-    </div>
+    <header class="v8-services-head">
+      <div>
+        <p class="studio-kicker">Four clear ways to start</p>
+        <h2 id="studio-services-title" class="studio-display studio-section-title">Choose the help<br /><strong>you need</strong><span class="text-signal">.</span></h2>
+      </div>
+      <p>You do not need to know the right AI term. Start with what you want to make easier. <a href="/services/">Compare every option →</a></p>
+    </header>
 
-    <div class="service-clarity-grid">
+    <div class="v8-service-list">
       {paths.map((path) => (
-        <article class="service-clarity-card">
-          <div class="service-clarity-meta">
-            <span>{path.number}</span>
-            <b>{path.label}</b>
+        <article class="v8-service">
+          <span class="v8-service-number">{path.number}</span>
+          <div class="v8-service-name">
+            <small>{path.label}</small>
+            <h3>{path.title}</h3>
           </div>
-          <h3 class="studio-display">{path.title}</h3>
           <p>{path.detail}</p>
-          <div class="service-clarity-action">
+          <div class="v8-service-action">
             <span>{path.price}</span>
-            <a href={path.href}>{path.cta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg></a>
-            {path.secondaryHref && <a class="service-secondary" href={path.secondaryHref}>{path.secondaryCta}</a>}
+            <a href={path.href}>{path.cta} <b aria-hidden="true">→</b></a>
+            {path.secondaryHref && <a class="v8-service-secondary" href={path.secondaryHref}>{path.secondaryCta}</a>}
           </div>
         </article>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .v8-services {
+    background:
+      linear-gradient(180deg, rgb(40 81 255 / 0.045), transparent 45%),
+      #030406;
+  }
+
+  .v8-services-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.38fr);
+    gap: clamp(2rem, 6vw, 7rem);
+    align-items: end;
+  }
+
+  .v8-services-head .studio-section-title {
+    margin-top: 0.9rem;
+  }
+
+  .v8-services-head > p {
+    margin: 0 0 0.45rem;
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    line-height: 1.65;
+  }
+
+  .v8-services-head > p a {
+    display: block;
+    margin-top: 1rem;
+    color: var(--color-cobalt-text);
+  }
+
+  .v8-service-list {
+    margin-top: clamp(2.8rem, 5vw, 4.5rem);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .v8-service {
+    position: relative;
+    display: grid;
+    min-height: 150px;
+    grid-template-columns: 3.5rem minmax(230px, 0.92fr) minmax(280px, 1.08fr) minmax(210px, 0.68fr);
+    gap: clamp(1rem, 2.8vw, 2.8rem);
+    align-items: center;
+    padding-block: 1.6rem;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-rule);
+    transition: padding 180ms ease, background 180ms ease;
+  }
+
+  .v8-service::after {
+    position: absolute;
+    right: 100%;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-cobalt), var(--color-signal));
+    content: "";
+    transition: right 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .v8-service:hover,
+  .v8-service:focus-within {
+    padding-inline: 1rem;
+    background: rgb(255 255 255 / 0.024);
+  }
+
+  .v8-service:hover::after,
+  .v8-service:focus-within::after {
+    right: 0;
+  }
+
+  .v8-service-number,
+  .v8-service-name small,
+  .v8-service-action > span {
+    color: var(--color-paper-faint);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .v8-service-number {
+    color: var(--color-cobalt-text);
+  }
+
+  .v8-service-name h3 {
+    margin-top: 0.55rem;
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    font-weight: 640;
+    letter-spacing: -0.035em;
+  }
+
+  .v8-service > p {
+    margin: 0;
+    color: var(--color-paper-dim);
+    font-size: 0.9rem;
+    line-height: 1.58;
+  }
+
+  .v8-service-action {
+    display: grid;
+    justify-items: end;
+    gap: 0.72rem;
+    text-align: right;
+  }
+
+  .v8-service-action > span {
+    color: var(--color-signal);
+    font-weight: 700;
+  }
+
+  .v8-service-action > a:not(.v8-service-secondary) {
+    display: inline-flex;
+    gap: 0.75rem;
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .v8-service-action b {
+    color: var(--color-cobalt-text);
+  }
+
+  .v8-service-secondary {
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 1040px) {
+    .v8-service {
+      grid-template-columns: 2.5rem minmax(220px, 0.9fr) minmax(0, 1.1fr);
+    }
+
+    .v8-service-action {
+      grid-column: 2 / -1;
+      display: flex;
+      justify-content: space-between;
+      justify-items: start;
+      align-items: baseline;
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .v8-services-head {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+
+    .v8-service {
+      grid-template-columns: 2rem minmax(0, 1fr);
+      gap: 0.8rem 1rem;
+      padding-block: 1.5rem;
+    }
+
+    .v8-service > p,
+    .v8-service-action {
+      grid-column: 2;
+    }
+
+    .v8-service-action {
+      display: grid;
+      justify-content: start;
+      justify-items: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v8-service,
+    .v8-service::after {
+      transition: none;
+    }
+  }
+</style>

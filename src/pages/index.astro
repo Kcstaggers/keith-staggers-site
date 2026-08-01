@@ -3,26 +3,32 @@ import Base from "../layouts/Base.astro";
 import StudioHero from "../components/StudioHero.astro";
 import StudioMethod from "../components/StudioMethod.astro";
 import StudioProduct from "../components/StudioProduct.astro";
+import StudioBook from "../components/StudioBook.astro";
+import StudioProjectProof from "../components/StudioProjectProof.astro";
 import StudioServices from "../components/StudioServices.astro";
 import StudioNotes from "../components/StudioNotes.astro";
 import StudioReadiness from "../components/StudioReadiness.astro";
 import StudioWork from "../components/StudioWork.astro";
-import StudioTestimonial from "../components/StudioTestimonial.astro";
 import StudioCatalog from "../components/StudioCatalog.astro";
 import StudioStory from "../components/StudioStory.astro";
 import StudioClosing from "../components/StudioClosing.astro";
+import StudioTemplate from "../components/StudioTemplate.astro";
 ---
 
 <Base>
-  <StudioHero />
-  <StudioServices />
-  <StudioMethod />
-  <StudioTestimonial />
-  <StudioReadiness />
-  <StudioProduct />
-  <StudioNotes />
-  <StudioStory />
-  <StudioWork />
-  <StudioCatalog />
-  <StudioClosing />
+  <div class="home-v8">
+    <StudioHero />
+    <StudioServices />
+    <StudioProjectProof mode="tabs" />
+    <StudioProduct />
+    <StudioBook />
+    <StudioMethod />
+    <StudioReadiness />
+    <StudioTemplate />
+    <StudioNotes />
+    <StudioWork />
+    <StudioCatalog />
+    <StudioStory />
+    <StudioClosing />
+  </div>
 </Base>

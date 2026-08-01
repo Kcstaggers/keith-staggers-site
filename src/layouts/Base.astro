@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
+import SiteConversion from "../components/SiteConversion.astro";
 import Footer from "../components/Footer.astro";
 import Analytics from "@vercel/analytics/astro";
 import { site } from "../data/site";
@@ -155,6 +156,7 @@ const jsonLd = {
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
+    <SiteConversion />
     <Footer />
     <Analytics />
 
@@ -257,6 +259,26 @@ const jsonLd = {
         const href = link.getAttribute("href") ?? "";
         const source = labelFor(link);
         const page = window.location.pathname;
+        const globalPath = link.hasAttribute("data-global-buy")
+          ? "book"
+          : link.hasAttribute("data-global-product")
+            ? "finish-loop"
+            : link.hasAttribute("data-global-contact")
+              ? "contact"
+              : link.hasAttribute("data-global-newsletter")
+                ? "newsletter"
+                : null;
+
+        if (globalPath) {
+          track("Site Conversion Path Selected", {
+            pathway: globalPath,
+            placement: link.closest(".studio-product-bar")
+              ? "top-product-bar"
+              : "site-conversion-band",
+            source,
+            page,
+          });
+        }
 
         if (link.dataset.cohortPurchase) {
           track("Cohort Checkout Intent", {
@@ -325,6 +347,11 @@ const jsonLd = {
           track("Readiness Completed", { page: window.location.pathname });
         } else if (event.target.matches("[data-readiness-followup]")) {
           track("Readiness Follow-up Attempt", { page: window.location.pathname });
+        } else if (event.target.matches("[data-newsletter-form]")) {
+          track("Newsletter Subscribe Attempt", {
+            placement: event.target.dataset.newsletterPlacement ?? "unspecified",
+            page: window.location.pathname,
+          });
         }
       });
     </script>

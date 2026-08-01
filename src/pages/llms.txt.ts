@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { books } from "../data/books";
 import { publishedNotes } from "../data/notes";
+import { finishLoop } from "../data/products";
 import { services } from "../data/services";
 import { site } from "../data/site";
 import {
@@ -52,8 +53,12 @@ export const GET: APIRoute = () => {
     `- [About Keith Staggers](${site.url}/about/): Career history, operating method, and portfolio boundaries.`,
     `- [Examples of Keith's work](${site.url}/proof/): Plain-English examples of independent AI builds, client work, books, and finished creative work.`,
     `- [Books by Keith Staggers](${site.url}/books/): Canonical records for three published books about practical AI workflows, nursing, and healthcare leadership.`,
+    `- [The Finish Loop](${site.url}${site.buy.productPath}): A $${finishLoop.price} downloadable toolkit for choosing one project, finishing it, releasing it, and saving a repeatable process.`,
+    `- [Practical AI for Frontline Nurse Leaders](${site.url}/frontline-nurse-leader/): A $179 live virtual class on September 16, 2026, from 9:00 AM to 1:15 PM ET.`,
     `- [Build the Workflow companion](${site.url}${workflowBookCompanion.route}): Ten free text templates for organizing AI work, recording important approvals, testing the result, and planning what to do if something fails.`,
     `- [Articles and guides](${site.url}/notes/): Practical articles about using AI at work, team training, finishing projects, and career reinvention.`,
+    `- [${site.newsletter.name}](${site.url}${site.newsletter.path}): A Buttondown-confirmed newsletter with one practical workflow, one guardrail, and one action. ${site.newsletter.cadence}. The five public Notes show what Keith writes about before someone joins.`,
+    `- [Privacy notice](${site.url}${site.newsletter.privacyPath}): Plain-language boundaries for Buttondown, Formspree, Vercel, browser-local tools, and external stores.`,
     `- [RSS feed](${site.url}/rss.xml): Machine-readable article updates.`,
     `- [Full public text index](${site.url}/llms-full.txt): Current public service descriptions and full article text.`,
     "",
@@ -79,6 +84,7 @@ export const GET: APIRoute = () => {
     "",
     `- [See if a task is ready for AI](${site.url}/workflow-readiness/): A free seven-question check with no email required.`,
     `- [Tell Keith about your task](${site.url}/project-fit/): Private inquiry form. Keith reviews every inquiry before sharing a calendar link.`,
+    `- [Read ${site.newsletter.name}](${site.url}${site.newsletter.path}): Review all five public Notes first. Joining is optional, Buttondown requires confirmation, and the free resources are not gated.`,
     "",
     "## Source boundaries",
     "",
