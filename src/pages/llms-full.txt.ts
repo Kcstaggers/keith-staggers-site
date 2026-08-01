@@ -41,12 +41,32 @@ export const GET: APIRoute = () => {
         ...section.paragraphs.flatMap((paragraph) => [paragraph, ""]),
       ]),
     ]);
-  const bookSections = books.flatMap((book) => [
+  const bookSections = books.flatMap((book) => {
+    const editionLines = book.editions.map((edition) => {
+      const details = [
+        `ASIN ${edition.asin}`,
+        edition.isbn13 ? `ISBN-13 ${edition.isbn13}` : undefined,
+        edition.pageCount ? `${edition.pageCount} pages` : undefined,
+        edition.priceUsd ? `$${edition.priceUsd} USD` : undefined,
+        edition.amazonUrl ? `Amazon record ${edition.amazonUrl}` : "United States Amazon page still propagating",
+      ].filter(Boolean);
+      return `- ${edition.format}: ${details.join("; ")}.`;
+    });
+    const catalogLines = [
+      book.goodreadsUrl ? `Goodreads record: ${book.goodreadsUrl}.` : undefined,
+      book.openLibraryUrl ? `Open Library record: ${book.openLibraryUrl}.` : undefined,
+      book.companionUrl ? `Free companion templates: ${site.url}${book.companionUrl}.` : undefined,
+    ].filter((line): line is string => Boolean(line));
+    return [
     `## ${book.title}: ${book.subtitle}`,
     "",
     `Canonical URL: ${site.url}/books/${book.slug}/`,
     "",
-    `Author: Keith Staggers. Published: ${book.datePublished}. Publisher: ${book.publisher}. Format: ${book.format}. Language: ${book.language}. Length: ${book.pageCount} pages. ISBN-13: ${book.isbn13}. ASIN: ${book.asin}. Amazon record: ${book.amazonUrl}. Goodreads record: ${book.goodreadsUrl}. Open Library record: ${book.openLibraryUrl}.`,
+    `Author: Keith Staggers. Published: ${book.datePublished}. Publisher: ${book.publisher}. Language: ${book.language}.`,
+    "",
+    "Verified editions:",
+    ...editionLines,
+    ...catalogLines,
     "",
     ...book.overview.flatMap((paragraph) => [paragraph, ""]),
     "What the book addresses:",
@@ -55,7 +75,8 @@ export const GET: APIRoute = () => {
     "Intended readers:",
     ...book.audience.map((audience) => `- ${audience}`),
     "",
-  ]);
+    ];
+  });
   const workflowTestSections = workflowTestCases.flatMap((testCase) => [
     `### ${testCase.number}. ${testCase.name}`,
     "",
@@ -79,7 +100,7 @@ export const GET: APIRoute = () => {
     "",
     "# Identity",
     "",
-    "Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem in a one-to-one session, and builds practical AI tools for repetitive tasks. He is also a working nurse leader, speaker, author, retired Baltimore detective, and independent producer. His public book catalog contains Nurse the F*ck Up and Leading with Care.",
+    "Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem in a one-to-one session, and builds practical AI tools for repetitive tasks. He is also a working nurse leader, speaker, author, retired Baltimore detective, and independent producer. His public book catalog contains Build the Workflow. Keep the Judgment., Nurse the F*ck Up, and Leading with Care.",
     "",
     `About: ${site.url}/about/`,
     `Proof: ${site.url}/proof/`,
@@ -99,7 +120,7 @@ export const GET: APIRoute = () => {
     "",
     `Companion version: ${workflowBookCompanion.version}. Updated: ${workflowBookCompanion.dateModified}.`,
     "",
-    "This is the companion resource for Keith Staggers's practical book about using AI for real work. The ten editable text files help a person explain the task, record what already exists, list unfinished work, name decisions that require a person, test the result, record what happened, teach another person to use it, and prepare for failures.",
+    "This is the companion resource for Build the Workflow. Keep the Judgment. The ten editable text files help a person explain the task, record what already exists, list unfinished work, name decisions that require a person, test the result, record what happened, teach another person to use it, and prepare for failures.",
     "",
     "The templates do not make an AI tool safe, legal, or correct by themselves. The person responsible must adapt them to the laws, workplace rules, privacy requirements, account controls, contracts, and professional duties that apply.",
     "",

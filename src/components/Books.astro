@@ -7,11 +7,11 @@ import SectionCTA from "./SectionCTA.astro";
   <header class="mb-16">
     <p class="eyebrow mb-6">Pillar · 03 / Books</p>
     <h2 class="serif text-[clamp(40px,5.5vw,72px)] leading-[1] tracking-[-0.01em] mb-6">
-      Two primary works.
+      Three published books.
       <span class="text-paper-dim/80 ml-3">written from inside the room</span>
     </h2>
     <p class="serif italic text-[20px] lg:text-[22px] text-paper-dim max-w-[640px] leading-[1.5]">
-      Healthcare, leadership, burnout. Not theory. Field notes from the floor.
+      Practical AI workflows, nursing, and leadership. Direct field guides from work Keith has done.
     </p>
   </header>
 
@@ -23,11 +23,11 @@ import SectionCTA from "./SectionCTA.astro";
             <img
               src={`/media/book-${book.slug}.webp`}
               alt={`${book.title} cover`}
-              width="600"
-              height="900"
+              width={book.coverWidth}
+              height={book.coverHeight}
               loading="lazy"
               decoding="async"
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              class="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
             />
           </a>
         </div>

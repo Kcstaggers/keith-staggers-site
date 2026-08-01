@@ -49,13 +49,14 @@ Before release, view the rendered homepage as a new visitor. Within ten seconds 
 
 ## Routes
 
-The build generates 24 static HTML pages. Twenty-three are indexable and appear in the sitemap. The Finish Loop thank-you page is intentionally noindex.
+The build generates 25 static HTML pages. Twenty-four are indexable and appear in the sitemap. The Finish Loop thank-you page is intentionally noindex.
 
 | Route | Purpose |
 |---|---|
 | `/` | Plain-English homepage and four service choices |
 | `/about/` | Keith's public identity, career arc, and operating method |
-| `/books/` | Owned catalog hub for Keith's two primary books |
+| `/books/` | Owned catalog hub for Keith's three published books |
+| `/books/build-the-workflow-keep-the-judgment/` | Practical AI workflow book with verified Kindle purchase path and paperback propagation status |
 | `/books/nurse-the-fck-up/` | Verified book record and direct Amazon handoff |
 | `/books/leading-with-care/` | Verified book record and direct Amazon handoff |
 | `/finish-loop/` | $49 project-finishing toolkit sales page |
@@ -70,7 +71,7 @@ The build generates 24 static HTML pages. Twenty-three are indexable and appear 
 | `/services/speaking/` | AI Speaking for Leaders and Teams |
 | `/workflow-readiness/` | Seven-question, no-email workflow readiness check |
 | `/workflow-testing-template/` | Free 10-case browser worksheet with CSV and print-to-PDF export |
-| `/workflow-book/` | Ten free companion templates for Keith's next AI book |
+| `/workflow-book/` | Ten free companion templates for Build the Workflow. Keep the Judgment. |
 | `/notes/` | Practical AI articles and guides |
 | `/notes/the-finishing-problem/` | Article and guide |
 | `/notes/the-monday-morning-test/` | Article and guide |

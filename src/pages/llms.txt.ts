@@ -17,10 +17,26 @@ export const GET: APIRoute = () => {
   const noteLines = [...publishedNotes]
     .sort((a, b) => b.datePublished.localeCompare(a.datePublished) || b.number.localeCompare(a.number))
     .map((note) => `- [${note.title}](${site.url}/notes/${note.slug}/): ${note.summary}`);
-  const bookLines = books.map(
-    (book) =>
-      `- [${book.title}: ${book.subtitle}](${site.url}/books/${book.slug}/): ${book.blurb} Paperback published ${book.datePublished}; ISBN-13 ${book.isbn13}; ASIN ${book.asin}. [Goodreads](${book.goodreadsUrl}). [Open Library](${book.openLibraryUrl}).`
-  );
+  const bookLines = books.map((book) => {
+    const editions = book.editions
+      .map((edition) => {
+        const identifiers = [
+          `ASIN ${edition.asin}`,
+          edition.isbn13 ? `ISBN-13 ${edition.isbn13}` : undefined,
+          edition.pageCount ? `${edition.pageCount} pages` : undefined,
+          edition.priceUsd ? `$${edition.priceUsd} USD` : undefined,
+          edition.amazonUrl ? `Amazon ${edition.amazonUrl}` : "US Amazon page propagating",
+        ].filter(Boolean);
+        return `${edition.format}: ${identifiers.join(", ")}`;
+      })
+      .join("; ");
+    const catalogLinks = [
+      book.goodreadsUrl ? `[Goodreads](${book.goodreadsUrl}).` : undefined,
+      book.openLibraryUrl ? `[Open Library](${book.openLibraryUrl}).` : undefined,
+      book.companionUrl ? `[Free companion templates](${site.url}${book.companionUrl}).` : undefined,
+    ].filter(Boolean).join(" ");
+    return `- [${book.title}: ${book.subtitle}](${site.url}/books/${book.slug}/): ${book.blurb} Published ${book.datePublished}. ${editions}. ${catalogLinks}`.trim();
+  });
   const workflowBookLines = workflowBookTemplates.map(
     (template) =>
       `- [${template.number}. ${template.title}](${site.url}/workflow-book/templates/${template.fileName}): ${template.purpose}`
@@ -35,8 +51,8 @@ export const GET: APIRoute = () => {
     `- [Homepage](${site.url}/): Current identity, offers, and primary navigation.`,
     `- [About Keith Staggers](${site.url}/about/): Career history, operating method, and portfolio boundaries.`,
     `- [Examples of Keith's work](${site.url}/proof/): Plain-English examples of independent AI builds, client work, books, and finished creative work.`,
-    `- [Books by Keith Staggers](${site.url}/books/): Canonical records for the two primary healthcare books.`,
-    `- [AI Book Companion](${site.url}${workflowBookCompanion.route}): Ten free text templates for organizing AI work, recording important approvals, testing the result, and planning what to do if something fails.`,
+    `- [Books by Keith Staggers](${site.url}/books/): Canonical records for three published books about practical AI workflows, nursing, and healthcare leadership.`,
+    `- [Build the Workflow companion](${site.url}${workflowBookCompanion.route}): Ten free text templates for organizing AI work, recording important approvals, testing the result, and planning what to do if something fails.`,
     `- [Articles and guides](${site.url}/notes/): Practical articles about using AI at work, team training, finishing projects, and career reinvention.`,
     `- [RSS feed](${site.url}/rss.xml): Machine-readable article updates.`,
     `- [Full public text index](${site.url}/llms-full.txt): Current public service descriptions and full article text.`,
@@ -52,7 +68,7 @@ export const GET: APIRoute = () => {
     "## Free guides and worksheets for repetitive tasks",
     "",
     `- [10-Example AI Process Testing Worksheet](${site.url}/workflow-testing-template/): A browser worksheet for checking normal work, missing information, mistakes, required stops, duplicate actions, rejected results, and failures. Entries stay in the visitor's browser and can be exported as CSV or printed to PDF.`,
-    `- [AI Book Companion](${site.url}${workflowBookCompanion.route}): Version ${workflowBookCompanion.version}. Ten editable text files that help a person organize, test, and safely run an AI-assisted task.`,
+    `- [Build the Workflow companion](${site.url}${workflowBookCompanion.route}): Version ${workflowBookCompanion.version}. Ten editable text files that help a person organize, test, and safely run an AI-assisted task.`,
     ...workflowBookLines,
     "",
     "## Latest articles and guides",

@@ -1510,7 +1510,8 @@ svg circle {
 .studio-book-mini img {
   width: 44px;
   aspect-ratio: 2 / 3;
-  object-fit: cover;
+  object-fit: contain;
+  background: var(--color-ink);
   border: 1px solid var(--color-rule);
   transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
@@ -2385,7 +2386,7 @@ svg circle {
 
 .proof-book-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 3rem);
   margin-top: clamp(3rem, 6vw, 6rem);
 }
@@ -2398,7 +2399,8 @@ svg circle {
   width: 100%;
   aspect-ratio: 2 / 3;
   border: 1px solid var(--color-rule);
-  object-fit: cover;
+  object-fit: contain;
+  background: var(--color-ink);
   box-shadow: var(--studio-shadow);
   transition: border-color 180ms ease, transform 180ms ease;
 }

@@ -1,6 +1,11 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { books, type Book } from "../../data/books";
+import {
+  books,
+  liveEditionsFor,
+  paperbackEditionFor,
+  type Book,
+} from "../../data/books";
 import { site } from "../../data/site";
 
 export function getStaticPaths() {
@@ -18,7 +23,68 @@ const displayDate = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
   timeZone: "UTC",
 }).format(new Date(`${book.datePublished}T12:00:00Z`));
-const displayIsbn = `${book.isbn13.slice(0, 3)}-${book.isbn13.slice(3)}`;
+const liveEditions = liveEditionsFor(book);
+const paperbackEdition = paperbackEditionFor(book);
+const displayIsbn = paperbackEdition?.isbn13
+  ? `${paperbackEdition.isbn13.slice(0, 3)}-${paperbackEdition.isbn13.slice(3)}`
+  : undefined;
+const workSameAs = [
+  book.goodreadsUrl,
+  book.openLibraryUrl,
+].filter((url): url is string => Boolean(url));
+const editionJsonLd = book.editions.map((edition) => {
+  const editionId = `${canonicalUrl}#edition-${edition.format.toLowerCase()}`;
+  const identifiers = [
+    {
+      "@type": "PropertyValue",
+      propertyID: "ASIN",
+      name: `${edition.format} Amazon Standard Identification Number`,
+      value: edition.asin,
+      ...(edition.amazonUrl ? { url: edition.amazonUrl } : {}),
+    },
+    ...(edition.isbn13
+      ? [
+          {
+            "@type": "PropertyValue",
+            propertyID: "ISBN-13",
+            value: edition.isbn13,
+          },
+        ]
+      : []),
+  ];
+
+  return {
+    "@type": "Book",
+    "@id": editionId,
+    url: canonicalUrl,
+    exampleOfWork: { "@id": `${canonicalUrl}#book` },
+    bookEdition: `${edition.format} edition`,
+    bookFormat: `https://schema.org/${edition.schemaFormat}`,
+    datePublished: book.datePublished,
+    inLanguage: book.languageCode,
+    creativeWorkStatus: "Published",
+    publisher: {
+      "@type": "Organization",
+      name: book.publisher,
+    },
+    identifier: identifiers,
+    ...(edition.isbn13 ? { isbn: edition.isbn13 } : {}),
+    ...(edition.pageCount ? { numberOfPages: edition.pageCount } : {}),
+    ...(edition.amazonUrl ? { sameAs: edition.amazonUrl } : {}),
+    ...(edition.status === "live" && edition.amazonUrl
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: edition.amazonUrl,
+            priceCurrency: "USD",
+            ...(edition.priceUsd ? { price: edition.priceUsd } : {}),
+            availability: "https://schema.org/InStock",
+            itemCondition: "https://schema.org/NewCondition",
+          },
+        }
+      : {}),
+  };
+});
 const bookJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -43,46 +109,31 @@ const bookJsonLd = {
       alternateName: book.subtitle,
       description: book.blurb,
       url: canonicalUrl,
-      sameAs: [book.amazonUrl, book.goodreadsUrl, book.openLibraryUrl],
+      ...(workSameAs.length ? { sameAs: workSameAs } : {}),
       author: { "@id": `${site.url}/#keith` },
       mainEntityOfPage: { "@id": `${canonicalUrl}#page` },
       image: { "@id": `${canonicalUrl}#cover` },
       datePublished: book.datePublished,
       inLanguage: book.languageCode,
-      isbn: book.isbn13,
-      numberOfPages: book.pageCount,
-      bookFormat: "https://schema.org/Paperback",
       publisher: {
         "@type": "Organization",
         name: book.publisher,
       },
-      identifier: [
-        {
-          "@type": "PropertyValue",
-          propertyID: "ASIN",
-          name: "Amazon Standard Identification Number",
-          value: book.asin,
-          url: book.amazonUrl,
-        },
-        {
-          "@type": "PropertyValue",
-          propertyID: "ISBN-13",
-          value: book.isbn13,
-        },
-      ],
+      workExample: editionJsonLd.map((edition) => ({ "@id": edition["@id"] })),
       keywords: book.themes,
       audience: book.audience.map((audienceType) => ({
         "@type": "Audience",
         audienceType,
       })),
     },
+    ...editionJsonLd,
     {
       "@type": "ImageObject",
       "@id": `${canonicalUrl}#cover`,
       url: `${site.url}/media/book-${book.slug}.webp`,
       contentUrl: `${site.url}/media/book-${book.slug}.webp`,
-      width: 600,
-      height: 900,
+      width: book.coverWidth,
+      height: book.coverHeight,
       caption: `${book.title}: ${book.subtitle} by Keith Staggers`,
     },
     {
@@ -119,8 +170,8 @@ const bookJsonLd = {
   ogType="book"
   ogImage={`/media/book-${book.slug}.webp`}
   ogImageAlt={`${book.title}: ${book.subtitle} by Keith Staggers book cover`}
-  ogImageWidth={600}
-  ogImageHeight={900}
+  ogImageWidth={book.coverWidth}
+  ogImageHeight={book.coverHeight}
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(bookJsonLd)} />
@@ -141,35 +192,42 @@ const bookJsonLd = {
           <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt-text">
             {book.topic} · By <a href="/about/" rel="author" class="underline decoration-rule underline-offset-4 transition-colors hover:text-paper">Keith Staggers</a>
           </p>
-          <h1 class="studio-display mt-6 text-[clamp(54px,8vw,108px)] leading-[0.87]">{book.title}<span class="text-signal">.</span></h1>
+          <h1 class="studio-display mt-6 text-[clamp(54px,8vw,108px)] leading-[0.87]">{book.title}{!book.title.endsWith(".") && <span class="text-signal">.</span>}</h1>
           <p class="mt-6 max-w-[760px] serif text-[clamp(24px,3vw,38px)] leading-tight italic text-paper-dim">{book.subtitle}</p>
           <p class="mt-8 max-w-[740px] text-[18px] leading-[1.75] text-paper-dim">{book.blurb}</p>
           <div class="mt-9 flex flex-wrap gap-3">
-            <a
-              href={book.amazonUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="studio-button studio-button--primary"
-              data-amazon-book={book.slug}
-              data-amazon-placement="book-hero"
-            >See the paperback on Amazon</a>
+            {liveEditions.map((edition) => (
+              <a
+                href={edition.amazonUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="studio-button studio-button--primary"
+                data-amazon-book={book.slug}
+                data-amazon-format={edition.format.toLowerCase()}
+                data-amazon-placement="book-hero"
+              >{edition.format === "Kindle" ? "Get the Kindle on Amazon" : "See the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
+            ))}
+            {book.companionUrl && <a href={book.companionUrl} class="studio-button studio-button--secondary">Get the free templates</a>}
             <a href="#book-details" class="studio-button studio-button--secondary">Book details</a>
           </div>
+          {paperbackEdition?.status === "propagating" && <p class="mt-4 font-mono text-[10px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">
+            Paperback{paperbackEdition.priceUsd ? ` $${paperbackEdition.priceUsd}` : ""} · Published in KDP · U.S. Amazon page still propagating
+          </p>}
         </div>
 
         <figure class="mx-auto w-full max-w-[420px] lg:col-span-5">
           <img
             src={`/media/book-${book.slug}.webp`}
             alt={`${book.title}: ${book.subtitle} by Keith Staggers book cover`}
-            width="600"
-            height="900"
+            width={book.coverWidth}
+            height={book.coverHeight}
             loading="eager"
             fetchpriority="high"
             decoding="async"
-            class="aspect-[2/3] w-full border border-rule object-cover shadow-2xl"
+            class="max-h-[680px] w-full border border-rule bg-ink object-contain shadow-2xl"
           />
           <figcaption class="mt-4 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint">
-            {book.format} · {book.pageCount} pages · {book.publisher}
+            {book.editions.map((edition) => edition.format).join(" and ")}{paperbackEdition?.pageCount ? ` · ${paperbackEdition.pageCount} print pages` : ""} · {book.publisher}
           </figcaption>
         </figure>
       </header>
@@ -216,37 +274,51 @@ const bookJsonLd = {
             <dl class="divide-y divide-rule">
               <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Published</dt><dd class="text-sm text-paper-dim">{displayDate}</dd></div>
               <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Publisher</dt><dd class="text-sm text-paper-dim">{book.publisher}</dd></div>
-              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Format</dt><dd class="text-sm text-paper-dim">{book.format}</dd></div>
-              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Length</dt><dd class="text-sm text-paper-dim">{book.pageCount} pages</dd></div>
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Formats</dt><dd class="text-sm text-paper-dim">{book.editions.map((edition) => edition.format).join(" and ")}</dd></div>
+              {paperbackEdition?.pageCount && <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Print length</dt><dd class="text-sm text-paper-dim">{paperbackEdition.pageCount} pages</dd></div>}
               <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Language</dt><dd class="text-sm text-paper-dim">{book.language}</dd></div>
-              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">ISBN-13</dt><dd class="break-all font-mono text-[12px] text-paper-dim">{displayIsbn}</dd></div>
-              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">ASIN</dt><dd class="font-mono text-[12px] text-paper-dim">{book.asin}</dd></div>
+              {displayIsbn && <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">ISBN-13</dt><dd class="break-all font-mono text-[12px] text-paper-dim">{displayIsbn}</dd></div>}
+              {book.editions.map((edition) => (
+                <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4">
+                  <dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">{edition.format}</dt>
+                  <dd class="text-sm leading-[1.6] text-paper-dim">
+                    <span class="block font-mono text-[12px]">ASIN {edition.asin}</span>
+                    {edition.priceUsd && <span class="block">${edition.priceUsd} USD</span>}
+                    {edition.status === "propagating" && <span class="block text-paper-faint">Published in KDP. The U.S. Amazon page is still propagating.</span>}
+                  </dd>
+                </div>
+              ))}
             </dl>
-            <div class="border-t border-rule pt-5">
+            {(book.goodreadsUrl || book.openLibraryUrl) && <div class="border-t border-rule pt-5">
               <p class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Catalog records</p>
               <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-paper-dim">
-                <a
+                {book.goodreadsUrl && <a
                   href={book.goodreadsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="underline decoration-rule underline-offset-4 transition-colors hover:text-paper"
-                >Goodreads ↗</a>
-                <a
+                >Goodreads ↗</a>}
+                {book.openLibraryUrl && <a
                   href={book.openLibraryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="underline decoration-rule underline-offset-4 transition-colors hover:text-paper"
-                >Open Library ↗</a>
+                >Open Library ↗</a>}
               </div>
+            </div>}
+            <div class="mt-7 grid gap-3">
+              {liveEditions.map((edition) => (
+                <a
+                  href={edition.amazonUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="studio-button studio-button--cobalt w-full"
+                  data-amazon-book={book.slug}
+                  data-amazon-format={edition.format.toLowerCase()}
+                  data-amazon-placement="book-details"
+                >Open {edition.format} listing</a>
+              ))}
             </div>
-            <a
-              href={book.amazonUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="studio-button studio-button--cobalt mt-7 w-full"
-              data-amazon-book={book.slug}
-              data-amazon-placement="book-details"
-            >Open Amazon listing</a>
           </div>
         </aside>
       </div>

@@ -1,3 +1,19 @@
+export type BookEdition = {
+  format: "Kindle" | "Paperback";
+  schemaFormat: "EBook" | "Paperback";
+  asin: string;
+  priceUsd?: string;
+  status: "live" | "propagating";
+  amazonUrl?: string;
+  isbn13?: string;
+  pageCount?: number;
+};
+
+export type LiveBookEdition = BookEdition & {
+  status: "live";
+  amazonUrl: string;
+};
+
 export type Book = {
   slug: string;
   title: string;
@@ -8,23 +24,90 @@ export type Book = {
   seoDescription: string;
   datePublished: string;
   dateModified: string;
-  isbn13: string;
-  asin: string;
+  coverWidth: number;
+  coverHeight: number;
   publisher: "Independently published";
-  format: "Paperback";
   language: "English";
   languageCode: "en-US";
-  pageCount: number;
-  amazonUrl: string;
-  goodreadsUrl: string;
-  openLibraryUrl: string;
+  editions: BookEdition[];
+  goodreadsUrl?: string;
+  openLibraryUrl?: string;
+  companionUrl?: string;
   featured: boolean;
   overview: string[];
   themes: string[];
   audience: string[];
 };
 
+export const liveEditionsFor = (book: Book): LiveBookEdition[] =>
+  book.editions.filter(
+    (edition): edition is LiveBookEdition =>
+      edition.status === "live" && Boolean(edition.amazonUrl)
+  );
+
+export const primaryLiveEditionFor = (book: Book) =>
+  liveEditionsFor(book)[0] ?? book.editions[0];
+
+export const paperbackEditionFor = (book: Book) =>
+  book.editions.find((edition) => edition.format === "Paperback");
+
 export const books: Book[] = [
+  {
+    slug: "build-the-workflow-keep-the-judgment",
+    title: "Build the Workflow. Keep the Judgment.",
+    subtitle: "A Practical Field Guide to AI Workflows, Guardrails, and Proof",
+    topic: "Practical AI workflows",
+    blurb:
+      "A practical field guide for turning scattered AI chats and automations into a controlled work system with clear sources, human approval, testing, proof, and a way to recover when something fails.",
+    seoTitle: "Build the Workflow. Keep the Judgment. AI Book",
+    seoDescription:
+      "Buy Build the Workflow. Keep the Judgment. by Keith Staggers, a practical guide to AI workflows, human approval, testing, evidence, and recovery.",
+    datePublished: "2026-07-31",
+    dateModified: "2026-07-31",
+    coverWidth: 600,
+    coverHeight: 960,
+    publisher: "Independently published",
+    language: "English",
+    languageCode: "en-US",
+    editions: [
+      {
+        format: "Kindle",
+        schemaFormat: "EBook",
+        asin: "B0HCC3L365",
+        priceUsd: "9.99",
+        status: "live",
+        amazonUrl: "https://www.amazon.com/dp/B0HCC3L365",
+      },
+      {
+        format: "Paperback",
+        schemaFormat: "Paperback",
+        asin: "B0HCCG4CTX",
+        isbn13: "9798190013788",
+        pageCount: 88,
+        priceUsd: "17.99",
+        status: "propagating",
+      },
+    ],
+    companionUrl: "/workflow-book/",
+    featured: true,
+    overview: [
+      "Build the Workflow. Keep the Judgment. is for people who use AI for real work but keep losing context, restarting conversations, or depending on processes nobody else can inspect.",
+      "The book shows how to separate current facts from old plans, define one repeated task clearly, decide what a person must approve, test normal and failure cases, record evidence, and keep a manual fallback.",
+      "It is not a prompt collection or a manual for one AI product. The goal is a useful work system that can survive changing tools while the responsible person keeps control of money, identity, commitments, and judgment.",
+    ],
+    themes: [
+      "Organizing durable context without creating one large junk drawer",
+      "Turning repeated work into a clear process with an owner and finish line",
+      "Keeping human approval around money, identity, commitments, and professional judgment",
+      "Testing normal, broken, private, prohibited, duplicate, and failure cases",
+      "Recording proof and recovering when a tool or workflow fails",
+    ],
+    audience: [
+      "Solo operators and creators who use AI across several kinds of work",
+      "Consultants and small-business owners building repeatable AI-assisted processes",
+      "Team leaders who need clear approval, testing, handoff, and recovery rules",
+    ],
+  },
   {
     slug: "nurse-the-fck-up",
     title: "Nurse the F*ck Up",
@@ -37,18 +120,26 @@ export const books: Book[] = [
       "Read about Nurse the F*ck Up by Keith Staggers, a candid 2023 paperback on the human and operational reality of surviving med-surg nursing.",
     datePublished: "2023-09-16",
     dateModified: "2026-07-31",
-    isbn13: "9798861621335",
-    asin: "B0CJ44XP81",
+    coverWidth: 600,
+    coverHeight: 900,
     publisher: "Independently published",
-    format: "Paperback",
     language: "English",
     languageCode: "en-US",
-    pageCount: 166,
-    amazonUrl: "https://www.amazon.com/dp/B0CJ44XP81",
+    editions: [
+      {
+        format: "Paperback",
+        schemaFormat: "Paperback",
+        asin: "B0CJ44XP81",
+        isbn13: "9798861621335",
+        pageCount: 166,
+        status: "live",
+        amazonUrl: "https://www.amazon.com/dp/B0CJ44XP81",
+      },
+    ],
     goodreadsUrl: "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
     openLibraryUrl:
       "https://openlibrary.org/books/OL62365292M/Nurse_the_F%2Ack_Up_The_Raw_Truth_About_Surviving_Med-Surg",
-    featured: true,
+    featured: false,
     overview: [
       "Nurse the F*ck Up is Keith Staggers' plainspoken 2023 book about surviving med-surg nursing. It focuses on the patient loads, red tape, pressure, and emotional weight that make bedside work hard to sustain.",
       "The book comes from Keith's experience as a nurse and nurse leader. It addresses the human and operational side of the job. It is not clinical instruction and does not replace workplace policy or professional judgment.",
@@ -78,14 +169,22 @@ export const books: Book[] = [
       "Read about Leading with Care by Keith Staggers, a 2023 paperback on conflict, change, retention, and practical healthcare leadership.",
     datePublished: "2023-11-24",
     dateModified: "2026-07-31",
-    isbn13: "9798869793935",
-    asin: "B0CNYLZ5FC",
+    coverWidth: 600,
+    coverHeight: 900,
     publisher: "Independently published",
-    format: "Paperback",
     language: "English",
     languageCode: "en-US",
-    pageCount: 178,
-    amazonUrl: "https://www.amazon.com/dp/B0CNYLZ5FC",
+    editions: [
+      {
+        format: "Paperback",
+        schemaFormat: "Paperback",
+        asin: "B0CNYLZ5FC",
+        isbn13: "9798869793935",
+        pageCount: 178,
+        status: "live",
+        amazonUrl: "https://www.amazon.com/dp/B0CNYLZ5FC",
+      },
+    ],
     goodreadsUrl: "https://www.goodreads.com/book/show/202652162-leading-with-care",
     openLibraryUrl:
       "https://openlibrary.org/books/OL62365304M/Leading_with_Care_Mastering_Healthcare_Management",

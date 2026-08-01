@@ -12,7 +12,7 @@ export const finishLoop = {
     "Choose one project, decide what finished looks like, complete the final work, release it, and save a process you can use again.",
   proof: [
     { value: "50+", label: "albums" },
-    { value: "2", label: "primary books" },
+    { value: "3", label: "published books" },
     { value: "1,000+", label: "images & films" },
   ],
   steps: [
