@@ -300,6 +300,15 @@ const jsonLd = {
             format: "markdown",
             page,
           });
+        } else if (link.dataset.audiobookPurchase) {
+          track("Audiobook Checkout Intent", {
+            book: link.dataset.audiobookPurchase,
+            format: link.dataset.audiobookFormat ?? "unspecified",
+            placement: link.dataset.audiobookPlacement ?? "unspecified",
+            destination: link.dataset.audiobookDestination ?? "unspecified",
+            source,
+            page,
+          });
         } else if (link.dataset.amazonBook) {
           track("Amazon Book Click", {
             book: link.dataset.amazonBook,

@@ -32,6 +32,9 @@ export const GET: APIRoute = () => {
       })
       .join("; ");
     const catalogLinks = [
+      book.directAudiobook
+        ? `Direct audiobook: $${book.directAudiobook.priceUsd} once; ${book.directAudiobook.durationLabel}; ${book.directAudiobook.deliveryLabel}; ${book.directAudiobook.availabilityLabel}; ${book.directAudiobook.narrationDisclosure} Checkout ${book.directAudiobook.checkoutUrl}.`
+        : undefined,
       book.goodreadsUrl ? `[Goodreads](${book.goodreadsUrl}).` : undefined,
       book.openLibraryUrl ? `[Open Library](${book.openLibraryUrl}).` : undefined,
       book.companionUrl ? `[Free companion templates](${site.url}${book.companionUrl}).` : undefined,
