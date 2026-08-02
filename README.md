@@ -58,7 +58,7 @@ The build generates 27 static HTML pages. Twenty-five are indexable and appear i
 | `/` | Plain-English homepage and four service choices |
 | `/about/` | Keith's public identity, career arc, and operating method |
 | `/books/` | Owned catalog hub for Keith's three published books |
-| `/books/build-the-workflow-keep-the-judgment/` | Practical AI workflow book with verified Kindle purchase path and paperback propagation status |
+| `/books/build-the-workflow-keep-the-judgment/` | Practical AI workflow book with a direct $12.99 MP3 audiobook, verified Kindle purchase path, and paperback propagation status |
 | `/books/nurse-the-fck-up/` | Verified book record and direct Amazon handoff |
 | `/books/leading-with-care/` | Verified book record and direct Amazon handoff |
 | `/finish-loop/` | $49 project-finishing toolkit sales page |

@@ -14,6 +14,20 @@ export type LiveBookEdition = BookEdition & {
   amazonUrl: string;
 };
 
+export type DirectAudiobookEdition = {
+  format: "Audiobook";
+  schemaFormat: "AudiobookFormat";
+  priceUsd: string;
+  status: "live";
+  checkoutUrl: string;
+  datePublished: string;
+  durationIso: string;
+  durationLabel: string;
+  deliveryLabel: "MP3 download";
+  availabilityLabel: "Immediate delivery";
+  narrationDisclosure: string;
+};
+
 export type Book = {
   slug: string;
   title: string;
@@ -30,6 +44,7 @@ export type Book = {
   language: "English";
   languageCode: "en-US";
   editions: BookEdition[];
+  directAudiobook?: DirectAudiobookEdition;
   goodreadsUrl?: string;
   openLibraryUrl?: string;
   companionUrl?: string;
@@ -63,7 +78,7 @@ export const books: Book[] = [
     seoDescription:
       "Buy Build the Workflow. Keep the Judgment. by Keith Staggers, a practical guide to AI workflows, human approval, testing, evidence, and recovery.",
     datePublished: "2026-07-31",
-    dateModified: "2026-07-31",
+    dateModified: "2026-08-02",
     coverWidth: 600,
     coverHeight: 960,
     publisher: "Independently published",
@@ -88,6 +103,20 @@ export const books: Book[] = [
         status: "propagating",
       },
     ],
+    directAudiobook: {
+      format: "Audiobook",
+      schemaFormat: "AudiobookFormat",
+      priceUsd: "12.99",
+      status: "live",
+      checkoutUrl:
+        "https://keithstaggers.lemonsqueezy.com/checkout/buy/9c8c2f24-c58c-4b7b-ad3f-844501fbfcd1",
+      datePublished: "2026-08-02",
+      durationIso: "PT2H38M13S",
+      durationLabel: "2 hours 38 minutes",
+      deliveryLabel: "MP3 download",
+      availabilityLabel: "Immediate delivery",
+      narrationDisclosure: "Narrated with Keith Staggers's authorized AI voice.",
+    },
     companionUrl: "/workflow-book/",
     featured: true,
     overview: [

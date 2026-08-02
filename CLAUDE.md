@@ -159,7 +159,7 @@ These are real rules from prior iterations — violating them will require rewor
 - **De-emphasize Tampa in CTAs.** Tampa is biographical (lives there, in the About section). Anywhere customer-facing — CTAs, footer, hero — say "Available worldwide" or "Working worldwide". He doesn't want Tampa narrowing his perceived market for remote work.
 - **Use a qualification step before scheduling.** Public service CTAs lead to `/project-fit/`. Keith reviews the answers first and shares a private calendar link only when the inquiry fits.
 - **Keep recruiter access open.** The project-fit form includes an employment or recruiter path that does not force a sales-budget answer.
-- **Books use owned detail pages with a direct Amazon CTA.** Do not add a separate direct-sale checkout. Track Amazon clicks with the book slug and owned-page placement only.
+- **Books use owned detail pages with direct purchase CTAs.** Amazon remains the only checkout for print and Kindle editions. The separately modeled, approved audiobook for Build the Workflow. Keep the Judgment. uses the verified Lemon Squeezy checkout and may appear only on its canonical book page and the Books hub. Track Amazon and audiobook intent separately with the book slug, format, placement, and non-personal destination fields.
 
 ## Data files — where to make common changes
 

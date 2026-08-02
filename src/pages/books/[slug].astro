@@ -25,6 +25,7 @@ const displayDate = new Intl.DateTimeFormat("en-US", {
 }).format(new Date(`${book.datePublished}T12:00:00Z`));
 const liveEditions = liveEditionsFor(book);
 const paperbackEdition = paperbackEditionFor(book);
+const directAudiobook = book.directAudiobook;
 const displayIsbn = paperbackEdition?.isbn13
   ? `${paperbackEdition.isbn13.slice(0, 3)}-${paperbackEdition.isbn13.slice(3)}`
   : undefined;
@@ -85,6 +86,36 @@ const editionJsonLd = book.editions.map((edition) => {
       : {}),
   };
 });
+const audiobookJsonLd = directAudiobook
+  ? {
+      "@type": ["Book", "Audiobook"],
+      "@id": `${canonicalUrl}#edition-audiobook`,
+      name: `${book.title} audiobook`,
+      url: canonicalUrl,
+      exampleOfWork: { "@id": `${canonicalUrl}#book` },
+      bookEdition: "Audiobook edition",
+      bookFormat: `https://schema.org/${directAudiobook.schemaFormat}`,
+      datePublished: directAudiobook.datePublished,
+      inLanguage: book.languageCode,
+      creativeWorkStatus: "Published",
+      duration: directAudiobook.durationIso,
+      encodingFormat: "audio/mpeg",
+      author: { "@id": `${site.url}/#keith` },
+      publisher: {
+        "@type": "Organization",
+        name: book.publisher,
+      },
+      offers: {
+        "@type": "Offer",
+        url: directAudiobook.checkoutUrl,
+        priceCurrency: "USD",
+        price: directAudiobook.priceUsd,
+        availability: "https://schema.org/InStock",
+        itemCondition: "https://schema.org/NewCondition",
+        seller: { "@id": `${site.url}/#keith` },
+      },
+    }
+  : undefined;
 const bookJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -119,7 +150,10 @@ const bookJsonLd = {
         "@type": "Organization",
         name: book.publisher,
       },
-      workExample: editionJsonLd.map((edition) => ({ "@id": edition["@id"] })),
+      workExample: [
+        ...editionJsonLd.map((edition) => ({ "@id": edition["@id"] })),
+        ...(audiobookJsonLd ? [{ "@id": audiobookJsonLd["@id"] }] : []),
+      ],
       keywords: book.themes,
       audience: book.audience.map((audienceType) => ({
         "@type": "Audience",
@@ -127,6 +161,7 @@ const bookJsonLd = {
       })),
     },
     ...editionJsonLd,
+    ...(audiobookJsonLd ? [audiobookJsonLd] : []),
     {
       "@type": "ImageObject",
       "@id": `${canonicalUrl}#cover`,
@@ -196,6 +231,18 @@ const bookJsonLd = {
           <p class="mt-6 max-w-[760px] serif text-[clamp(24px,3vw,38px)] leading-tight italic text-paper-dim">{book.subtitle}</p>
           <p class="mt-8 max-w-[740px] text-[18px] leading-[1.75] text-paper-dim">{book.blurb}</p>
           <div class="mt-9 flex flex-wrap gap-3">
+            {directAudiobook && (
+              <a
+                href={directAudiobook.checkoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="studio-button studio-button--primary"
+                data-audiobook-purchase={book.slug}
+                data-audiobook-format="mp3"
+                data-audiobook-placement="book-hero"
+                data-audiobook-destination="lemon-squeezy"
+              >Buy the audiobook · ${directAudiobook.priceUsd} once</a>
+            )}
             {liveEditions.map((edition) => (
               <a
                 href={edition.amazonUrl}
@@ -210,6 +257,9 @@ const bookJsonLd = {
             {book.companionUrl && <a href={book.companionUrl} class="studio-button studio-button--secondary">Get the free templates</a>}
             <a href="#book-details" class="studio-button studio-button--secondary">Book details</a>
           </div>
+          {directAudiobook && <p class="mt-4 max-w-[740px] text-[14px] leading-[1.7] text-paper-dim">
+            {directAudiobook.durationLabel} · {directAudiobook.deliveryLabel} · {directAudiobook.availabilityLabel} · {directAudiobook.narrationDisclosure}
+          </p>}
           {paperbackEdition?.status === "propagating" && <p class="mt-4 font-mono text-[10px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">
             Paperback{paperbackEdition.priceUsd ? ` $${paperbackEdition.priceUsd}` : ""} · Published in KDP · U.S. Amazon page still propagating
           </p>}
@@ -227,7 +277,7 @@ const bookJsonLd = {
             class="max-h-[680px] w-full border border-rule bg-ink object-contain shadow-2xl"
           />
           <figcaption class="mt-4 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint">
-            {book.editions.map((edition) => edition.format).join(" and ")}{paperbackEdition?.pageCount ? ` · ${paperbackEdition.pageCount} print pages` : ""} · {book.publisher}
+            {[...(directAudiobook ? [directAudiobook.format] : []), ...book.editions.map((edition) => edition.format)].join(", ")}{paperbackEdition?.pageCount ? ` · ${paperbackEdition.pageCount} print pages` : ""} · {book.publisher}
           </figcaption>
         </figure>
       </header>
@@ -274,7 +324,7 @@ const bookJsonLd = {
             <dl class="divide-y divide-rule">
               <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Published</dt><dd class="text-sm text-paper-dim">{displayDate}</dd></div>
               <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Publisher</dt><dd class="text-sm text-paper-dim">{book.publisher}</dd></div>
-              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Formats</dt><dd class="text-sm text-paper-dim">{book.editions.map((edition) => edition.format).join(" and ")}</dd></div>
+              <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Formats</dt><dd class="text-sm text-paper-dim">{[...(directAudiobook ? [directAudiobook.format] : []), ...book.editions.map((edition) => edition.format)].join(", ")}</dd></div>
               {paperbackEdition?.pageCount && <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Print length</dt><dd class="text-sm text-paper-dim">{paperbackEdition.pageCount} pages</dd></div>}
               <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Language</dt><dd class="text-sm text-paper-dim">{book.language}</dd></div>
               {displayIsbn && <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4"><dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">ISBN-13</dt><dd class="break-all font-mono text-[12px] text-paper-dim">{displayIsbn}</dd></div>}
@@ -288,6 +338,17 @@ const bookJsonLd = {
                   </dd>
                 </div>
               ))}
+              {directAudiobook && (
+                <div class="grid grid-cols-[7.5rem_1fr] gap-4 py-4">
+                  <dt class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Audiobook</dt>
+                  <dd class="text-sm leading-[1.6] text-paper-dim">
+                    <span class="block">${directAudiobook.priceUsd} USD once</span>
+                    <span class="block">{directAudiobook.durationLabel} · {directAudiobook.deliveryLabel}</span>
+                    <span class="block">{directAudiobook.availabilityLabel}</span>
+                    <span class="block text-paper-faint">{directAudiobook.narrationDisclosure}</span>
+                  </dd>
+                </div>
+              )}
             </dl>
             {(book.goodreadsUrl || book.openLibraryUrl) && <div class="border-t border-rule pt-5">
               <p class="font-mono text-[10px] tracking-[0.13em] uppercase text-paper-faint">Catalog records</p>

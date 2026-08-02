@@ -12,6 +12,11 @@ const hasAttributedAmazonLink = (html, amazonUrl, bookSlug, format) =>
     `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(amazonUrl)}["'])(?=[^>]*\\bdata-amazon-book=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-amazon-format=["']${escapeRegExp(format)}["'])[^>]*>`,
     "i"
   ).test(html);
+const hasAttributedAudiobookLink = (html, checkoutUrl, bookSlug, placement) =>
+  new RegExp(
+    `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(checkoutUrl)}["'])(?=[^>]*\\bdata-audiobook-purchase=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-audiobook-format=["']mp3["'])(?=[^>]*\\bdata-audiobook-placement=["']${escapeRegExp(placement)}["'])(?=[^>]*\\bdata-audiobook-destination=["']lemon-squeezy["'])[^>]*>`,
+    "i"
+  ).test(html);
 const hasMarkedInternalLink = (html, marker, href) =>
   new RegExp(
     `<a\\b(?=[^>]*\\b${escapeRegExp(marker)}(?:=["'][^"']*["'])?)(?=[^>]*\\bhref=["']${escapeRegExp(href)}["'])[^>]*>`,
@@ -592,6 +597,16 @@ const bookExpectations = [
         status: "propagating",
       },
     ],
+    directAudiobook: {
+      checkout:
+        "https://keithstaggers.lemonsqueezy.com/checkout/buy/9c8c2f24-c58c-4b7b-ad3f-844501fbfcd1",
+      price: "12.99",
+      duration: "PT2H38M13S",
+      durationLabel: "2 hours 38 minutes",
+      delivery: "MP3 download",
+      availability: "Immediate delivery",
+      disclosure: "Narrated with Keith Staggers's authorized AI voice.",
+    },
     companion: "/workflow-book/",
   },
   {
@@ -720,6 +735,60 @@ for (const expected of bookExpectations) {
       fail(`${expected.route}: ${edition.format} propagation status is missing`);
     }
   }
+  if (expected.directAudiobook) {
+    const audiobookId = `${siteUrl}${expected.route}#edition-audiobook`;
+    expectedEditionIds.push(audiobookId);
+    for (const token of [
+      `$${expected.directAudiobook.price} once`,
+      expected.directAudiobook.durationLabel,
+      expected.directAudiobook.delivery,
+      expected.directAudiobook.availability,
+      "https://schema.org/AudiobookFormat",
+    ]) {
+      if (!page.html.includes(token)) {
+        fail(`${expected.route}: direct audiobook metadata is missing ${token}`);
+      }
+    }
+    if (!visibleText(page.html).includes(expected.directAudiobook.disclosure)) {
+      fail(`${expected.route}: direct audiobook disclosure is missing`);
+    }
+    const audiobookSchema = graphNodes.find(
+      (node) =>
+        node?.["@id"] === audiobookId &&
+        hasSchemaType(node, "Book") &&
+        hasSchemaType(node, "Audiobook") &&
+        node.bookFormat === "https://schema.org/AudiobookFormat"
+    );
+    if (!audiobookSchema) {
+      fail(`${expected.route}: direct audiobook Book and Audiobook schema node is missing`);
+    } else {
+      if (audiobookSchema.exampleOfWork?.["@id"] !== canonicalBookId) {
+        fail(`${expected.route}: direct audiobook is not linked to the canonical Book work`);
+      }
+      if (audiobookSchema.duration !== expected.directAudiobook.duration) {
+        fail(`${expected.route}: direct audiobook duration is incorrect`);
+      }
+    }
+    const audiobookOffer = schemaObjects.find(
+      (node) => hasSchemaType(node, "Offer") && node.url === expected.directAudiobook.checkout
+    );
+    if (!audiobookOffer) {
+      fail(`${expected.route}: direct audiobook Offer schema is missing`);
+    } else if (
+      String(audiobookOffer.price) !== expected.directAudiobook.price ||
+      audiobookOffer.priceCurrency !== "USD"
+    ) {
+      fail(`${expected.route}: direct audiobook Offer price is incorrect`);
+    }
+    if (!hasAttributedAudiobookLink(
+      page.html,
+      expected.directAudiobook.checkout,
+      bookSlug,
+      "book-hero"
+    )) {
+      fail(`${expected.route}: direct audiobook checkout attribution is missing`);
+    }
+  }
   const workExamples = workNode
     ? Array.isArray(workNode.workExample)
       ? workNode.workExample
@@ -794,6 +863,36 @@ for (const expected of bookExpectations) {
       fail(`/books/: missing ${edition.format} Amazon attribution for ${expected.route}`);
     }
   }
+  if (expected.directAudiobook && !hasAttributedAudiobookLink(
+    booksHub,
+    expected.directAudiobook.checkout,
+    bookSlug,
+    "books-hub"
+  )) {
+    fail(`/books/: missing direct audiobook attribution for ${expected.route}`);
+  }
+}
+if ((allPublicHtml.match(/data-audiobook-purchase="build-the-workflow-keep-the-judgment"/g) ?? []).length !== 2) {
+  fail("audiobook: expected exactly two direct checkout controls across public HTML");
+}
+const audiobookTrackingBlock = baseLayoutSource.match(
+  /else if \(link\.dataset\.audiobookPurchase\) \{([\s\S]*?)\n\s*\} else if \(link\.dataset\.amazonBook\)/
+)?.[1] ?? "";
+for (const token of [
+  "Audiobook Checkout Intent",
+  "link.dataset.audiobookPurchase",
+  "link.dataset.audiobookFormat",
+  "link.dataset.audiobookPlacement",
+  "link.dataset.audiobookDestination",
+  "source",
+  "page",
+]) {
+  if (!audiobookTrackingBlock.includes(token)) {
+    fail(`audiobook: privacy-safe checkout analytics is missing ${token}`);
+  }
+}
+if (/email|customer|card|order|formData|response|value/i.test(audiobookTrackingBlock)) {
+  fail("audiobook: checkout-intent analytics must not contain personal, payment, order, or response data");
 }
 
 const workflowTemplate = pages.find((page) => page.route === "/workflow-testing-template/")?.html ?? "";
@@ -1124,6 +1223,12 @@ for (const [fileName, content] of [
     "B0HCC3L365",
     "B0HCCG4CTX",
     "https://www.amazon.com/dp/B0HCC3L365",
+    "https://keithstaggers.lemonsqueezy.com/checkout/buy/9c8c2f24-c58c-4b7b-ad3f-844501fbfcd1",
+    "$12.99 once",
+    "2 hours 38 minutes",
+    "MP3 download",
+    "Immediate delivery",
+    "Narrated with Keith Staggers's authorized AI voice.",
   ]) {
     if (!content.includes(requiredWorkflowBookRecord)) {
       fail(`${fileName}: missing Build the Workflow record ${requiredWorkflowBookRecord}`);

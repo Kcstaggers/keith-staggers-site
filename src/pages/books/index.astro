@@ -18,7 +18,7 @@ const booksJsonLd = {
       description:
         "The public book catalog from Keith Staggers: one practical AI workflow guide and two books about nursing and healthcare leadership.",
       url: canonicalUrl,
-      dateModified: "2026-07-31",
+      dateModified: "2026-08-02",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       about: { "@id": `${site.url}/#keith` },
@@ -85,7 +85,7 @@ const booksJsonLd = {
             Keith has written three books: a practical guide to controlled AI workflows, an honest account of med-surg nursing, and a guide to healthcare leadership.
           </p>
           <p class="mt-5 font-mono text-[11px] tracking-[0.14em] uppercase text-paper-faint">
-            Kindle and paperback · English · Published from 2023 to 2026
+            Audiobook, Kindle, and paperback · English · Published from 2023 to 2026
           </p>
         </div>
       </header>
@@ -94,6 +94,7 @@ const booksJsonLd = {
         {books.map((book, index) => {
           const liveEditions = liveEditionsFor(book);
           const paperbackEdition = paperbackEditionFor(book);
+          const directAudiobook = book.directAudiobook;
           return (
           <article class="grid gap-10 py-16 lg:grid-cols-12 lg:items-center lg:py-24">
             <a
@@ -123,12 +124,24 @@ const booksJsonLd = {
               <p class="mt-4 serif text-[clamp(21px,2vw,28px)] italic text-paper-dim">{book.subtitle}</p>
               <p class="mt-7 max-w-[720px] text-[17px] leading-[1.75] text-paper-dim">{book.blurb}</p>
               <dl class="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-y border-rule py-5 font-mono text-[10px] tracking-[0.12em] uppercase text-paper-faint">
-                <div><dt class="sr-only">Formats</dt><dd>{book.editions.map((edition) => edition.format).join(" and ")}</dd></div>
+                <div><dt class="sr-only">Formats</dt><dd>{[...(directAudiobook ? [directAudiobook.format] : []), ...book.editions.map((edition) => edition.format)].join(", ")}</dd></div>
                 {paperbackEdition?.pageCount && <div><dt class="sr-only">Print page count</dt><dd>{paperbackEdition.pageCount} print pages</dd></div>}
                 {paperbackEdition?.isbn13 && <div><dt class="sr-only">ISBN-13</dt><dd>ISBN {paperbackEdition.isbn13}</dd></div>}
               </dl>
               <div class="mt-8 flex flex-wrap gap-3">
                 <a href={`/books/${book.slug}/`} class="studio-button studio-button--cobalt">Read about the book</a>
+                {directAudiobook && (
+                  <a
+                    href={directAudiobook.checkoutUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="studio-button studio-button--primary"
+                    data-audiobook-purchase={book.slug}
+                    data-audiobook-format="mp3"
+                    data-audiobook-placement="books-hub"
+                    data-audiobook-destination="lemon-squeezy"
+                  >Buy the audiobook · ${directAudiobook.priceUsd} once</a>
+                )}
                 {liveEditions.map((edition) => (
                   <a
                     href={edition.amazonUrl}
@@ -141,6 +154,9 @@ const booksJsonLd = {
                   >{edition.format === "Kindle" ? "Buy the Kindle on Amazon" : "See the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
                 ))}
               </div>
+              {directAudiobook && <p class="mt-4 max-w-[720px] text-[14px] leading-[1.7] text-paper-dim">
+                {directAudiobook.durationLabel} · {directAudiobook.deliveryLabel} · {directAudiobook.availabilityLabel} · {directAudiobook.narrationDisclosure}
+              </p>}
               {paperbackEdition?.status === "propagating" && <p class="mt-4 font-mono text-[10px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">
                 Paperback{paperbackEdition.priceUsd ? ` $${paperbackEdition.priceUsd}` : ""} · Published in KDP · U.S. Amazon page still propagating
               </p>}

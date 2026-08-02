@@ -54,6 +54,9 @@ export const GET: APIRoute = () => {
       return `- ${edition.format}: ${details.join("; ")}.`;
     });
     const catalogLines = [
+      book.directAudiobook
+        ? `Direct audiobook: $${book.directAudiobook.priceUsd} once; ${book.directAudiobook.durationLabel}; ${book.directAudiobook.deliveryLabel}; ${book.directAudiobook.availabilityLabel}; ${book.directAudiobook.narrationDisclosure} Checkout: ${book.directAudiobook.checkoutUrl}.`
+        : undefined,
       book.goodreadsUrl ? `Goodreads record: ${book.goodreadsUrl}.` : undefined,
       book.openLibraryUrl ? `Open Library record: ${book.openLibraryUrl}.` : undefined,
       book.companionUrl ? `Free companion templates: ${site.url}${book.companionUrl}.` : undefined,
