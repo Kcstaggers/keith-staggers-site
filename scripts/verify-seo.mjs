@@ -623,6 +623,7 @@ const bookExpectations = [
         asin: "B0CJ44XP81",
         isbn: "9798861621335",
         pages: 166,
+        price: "10.99",
         amazon: "https://www.amazon.com/dp/B0CJ44XP81",
       },
     ],

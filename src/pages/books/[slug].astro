@@ -252,7 +252,7 @@ const bookJsonLd = {
                 data-amazon-book={book.slug}
                 data-amazon-format={edition.format.toLowerCase()}
                 data-amazon-placement="book-hero"
-              >{edition.format === "Kindle" ? "Get the Kindle on Amazon" : "See the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
+              >{edition.format === "Kindle" ? "Get the Kindle on Amazon" : "Buy the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
             ))}
             {book.companionUrl && <a href={book.companionUrl} class="studio-button studio-button--secondary">Get the free templates</a>}
             <a href="#book-details" class="studio-button studio-button--secondary">Book details</a>

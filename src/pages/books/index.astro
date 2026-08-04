@@ -151,7 +151,7 @@ const booksJsonLd = {
                     data-amazon-book={book.slug}
                     data-amazon-format={edition.format.toLowerCase()}
                     data-amazon-placement="books-hub"
-                  >{edition.format === "Kindle" ? "Buy the Kindle on Amazon" : "See the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
+                  >{edition.format === "Kindle" ? "Buy the Kindle on Amazon" : "Buy the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
                 ))}
               </div>
               {directAudiobook && <p class="mt-4 max-w-[720px] text-[14px] leading-[1.7] text-paper-dim">
