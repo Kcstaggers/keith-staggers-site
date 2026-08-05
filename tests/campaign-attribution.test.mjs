@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   appendValidatedStripeUtm,
+  getValidatedBookUtm,
   getValidatedStripeUtm,
 } from "../src/utils/campaignAttribution.ts";
 
@@ -48,5 +49,43 @@ test("adds validated UTM values to a Stripe Payment Link only", () => {
   assert.equal(
     appendValidatedStripeUtm("https://example.com/checkout", attribution),
     "https://example.com/checkout"
+  );
+});
+
+test("accepts privacy-safe book campaign attribution", () => {
+  assert.deepEqual(
+    getValidatedBookUtm(
+      "?utm_source=facebook&utm_medium=organic_social&utm_campaign=nurse_book_social_2026&utm_content=post_01&email=person%40example.com&fbclid=visitor-id"
+    ),
+    {
+      utm_source: "facebook",
+      utm_medium: "organic_social",
+      utm_campaign: "nurse_book_social_2026",
+      utm_content: "post_01",
+    }
+  );
+});
+
+test("rejects unknown, ambiguous, and personal-looking book attribution", () => {
+  assert.deepEqual(
+    getValidatedBookUtm(
+      "?utm_source=reddit&utm_medium=organic_social&utm_campaign=nurse_book_social_2026"
+    ),
+    {}
+  );
+  assert.deepEqual(
+    getValidatedBookUtm(
+      "?utm_source=facebook&utm_source=instagram&utm_medium=organic_social&utm_campaign=nurse_book_social_2026"
+    ),
+    {}
+  );
+  assert.deepEqual(
+    getValidatedBookUtm(
+      "?utm_source=linkedin&utm_medium=organic_social&utm_campaign=keith%20staggers&utm_content=post%40example.com"
+    ),
+    {
+      utm_source: "linkedin",
+      utm_medium: "organic_social",
+    }
   );
 });

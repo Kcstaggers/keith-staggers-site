@@ -24,6 +24,7 @@ const displayDate = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 }).format(new Date(`${book.datePublished}T12:00:00Z`));
 const liveEditions = liveEditionsFor(book);
+const primaryLiveEdition = liveEditions[0];
 const paperbackEdition = paperbackEditionFor(book);
 const directAudiobook = book.directAudiobook;
 const displayIsbn = paperbackEdition?.isbn13
@@ -212,7 +213,10 @@ const bookJsonLd = {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(bookJsonLd)} />
   </Fragment>
 
-  <article class="px-6 pb-20 pt-10 lg:px-12 lg:pb-28 lg:pt-16">
+  <article
+    class="px-6 pb-36 pt-10 lg:px-12 lg:pb-28 lg:pt-16"
+    data-book-landing={book.slug}
+  >
     <div class="mx-auto max-w-[1280px]">
       <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
         <a href="/" class="transition-colors hover:text-paper">Home</a>
@@ -245,13 +249,14 @@ const bookJsonLd = {
             )}
             {liveEditions.map((edition) => (
               <a
-                href={edition.amazonUrl}
+                href={edition.ownedSiteAttributionUrl ?? edition.amazonUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="studio-button studio-button--primary"
                 data-amazon-book={book.slug}
                 data-amazon-format={edition.format.toLowerCase()}
                 data-amazon-placement="book-hero"
+                data-amazon-attribution={edition.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
               >{edition.format === "Kindle" ? "Get the Kindle on Amazon" : "Buy the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
             ))}
             {book.companionUrl && <a href={book.companionUrl} class="studio-button studio-button--secondary">Get the free templates</a>}
@@ -370,13 +375,14 @@ const bookJsonLd = {
             <div class="mt-7 grid gap-3">
               {liveEditions.map((edition) => (
                 <a
-                  href={edition.amazonUrl}
+                  href={edition.ownedSiteAttributionUrl ?? edition.amazonUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="studio-button studio-button--cobalt w-full"
                   data-amazon-book={book.slug}
                   data-amazon-format={edition.format.toLowerCase()}
                   data-amazon-placement="book-details"
+                  data-amazon-attribution={edition.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
                 >Open {edition.format} listing</a>
               ))}
             </div>
@@ -396,5 +402,28 @@ const bookJsonLd = {
         </div>
       </section>
     </div>
+
+    {primaryLiveEdition && (
+      <aside
+        class="fixed inset-x-0 bottom-0 z-50 border-t border-rule bg-ink/95 px-4 py-3 backdrop-blur lg:hidden"
+        aria-label={`Buy ${book.title}`}
+      >
+        <div class="mx-auto flex max-w-[720px] items-center gap-3">
+          <p class="min-w-0 flex-1 truncate text-[13px] font-semibold text-paper">
+            {book.title}
+          </p>
+          <a
+            href={primaryLiveEdition.ownedSiteAttributionUrl ?? primaryLiveEdition.amazonUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="studio-button studio-button--cobalt shrink-0"
+            data-amazon-book={book.slug}
+            data-amazon-format={primaryLiveEdition.format.toLowerCase()}
+            data-amazon-placement="book-mobile-sticky"
+            data-amazon-attribution={primaryLiveEdition.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
+          >{primaryLiveEdition.format === "Kindle" ? "Get Kindle" : "Buy paperback"}{primaryLiveEdition.priceUsd ? ` · $${primaryLiveEdition.priceUsd}` : ""}</a>
+        </div>
+      </aside>
+    )}
   </article>
 </Base>

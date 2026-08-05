@@ -585,6 +585,8 @@ const bookExpectations = [
         asin: "B0HCC3L365",
         price: "9.99",
         amazon: "https://www.amazon.com/dp/B0HCC3L365",
+        ctaAmazon:
+          "https://www.amazon.com/dp/B0HCC3L365?maas=maas_adg_E498A685DB2F0F0FFA051FC18686BEFB_afap_abs&amp;ref_=aa_maas&amp;tag=maas",
       },
       {
         format: "Paperback",
@@ -625,6 +627,8 @@ const bookExpectations = [
         pages: 166,
         price: "10.99",
         amazon: "https://www.amazon.com/dp/B0CJ44XP81",
+        ctaAmazon:
+          "https://www.amazon.com/dp/B0CJ44XP81?maas=maas_adg_57E64B69A8DE109B65FAE9175834B3AF_afap_abs&amp;ref_=aa_maas&amp;tag=maas",
       },
     ],
     goodreads: "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
@@ -711,6 +715,7 @@ for (const expected of bookExpectations) {
       }
     }
     if (edition.amazon) {
+      const ctaAmazon = "ctaAmazon" in edition ? edition.ctaAmazon : edition.amazon;
       liveCatalogUrls.push(edition.amazon);
       if (!page.html.includes(edition.amazon)) {
         fail(`${expected.route}: verified ${edition.format} Amazon URL is missing`);
@@ -723,7 +728,7 @@ for (const expected of bookExpectations) {
       } else if (edition.price && String(offer.price) !== edition.price) {
         fail(`${expected.route}: verified ${edition.format} Offer price is incorrect`);
       }
-      if (!hasAttributedAmazonLink(page.html, edition.amazon, bookSlug, edition.attributionFormat)) {
+      if (!hasAttributedAmazonLink(page.html, ctaAmazon, bookSlug, edition.attributionFormat)) {
         fail(`${expected.route}: ${edition.format} Amazon click attribution is missing`);
       }
     } else {
@@ -735,6 +740,12 @@ for (const expected of bookExpectations) {
     if (edition.status === "propagating" && !page.html.includes("The U.S. Amazon page is still propagating.")) {
       fail(`${expected.route}: ${edition.format} propagation status is missing`);
     }
+  }
+  if (
+    expected.editions.some((edition) => "ctaAmazon" in edition) &&
+    !page.html.includes('data-amazon-placement="book-mobile-sticky"')
+  ) {
+    fail(`${expected.route}: measured mobile purchase control is missing`);
   }
   if (expected.directAudiobook) {
     const audiobookId = `${siteUrl}${expected.route}#edition-audiobook`;
@@ -860,7 +871,8 @@ for (const expected of bookExpectations) {
   if (!booksHub.includes(`href="${expected.route}"`)) fail(`/books/: missing owned link to ${expected.route}`);
   const bookSlug = expected.route.split("/")[2];
   for (const edition of expected.editions.filter((candidate) => candidate.amazon)) {
-    if (!hasAttributedAmazonLink(booksHub, edition.amazon, bookSlug, edition.attributionFormat)) {
+    const ctaAmazon = "ctaAmazon" in edition ? edition.ctaAmazon : edition.amazon;
+    if (!hasAttributedAmazonLink(booksHub, ctaAmazon, bookSlug, edition.attributionFormat)) {
       fail(`/books/: missing ${edition.format} Amazon attribution for ${expected.route}`);
     }
   }
@@ -965,8 +977,18 @@ if (!baseLayoutSource.includes("Workflow Book Template Download")) {
 if (!baseLayoutSource.includes("format: link.dataset.amazonFormat")) {
   fail("books: Amazon format attribution is missing from the analytics event");
 }
+for (const token of [
+  "Book Campaign Landing",
+  "getValidatedBookUtm",
+  "attribution: link.dataset.amazonAttribution",
+]) {
+  if (!baseLayoutSource.includes(token)) {
+    fail(`books: campaign measurement is missing ${token}`);
+  }
+}
 const workflowBookRoute = "/books/build-the-workflow-keep-the-judgment/";
-const workflowKindleUrl = "https://www.amazon.com/dp/B0HCC3L365";
+const workflowKindleUrl =
+  "https://www.amazon.com/dp/B0HCC3L365?maas=maas_adg_E498A685DB2F0F0FFA051FC18686BEFB_afap_abs&amp;ref_=aa_maas&amp;tag=maas";
 if (!workflowBookPage.includes(`href="${workflowBookRoute}"`)) {
   fail("workflow-book: canonical book page is not linked");
 }

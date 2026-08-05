@@ -18,7 +18,7 @@ const booksJsonLd = {
       description:
         "The public book catalog from Keith Staggers: one practical AI workflow guide and two books about nursing and healthcare leadership.",
       url: canonicalUrl,
-      dateModified: "2026-08-02",
+      dateModified: "2026-08-05",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       about: { "@id": `${site.url}/#keith` },
@@ -144,13 +144,14 @@ const booksJsonLd = {
                 )}
                 {liveEditions.map((edition) => (
                   <a
-                    href={edition.amazonUrl}
+                    href={edition.ownedSiteAttributionUrl ?? edition.amazonUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="studio-button studio-button--secondary"
                     data-amazon-book={book.slug}
                     data-amazon-format={edition.format.toLowerCase()}
                     data-amazon-placement="books-hub"
+                    data-amazon-attribution={edition.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
                   >{edition.format === "Kindle" ? "Buy the Kindle on Amazon" : "Buy the paperback on Amazon"}{edition.priceUsd ? ` · $${edition.priceUsd}` : ""}</a>
                 ))}
               </div>

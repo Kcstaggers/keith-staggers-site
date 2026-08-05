@@ -187,13 +187,14 @@ const companionJsonLd = {
           <div class="mt-6 flex flex-wrap gap-3">
             <a href={`/books/${workflowBook.slug}/`} class="studio-button studio-button--secondary">Read about the book</a>
             <a
-              href={kindleEdition.amazonUrl}
+              href={kindleEdition.ownedSiteAttributionUrl ?? kindleEdition.amazonUrl}
               target="_blank"
               rel="noopener noreferrer"
               class="studio-button studio-button--cobalt"
               data-amazon-book={workflowBook.slug}
               data-amazon-format="kindle"
               data-amazon-placement="workflow-companion-hero"
+              data-amazon-attribution={kindleEdition.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
             >Buy the Kindle · $9.99</a>
           </div>
         </div>
@@ -385,13 +386,14 @@ const companionJsonLd = {
         <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
           <a href={`/books/${workflowBook.slug}/`} class="studio-button studio-button--secondary">Read the book</a>
           <a
-            href={kindleEdition.amazonUrl}
+            href={kindleEdition.ownedSiteAttributionUrl ?? kindleEdition.amazonUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="studio-button studio-button--cobalt"
             data-amazon-book={workflowBook.slug}
             data-amazon-format="kindle"
             data-amazon-placement="workflow-companion-close"
+            data-amazon-attribution={kindleEdition.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
           >Buy the Kindle · $9.99</a>
           <a href="/services/training/" class="studio-button studio-button--secondary">See practical AI training</a>
         </div>
