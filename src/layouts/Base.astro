@@ -164,6 +164,7 @@ const jsonLd = {
       import { track } from "@vercel/analytics";
       import {
         appendValidatedStripeUtm,
+        getValidatedBookUtm,
         getValidatedStripeUtm,
       } from "../utils/campaignAttribution";
 
@@ -207,6 +208,20 @@ const jsonLd = {
       const cohortLanding = document.querySelector<HTMLElement>("[data-cohort-landing]");
       const cohort = cohortLanding?.dataset.cohortLanding;
       const cohortAttribution = getValidatedStripeUtm(window.location.search);
+      const bookLanding = document.querySelector<HTMLElement>("[data-book-landing]");
+      const bookAttribution = getValidatedBookUtm(window.location.search);
+
+      if (
+        bookLanding?.dataset.bookLanding &&
+        bookAttribution.utm_source &&
+        bookAttribution.utm_medium
+      ) {
+        track("Book Campaign Landing", {
+          book: bookLanding.dataset.bookLanding,
+          page: window.location.pathname,
+          ...bookAttribution,
+        });
+      }
 
       if (cohort) {
         const checkoutLinks = document.querySelectorAll<HTMLAnchorElement>("a[data-cohort-purchase]");
@@ -308,14 +323,17 @@ const jsonLd = {
             destination: link.dataset.audiobookDestination ?? "unspecified",
             source,
             page,
+            ...bookAttribution,
           });
         } else if (link.dataset.amazonBook) {
           track("Amazon Book Click", {
             book: link.dataset.amazonBook,
             format: link.dataset.amazonFormat ?? "unspecified",
             placement: link.dataset.amazonPlacement ?? "unspecified",
+            attribution: link.dataset.amazonAttribution ?? "unattributed",
             source,
             page,
+            ...bookAttribution,
           });
         } else if (link.dataset.productPurchase) {
           track("Product Checkout Intent", {

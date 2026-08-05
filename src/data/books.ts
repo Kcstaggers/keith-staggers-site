@@ -5,6 +5,7 @@ export type BookEdition = {
   priceUsd?: string;
   status: "live" | "propagating";
   amazonUrl?: string;
+  ownedSiteAttributionUrl?: string;
   isbn13?: string;
   pageCount?: number;
 };
@@ -78,7 +79,7 @@ export const books: Book[] = [
     seoDescription:
       "Buy Build the Workflow. Keep the Judgment. by Keith Staggers, a practical guide to AI workflows, human approval, testing, evidence, and recovery.",
     datePublished: "2026-07-31",
-    dateModified: "2026-08-02",
+    dateModified: "2026-08-05",
     coverWidth: 600,
     coverHeight: 960,
     publisher: "Independently published",
@@ -92,6 +93,8 @@ export const books: Book[] = [
         priceUsd: "9.99",
         status: "live",
         amazonUrl: "https://www.amazon.com/dp/B0HCC3L365",
+        ownedSiteAttributionUrl:
+          "https://www.amazon.com/dp/B0HCC3L365?maas=maas_adg_E498A685DB2F0F0FFA051FC18686BEFB_afap_abs&ref_=aa_maas&tag=maas",
       },
       {
         format: "Paperback",
@@ -148,7 +151,7 @@ export const books: Book[] = [
     seoDescription:
       "Buy Nurse the F*ck Up by Keith Staggers, a practical field guide for managing patient loads, stress, advocacy, emergencies, and the realities of med-surg nursing.",
     datePublished: "2023-09-16",
-    dateModified: "2026-08-03",
+    dateModified: "2026-08-05",
     coverWidth: 600,
     coverHeight: 900,
     publisher: "Independently published",
@@ -164,6 +167,8 @@ export const books: Book[] = [
         priceUsd: "10.99",
         status: "live",
         amazonUrl: "https://www.amazon.com/dp/B0CJ44XP81",
+        ownedSiteAttributionUrl:
+          "https://www.amazon.com/dp/B0CJ44XP81?maas=maas_adg_57E64B69A8DE109B65FAE9175834B3AF_afap_abs&ref_=aa_maas&tag=maas",
       },
     ],
     goodreadsUrl: "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",

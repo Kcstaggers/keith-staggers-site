@@ -39,13 +39,14 @@ const bookPath = `/books/${featuredBook.slug}/`;
       <div class="v8-book-actions">
         {kindle && (
           <a
-            href={kindle.amazonUrl}
+            href={kindle.ownedSiteAttributionUrl ?? kindle.amazonUrl}
             class="studio-button studio-button--primary"
             target="_blank"
             rel="noopener noreferrer"
             data-amazon-book={featuredBook.slug}
             data-amazon-format="kindle"
             data-amazon-placement="homepage-commerce"
+            data-amazon-attribution={kindle.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
           >
             Buy the Kindle · ${kindle.priceUsd}
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
