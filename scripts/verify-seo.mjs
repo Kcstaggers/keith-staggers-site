@@ -3,6 +3,8 @@ import path from "node:path";
 
 const distDir = path.resolve("dist");
 const siteUrl = "https://www.keithstaggers.com";
+const workflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
+const directSessionUrl = "https://cal.com/keith-staggers-rpphlg/one-to-one-ai-working-session";
 const errors = [];
 
 const fail = (message) => errors.push(message);
@@ -15,6 +17,11 @@ const hasAttributedAmazonLink = (html, amazonUrl, bookSlug, format) =>
 const hasPlacedAmazonLink = (html, amazonUrl, bookSlug, format, placement) =>
   new RegExp(
     `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(amazonUrl)}["'])(?=[^>]*\\bdata-amazon-book=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-amazon-format=["']${escapeRegExp(format)}["'])(?=[^>]*\\bdata-amazon-placement=["']${escapeRegExp(placement)}["'])[^>]*>`,
+    "i"
+  ).test(html);
+const hasPlacedSessionLink = (html, sessionUrl, placement) =>
+  new RegExp(
+    `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(sessionUrl)}["'])(?=[^>]*\\btarget=["']_blank["'])(?=[^>]*\\brel=["']noopener noreferrer["'])(?=[^>]*\\bdata-session-booking=["']coaching["'])(?=[^>]*\\bdata-session-placement=["']${escapeRegExp(placement)}["'])[^>]*>`,
     "i"
   ).test(html);
 const hasAttributedAudiobookLink = (html, checkoutUrl, bookSlug, placement) =>
@@ -338,6 +345,7 @@ const plainLanguageContracts = new Map([
       "What do you want to make easier?",
       "You do not need a technical explanation.",
       "Tell Keith about your task",
+      "Need one hour of direct help? See the $250 one-to-one session",
     ],
   ],
   [
@@ -378,6 +386,13 @@ const plainLanguageContracts = new Map([
       "Do not send sensitive information",
       "Newsletter email through Buttondown",
       "Inquiries through Formspree",
+      "Session booking through Cal.com",
+      "Cal.com and Keith receive the name",
+      "Keith can review those booking details in his Cal.com account",
+      "Cal Video provides the meeting room",
+      "The session is not recorded automatically",
+      "No one should start a recording unless everyone expressly agrees before it begins",
+      "any reason the visitor provides when canceling or rescheduling",
       "Hosting and privacy-safe measurement through Vercel",
       "Purchases happen in external stores",
       "protected health information or PHI",
@@ -392,7 +407,16 @@ const plainLanguageContracts = new Map([
     ],
   ],
   ["/services/done-for-you/", ["Done-for-You AI Setup"]],
-  ["/services/coaching/", ["One-to-One AI Working Session"]],
+  [
+    "/services/coaching/",
+    [
+      "One-to-One AI Working Session",
+      "Book the $250 session",
+      "Choose a time · Answer three questions · Pay $250 to reserve",
+      "The session is not recorded automatically",
+      "Later cancellations and no-shows are not refundable",
+    ],
+  ],
   ["/services/training/", ["Practical AI Training"]],
   ["/services/speaking/", ["AI Speaking for Leaders and Teams"]],
 ]);
@@ -404,6 +428,59 @@ for (const [route, requiredPhrases] of plainLanguageContracts) {
       fail(`${route}: plain-language contract is missing "${phrase}"`);
     }
   }
+}
+
+const coachingPage = pages.find((page) => page.route === "/services/coaching/")?.html ?? "";
+for (const placement of ["service-hero", "service-close"]) {
+  if (!hasPlacedSessionLink(coachingPage, directSessionUrl, placement)) {
+    fail(`/services/coaching/: measured direct booking link is missing at ${placement}`);
+  }
+}
+const coachingSchemaObjects = schemaGraphNodes(coachingPage).flatMap(nestedSchemaObjects);
+const coachingOffer = coachingSchemaObjects.find(
+  (node) => hasSchemaType(node, "Offer") && node.url === directSessionUrl
+);
+if (!coachingOffer) {
+  fail("/services/coaching/: $250 Cal.com Offer schema is missing");
+} else if (
+  String(coachingOffer.price) !== "250" ||
+  coachingOffer.priceCurrency !== "USD"
+) {
+  fail("/services/coaching/: direct-booking Offer price or currency is incorrect");
+}
+for (const route of [
+  "/services/done-for-you/",
+  "/services/training/",
+  "/services/speaking/",
+]) {
+  const pageHtml = pages.find((page) => page.route === route)?.html ?? "";
+  if (pageHtml.includes(directSessionUrl) || /cal\.com\/keith-staggers-rpphlg/i.test(pageHtml)) {
+    fail(`${route}: direct session URL must remain isolated to coaching`);
+  }
+  if (!pageHtml.includes('href="/project-fit/"')) {
+    fail(`${route}: larger-service Project Fit route is missing`);
+  }
+}
+const projectFitSessionPage = pages.find((page) => page.route === "/project-fit/")?.html ?? "";
+if (!projectFitSessionPage.includes('href="/services/coaching/"')) {
+  fail("/project-fit/: direct-session handoff is missing");
+}
+if (/value="one-to-one"|\$250 one-to-one working session/i.test(projectFitSessionPage)) {
+  fail("/project-fit/: one-to-one session still enters the larger-work form");
+}
+const finishLoopPageForSession = pages.find((page) => page.route === "/finish-loop/")?.html ?? "";
+if (
+  !finishLoopPageForSession.includes('href="/services/coaching/"') ||
+  finishLoopPageForSession.includes(directSessionUrl)
+) {
+  fail("/finish-loop/: session handoff must use the owned coaching page");
+}
+const finishLoopThankYouPageForSession = pages.find((page) => page.route === "/finish-loop/thank-you/")?.html ?? "";
+if (
+  !finishLoopThankYouPageForSession.includes('href="/services/coaching/"') ||
+  finishLoopThankYouPageForSession.includes(directSessionUrl)
+) {
+  fail("/finish-loop/thank-you/: session handoff must use the owned coaching page");
 }
 
 const retiredBuyerPhrases = [
@@ -561,7 +638,6 @@ for (const page of pages.filter((candidate) => /charter\s*rn/i.test(visibleText(
 if (/mailto:|kcstaggers@gmail\.com/i.test(allPublicHtml)) {
   fail("release: public personal email path is present");
 }
-const workflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
 if (/Beyond Burnout|No Fear Nursing/i.test(allPublicHtml)) {
   fail("books: retired test or alternate-title records must not appear in the public site");
 }
@@ -880,6 +956,24 @@ for (const expected of bookExpectations) {
 }
 
 const baseLayoutSource = fs.readFileSync(path.join("src", "layouts", "Base.astro"), "utf8");
+const sessionTrackingBlock = baseLayoutSource.match(
+  /else if \(link\.dataset\.sessionBooking\) \{([\s\S]*?)\n\s*\} else if \(link\.dataset\.workflowBookDownload\)/
+)?.[1] ?? "";
+for (const token of [
+  "Session Booking Intent",
+  "link.dataset.sessionBooking",
+  "link.dataset.sessionPlacement",
+  'destination: "cal.com"',
+  "source",
+  "page",
+]) {
+  if (!sessionTrackingBlock.includes(token)) {
+    fail(`session: privacy-safe booking analytics is missing ${token}`);
+  }
+}
+if (/\b(?:email|answer|timezone|bookingUid|payment|card|formData|value)\b/i.test(sessionTrackingBlock)) {
+  fail("session: booking-intent analytics must not contain personal, intake, schedule, or payment data");
+}
 const booksHub = pages.find((page) => page.route === "/books/")?.html ?? "";
 for (const expected of bookExpectations) {
   if (!booksHub.includes(`href="${expected.route}"`)) fail(`/books/: missing owned link to ${expected.route}`);
@@ -1138,12 +1232,20 @@ for (const phrase of [
   "Buttondown",
   "Formspree",
   "Vercel",
+  "Cal.com",
+  "Cal Video",
   "Amazon",
   "Lemon Squeezy",
   "Stripe",
   "protected health information or PHI",
   "confidential employer or client material",
   "does not receive or store card numbers",
+  "selected time",
+  "three required booking questions",
+  "canceling or rescheduling",
+  "Cal.com account",
+  "not recorded automatically",
+  "everyone expressly agrees before it begins",
   "Submitting an inquiry does not add you to the newsletter",
 ]) {
   if (!privacyText.toLowerCase().includes(phrase.toLowerCase())) {
@@ -1214,7 +1316,7 @@ for (const fileName of ["llms.txt", "llms-full.txt"]) {
   if (
     !content.includes(siteUrl) ||
     !content.includes(`${siteUrl}/project-fit/`) ||
-    !content.toLowerCase().includes("tell keith about your task")
+    !content.toLowerCase().includes("tell keith about a larger project")
   ) {
     fail(`${fileName}: canonical identity or inquiry path is missing`);
   }
@@ -1259,6 +1361,7 @@ for (const [fileName, content] of [
     "/frontline-nurse-leader/",
     "/workflow-readiness/",
     "/newsletter/",
+    "/services/coaching/",
   ]) {
     if (!content.includes(`${siteUrl}${requiredDiscoveryPath}`)) {
       fail(`${fileName}: missing discovery path ${requiredDiscoveryPath}`);
@@ -1288,6 +1391,12 @@ for (const [fileName, content] of [
   }
   if (!content.includes(workflowPaperbackUrl)) {
     fail(`${fileName}: verified United States paperback URL is missing`);
+  }
+  if (!content.includes(`${siteUrl}/services/coaching/`)) {
+    fail(`${fileName}: owned one-to-one booking path is missing`);
+  }
+  if (content.includes(directSessionUrl)) {
+    fail(`${fileName}: raw Cal.com URL must remain isolated to the owned coaching page`);
   }
 }
 for (const requiredAuthorRecord of [

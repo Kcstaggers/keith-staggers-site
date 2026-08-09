@@ -70,7 +70,7 @@ export const finishLoop = {
     },
     {
       question: "What if I need help?",
-      answer: "Start a project inquiry for a 60-minute working session with Keith. Bring the real project and explain where you are stuck. Keith reviews the details before sharing a private calendar link.",
+      answer: "See the public 60-minute working session with Keith. Bring the real project, answer three short booking questions, and pay $250 through Cal.com to reserve a time.",
     },
   ],
 };

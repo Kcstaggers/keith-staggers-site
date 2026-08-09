@@ -86,6 +86,74 @@ for (const url of sitemapUrls) {
   if (!/<meta\s+[^>]*name=["']robots["'][^>]*content=["'][^"']*max-image-preview:large/i.test(html)) {
     fail(`${url}: indexable robots contract is missing`);
   }
+  if (
+    url !== `${siteUrl}/services/coaching/` &&
+    html.includes("https://cal.com/keith-staggers-rpphlg/one-to-one-ai-working-session")
+  ) {
+    fail(`${url}: direct Cal.com URL leaked outside the coaching page`);
+  }
+}
+
+const requiredLiveContracts = [
+  {
+    path: "/books/build-the-workflow-keep-the-judgment/",
+    phrases: [
+      "https://www.amazon.com/dp/B0HCCG4CTX",
+      "Buy paperback · $17.99",
+      "ASIN B0HCCG4CTX",
+    ],
+  },
+  {
+    path: "/services/coaching/",
+    phrases: [
+      "https://cal.com/keith-staggers-rpphlg/one-to-one-ai-working-session",
+      "Book the $250 session",
+      "Pay $250 to reserve",
+      "data-session-booking=\"coaching\"",
+    ],
+  },
+  {
+    path: "/project-fit/",
+    phrases: [
+      "href=\"/services/coaching/\"",
+      "Use this form for a done-for-you setup, team training, speaking, or a larger project",
+    ],
+    forbidden: [
+      "value=\"one-to-one\"",
+      "$250 one-to-one working session",
+      "cal.com/keith-staggers-rpphlg",
+    ],
+  },
+];
+
+for (const contract of requiredLiveContracts) {
+  const response = await request(`${siteUrl}${contract.path}`);
+  if (response?.status !== 200) {
+    fail(`${contract.path}: expected 200 for conversion contract`);
+    continue;
+  }
+  const html = await bodyFor(response, contract.path);
+  for (const phrase of contract.phrases) {
+    if (!html.includes(phrase)) fail(`${contract.path}: live conversion contract is missing ${phrase}`);
+  }
+  for (const phrase of contract.forbidden ?? []) {
+    if (html.includes(phrase)) fail(`${contract.path}: forbidden conversion content remains ${phrase}`);
+  }
+}
+
+for (const path of [
+  "/services/done-for-you/",
+  "/services/training/",
+  "/services/speaking/",
+]) {
+  const response = await request(`${siteUrl}${path}`);
+  if (response?.status !== 200) {
+    fail(`${path}: expected 200 for Project Fit isolation`);
+    continue;
+  }
+  const html = await bodyFor(response, path);
+  if (!html.includes('href="/project-fit/"')) fail(`${path}: Project Fit route is missing`);
+  if (html.includes("cal.com/keith-staggers-rpphlg")) fail(`${path}: direct session URL leaked outside coaching`);
 }
 
 const thankYouResponse = await request(`${siteUrl}/finish-loop/thank-you/`);
@@ -94,6 +162,8 @@ const thankYou = thankYouResponse ? await bodyFor(thankYouResponse, "thank-you")
 if (!/<meta\s+[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(thankYou)) {
   fail("thank-you: noindex is missing");
 }
+if (!thankYou.includes('href="/services/coaching/"')) fail("thank-you: owned session handoff is missing");
+if (thankYou.includes("cal.com/keith-staggers-rpphlg")) fail("thank-you: direct Cal.com URL must not appear");
 
 const rssResponse = await request(`${siteUrl}/rss.xml`);
 if (rssResponse?.status !== 200) fail("rss.xml: expected 200");
@@ -110,6 +180,7 @@ for (const path of ["/llms.txt", "/llms-full.txt"]) {
   if (response?.status !== 200) fail(`${path}: expected 200`);
   const text = response ? await bodyFor(response, path) : "";
   if (!text.includes(siteUrl)) fail(`${path}: canonical site URL is missing`);
+  if (text.includes("cal.com/keith-staggers-rpphlg")) fail(`${path}: raw Cal.com URL must not appear`);
   if (!(response?.headers.get("x-robots-tag") ?? "").includes("noindex")) {
     fail(`${path}: X-Robots-Tag noindex is missing`);
   }

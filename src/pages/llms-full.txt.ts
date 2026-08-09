@@ -22,6 +22,12 @@ export const GET: APIRoute = () => {
     "",
     `Public pricing: ${service.pricing}.`,
     "",
+    ...(service.directBooking
+      ? [
+          `Direct booking is available from the owned service page. Payment of $${service.directBooking.priceUsd} USD reserves the ${service.directBooking.durationMinutes}-minute session.`,
+          "",
+        ]
+      : []),
     `Best fit: ${service.audience.join("; ")}.`,
     "",
   ]);
@@ -108,7 +114,8 @@ export const GET: APIRoute = () => {
     "",
     `About: ${site.url}/about/`,
     `Proof: ${site.url}/proof/`,
-    `Tell Keith about your task: ${site.url}/project-fit/`,
+    `Book the $250 one-to-one session: ${site.url}/services/coaching/`,
+    `Tell Keith about a larger project: ${site.url}/project-fit/`,
     `Goodreads author record: ${site.social.goodreads}`,
     `Open Library author record: ${site.social.openLibrary}`,
     "",
@@ -173,7 +180,7 @@ export const GET: APIRoute = () => {
     "",
     `URL: ${site.url}${site.newsletter.privacyPath}`,
     "",
-    "Buttondown receives newsletter email addresses. Formspree receives intentionally submitted Project Fit and optional readiness follow-up fields. Vercel hosts the site and records privacy-safe page and event analytics without newsletter emails, form answers, or payment details. Amazon, Lemon Squeezy, and Stripe handle purchases under their own policies. Browser worksheets and readiness scoring stay local unless a visitor intentionally submits a separate follow-up. Do not submit protected health information, patient data, confidential employer or client material, passwords, API keys, or other secrets.",
+    "Buttondown receives newsletter email addresses. Formspree receives intentionally submitted Project Fit and optional readiness follow-up fields. Cal.com and Keith receive the name, email address, timezone, selected time, three required answers, and any cancellation or rescheduling reason entered for the one-to-one session; Keith can review those details in his Cal.com account to prepare. Cal Video provides the meeting room. The session is not recorded automatically, and no one should start a recording unless everyone expressly agrees before it begins. Stripe processes the $250 session payment. Vercel hosts the site and records privacy-safe page and event analytics without newsletter emails, form answers, booking answers, cancellation or rescheduling reasons, or payment details. Amazon, Lemon Squeezy, and Stripe handle purchases under their own policies. Browser worksheets and readiness scoring stay local unless a visitor intentionally submits a separate follow-up. Do not submit protected health information, patient data, confidential employer or client material, passwords, API keys, account credentials, or other secrets.",
     "",
     "# Articles and guides",
     "",
