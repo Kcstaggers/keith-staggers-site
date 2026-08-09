@@ -79,7 +79,7 @@ export const books: Book[] = [
     seoDescription:
       "Buy Build the Workflow. Keep the Judgment. by Keith Staggers, a practical guide to AI workflows, human approval, testing, evidence, and recovery.",
     datePublished: "2026-07-31",
-    dateModified: "2026-08-05",
+    dateModified: "2026-08-09",
     coverWidth: 600,
     coverHeight: 960,
     publisher: "Independently published",
@@ -103,7 +103,8 @@ export const books: Book[] = [
         isbn13: "9798190013788",
         pageCount: 88,
         priceUsd: "17.99",
-        status: "propagating",
+        status: "live",
+        amazonUrl: "https://www.amazon.com/dp/B0HCCG4CTX",
       },
     ],
     directAudiobook: {

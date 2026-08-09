@@ -25,6 +25,9 @@ const displayDate = new Intl.DateTimeFormat("en-US", {
 }).format(new Date(`${book.datePublished}T12:00:00Z`));
 const liveEditions = liveEditionsFor(book);
 const primaryLiveEdition = liveEditions[0];
+const mobilePurchaseEdition =
+  liveEditions.find((edition) => edition.format === "Paperback") ??
+  primaryLiveEdition;
 const paperbackEdition = paperbackEditionFor(book);
 const directAudiobook = book.directAudiobook;
 const displayIsbn = paperbackEdition?.isbn13
@@ -403,7 +406,7 @@ const bookJsonLd = {
       </section>
     </div>
 
-    {primaryLiveEdition && (
+    {mobilePurchaseEdition && (
       <aside
         class="fixed inset-x-0 bottom-0 z-50 border-t border-rule bg-ink/95 px-4 py-3 backdrop-blur lg:hidden"
         aria-label={`Buy ${book.title}`}
@@ -413,15 +416,15 @@ const bookJsonLd = {
             {book.title}
           </p>
           <a
-            href={primaryLiveEdition.ownedSiteAttributionUrl ?? primaryLiveEdition.amazonUrl}
+            href={mobilePurchaseEdition.ownedSiteAttributionUrl ?? mobilePurchaseEdition.amazonUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="studio-button studio-button--cobalt shrink-0"
             data-amazon-book={book.slug}
-            data-amazon-format={primaryLiveEdition.format.toLowerCase()}
+            data-amazon-format={mobilePurchaseEdition.format.toLowerCase()}
             data-amazon-placement="book-mobile-sticky"
-            data-amazon-attribution={primaryLiveEdition.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
-          >{primaryLiveEdition.format === "Kindle" ? "Get Kindle" : "Buy paperback"}{primaryLiveEdition.priceUsd ? ` · $${primaryLiveEdition.priceUsd}` : ""}</a>
+            data-amazon-attribution={mobilePurchaseEdition.ownedSiteAttributionUrl ? "book-site-organic" : "unattributed"}
+          >{mobilePurchaseEdition.format === "Kindle" ? "Get Kindle" : "Buy paperback"}{mobilePurchaseEdition.priceUsd ? ` · $${mobilePurchaseEdition.priceUsd}` : ""}</a>
         </div>
       </aside>
     )}

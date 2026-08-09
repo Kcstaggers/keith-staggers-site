@@ -12,6 +12,11 @@ const hasAttributedAmazonLink = (html, amazonUrl, bookSlug, format) =>
     `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(amazonUrl)}["'])(?=[^>]*\\bdata-amazon-book=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-amazon-format=["']${escapeRegExp(format)}["'])[^>]*>`,
     "i"
   ).test(html);
+const hasPlacedAmazonLink = (html, amazonUrl, bookSlug, format, placement) =>
+  new RegExp(
+    `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(amazonUrl)}["'])(?=[^>]*\\bdata-amazon-book=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-amazon-format=["']${escapeRegExp(format)}["'])(?=[^>]*\\bdata-amazon-placement=["']${escapeRegExp(placement)}["'])[^>]*>`,
+    "i"
+  ).test(html);
 const hasAttributedAudiobookLink = (html, checkoutUrl, bookSlug, placement) =>
   new RegExp(
     `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(checkoutUrl)}["'])(?=[^>]*\\bdata-audiobook-purchase=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-audiobook-format=["']mp3["'])(?=[^>]*\\bdata-audiobook-placement=["']${escapeRegExp(placement)}["'])(?=[^>]*\\bdata-audiobook-destination=["']lemon-squeezy["'])[^>]*>`,
@@ -556,7 +561,7 @@ for (const page of pages.filter((candidate) => /charter\s*rn/i.test(visibleText(
 if (/mailto:|kcstaggers@gmail\.com/i.test(allPublicHtml)) {
   fail("release: public personal email path is present");
 }
-const unavailableWorkflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
+const workflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
 if (/Beyond Burnout|No Fear Nursing/i.test(allPublicHtml)) {
   fail("books: retired test or alternate-title records must not appear in the public site");
 }
@@ -566,8 +571,8 @@ if (/\b2 primary books\b|two primary works|Keith has written two healthcare book
 if (/Companion to Keith(?:'|&#39;)s next book|does not yet have a verified public retail record/i.test(allPublicHtml)) {
   fail("books: stale pre-release book language remains");
 }
-if (allPublicHtml.includes(unavailableWorkflowPaperbackUrl)) {
-  fail("books: unavailable United States paperback URL must not appear in public HTML");
+if (/Amazon page (?:still )?propagating/i.test(visibleText(allPublicHtml))) {
+  fail("books: stale United States paperback propagation language remains");
 }
 
 const bookExpectations = [
@@ -596,7 +601,7 @@ const bookExpectations = [
         isbn: "9798190013788",
         pages: 88,
         price: "17.99",
-        status: "propagating",
+        amazon: workflowPaperbackUrl,
       },
     ],
     directAudiobook: {
@@ -737,15 +742,24 @@ for (const expected of bookExpectations) {
         fail(`${expected.route}: unavailable ${edition.format} Amazon URL must not be published`);
       }
     }
-    if (edition.status === "propagating" && !page.html.includes("The U.S. Amazon page is still propagating.")) {
-      fail(`${expected.route}: ${edition.format} propagation status is missing`);
-    }
   }
   if (
     expected.editions.some((edition) => "ctaAmazon" in edition) &&
     !page.html.includes('data-amazon-placement="book-mobile-sticky"')
   ) {
     fail(`${expected.route}: measured mobile purchase control is missing`);
+  }
+  if (
+    expected.route === "/books/build-the-workflow-keep-the-judgment/" &&
+    !hasPlacedAmazonLink(
+      page.html,
+      workflowPaperbackUrl,
+      "build-the-workflow-keep-the-judgment",
+      "paperback",
+      "book-mobile-sticky"
+    )
+  ) {
+    fail(`${expected.route}: measured paperback mobile purchase control is missing`);
   }
   if (expected.directAudiobook) {
     const audiobookId = `${siteUrl}${expected.route}#edition-audiobook`;
@@ -964,8 +978,7 @@ for (const fileName of workflowBookTemplateFiles) {
 for (const statusText of [
   "Companion to Build the Workflow. Keep the Judgment.",
   "The Kindle edition is available on Amazon for $9.99.",
-  "The paperback is published in KDP at $17.99",
-  "United States Amazon page is still propagating.",
+  "The paperback is available on Amazon for $17.99.",
 ]) {
   if (!workflowBookText.includes(statusText)) {
     fail(`workflow-book: current book status is missing ${statusText}`);
@@ -1002,6 +1015,17 @@ if (!hasAttributedAmazonLink(
 }
 if ((workflowBookPage.match(/data-amazon-format="kindle"/g) ?? []).length !== 2) {
   fail("workflow-book: both Kindle calls to action must carry format attribution");
+}
+if (!hasAttributedAmazonLink(
+  workflowBookPage,
+  workflowPaperbackUrl,
+  "build-the-workflow-keep-the-judgment",
+  "paperback"
+)) {
+  fail("workflow-book: measured paperback purchase link is missing");
+}
+if ((workflowBookPage.match(/data-amazon-format="paperback"/g) ?? []).length !== 2) {
+  fail("workflow-book: both paperback calls to action must carry format attribution");
 }
 if (!booksHub.includes('href="/workflow-book/"')) {
   fail("books: workflow book companion is not linked");
@@ -1216,6 +1240,7 @@ for (const requiredAiRecord of [
   "B0CJ44XP81",
   "B0CNYLZ5FC",
   "https://www.amazon.com/dp/B0HCC3L365",
+  workflowPaperbackUrl,
   "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
   "https://openlibrary.org/books/OL62365292M/Nurse_the_F%2Ack_Up_The_Raw_Truth_About_Surviving_Med-Surg",
   "https://www.goodreads.com/book/show/202652162-leading-with-care",
@@ -1246,6 +1271,7 @@ for (const [fileName, content] of [
     "B0HCC3L365",
     "B0HCCG4CTX",
     "https://www.amazon.com/dp/B0HCC3L365",
+    workflowPaperbackUrl,
     "https://keithstaggers.lemonsqueezy.com/checkout/buy/9c8c2f24-c58c-4b7b-ad3f-844501fbfcd1",
     "$12.99 once",
     "2 hours 38 minutes",
@@ -1257,11 +1283,11 @@ for (const [fileName, content] of [
       fail(`${fileName}: missing Build the Workflow record ${requiredWorkflowBookRecord}`);
     }
   }
-  if (!/Amazon page (?:still )?propagating/i.test(content)) {
-    fail(`${fileName}: United States paperback propagation status is missing`);
+  if (/Amazon page (?:still )?propagating/i.test(content)) {
+    fail(`${fileName}: stale United States paperback propagation status remains`);
   }
-  if (content.includes(unavailableWorkflowPaperbackUrl)) {
-    fail(`${fileName}: unavailable United States paperback URL must not be published`);
+  if (!content.includes(workflowPaperbackUrl)) {
+    fail(`${fileName}: verified United States paperback URL is missing`);
   }
 }
 for (const requiredAuthorRecord of [
