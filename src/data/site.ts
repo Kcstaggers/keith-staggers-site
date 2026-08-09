@@ -27,8 +27,9 @@ export const site = {
     cadence: "At most two emails per month",
   },
   booking: {
-    // Public scheduling is intentionally gated. Visitors answer the project-fit
-    // questions first. Keith sends the private calendar link only after review.
+    // Larger projects remain gated through Project Fit. The fixed-price
+    // one-to-one session is the only direct-booking exception and is defined
+    // on that service record instead of changing this global route.
     enabled: false,
     username: "",
     eventSlug: "",

@@ -26,12 +26,24 @@ The indexed `/newsletter/` page uses the official normal Buttondown POST with hi
 
 The plain-language `/privacy/` notice distinguishes Buttondown newsletter processing, Formspree inquiries, Vercel hosting and privacy-safe analytics, browser-local tools, and Amazon, Lemon Squeezy, and Stripe purchases. It explicitly rejects PHI, patient data, confidential material, passwords, credentials, and secrets. RSS and raw workflow-book templates receive `X-Robots-Tag: noindex, follow` so their canonical HTML hubs remain the preferred discovery surfaces.
 
+### Paperback and one-to-one conversion staging, August 9, 2026
+
+The verified United States paperback for *Build the Workflow. Keep the Judgment.* is live at $17.99, ASIN `B0HCCG4CTX`, ISBN `9798190013788`, at `https://www.amazon.com/dp/B0HCCG4CTX`. Its canonical book page, Books hub, companion page, structured data, AI-readable records, and measured purchase controls must all present the paperback as live. Do not restore propagation wording unless a fresh normal-browser check proves the listing unavailable.
+
+The fixed-price one-to-one working session is the only public direct-booking exception. `/services/coaching/` may link to the exact Cal.com event recorded in `src/data/services.ts`. Visitors choose a time, answer three required questions, and pay $250 to reserve the 60-minute session. Every done-for-you, training, speaking, global contact, and larger-project path must continue through `/project-fit/`. Do not place the Cal.com URL in the global booking configuration or embed a calendar.
+
+The session is not recorded automatically. The stated follow-up is a written summary, three ordered next steps, and a small prompt pack within 48 hours. Privacy-safe measurement records only the service, placement, destination, source, and page. It never records names, email addresses, intake answers, times, booking identifiers, or payment data. Cal.com, Cal Video, and Stripe are disclosed on `/privacy/`, and visitors are told not to submit PHI, confidential material, passwords, credentials, or secrets.
+
+The public route must not go live until Cal.com event `6566804` matches the approved offer: 60 minutes, $250 USD collected at booking, one-business-day full-refund threshold, 24-hour minimum notice, no more than two bookings per month, a 14-day future-booking horizon, Additional notes and Add guests hidden, and the existing four availability windows unchanged. Keep the event hidden from Cal Discover even though its direct link is public from the owned coaching page. Cal Video automatic recording is unavailable and off on the current free plan. No one should start a manual recording unless everyone expressly agrees before it begins.
+
+The August 9 candidate also patches only two transitive build dependencies: `js-yaml` 4.3.0 to 4.3.1 and `nanoid` 3.3.16 to 3.3.18. The required high-severity production audit must report zero vulnerabilities before merge. These package-lock changes do not alter accounts, permissions, payment configuration, or site data handling.
+
 ## Tech stack
 
 - **Astro 7** (static site generation, TypeScript strict; Node 24.x pinned for Vercel)
 - **Tailwind v4** via `@tailwindcss/vite` — config lives in `src/styles/global.css` using `@theme` (no `tailwind.config.js`)
 - **Fontsource variable fonts**: Fraunces (serif), Inter (sans)
-- **Project-fit qualification page** before any private booking link is shared
+- **Project-fit qualification page** for larger work, with one fixed-price direct-booking exception
 - **@vercel/analytics/astro** for pageviews and privacy-safe conversion events
 - **Spotify iframes** for music playback (no SDK, no auth)
 
@@ -157,7 +169,7 @@ These are real rules from prior iterations — violating them will require rewor
 - **No em dashes (—) anywhere in copy.** Use periods, commas, or `·` (middle dot) instead. Em dashes feel AI-generated. He swept the codebase to remove them.
 - **No dated content.** No "Winter 26", no "as of May 2026". The "Issue 26" masthead is fine because it's typographic flavor, not a freshness claim.
 - **De-emphasize Tampa in CTAs.** Tampa is biographical (lives there, in the About section). Anywhere customer-facing — CTAs, footer, hero — say "Available worldwide" or "Working worldwide". He doesn't want Tampa narrowing his perceived market for remote work.
-- **Use a qualification step before scheduling.** Public service CTAs lead to `/project-fit/`. Keith reviews the answers first and shares a private calendar link only when the inquiry fits.
+- **Use a qualification step for larger work.** Done-for-you, training, speaking, global contact, and larger-project CTAs lead to `/project-fit/`. The $250 one-to-one service is the only direct-booking exception.
 - **Keep recruiter access open.** The project-fit form includes an employment or recruiter path that does not force a sales-budget answer.
 - **Books use owned detail pages with direct purchase CTAs.** Amazon remains the only checkout for print and Kindle editions. The separately modeled, approved audiobook for Build the Workflow. Keep the Judgment. uses the verified Lemon Squeezy checkout and may appear only on its canonical book page and the Books hub. Track Amazon and audiobook intent separately with the book slug, format, placement, and non-personal destination fields.
 
@@ -170,7 +182,7 @@ These are real rules from prior iterations — violating them will require rewor
 | Change service pricing | `src/data/services.ts` | Four services. `pricing` field is a free-form string. |
 | Edit availability badge ("Open for projects") | `src/data/site.ts` | `availability.status: "open"\|"limited"\|"booked"` + label. Drives HirePill. |
 | Add or edit a Studio Note | `src/data/notes.ts` | Only `status: "published"` records reach routes, homepage, Notes, RSS, sitemap, or AI text. Keep drafts in the Content Engine until exact approval. |
-| Change the qualification route | `src/data/site.ts` | Edit `booking.intakePath`. Keep public scheduling disabled. |
+| Change the qualification route | `src/data/site.ts` | Edit `booking.intakePath`. Keep it as the global route for larger work. The one-to-one exception belongs only in its service record. |
 | Add a book | `src/data/books.ts` + drop cover at `public/media/book-<slug>.webp` | Cover convention is `book-${book.slug}.webp` at 600×900. |
 | Update the bio | `src/components/About.astro` | Three paragraphs. Keep the drop cap on paragraph 1. |
 | Change career timeline | `src/components/CareerTimeline.astro` | Three eras. Detective 1992-2013, Nurse 2014-Now, AI Creator 2022-Now. These dates are canonical; do not imply nursing ended. |
@@ -194,13 +206,15 @@ All gallery videos autoplay muted on loop — `<video autoplay muted loop playsi
 
 ## Inquiry and booking flow
 
-All active public service CTAs route to `/project-fit/`. The page asks for the outcome, timeline, prior work, conversation type, investment fit, and a confidentiality confirmation. It then builds a reviewable email for Keith. No answers are transmitted until the visitor intentionally opens that email.
+Done-for-you, training, speaking, global contact, and larger-project CTAs route to `/project-fit/`. The page asks for the outcome, timeline, prior work, conversation type, investment fit, and a confidentiality confirmation. It then submits through the approved Formspree route only when the visitor intentionally sends the form.
 
-Keith reviews every inquiry. Qualified people receive the private calendar link in his reply. The live site must not expose a direct scheduling URL or load a calendar embed.
+Keith reviews those larger-work inquiries and shares a private calendar link when a conversation makes sense. The fixed-price one-to-one service is the only direct-booking exception: its canonical service page may open the exact public Cal.com event recorded in `src/data/services.ts`. Do not expose that URL on other owned pages and do not load a calendar embed.
 
 Use the compatibility helpers in `src/utils/booking.ts`:
 - `getBookingHref()` returns `site.booking.intakePath`.
 - `getCalAttrs()` returns an empty object.
+
+The one-to-one service does not use these global helpers for its two direct booking controls. That isolation prevents larger services from bypassing Project Fit.
 
 ## Conversion measurement
 

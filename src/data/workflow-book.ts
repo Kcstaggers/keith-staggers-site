@@ -9,7 +9,7 @@ export interface WorkflowBookTemplate {
 
 export const workflowBookCompanion = {
   version: "0.1",
-  dateModified: "2026-07-31",
+  dateModified: "2026-08-09",
   route: "/workflow-book/",
   description:
     "Ten free text templates for organizing AI work, recording important approvals, testing results, and planning what to do when something fails.",

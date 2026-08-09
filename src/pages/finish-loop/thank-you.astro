@@ -1,8 +1,5 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { getBookingHref, getCalAttrs } from "../../utils/booking";
-
-const bookingAttrs = getCalAttrs();
 ---
 
 <Base
@@ -68,7 +65,7 @@ const bookingAttrs = getCalAttrs();
         <p class="eyebrow !text-cobalt">Want help applying it?</p>
         <h2 class="serif mt-5 text-5xl leading-[0.94] tracking-[-0.045em]">Bring the real project.</h2>
         <p class="mt-7 max-w-xl text-lg leading-relaxed text-paper/70">A 60-minute working session is $250. We find what is blocking the project, work through the steps together, and leave with a concrete release plan.</p>
-        <a href={getBookingHref()} {...bookingAttrs} class="mt-7 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim">Start a project inquiry →</a>
+        <a href="/services/coaching/" class="mt-7 inline-flex min-h-13 items-center justify-center bg-cobalt px-7 py-3 font-bold text-white transition-colors hover:bg-cobalt-dim">See the $250 working session →</a>
       </div>
     </div>
   </section>

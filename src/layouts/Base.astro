@@ -308,6 +308,14 @@ const jsonLd = {
             source,
             page,
           });
+        } else if (link.dataset.sessionBooking) {
+          track("Session Booking Intent", {
+            session: link.dataset.sessionBooking,
+            placement: link.dataset.sessionPlacement ?? "unspecified",
+            destination: "cal.com",
+            source,
+            page,
+          });
         } else if (link.dataset.workflowBookDownload) {
           track("Workflow Book Template Download", {
             resource: link.dataset.workflowBookDownload,

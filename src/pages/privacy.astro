@@ -44,7 +44,7 @@ const privacyJsonLd = {
       </nav>
       <div>
         <h1 class="studio-display">What this site receives, and <strong>what it does not</strong><span class="text-signal">.</span></h1>
-        <p>This notice explains the small amount of information used to run the website, answer an inquiry, manage the newsletter, and send someone to an outside store.</p>
+        <p>This notice explains the small amount of information used to run the website, answer an inquiry, book a working session, manage the newsletter, and send someone to an outside store.</p>
       </div>
     </header>
 
@@ -75,8 +75,17 @@ const privacyJsonLd = {
         </div>
       </section>
 
-      <section aria-labelledby="privacy-analytics">
+      <section aria-labelledby="privacy-booking">
         <p class="privacy-number">04</p>
+        <div>
+          <h2 id="privacy-booking">Session booking through Cal.com</h2>
+          <p>The one-to-one working-session link opens Cal.com. Cal.com and Keith receive the name, email address, timezone, selected time, answers entered in the three required booking questions, and any reason the visitor provides when canceling or rescheduling. Keith can review those booking details in his Cal.com account to prepare. Cal Video provides the meeting room. The session is not recorded automatically. No one should start a recording unless everyone expressly agrees before it begins.</p>
+          <p>Stripe processes the $250 payment inside the Cal.com booking flow. This website does not receive or store card numbers or payment credentials. Do not enter protected health information, confidential employer or client material, passwords, account credentials, or other secrets.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="privacy-analytics">
+        <p class="privacy-number">05</p>
         <div>
           <h2 id="privacy-analytics">Hosting and privacy-safe measurement through Vercel</h2>
           <p>Vercel hosts this website and provides page and event analytics. The site measures actions such as opening a page, choosing a service, starting an inquiry, attempting a newsletter signup, or clicking an outside purchase link.</p>
@@ -85,7 +94,7 @@ const privacyJsonLd = {
       </section>
 
       <section aria-labelledby="privacy-local">
-        <p class="privacy-number">05</p>
+        <p class="privacy-number">06</p>
         <div>
           <h2 id="privacy-local">Tools that stay in your browser</h2>
           <p>The 10-example workflow-testing worksheet stores entries in your browser's local storage so the page can restore your work. Its CSV export and print-to-PDF action happen from your browser. Clear the worksheet to remove its saved entry from that browser.</p>
@@ -94,16 +103,16 @@ const privacyJsonLd = {
       </section>
 
       <section aria-labelledby="privacy-stores">
-        <p class="privacy-number">06</p>
+        <p class="privacy-number">07</p>
         <div>
           <h2 id="privacy-stores">Purchases happen in external stores</h2>
-          <p>Amazon handles book purchases, Lemon Squeezy handles The Finish Loop purchase, and Stripe handles public-class registration. Those companies receive and process the information needed for their own checkout under their policies.</p>
+          <p>Amazon handles book purchases, Lemon Squeezy handles The Finish Loop purchase, and Stripe handles public-class registration and paid-session booking. Those companies receive and process the information needed for their own checkout under their policies.</p>
           <p>Keith Staggers Studio does not receive or store card numbers through this website. This site records only a privacy-safe click or checkout-intent event before you leave for the store.</p>
         </div>
       </section>
 
       <section aria-labelledby="privacy-control">
-        <p class="privacy-number">07</p>
+        <p class="privacy-number">08</p>
         <div>
           <h2 id="privacy-control">Your choices</h2>
           <p>You can read every public Note and use the free workflow resources without joining the newsletter. You can unsubscribe from the newsletter in any issue, avoid submitting either inquiry form, clear locally saved worksheet entries, or leave before opening an external store.</p>
@@ -201,7 +210,8 @@ const privacyJsonLd = {
   }
 
   .privacy-body section:nth-child(2) h2,
-  .privacy-body section:nth-child(4) h2 {
+  .privacy-body section:nth-child(4) h2,
+  .privacy-body section:nth-child(6) h2 {
     color: var(--color-cobalt);
   }
 

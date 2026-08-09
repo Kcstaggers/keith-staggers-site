@@ -15,6 +15,11 @@ export type Service = {
   process: { step: string; detail: string }[];
   faqs: { question: string; answer: string }[];
   ctaPrompt: string;
+  directBooking?: {
+    url: string;
+    priceUsd: string;
+    durationMinutes: number;
+  };
 };
 
 export const services: Service[] = [
@@ -94,10 +99,10 @@ export const services: Service[] = [
     blurb:
       "Bring one task, business problem, or stuck project. Work with Keith for 60 minutes and leave with a useful first version and a written next-step plan.",
     pricing: "$250 · 60 minutes",
-    lastModified: "2026-07-31",
+    lastModified: "2026-08-09",
     seoTitle: "One-to-One AI Help with Keith Staggers",
     seoDescription:
-      "Work directly with Keith Staggers for 60 minutes on one real task or AI project. Leave with a useful first version, recording, and written next-step plan. $250.",
+      "Work directly with Keith Staggers for 60 minutes on one real task or AI project. Leave with a useful first version and receive a written next-step plan. $250.",
     headline: "Bring one real problem.",
     headlineAccent: "Leave with a useful first version.",
     intro:
@@ -111,13 +116,13 @@ export const services: Service[] = [
     deliverables: [
       { name: "A clear diagnosis", detail: "Keith helps identify what is wasting time, what result matters, and where AI could help." },
       { name: "A live first version", detail: "You create the first useful prompt, process, or prototype together during the session." },
-      { name: "Recording and next-step plan", detail: "You receive the recording, three ordered next steps, and the tools needed to continue." },
+      { name: "Written summary and next-step plan", detail: "Within 48 hours, you receive a written summary, three ordered next steps, and the tools needed to continue." },
       { name: "A small prompt pack", detail: "You receive a focused set of prompts written for the problem you worked on." },
     ],
     process: [
       { step: "Bring one problem", detail: "Share one task, business problem, or stuck project before the session." },
       { step: "Work together", detail: "Spend 60 minutes sharing screens and working on the real task." },
-      { step: "Continue with a plan", detail: "Receive the recording, prompts, and three ordered next steps within 48 hours." },
+      { step: "Continue with a plan", detail: "Receive a written summary, prompts, and three ordered next steps within 48 hours." },
     ],
     faqs: [
       {
@@ -133,15 +138,30 @@ export const services: Service[] = [
       {
         question: "What do I receive afterward?",
         answer:
-          "You receive the session recording, a written plan with three ordered next steps, and a small set of prompts tailored to your problem.",
+          "Within 48 hours, you receive a written summary, a plan with three ordered next steps, and a small set of prompts tailored to your problem. The session is not recorded automatically. No one should start a recording unless everyone expressly agrees before it begins.",
       },
       {
         question: "Is this the right option for a team?",
         answer:
           "This is a one-to-one working session. Choose team training when several people need shared practice, examples, and follow-up support.",
       },
+      {
+        question: "How do booking, cancellation, and rescheduling work?",
+        answer:
+          "Answer three short questions and pay $250 to reserve the session. Cancel at least one business day before the scheduled start for a full refund. Later cancellations and no-shows are not refundable. You may use Cal.com to reschedule before the scheduled start. If Keith cancels, choose a full refund or a rescheduled time.",
+      },
+      {
+        question: "Is a specific result guaranteed?",
+        answer:
+          "No. The session includes the 60 minutes of work and the stated follow-up, but it cannot guarantee a business, financial, or technical result.",
+      },
     ],
     ctaPrompt: "Tell me which task or project is stuck. We will work on one useful first version together.",
+    directBooking: {
+      url: "https://cal.com/keith-staggers-rpphlg/one-to-one-ai-working-session",
+      priceUsd: "250",
+      durationMinutes: 60,
+    },
   },
   {
     num: "03",

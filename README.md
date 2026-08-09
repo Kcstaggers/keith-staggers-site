@@ -14,7 +14,7 @@ The site is a plain-language storefront. It explains how Keith can help before i
 - Spotify embeds
 - Node.js 24.x
 
-There is no server-side rendering, database, CMS, or public calendar integration. Content is stored in TypeScript data files.
+There is no server-side rendering, database, CMS, or embedded calendar. Content is stored in TypeScript data files. The fixed-price one-to-one service uses one external Cal.com booking link.
 
 ## Offer funnel
 
@@ -26,9 +26,9 @@ There is no server-side rendering, database, CMS, or public calendar integration
    - AI Speaking for Leaders and Teams from $3,500
 3. Concrete examples explain how AI can help with familiar work before the site explains Keith's method.
 4. The Finish Loop is introduced as a $49 project-finishing toolkit for solo creators before its product name is used on its own.
-5. Every service inquiry goes through `/project-fit/`, presented to visitors as `Tell Keith about your task`.
-6. The form sends only after the visitor intentionally submits it through the approved Formspree route.
-7. Keith reviews the inquiry and shares a private calendar link only when the conversation fits.
+5. The $250 one-to-one service links directly to its Cal.com event. Visitors choose a time, answer three required questions, and pay to reserve the 60-minute session.
+6. Done-for-you work, training, speaking, and larger projects continue through `/project-fit/`, presented as `Tell Keith about your task`.
+7. The larger-work form sends only after the visitor intentionally submits it through the approved Formspree route. Keith reviews the inquiry and shares a private calendar link only when the conversation fits.
 8. Every HTML page ends with four measured paths: the owned Build the Workflow book page, The Finish Loop, Project Fit, and the newsletter.
 9. `/newsletter/` uses Buttondown's normal double-confirmation POST. It promises at most two emails per month, leaves consent unchecked, and keeps all free resources open without an email gate.
 
@@ -58,7 +58,7 @@ The build generates 27 static HTML pages. Twenty-five are indexable and appear i
 | `/` | Plain-English homepage and four service choices |
 | `/about/` | Keith's public identity, career arc, and operating method |
 | `/books/` | Owned catalog hub for Keith's three published books |
-| `/books/build-the-workflow-keep-the-judgment/` | Practical AI workflow book with a direct $12.99 MP3 audiobook, verified Kindle purchase path, and paperback propagation status |
+| `/books/build-the-workflow-keep-the-judgment/` | Practical AI workflow book with direct $12.99 MP3 audiobook, $9.99 Kindle, and $17.99 United States paperback purchase paths |
 | `/books/nurse-the-fck-up/` | Verified book record and direct Amazon handoff |
 | `/books/leading-with-care/` | Verified book record and direct Amazon handoff |
 | `/finish-loop/` | $49 project-finishing toolkit sales page |
@@ -70,7 +70,7 @@ The build generates 27 static HTML pages. Twenty-five are indexable and appear i
 | `/proof/` | Plain-English examples of independent work |
 | `/services/` | Four clear ways Keith can help |
 | `/services/done-for-you/` | Done-for-You AI Setup |
-| `/services/coaching/` | One-to-One AI Working Session |
+| `/services/coaching/` | $250 One-to-One AI Working Session and the only direct Cal.com booking path |
 | `/services/training/` | Practical AI Training |
 | `/services/speaking/` | AI Speaking for Leaders and Teams |
 | `/workflow-readiness/` | Seven-question, no-email workflow readiness check |
@@ -163,7 +163,7 @@ Vercel previews and production deployments run `npm run build`, including the st
 
 ## Guardrails
 
-- Keep the public calendar private. Service calls must remain behind `/project-fit/`.
+- Keep larger-work scheduling behind `/project-fit/`. The $250 one-to-one service is the only direct Cal.com exception, and its URL must remain isolated to `/services/coaching/`.
 - Never add personal form answers to analytics.
 - Never commit secrets, environment files, customer ZIPs, or editable paid-product sources.
 - Books use owned catalog and detail pages, then link directly to Amazon with privacy-safe click measurement.

@@ -4,11 +4,21 @@ import { getBookingHref, getCalAttrs } from "../utils/booking";
 interface Props {
   prompt: string;
   label?: string;
+  href?: string;
+  external?: boolean;
+  session?: string;
+  placement?: string;
 }
 
-const { prompt, label = "Tell Keith about your task" } = Astro.props;
-const href = getBookingHref();
-const calAttrs = getCalAttrs();
+const {
+  prompt,
+  label = "Tell Keith about your task",
+  href = getBookingHref(),
+  external = false,
+  session,
+  placement,
+} = Astro.props;
+const calAttrs = session ? {} : getCalAttrs();
 ---
 
 <div class="hairline mt-20 pt-10 flex flex-col items-center text-center gap-5">
@@ -18,6 +28,10 @@ const calAttrs = getCalAttrs();
   <a
     href={href}
     {...calAttrs}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener noreferrer" : undefined}
+    data-session-booking={session}
+    data-session-placement={placement}
     class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase px-6 py-3 rounded-full border border-cobalt text-cobalt hover:bg-cobalt hover:text-ink transition-colors"
   >
     {label}

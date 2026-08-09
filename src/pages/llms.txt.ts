@@ -13,7 +13,7 @@ export const prerender = true;
 
 export const GET: APIRoute = () => {
   const serviceLines = services.map(
-    (service) => `- [${service.title}](${site.url}/services/${service.slug}/): ${service.blurb}`
+    (service) => `- [${service.title}](${site.url}/services/${service.slug}/): ${service.blurb}${service.directBooking ? " Direct booking is available from this owned service page." : ""}`
   );
   const noteLines = [...publishedNotes]
     .sort((a, b) => b.datePublished.localeCompare(a.datePublished) || b.number.localeCompare(a.number))
@@ -61,7 +61,7 @@ export const GET: APIRoute = () => {
     `- [Build the Workflow companion](${site.url}${workflowBookCompanion.route}): Ten free text templates for organizing AI work, recording important approvals, testing the result, and planning what to do if something fails.`,
     `- [Articles and guides](${site.url}/notes/): Practical articles about using AI at work, team training, finishing projects, and career reinvention.`,
     `- [${site.newsletter.name}](${site.url}${site.newsletter.path}): A Buttondown-confirmed newsletter with one practical workflow, one guardrail, and one action. ${site.newsletter.cadence}. The five public Notes show what Keith writes about before someone joins.`,
-    `- [Privacy notice](${site.url}${site.newsletter.privacyPath}): Plain-language boundaries for Buttondown, Formspree, Vercel, browser-local tools, and external stores.`,
+    `- [Privacy notice](${site.url}${site.newsletter.privacyPath}): Plain-language boundaries for Buttondown, Formspree, Cal.com, Stripe, Vercel, browser-local tools, and external stores.`,
     `- [RSS feed](${site.url}/rss.xml): Machine-readable article updates.`,
     `- [Full public text index](${site.url}/llms-full.txt): Current public service descriptions and full article text.`,
     "",
@@ -86,7 +86,8 @@ export const GET: APIRoute = () => {
     "## Start here",
     "",
     `- [See if a task is ready for AI](${site.url}/workflow-readiness/): A free seven-question check with no email required.`,
-    `- [Tell Keith about your task](${site.url}/project-fit/): Private inquiry form. Keith reviews every inquiry before sharing a calendar link.`,
+    `- [Book the $250 one-to-one session](${site.url}/services/coaching/): A 60-minute working session for one real task or stuck project. Choose a time, answer three questions, and pay through Cal.com to reserve.`,
+    `- [Tell Keith about a larger project](${site.url}/project-fit/): Private inquiry form for done-for-you setups, team training, speaking, and larger work. Keith reviews every inquiry before sharing a calendar link.`,
     `- [Read ${site.newsletter.name}](${site.url}${site.newsletter.path}): Review all five public Notes first. Joining is optional, Buttondown requires confirmation, and the free resources are not gated.`,
     "",
     "## Source boundaries",

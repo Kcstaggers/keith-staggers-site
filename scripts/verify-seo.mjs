@@ -3,6 +3,8 @@ import path from "node:path";
 
 const distDir = path.resolve("dist");
 const siteUrl = "https://www.keithstaggers.com";
+const workflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
+const directSessionUrl = "https://cal.com/keith-staggers-rpphlg/one-to-one-ai-working-session";
 const errors = [];
 
 const fail = (message) => errors.push(message);
@@ -10,6 +12,16 @@ const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const hasAttributedAmazonLink = (html, amazonUrl, bookSlug, format) =>
   new RegExp(
     `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(amazonUrl)}["'])(?=[^>]*\\bdata-amazon-book=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-amazon-format=["']${escapeRegExp(format)}["'])[^>]*>`,
+    "i"
+  ).test(html);
+const hasPlacedAmazonLink = (html, amazonUrl, bookSlug, format, placement) =>
+  new RegExp(
+    `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(amazonUrl)}["'])(?=[^>]*\\bdata-amazon-book=["']${escapeRegExp(bookSlug)}["'])(?=[^>]*\\bdata-amazon-format=["']${escapeRegExp(format)}["'])(?=[^>]*\\bdata-amazon-placement=["']${escapeRegExp(placement)}["'])[^>]*>`,
+    "i"
+  ).test(html);
+const hasPlacedSessionLink = (html, sessionUrl, placement) =>
+  new RegExp(
+    `<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(sessionUrl)}["'])(?=[^>]*\\btarget=["']_blank["'])(?=[^>]*\\brel=["']noopener noreferrer["'])(?=[^>]*\\bdata-session-booking=["']coaching["'])(?=[^>]*\\bdata-session-placement=["']${escapeRegExp(placement)}["'])[^>]*>`,
     "i"
   ).test(html);
 const hasAttributedAudiobookLink = (html, checkoutUrl, bookSlug, placement) =>
@@ -333,6 +345,7 @@ const plainLanguageContracts = new Map([
       "What do you want to make easier?",
       "You do not need a technical explanation.",
       "Tell Keith about your task",
+      "Need one hour of direct help? See the $250 one-to-one session",
     ],
   ],
   [
@@ -373,6 +386,13 @@ const plainLanguageContracts = new Map([
       "Do not send sensitive information",
       "Newsletter email through Buttondown",
       "Inquiries through Formspree",
+      "Session booking through Cal.com",
+      "Cal.com and Keith receive the name",
+      "Keith can review those booking details in his Cal.com account",
+      "Cal Video provides the meeting room",
+      "The session is not recorded automatically",
+      "No one should start a recording unless everyone expressly agrees before it begins",
+      "any reason the visitor provides when canceling or rescheduling",
       "Hosting and privacy-safe measurement through Vercel",
       "Purchases happen in external stores",
       "protected health information or PHI",
@@ -387,7 +407,16 @@ const plainLanguageContracts = new Map([
     ],
   ],
   ["/services/done-for-you/", ["Done-for-You AI Setup"]],
-  ["/services/coaching/", ["One-to-One AI Working Session"]],
+  [
+    "/services/coaching/",
+    [
+      "One-to-One AI Working Session",
+      "Book the $250 session",
+      "Choose a time · Answer three questions · Pay $250 to reserve",
+      "The session is not recorded automatically",
+      "Later cancellations and no-shows are not refundable",
+    ],
+  ],
   ["/services/training/", ["Practical AI Training"]],
   ["/services/speaking/", ["AI Speaking for Leaders and Teams"]],
 ]);
@@ -399,6 +428,59 @@ for (const [route, requiredPhrases] of plainLanguageContracts) {
       fail(`${route}: plain-language contract is missing "${phrase}"`);
     }
   }
+}
+
+const coachingPage = pages.find((page) => page.route === "/services/coaching/")?.html ?? "";
+for (const placement of ["service-hero", "service-close"]) {
+  if (!hasPlacedSessionLink(coachingPage, directSessionUrl, placement)) {
+    fail(`/services/coaching/: measured direct booking link is missing at ${placement}`);
+  }
+}
+const coachingSchemaObjects = schemaGraphNodes(coachingPage).flatMap(nestedSchemaObjects);
+const coachingOffer = coachingSchemaObjects.find(
+  (node) => hasSchemaType(node, "Offer") && node.url === directSessionUrl
+);
+if (!coachingOffer) {
+  fail("/services/coaching/: $250 Cal.com Offer schema is missing");
+} else if (
+  String(coachingOffer.price) !== "250" ||
+  coachingOffer.priceCurrency !== "USD"
+) {
+  fail("/services/coaching/: direct-booking Offer price or currency is incorrect");
+}
+for (const route of [
+  "/services/done-for-you/",
+  "/services/training/",
+  "/services/speaking/",
+]) {
+  const pageHtml = pages.find((page) => page.route === route)?.html ?? "";
+  if (pageHtml.includes(directSessionUrl) || /cal\.com\/keith-staggers-rpphlg/i.test(pageHtml)) {
+    fail(`${route}: direct session URL must remain isolated to coaching`);
+  }
+  if (!pageHtml.includes('href="/project-fit/"')) {
+    fail(`${route}: larger-service Project Fit route is missing`);
+  }
+}
+const projectFitSessionPage = pages.find((page) => page.route === "/project-fit/")?.html ?? "";
+if (!projectFitSessionPage.includes('href="/services/coaching/"')) {
+  fail("/project-fit/: direct-session handoff is missing");
+}
+if (/value="one-to-one"|\$250 one-to-one working session/i.test(projectFitSessionPage)) {
+  fail("/project-fit/: one-to-one session still enters the larger-work form");
+}
+const finishLoopPageForSession = pages.find((page) => page.route === "/finish-loop/")?.html ?? "";
+if (
+  !finishLoopPageForSession.includes('href="/services/coaching/"') ||
+  finishLoopPageForSession.includes(directSessionUrl)
+) {
+  fail("/finish-loop/: session handoff must use the owned coaching page");
+}
+const finishLoopThankYouPageForSession = pages.find((page) => page.route === "/finish-loop/thank-you/")?.html ?? "";
+if (
+  !finishLoopThankYouPageForSession.includes('href="/services/coaching/"') ||
+  finishLoopThankYouPageForSession.includes(directSessionUrl)
+) {
+  fail("/finish-loop/thank-you/: session handoff must use the owned coaching page");
 }
 
 const retiredBuyerPhrases = [
@@ -556,7 +638,6 @@ for (const page of pages.filter((candidate) => /charter\s*rn/i.test(visibleText(
 if (/mailto:|kcstaggers@gmail\.com/i.test(allPublicHtml)) {
   fail("release: public personal email path is present");
 }
-const unavailableWorkflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
 if (/Beyond Burnout|No Fear Nursing/i.test(allPublicHtml)) {
   fail("books: retired test or alternate-title records must not appear in the public site");
 }
@@ -566,8 +647,8 @@ if (/\b2 primary books\b|two primary works|Keith has written two healthcare book
 if (/Companion to Keith(?:'|&#39;)s next book|does not yet have a verified public retail record/i.test(allPublicHtml)) {
   fail("books: stale pre-release book language remains");
 }
-if (allPublicHtml.includes(unavailableWorkflowPaperbackUrl)) {
-  fail("books: unavailable United States paperback URL must not appear in public HTML");
+if (/Amazon page (?:still )?propagating/i.test(visibleText(allPublicHtml))) {
+  fail("books: stale United States paperback propagation language remains");
 }
 
 const bookExpectations = [
@@ -596,7 +677,7 @@ const bookExpectations = [
         isbn: "9798190013788",
         pages: 88,
         price: "17.99",
-        status: "propagating",
+        amazon: workflowPaperbackUrl,
       },
     ],
     directAudiobook: {
@@ -737,15 +818,24 @@ for (const expected of bookExpectations) {
         fail(`${expected.route}: unavailable ${edition.format} Amazon URL must not be published`);
       }
     }
-    if (edition.status === "propagating" && !page.html.includes("The U.S. Amazon page is still propagating.")) {
-      fail(`${expected.route}: ${edition.format} propagation status is missing`);
-    }
   }
   if (
     expected.editions.some((edition) => "ctaAmazon" in edition) &&
     !page.html.includes('data-amazon-placement="book-mobile-sticky"')
   ) {
     fail(`${expected.route}: measured mobile purchase control is missing`);
+  }
+  if (
+    expected.route === "/books/build-the-workflow-keep-the-judgment/" &&
+    !hasPlacedAmazonLink(
+      page.html,
+      workflowPaperbackUrl,
+      "build-the-workflow-keep-the-judgment",
+      "paperback",
+      "book-mobile-sticky"
+    )
+  ) {
+    fail(`${expected.route}: measured paperback mobile purchase control is missing`);
   }
   if (expected.directAudiobook) {
     const audiobookId = `${siteUrl}${expected.route}#edition-audiobook`;
@@ -866,6 +956,24 @@ for (const expected of bookExpectations) {
 }
 
 const baseLayoutSource = fs.readFileSync(path.join("src", "layouts", "Base.astro"), "utf8");
+const sessionTrackingBlock = baseLayoutSource.match(
+  /else if \(link\.dataset\.sessionBooking\) \{([\s\S]*?)\n\s*\} else if \(link\.dataset\.workflowBookDownload\)/
+)?.[1] ?? "";
+for (const token of [
+  "Session Booking Intent",
+  "link.dataset.sessionBooking",
+  "link.dataset.sessionPlacement",
+  'destination: "cal.com"',
+  "source",
+  "page",
+]) {
+  if (!sessionTrackingBlock.includes(token)) {
+    fail(`session: privacy-safe booking analytics is missing ${token}`);
+  }
+}
+if (/\b(?:email|answer|timezone|bookingUid|payment|card|formData|value)\b/i.test(sessionTrackingBlock)) {
+  fail("session: booking-intent analytics must not contain personal, intake, schedule, or payment data");
+}
 const booksHub = pages.find((page) => page.route === "/books/")?.html ?? "";
 for (const expected of bookExpectations) {
   if (!booksHub.includes(`href="${expected.route}"`)) fail(`/books/: missing owned link to ${expected.route}`);
@@ -964,8 +1072,7 @@ for (const fileName of workflowBookTemplateFiles) {
 for (const statusText of [
   "Companion to Build the Workflow. Keep the Judgment.",
   "The Kindle edition is available on Amazon for $9.99.",
-  "The paperback is published in KDP at $17.99",
-  "United States Amazon page is still propagating.",
+  "The paperback is available on Amazon for $17.99.",
 ]) {
   if (!workflowBookText.includes(statusText)) {
     fail(`workflow-book: current book status is missing ${statusText}`);
@@ -1002,6 +1109,17 @@ if (!hasAttributedAmazonLink(
 }
 if ((workflowBookPage.match(/data-amazon-format="kindle"/g) ?? []).length !== 2) {
   fail("workflow-book: both Kindle calls to action must carry format attribution");
+}
+if (!hasAttributedAmazonLink(
+  workflowBookPage,
+  workflowPaperbackUrl,
+  "build-the-workflow-keep-the-judgment",
+  "paperback"
+)) {
+  fail("workflow-book: measured paperback purchase link is missing");
+}
+if ((workflowBookPage.match(/data-amazon-format="paperback"/g) ?? []).length !== 2) {
+  fail("workflow-book: both paperback calls to action must carry format attribution");
 }
 if (!booksHub.includes('href="/workflow-book/"')) {
   fail("books: workflow book companion is not linked");
@@ -1114,12 +1232,20 @@ for (const phrase of [
   "Buttondown",
   "Formspree",
   "Vercel",
+  "Cal.com",
+  "Cal Video",
   "Amazon",
   "Lemon Squeezy",
   "Stripe",
   "protected health information or PHI",
   "confidential employer or client material",
   "does not receive or store card numbers",
+  "selected time",
+  "three required booking questions",
+  "canceling or rescheduling",
+  "Cal.com account",
+  "not recorded automatically",
+  "everyone expressly agrees before it begins",
   "Submitting an inquiry does not add you to the newsletter",
 ]) {
   if (!privacyText.toLowerCase().includes(phrase.toLowerCase())) {
@@ -1190,7 +1316,7 @@ for (const fileName of ["llms.txt", "llms-full.txt"]) {
   if (
     !content.includes(siteUrl) ||
     !content.includes(`${siteUrl}/project-fit/`) ||
-    !content.toLowerCase().includes("tell keith about your task")
+    !content.toLowerCase().includes("tell keith about a larger project")
   ) {
     fail(`${fileName}: canonical identity or inquiry path is missing`);
   }
@@ -1216,6 +1342,7 @@ for (const requiredAiRecord of [
   "B0CJ44XP81",
   "B0CNYLZ5FC",
   "https://www.amazon.com/dp/B0HCC3L365",
+  workflowPaperbackUrl,
   "https://www.goodreads.com/book/show/201866638-nurse-the-f-ck-up",
   "https://openlibrary.org/books/OL62365292M/Nurse_the_F%2Ack_Up_The_Raw_Truth_About_Surviving_Med-Surg",
   "https://www.goodreads.com/book/show/202652162-leading-with-care",
@@ -1234,6 +1361,7 @@ for (const [fileName, content] of [
     "/frontline-nurse-leader/",
     "/workflow-readiness/",
     "/newsletter/",
+    "/services/coaching/",
   ]) {
     if (!content.includes(`${siteUrl}${requiredDiscoveryPath}`)) {
       fail(`${fileName}: missing discovery path ${requiredDiscoveryPath}`);
@@ -1246,6 +1374,7 @@ for (const [fileName, content] of [
     "B0HCC3L365",
     "B0HCCG4CTX",
     "https://www.amazon.com/dp/B0HCC3L365",
+    workflowPaperbackUrl,
     "https://keithstaggers.lemonsqueezy.com/checkout/buy/9c8c2f24-c58c-4b7b-ad3f-844501fbfcd1",
     "$12.99 once",
     "2 hours 38 minutes",
@@ -1257,11 +1386,17 @@ for (const [fileName, content] of [
       fail(`${fileName}: missing Build the Workflow record ${requiredWorkflowBookRecord}`);
     }
   }
-  if (!/Amazon page (?:still )?propagating/i.test(content)) {
-    fail(`${fileName}: United States paperback propagation status is missing`);
+  if (/Amazon page (?:still )?propagating/i.test(content)) {
+    fail(`${fileName}: stale United States paperback propagation status remains`);
   }
-  if (content.includes(unavailableWorkflowPaperbackUrl)) {
-    fail(`${fileName}: unavailable United States paperback URL must not be published`);
+  if (!content.includes(workflowPaperbackUrl)) {
+    fail(`${fileName}: verified United States paperback URL is missing`);
+  }
+  if (!content.includes(`${siteUrl}/services/coaching/`)) {
+    fail(`${fileName}: owned one-to-one booking path is missing`);
+  }
+  if (content.includes(directSessionUrl)) {
+    fail(`${fileName}: raw Cal.com URL must remain isolated to the owned coaching page`);
   }
 }
 for (const requiredAuthorRecord of [

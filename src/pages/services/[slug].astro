@@ -3,7 +3,7 @@ import Base from "../../layouts/Base.astro";
 import SectionCTA from "../../components/SectionCTA.astro";
 import { services } from "../../data/services";
 import { site } from "../../data/site";
-import { getBookingHref, getCalAttrs } from "../../utils/booking";
+import { getBookingHref } from "../../utils/booking";
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -14,8 +14,17 @@ export function getStaticPaths() {
 
 const { service } = Astro.props;
 const others = services.filter((s) => s.slug !== service.slug);
-const href = getBookingHref();
-const calAttrs = getCalAttrs();
+const directBooking = service.directBooking;
+const href = directBooking?.url ?? getBookingHref();
+const ctaLabel = directBooking ? "Book the $250 session" : site.booking.buttonLabel;
+const ctaAttrs = directBooking
+  ? {
+      target: "_blank",
+      rel: "noopener noreferrer",
+      "data-session-booking": service.slug,
+      "data-session-placement": "service-hero",
+    }
+  : {};
 const canonicalUrl = new URL(`/services/${service.slug}/`, site.url).href;
 const serviceJsonLd = {
   "@context": "https://schema.org",
@@ -35,8 +44,15 @@ const serviceJsonLd = {
       })),
       offers: {
         "@type": "Offer",
-        url: canonicalUrl,
+        url: directBooking?.url ?? canonicalUrl,
         description: service.pricing,
+        ...(directBooking
+          ? {
+              price: directBooking.priceUsd,
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+            }
+          : {}),
       },
     },
     {
@@ -115,14 +131,16 @@ const serviceJsonLd = {
       <div class="flex flex-wrap items-center gap-4">
         <a
           href={href}
-          {...calAttrs}
+          {...ctaAttrs}
           class="inline-flex items-center gap-2 text-[12px] font-mono tracking-[0.18em] uppercase px-6 py-3.5 rounded-full border border-cobalt bg-cobalt text-ink hover:bg-transparent hover:text-cobalt-text transition-colors"
         >
-          {site.booking.buttonLabel}
+          {ctaLabel}
           <span aria-hidden="true">→</span>
         </a>
         <span class="font-mono text-[10.5px] tracking-[0.18em] uppercase text-paper-faint">
-          Tell Keith what you need first · He reviews every inquiry
+          {directBooking
+            ? "Choose a time · Answer three questions · Pay $250 to reserve"
+            : "Tell Keith what you need first · He reviews every inquiry"}
         </span>
       </div>
     </header>
@@ -226,7 +244,14 @@ const serviceJsonLd = {
       </div>
     </section>
 
-    <SectionCTA prompt={service.ctaPrompt} />
+    <SectionCTA
+      prompt={service.ctaPrompt}
+      label={directBooking ? "Book the $250 session" : undefined}
+      href={directBooking?.url}
+      external={Boolean(directBooking)}
+      session={directBooking ? service.slug : undefined}
+      placement={directBooking ? "service-close" : undefined}
+    />
 
     <!-- Other services -->
     <section class="hairline mt-20 pt-10">
