@@ -152,7 +152,15 @@ if (sitemapRoutes.includes("/ai-workflow-guide.pdf")) fail("sitemap: PDF must re
 const titles = new Map();
 const descriptions = new Map();
 const indexableRoutes = [];
-const expectedNoindexRoutes = new Set(["/finish-loop/thank-you/", "/privacy/"]);
+const minimalProofRoutes = new Set([
+  "/client-tool-pilot/",
+  "/tools/first-ai-workflow/",
+]);
+const expectedNoindexRoutes = new Set([
+  "/finish-loop/thank-you/",
+  "/privacy/",
+  ...minimalProofRoutes,
+]);
 const requiredSchema = new Map([
   ["/", ["WebSite", "Person", "Organization"]],
   ["/about/", ["ProfilePage", "BreadcrumbList"]],
@@ -236,29 +244,34 @@ for (const page of pages) {
   }
   if (/<video\b[^>]*\sautoplay/i.test(html)) fail(`${route}: autoplay video is not allowed`);
 
-  for (const [marker, href] of [
-    ["data-global-buy", "/books/build-the-workflow-keep-the-judgment/"],
-    ["data-global-product", "/finish-loop/"],
-    ["data-global-contact", "/project-fit/"],
-    ["data-global-newsletter", "/newsletter/"],
-  ]) {
-    if (!hasMarkedInternalLink(html, marker, href)) {
-      fail(`${route}: global conversion link ${marker} must point to ${href}`);
+  // These two unlisted, noindex proof surfaces use the intentionally minimal
+  // client-tool shell. They still pass metadata, schema, accessibility, link,
+  // privacy, and sitemap checks, but do not inherit Studio conversion chrome.
+  if (!minimalProofRoutes.has(route)) {
+    for (const [marker, href] of [
+      ["data-global-buy", "/books/build-the-workflow-keep-the-judgment/"],
+      ["data-global-product", "/finish-loop/"],
+      ["data-global-contact", "/project-fit/"],
+      ["data-global-newsletter", "/newsletter/"],
+    ]) {
+      if (!hasMarkedInternalLink(html, marker, href)) {
+        fail(`${route}: global conversion link ${marker} must point to ${href}`);
+      }
     }
-  }
-  const sharedHeader = html.match(/<header\b[^>]*\bclass=["'][^"']*studio-nav-wrap[^"']*["'][^>]*>[\s\S]*?<\/header>/i)?.[0] ?? "";
-  for (const [label, href] of [
-    ["Proof", "/proof/"],
-    ["Buy", "/#finish-loop"],
-    ["Books", "/books/"],
-  ]) {
-    const linkCount = (
-      sharedHeader.match(
-        new RegExp(`<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(href)}["'])[^>]*>\\s*${escapeRegExp(label)}\\s*</a>`, "gi")
-      ) ?? []
-    ).length;
-    if (linkCount < 2) {
-      fail(`${route}: desktop and mobile navigation both need ${label} linking to ${href}`);
+    const sharedHeader = html.match(/<header\b[^>]*\bclass=["'][^"']*studio-nav-wrap[^"']*["'][^>]*>[\s\S]*?<\/header>/i)?.[0] ?? "";
+    for (const [label, href] of [
+      ["Proof", "/proof/"],
+      ["Buy", "/#finish-loop"],
+      ["Books", "/books/"],
+    ]) {
+      const linkCount = (
+        sharedHeader.match(
+          new RegExp(`<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(href)}["'])[^>]*>\\s*${escapeRegExp(label)}\\s*</a>`, "gi")
+        ) ?? []
+      ).length;
+      if (linkCount < 2) {
+        fail(`${route}: desktop and mobile navigation both need ${label} linking to ${href}`);
+      }
     }
   }
 

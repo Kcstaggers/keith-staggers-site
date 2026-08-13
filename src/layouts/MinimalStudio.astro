@@ -1,0 +1,119 @@
+---
+import "../styles/global.css";
+import Analytics from "@vercel/analytics/astro";
+import { site } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  ogImage?: string;
+  ogImageAlt?: string;
+}
+
+const {
+  title,
+  description,
+  noindex = true,
+  ogImage = "/og-keith-staggers-v2.png",
+  ogImageAlt = "Keith Staggers: practical AI training, one-to-one help, and done-for-you solutions.",
+} = Astro.props;
+const pageTitle = `${title} · ${site.name}`;
+const canonicalUrl = new URL(Astro.url.pathname, site.url).href;
+const socialImage = new URL(ogImage, site.url).href;
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: pageTitle,
+  description,
+  url: canonicalUrl,
+  isPartOf: {
+    "@type": "WebSite",
+    name: site.name,
+    url: site.url,
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)}></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{pageTitle}</title>
+    <slot name="head" />
+  </head>
+  <body class="minimal-studio-body">
+    <a class="minimal-studio-skip" href="#main-content">Skip to content</a>
+    <main id="main-content"><slot /></main>
+    <Analytics />
+  </body>
+</html>
+
+<style is:global>
+  .minimal-studio-body {
+    min-height: 100dvh;
+    margin: 0;
+    background:
+      radial-gradient(circle at 72% 18%, rgb(40 81 255 / 0.07), transparent 28rem),
+      #050608;
+  }
+
+  .minimal-studio-skip {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+  }
+
+  .minimal-studio-skip:focus {
+    position: fixed;
+    z-index: 100;
+    top: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background: #f4f6fb;
+    color: #050608;
+  }
+
+  @media print {
+    @page {
+      size: letter;
+      margin: 0.45in 0.5in;
+      background: white;
+    }
+    html,
+    .minimal-studio-body,
+    .minimal-studio-body main { background: white !important; }
+  }
+</style>
