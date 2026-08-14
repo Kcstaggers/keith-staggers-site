@@ -1,0 +1,595 @@
+---
+import Base from "../layouts/Base.astro";
+import {
+  leadPathFormConfigured,
+  leadPathFormEndpoint,
+} from "../data/forms";
+---
+
+<Base
+  title="AI-Guided Lead Path Kit"
+  description="Check whether your current website can use a one-time, platform-specific contact-action kit with AI-guided installation."
+  robots="noindex, nofollow"
+>
+  <section class="project-fit lead-path-check" aria-labelledby="lead-path-title">
+    <div class="studio-shell project-fit-shell">
+      <header class="project-fit-head">
+        <div>
+          <p class="studio-kicker">One clear next step</p>
+          <h1 id="lead-path-title" class="studio-display">
+            Your platform.<br /><strong>Finished code</strong><span class="text-signal">.</span>
+          </h1>
+        </div>
+        <div class="project-fit-intro">
+          <p>Answer the setup questions once. If the site fits a supported package, you can request one finished lead-action kit for $149. No subscription and no site login.</p>
+          <p class="lead-path-price">$149 USD once · U.S. business billing address required</p>
+        </div>
+      </header>
+
+      <ol class="project-fit-steps" aria-label="How the Lead Path Kit works">
+        <li><span>01</span><b>Check the setup</b><p>Confirm the platform, plan, installation permission, and rollback path.</p></li>
+        <li><span>02</span><b>Pay only if ready</b><p>A compatible request receives the current terms and a customer-specific Stripe invoice.</p></li>
+        <li><span>03</span><b>Install with your AI</b><p>Your ZIP includes finished code, an exact AI prompt, verification, and rollback steps.</p></li>
+      </ol>
+
+      <div class="project-fit-grid">
+        <aside class="project-fit-aside">
+          <p class="studio-kicker">One order includes</p>
+          <ul>
+            <li>One business and one production website.</li>
+            <li>One WordPress, Wix, Squarespace, Shopify, GoDaddy, or custom-site package.</li>
+            <li>One call, text, email, quote, booking, or contact action.</li>
+            <li>Finished code plus an AI installation prompt.</li>
+            <li>Verification, rollback, manifest, and package test report.</li>
+            <li>A 14-day covered-defect correction window.</li>
+          </ul>
+          <p class="project-fit-privacy">Do not send passwords, API keys, recovery codes, private credentials, protected information, or confidential site data. This check does not access or test your live website.</p>
+        </aside>
+
+        <form
+          class="project-fit-form lead-path-form"
+          data-lead-path-form
+          data-form-configured={String(leadPathFormConfigured)}
+          action={leadPathFormEndpoint || undefined}
+          method="post"
+          accept-charset="UTF-8"
+        >
+          <input type="hidden" name="subject" value="[KS Lead Path Kit] {{ delivery_email }}" />
+          <input type="hidden" name="form_type" value="AI-Guided Lead Path Kit" />
+          <input type="hidden" name="inquiry_marker" value="ks-lead-path-kit-v1" />
+          <input type="hidden" name="source_page" value="/lead-path-kit/" />
+          <input type="hidden" name="offer_version" value="1.0" />
+          <input type="hidden" name="terms_version" value="1.0" />
+          <input type="hidden" name="campaign_id" value="proof-first-lead-path-001" />
+          <input type="hidden" name="source_prospect_id" data-source-prospect value="" />
+          <input type="hidden" name="submitted_at" data-submitted-at value="" />
+          <input type="hidden" name="terms_acceptance_statement" value="I confirm that I am the owner of, or authorized to order for, the named business. I confirm that the production website, platform, plan or version, theme or editor, installation permission, backup status, installer, and contact destination I supplied are accurate. I authorize work to begin after payment and agree to the AI-Guided Lead Path Kit Order Terms v1.0, including its scope, refund and defect policy, delivery method, and one-site license." />
+          <input type="hidden" name="adapter_permission_statement" data-adapter-permission-statement value="" />
+          <input type="hidden" name="adapter_rollback_statement" data-adapter-rollback-statement value="" />
+          <input type="hidden" name="compatibility_result" data-result-input value="NEEDS REVIEW" />
+
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="lead-path-company-site">Leave this field empty</label>
+            <input id="lead-path-company-site" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <header class="lead-path-form-head">
+            <p class="studio-kicker">Five-minute compatibility check</p>
+            <h2>Tell the generator what it must build.</h2>
+            <p>The result stays on this page until every required answer is confirmed. Only a Ready result can be submitted for an invoice.</p>
+          </header>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-business">Business name</label>
+            <input id="lead-business" name="business_name" type="text" autocomplete="organization" maxlength="80" required />
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-state">U.S. billing state</label>
+            <input id="lead-state" name="billing_state" type="text" inputmode="text" autocomplete="address-level1" minlength="2" maxlength="2" pattern="[A-Za-z]{2}" placeholder="FL" required />
+          </div>
+
+          <div class="fit-field">
+            <label for="lead-site">Production website</label>
+            <input id="lead-site" name="website_url" type="url" inputmode="url" maxlength="500" placeholder="https://example.com" required />
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-platform">Website platform</label>
+            <select id="lead-platform" name="platform" required>
+              <option value="">Choose one</option>
+              <option value="wordpress">WordPress</option>
+              <option value="wix">Wix</option>
+              <option value="squarespace">Squarespace</option>
+              <option value="shopify">Shopify</option>
+              <option value="godaddy">GoDaddy Websites + Marketing</option>
+              <option value="custom">Custom or webmaster-managed site</option>
+            </select>
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-plan">Current plan or version</label>
+            <input id="lead-plan" name="platform_version" type="text" maxlength="120" placeholder="Exact current plan or version" required />
+          </div>
+
+          <div class="fit-field">
+            <label for="lead-editor">Theme, editor, or framework</label>
+            <input id="lead-editor" name="theme_editor" type="text" maxlength="120" placeholder="Exact current theme, editor, or framework" required />
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-install">Can this account install the required code?</label>
+            <select id="lead-install" name="install_capability" required>
+              <option value="unknown">Not checked yet</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="unavailable">Unavailable</option>
+            </select>
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-backup">Is a backup, duplicate, or rollback point ready?</label>
+            <select id="lead-backup" name="backup_capability" required>
+              <option value="unknown">Not checked yet</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="unavailable">Unavailable</option>
+            </select>
+          </div>
+
+          <div class="fit-field">
+            <label for="lead-installer">Who will install it?</label>
+            <input id="lead-installer" name="installer_name" type="text" maxlength="80" placeholder="Your name, teammate, or webmaster role" required />
+          </div>
+
+          <section class="lead-path-adapter" data-adapter-requirements hidden aria-live="polite">
+            <p class="studio-kicker">Platform-specific requirements</p>
+            <ul>
+              <li data-adapter-permission></li>
+              <li data-adapter-rollback></li>
+            </ul>
+            <label class="fit-confirm" for="lead-adapter-confirmed">
+              <input id="lead-adapter-confirmed" name="adapter_requirements_confirmed" type="checkbox" value="Confirmed" />
+              <span>I checked this exact platform account and confirm that both requirements above are true.</span>
+            </label>
+          </section>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-action">Primary action</label>
+            <select id="lead-action" name="cta_mode" required>
+              <option value="url">Open a quote, booking, or contact page</option>
+              <option value="phone">Call the business</option>
+              <option value="sms">Text the business</option>
+              <option value="email">Email the business</option>
+            </select>
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-label">Action label</label>
+            <input id="lead-label" name="cta_label" type="text" maxlength="48" placeholder="Get a free estimate" required />
+          </div>
+
+          <div class="fit-field">
+            <label for="lead-destination">Confirmed action destination</label>
+            <input id="lead-destination" name="cta_destination" type="text" maxlength="500" placeholder="https://, phone number, or business email" required />
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-services">Short services line, optional</label>
+            <input id="lead-services" name="services" type="text" maxlength="160" placeholder="Roofing, siding, gutters" />
+          </div>
+
+          <div class="fit-field fit-field--half">
+            <label for="lead-color">Primary brand color</label>
+            <input id="lead-color" name="primary_color" type="color" value="#2851ff" required />
+          </div>
+
+          <div class="fit-field">
+            <label for="lead-email">Invoice and delivery email</label>
+            <input id="lead-email" name="delivery_email" type="email" autocomplete="email" maxlength="254" required />
+          </div>
+
+          <section class="lead-path-result" data-compatibility-result data-state="needs-review" tabindex="-1" aria-live="polite" aria-labelledby="lead-result-title">
+            <p class="studio-kicker">Compatibility result</p>
+            <h3 id="lead-result-title" data-result-title>Needs review</h3>
+            <p data-result-copy>Complete the required fields and confirm the installation and rollback paths.</p>
+          </section>
+
+          <div class="lead-path-acceptance" data-order-acceptance hidden>
+            <p><strong>Your answers fit a supported package.</strong> This screening does not test the live site or guarantee conflict-free installation.</p>
+            <label class="fit-confirm" for="lead-terms">
+              <input id="lead-terms" name="terms_accepted" type="checkbox" value="Accepted" />
+              <span>I confirm that I am the owner of, or authorized to order for, the named business. I confirm that the production website, platform, plan or version, theme or editor, installation permission, backup status, installer, and contact destination I supplied are accurate. I authorize work to begin after payment and agree to the <a href="/lead-path-kit/terms/" target="_blank" rel="noopener">AI-Guided Lead Path Kit Order Terms v1.0</a>, including its scope, refund and defect policy, delivery method, and one-site license.</span>
+            </label>
+          </div>
+
+          <p
+            class="form-status"
+            data-lead-path-status
+            data-state={leadPathFormConfigured ? "ready" : "error"}
+            aria-live="polite"
+          >
+            {leadPathFormConfigured
+              ? "Nothing is charged here. A verified Ready request receives a customer-specific Stripe invoice."
+              : "Order-request delivery is not configured. Nothing can be submitted."}
+          </p>
+
+          <button class="studio-button studio-button--primary fit-submit" type="submit" disabled>
+            <span data-submit-label>Complete the compatibility check</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+          </button>
+        </form>
+      </div>
+
+      <section class="project-fit-review" data-lead-path-success hidden tabindex="-1" aria-labelledby="lead-path-success-title">
+        <p class="studio-kicker">Compatible request received</p>
+        <h2 id="lead-path-success-title" class="studio-display">The order facts are in<span class="text-signal">.</span></h2>
+        <p>The setup will be rechecked against the locked adapter. If it remains Ready to build, the customer-specific $149 Stripe invoice will go to the email you provided. No work starts before official paid status.</p>
+        <div class="project-fit-review-actions">
+          <a class="studio-button studio-button--secondary" href="/">Back to the studio</a>
+          <a class="studio-button studio-button--secondary" href="/lead-path-kit/terms/">Keep a copy of the terms</a>
+        </div>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const leadForm = document.querySelector<HTMLFormElement>("[data-lead-path-form]");
+  const resultPanel = document.querySelector<HTMLElement>("[data-compatibility-result]");
+  const resultTitle = document.querySelector<HTMLElement>("[data-result-title]");
+  const resultCopy = document.querySelector<HTMLElement>("[data-result-copy]");
+  const resultInput = document.querySelector<HTMLInputElement>("[data-result-input]");
+  const acceptance = document.querySelector<HTMLElement>("[data-order-acceptance]");
+  const terms = document.querySelector<HTMLInputElement>("#lead-terms");
+  const adapterRequirements = document.querySelector<HTMLElement>("[data-adapter-requirements]");
+  const adapterPermission = document.querySelector<HTMLElement>("[data-adapter-permission]");
+  const adapterRollback = document.querySelector<HTMLElement>("[data-adapter-rollback]");
+  const adapterConfirmed = document.querySelector<HTMLInputElement>("#lead-adapter-confirmed");
+  const adapterPermissionInput = document.querySelector<HTMLInputElement>("[data-adapter-permission-statement]");
+  const adapterRollbackInput = document.querySelector<HTMLInputElement>("[data-adapter-rollback-statement]");
+  const platformSelect = document.querySelector<HTMLSelectElement>("#lead-platform");
+  const sourceProspectInput = document.querySelector<HTMLInputElement>("[data-source-prospect]");
+  const submittedAtInput = document.querySelector<HTMLInputElement>("[data-submitted-at]");
+  const formStatus = document.querySelector<HTMLElement>("[data-lead-path-status]");
+  const success = document.querySelector<HTMLElement>("[data-lead-path-success]");
+  const submit = leadForm?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const submitLabel = leadForm?.querySelector<HTMLElement>("[data-submit-label]");
+
+  const adapterRules: Record<string, { permission: string; rollback: string }> = {
+    wordpress: {
+      permission: "The installer has administrator access and the site allows ZIP plugin uploads",
+      rollback: "A current site backup or staging copy is ready",
+    },
+    wix: {
+      permission: "The installer can edit the intended page, add and size an HTML Embed Code element, preview, and publish",
+      rollback: "A duplicate site or restorable site-history point is ready",
+    },
+    squarespace: {
+      permission: "The plan and account role allow Code Injection",
+      rollback: "A duplicate site or saved copy of the current injection code is ready",
+    },
+    shopify: {
+      permission: "The installer can edit an owned theme, add the section to the intended template, preview, and publish",
+      rollback: "The current theme has been duplicated before editing",
+    },
+    godaddy: {
+      permission: "The installer can edit the intended page, add an HTML section, preview, and publish",
+      rollback: "The current page has been duplicated or its content has been saved",
+    },
+    custom: {
+      permission: "A webmaster can place the HTML, CSS, and JavaScript, preview the intended page, and deploy it",
+      rollback: "A restorable copy or source-control checkpoint is ready",
+    },
+  };
+
+  const supportedBillingStates = new Set([
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
+    "DC",
+  ]);
+
+  const prospectFromUrl = new URLSearchParams(window.location.search).get("p")?.trim() ?? "";
+  if (sourceProspectInput && /^[A-Za-z0-9][A-Za-z0-9_-]{5,64}$/.test(prospectFromUrl)) {
+    sourceProspectInput.value = prospectFromUrl;
+  }
+
+  const value = (name: string) => {
+    const field = leadForm?.elements.namedItem(name);
+    return field instanceof HTMLInputElement || field instanceof HTMLSelectElement
+      ? field.value.trim()
+      : "";
+  };
+
+  const confirmedDescriptor = (entry: string) =>
+    Boolean(entry) &&
+    !/\b(?:unknown|unsure|not sure|do not know|don't know|idk|tbd|to be determined|n\/a)\b|^(?:none|\?)$/i.test(entry);
+
+  const productionUrl = (entry: string) => {
+    try {
+      const parsed = new URL(entry);
+      const hostname = parsed.hostname.toLowerCase().replace(/\.$/, "");
+      const labels = hostname.split(".");
+      const reservedSuffixes = new Set(["example", "invalid", "internal", "local", "localhost", "test"]);
+      const forbiddenQueryKey = /(?:password|passwd|secret|token|api.?key|credential|authorization|cookie|session|private.?key|recovery.?code|one.?time.?code|otp|access.?key|client.?secret|site.?login)/i;
+      return (
+        parsed.protocol === "https:" &&
+        Boolean(hostname) &&
+        !parsed.username &&
+        !parsed.password &&
+        !parsed.hash &&
+        labels.length >= 2 &&
+        !hostname.includes(":") &&
+        !/^\d{1,3}(?:\.\d{1,3}){3}$/.test(hostname) &&
+        labels.every((label) => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(label)) &&
+        /^[a-z]{2,63}$/i.test(labels.at(-1) ?? "") &&
+        !reservedSuffixes.has(labels.at(-1) ?? "") &&
+        ![...parsed.searchParams.keys()].some((key) => forbiddenQueryKey.test(key))
+      );
+    } catch {
+      return false;
+    }
+  };
+
+  const validDestination = () => {
+    const mode = value("cta_mode");
+    const destination = value("cta_destination");
+    if (mode === "url") return productionUrl(destination);
+    if (mode === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(destination);
+    const digits = destination.replace(/\D/g, "");
+    return digits.length >= 7 && digits.length <= 15;
+  };
+
+  const requiredFactsPresent = () =>
+    Boolean(
+      value("business_name") &&
+      supportedBillingStates.has(value("billing_state").toUpperCase()) &&
+      productionUrl(value("website_url")) &&
+      value("platform") &&
+      Boolean(adapterConfirmed?.checked) &&
+      confirmedDescriptor(value("platform_version")) &&
+      confirmedDescriptor(value("theme_editor")) &&
+      confirmedDescriptor(value("installer_name")) &&
+      value("cta_mode") &&
+      value("cta_label") &&
+      validDestination() &&
+      value("primary_color") &&
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value("delivery_email")),
+    );
+
+  const evaluate = () => {
+    if (
+      !leadForm ||
+      !resultPanel ||
+      !resultTitle ||
+      !resultCopy ||
+      !resultInput ||
+      !acceptance ||
+      !terms ||
+      !adapterRequirements ||
+      !adapterPermission ||
+      !adapterRollback ||
+      !adapterConfirmed ||
+      !adapterPermissionInput ||
+      !adapterRollbackInput ||
+      !submit ||
+      !submitLabel
+    ) return;
+
+    const install = value("install_capability");
+    const backup = value("backup_capability");
+    const adapterRule = adapterRules[value("platform")];
+    adapterRequirements.hidden = !adapterRule;
+    adapterPermission.textContent = adapterRule?.permission ?? "";
+    adapterRollback.textContent = adapterRule?.rollback ?? "";
+    adapterPermissionInput.value = adapterRule?.permission ?? "";
+    adapterRollbackInput.value = adapterRule?.rollback ?? "";
+    adapterConfirmed.required = Boolean(adapterRule);
+    const unsupported = install === "unavailable" || backup === "unavailable";
+    const ready =
+      !unsupported &&
+      Boolean(adapterRule) &&
+      adapterConfirmed.checked &&
+      install === "confirmed" &&
+      backup === "confirmed" &&
+      requiredFactsPresent();
+
+    const configured = leadForm.dataset.formConfigured === "true";
+
+    if (unsupported) {
+      resultPanel.dataset.state = "not-supported";
+      resultTitle.textContent = "Not supported";
+      resultCopy.textContent = "The required installation or rollback path is unavailable. No payment or order request can proceed.";
+      resultInput.value = "NOT SUPPORTED";
+    } else if (ready) {
+      resultPanel.dataset.state = "ready";
+      resultTitle.textContent = "Ready to build";
+      resultCopy.textContent = "Your reported setup fits one locked package. Review the order terms and confirm the facts below.";
+      resultInput.value = "READY TO BUILD";
+    } else {
+      resultPanel.dataset.state = "needs-review";
+      resultTitle.textContent = "Needs review";
+      resultCopy.textContent = "Complete every required field with a confirmed answer. Installation and rollback must both be Confirmed.";
+      resultInput.value = "NEEDS REVIEW";
+    }
+
+    acceptance.hidden = !ready;
+    terms.required = ready;
+    const accepted = ready && terms.checked;
+    submit.disabled = !configured || !accepted;
+    submitLabel.textContent = ready
+      ? accepted
+        ? "Submit compatible order request"
+        : "Review and accept the order terms"
+      : unsupported
+        ? "This setup is not supported"
+        : "Complete the compatibility check";
+  };
+
+  leadForm?.addEventListener("input", evaluate);
+  leadForm?.addEventListener("change", evaluate);
+  platformSelect?.addEventListener("change", () => {
+    if (adapterConfirmed) adapterConfirmed.checked = false;
+    if (terms) terms.checked = false;
+    evaluate();
+  });
+  evaluate();
+
+  leadForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    evaluate();
+
+    if (!leadForm || !formStatus || !success || !submit || !submitLabel || resultInput?.value !== "READY TO BUILD") return;
+    if (!leadForm.reportValidity()) return;
+
+    const configured = leadForm.dataset.formConfigured === "true";
+    const endpoint = leadForm.getAttribute("action");
+    if (!configured || !endpoint) {
+      formStatus.dataset.state = "error";
+      formStatus.textContent = "Order-request delivery is not configured. Nothing was sent.";
+      return;
+    }
+
+    leadForm.setAttribute("aria-busy", "true");
+    if (submittedAtInput) submittedAtInput.value = new Date().toISOString();
+    submit.disabled = true;
+    submitLabel.textContent = "Sending...";
+    formStatus.dataset.state = "ready";
+    formStatus.textContent = "Sending the compatible order request...";
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: new FormData(leadForm),
+        headers: { Accept: "application/json" },
+      });
+
+      if (!response.ok) throw new Error("Form submission failed");
+
+      leadForm.reset();
+      leadForm.hidden = true;
+      success.hidden = false;
+      success.focus();
+    } catch {
+      formStatus.dataset.state = "error";
+      formStatus.textContent = "That did not send. Check your connection and try again. Your answers are still on this page.";
+      submit.disabled = false;
+      submitLabel.textContent = "Submit compatible order request";
+    } finally {
+      leadForm.removeAttribute("aria-busy");
+    }
+  });
+</script>
+
+<style>
+  .lead-path-price {
+    margin-top: 1.2rem;
+    color: var(--color-paper);
+    font-weight: 700;
+  }
+
+  .lead-path-form-head {
+    grid-column: 1 / -1;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .lead-path-form-head h2 {
+    margin-top: 0.65rem;
+    font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .lead-path-form-head > p:last-child {
+    max-width: 68ch;
+    margin-top: 1rem;
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    line-height: 1.65;
+  }
+
+  .lead-path-result {
+    grid-column: 1 / -1;
+    padding: 1.4rem;
+    border: 1px solid var(--color-rule);
+    background: rgb(5 6 8 / 0.8);
+  }
+
+  .lead-path-result h3 {
+    margin-top: 0.55rem;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    letter-spacing: -0.045em;
+  }
+
+  .lead-path-result > p:last-child {
+    margin-top: 0.75rem;
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .lead-path-result[data-state="ready"] {
+    border-color: var(--color-cobalt);
+    background: rgb(40 81 255 / 0.1);
+  }
+
+  .lead-path-result[data-state="ready"] h3 { color: var(--color-cobalt); }
+
+  .lead-path-result[data-state="not-supported"] {
+    border-color: var(--color-signal);
+    background: rgb(255 96 77 / 0.08);
+  }
+
+  .lead-path-result[data-state="not-supported"] h3 { color: var(--color-signal); }
+
+  .lead-path-adapter {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 1rem;
+    padding: 1.4rem;
+    border: 1px solid var(--color-rule);
+    background: rgb(5 6 8 / 0.8);
+  }
+
+  .lead-path-adapter[hidden] { display: none; }
+
+  .lead-path-adapter ul {
+    display: grid;
+    gap: 0.65rem;
+    padding-left: 1.2rem;
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .lead-path-acceptance {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .lead-path-acceptance[hidden] { display: none; }
+
+  .lead-path-acceptance > p {
+    color: var(--color-paper-dim);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.65;
+  }
+
+  .lead-path-acceptance a {
+    color: var(--color-paper);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  input[type="color"] {
+    padding: 0.55rem;
+    cursor: pointer;
+  }
+</style>
