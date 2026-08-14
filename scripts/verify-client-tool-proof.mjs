@@ -28,6 +28,8 @@ async function sha256(path) {
 
 const sourcePath = resolve(siteRoot, "src/data/clientTools.ts");
 const source = await readFile(sourcePath, "utf8");
+const pilotConfigPath = resolve(siteRoot, "src/data/clientToolPilot.ts");
+const pilotConfigSource = await readFile(pilotConfigPath, "utf8");
 const compiled = ts.transpileModule(source, {
   compilerOptions: {
     module: ts.ModuleKind.ESNext,
@@ -45,6 +47,10 @@ check(clientTools.every((candidate) => candidate.questions.length >= 1 && candid
 
 const tool = clientTools.find((candidate) => candidate.slug === "first-ai-workflow");
 check(Boolean(tool), "First AI Task Finder configuration exists");
+check(
+  /CLIENT_TOOL_PILOT_FORM_ENABLED\s*=\s*false/.test(pilotConfigSource),
+  "founding intake flag remains false",
+);
 
 const resultCounts = Object.fromEntries(tool.resultOrder.map((key) => [key, 0]));
 let total = 0;
@@ -159,29 +165,40 @@ check(await exists(shareImagePath), "client-tool share image exists");
 
 if (await exists(distPilotPath)) {
   const pilotHtml = await readFile(distPilotPath, "utf8");
-  const formTag = pilotHtml.match(/<form[^>]*data-client-tool-pilot-form[^>]*>/)?.[0] ?? "";
   check(pilotHtml.includes('name="robots" content="noindex,nofollow"'), "pilot page is noindex and nofollow");
-  check(formTag.includes('data-form-configured="false"'), "pilot form is fail-closed");
-  check(!/\saction=/.test(formTag), "disabled pilot form has no submission endpoint");
-  check(!pilotHtml.includes("formspree.io/f/"), "disabled pilot page contains no Formspree endpoint");
-  check(/<button\b[^>]*\bclass="pilot-submit"[^>]*\bdisabled\b/.test(pilotHtml), "disabled pilot submit control is rendered disabled");
-  check(pilotHtml.includes("Applications are still closed"), "closed intake status is visible");
-  check(pilotHtml.includes("Applications are not open yet"), "closed intake heading appears before the application fields");
-  check(pilotHtml.indexOf("Applications are not open yet") < pilotHtml.indexOf('id="pilot-url"'), "closed intake heading precedes the first application field");
-  check(pilotHtml.includes("Review the short application"), "closed intake action describes the available next step");
-  for (const id of ["pilot-url", "pilot-question", "pilot-next", "pilot-email", "pilot-authority"]) {
-    check(new RegExp(`<(?:input|textarea)\\b[^>]*\\bid="${id}"[^>]*\\bdisabled\\b`).test(pilotHtml), `closed intake disables ${id}`);
+  check(!pilotHtml.includes("data-client-tool-pilot-form"), "closed pilot renders no application form");
+  check(!/<(?:form|input|textarea|button)\b/i.test(pilotHtml), "closed pilot renders no submission-capable controls");
+  check(!/\saction=|formspree\.io\/f\/|Client Tool Pilot Applied/i.test(pilotHtml), "closed pilot contains no endpoint or submission event");
+
+  const requiredMarkers = ["data-pilot-offer", "data-pilot-closed", "data-pilot-example", "data-pilot-package"];
+  for (const marker of requiredMarkers) {
+    check((pilotHtml.match(new RegExp(marker, "g")) ?? []).length === 1, `pilot renders exactly one ${marker} block`);
   }
-  check(pilotHtml.includes('href="/tools/first-ai-workflow/"'), "finished example is visible before submission");
-  check(pilotHtml.includes("Three complimentary founding builds"), "three-build complimentary limit is visible");
-  check(pilotHtml.includes("There is no charge"), "no-charge boundary is visible");
-  check(pilotHtml.includes("You owe no positive review or public testimonial"), "testimonial is explicitly optional");
-  check(pilotHtml.includes("Which service is right for me?"), "ordinary recurring-question example is visible");
-  check(pilotHtml.includes('href="/privacy/"'), "pilot form links to the privacy notice");
-  check(pilotHtml.includes("When applications open, Formspree will send the four fields above and your required authority and safety confirmation"), "closed pilot privacy copy describes future Formspree use and the full submitted brief");
-  check(pilotHtml.includes("Nothing is submitted while this page says applications are closed"), "closed pilot privacy copy matches the fail-closed form state");
-  check(pilotHtml.includes("never more than eight"), "fixed question limit is visible");
-  check(pilotHtml.includes("straightforward, nonregulated client questions"), "nonregulated pilot boundary is visible");
+  const markerPositions = requiredMarkers.map((marker) => pilotHtml.indexOf(marker));
+  check(markerPositions.every((position) => position >= 0), "pilot clarity blocks all render");
+  check(markerPositions.every((position, index) => index === 0 || position > markerPositions[index - 1]), "pilot clarity blocks render in offer, closed notice, example, package order");
+
+  check((pilotHtml.match(/<h1\b/g) ?? []).length === 1, "pilot page has one primary heading");
+  const ids = [...pilotHtml.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
+  check(new Set(ids).size === ids.length, "pilot page IDs are unique");
+  check(pilotHtml.includes("Applications are closed"), "one closed intake notice is visible");
+  check(pilotHtml.includes("Three complimentary founding builds are planned"), "three-build complimentary limit is visible");
+  check(pilotHtml.includes("No positive review or testimonial is required"), "testimonial is explicitly optional");
+  check(!/\bApply\b|\bSubmit\b|Review the short application/i.test(pilotHtml), "closed pilot presents no application action");
+
+  check(pilotHtml.includes(`href="/tools/${tool.slug}/"`), "working example links to the public proof tool");
+  check(pilotHtml.includes(`src="${tool.ogImage}"`), "working example uses the configured share image");
+  check(pilotHtml.includes(`alt="${tool.ogImageAlt}"`), "working example uses the configured image description");
+  check(/width="1200" height="630"[^>]*loading="eager"[^>]*decoding="async"/.test(pilotHtml), "working example declares exact image dimensions and loading behavior");
+  check(pilotHtml.includes(tool.questions[0].title), "working example shows a real first question");
+  check(pilotHtml.includes(tool.questions[0].options[0].label), "working example shows a real answer option");
+  check(pilotHtml.includes(tool.outcomes.followup.title), "working example shows a real result title");
+  check(pilotHtml.includes(tool.outcomes.followup.summary), "working example shows the matching real result summary");
+  check(pilotHtml.includes("Share image") && pilotHtml.includes("3 posts") && pilotHtml.includes("Email draft") && pilotHtml.includes("Source + QA"), "working example previews the launch package");
+  check(pilotHtml.includes("Interactive guide") && pilotHtml.includes("Launch kit") && pilotHtml.includes("Private handoff"), "what-you-receive band names all three deliverable groups");
+  check(pilotHtml.includes("Straightforward, nonregulated service questions only"), "nonregulated pilot boundary is visible");
+  check(!/Kevin|Lazar|Wellness\s*Rx|wellnessrx|klazar1987/i.test(pilotHtml), "pilot proof contains no prohibited private-client material");
+  check(!/firstaitaskfinder\.com|Full source and answers|What task do you want help with\?/i.test(pilotHtml), "pilot proof contains no fabricated concept copy");
   check(!/prospect question|qualified visitor|Project Fit review/i.test(pilotHtml), "pilot opening and actions avoid internal sales jargon");
 }
 
