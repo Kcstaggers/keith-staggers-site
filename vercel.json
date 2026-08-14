@@ -53,7 +53,7 @@
       ]
     },
     {
-      "source": "/private-preview/:path*",
+      "source": "/private-preview/(.*)",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
         { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" }
