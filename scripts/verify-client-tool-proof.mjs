@@ -30,6 +30,8 @@ const sourcePath = resolve(siteRoot, "src/data/clientTools.ts");
 const source = await readFile(sourcePath, "utf8");
 const pilotConfigPath = resolve(siteRoot, "src/data/clientToolPilot.ts");
 const pilotConfigSource = await readFile(pilotConfigPath, "utf8");
+const pilotPagePath = resolve(siteRoot, "src/pages/client-tool-pilot.astro");
+const pilotPageSource = await readFile(pilotPagePath, "utf8");
 const compiled = ts.transpileModule(source, {
   compilerOptions: {
     module: ts.ModuleKind.ESNext,
@@ -48,9 +50,15 @@ check(clientTools.every((candidate) => candidate.questions.length >= 1 && candid
 const tool = clientTools.find((candidate) => candidate.slug === "first-ai-workflow");
 check(Boolean(tool), "First AI Task Finder configuration exists");
 check(
-  /CLIENT_TOOL_PILOT_FORM_ENABLED\s*=\s*false/.test(pilotConfigSource),
-  "founding intake flag remains false",
+  /CLIENT_TOOL_PILOT_FORM_ENABLED\s*=\s*true/.test(pilotConfigSource),
+  "Gate 2B local candidate enables the founding intake flag",
 );
+check(pilotConfigSource.includes('CLIENT_TOOL_PILOT_SUBJECT = "[KS Client Tool Pilot] {{ email }}"'), "pilot subject marker is frozen in configuration");
+check(pilotConfigSource.includes('CLIENT_TOOL_PILOT_FORM_TYPE = "Interactive Client Tool Pilot"'), "pilot form type is frozen in configuration");
+check(pilotConfigSource.includes('CLIENT_TOOL_PILOT_INQUIRY_MARKER = "ks-client-tool-pilot-v1"'), "pilot body marker is frozen in configuration");
+check(pilotConfigSource.includes('CLIENT_TOOL_PILOT_SOURCE_PAGE = "/client-tool-pilot/"'), "pilot source page is frozen in configuration");
+check(pilotConfigSource.includes('CLIENT_TOOL_PILOT_OFFER_VERSION = "founding-wave1-v1"'), "pilot offer version is frozen in configuration");
+check(pilotConfigSource.includes('CLIENT_TOOL_PILOT_PRODUCTION_HOST = "www.keithstaggers.com"'), "pilot production host is frozen in configuration");
 
 const resultCounts = Object.fromEntries(tool.resultOrder.map((key) => [key, 0]));
 let total = 0;
@@ -166,25 +174,62 @@ check(await exists(shareImagePath), "client-tool share image exists");
 if (await exists(distPilotPath)) {
   const pilotHtml = await readFile(distPilotPath, "utf8");
   check(pilotHtml.includes('name="robots" content="noindex,nofollow"'), "pilot page is noindex and nofollow");
-  check(!pilotHtml.includes("data-client-tool-pilot-form"), "closed pilot renders no application form");
-  check(!/<(?:form|input|textarea|button)\b/i.test(pilotHtml), "closed pilot renders no submission-capable controls");
-  check(!/\saction=|formspree\.io\/f\/|Client Tool Pilot Applied/i.test(pilotHtml), "closed pilot contains no endpoint or submission event");
+  const formMatches = pilotHtml.match(/<form\b[^>]*data-client-tool-pilot-form[^>]*>/gi) ?? [];
+  check(formMatches.length === 1, "enabled pilot renders exactly one application form");
+  check(!pilotHtml.includes("data-pilot-closed"), "enabled pilot renders no closed-intake notice");
+  check(/<form\b[^>]*data-client-tool-pilot-form[^>]*data-form-configured="true"[^>]*data-form-endpoint="https:\/\/formspree\.io\/f\/xwvgnryp"[^>]*data-production-host="www\.keithstaggers\.com"[^>]*accept-charset="UTF-8"/i.test(pilotHtml), "enabled pilot binds the exact endpoint and canonical production host as inert data");
+  check(!/<form\b[^>]*(?:\saction=|\smethod=)/i.test(pilotHtml), "enabled pilot has no native form action or method and fails closed without JavaScript");
+  check(!/Client Tool Pilot Applied/i.test(pilotHtml), "enabled pilot adds no form-specific analytics event");
 
-  const requiredMarkers = ["data-pilot-offer", "data-pilot-closed", "data-pilot-example", "data-pilot-package"];
+  const requiredMarkers = ["data-pilot-offer", "data-pilot-example", "data-pilot-package"];
   for (const marker of requiredMarkers) {
     check((pilotHtml.match(new RegExp(marker, "g")) ?? []).length === 1, `pilot renders exactly one ${marker} block`);
   }
-  const markerPositions = requiredMarkers.map((marker) => pilotHtml.indexOf(marker));
+  const markerPositions = [...requiredMarkers.map((marker) => pilotHtml.indexOf(marker)), pilotHtml.search(/<form\b[^>]*data-client-tool-pilot-form/i)];
   check(markerPositions.every((position) => position >= 0), "pilot clarity blocks all render");
-  check(markerPositions.every((position, index) => index === 0 || position > markerPositions[index - 1]), "pilot clarity blocks render in offer, closed notice, example, package order");
+  check(markerPositions.every((position, index) => index === 0 || position > markerPositions[index - 1]), "pilot blocks render in offer, example, package, intake order");
 
   check((pilotHtml.match(/<h1\b/g) ?? []).length === 1, "pilot page has one primary heading");
   const ids = [...pilotHtml.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   check(new Set(ids).size === ids.length, "pilot page IDs are unique");
-  check(pilotHtml.includes("Applications are closed"), "one closed intake notice is visible");
-  check(pilotHtml.includes("Three complimentary founding builds are planned"), "three-build complimentary limit is visible");
-  check(pilotHtml.includes("No positive review or testimonial is required"), "testimonial is explicitly optional");
-  check(!/\bApply\b|\bSubmit\b|Review the short application/i.test(pilotHtml), "closed pilot presents no application action");
+  check(pilotHtml.includes('href="#pilot-form"'), "open hero has a direct application action");
+  check(pilotHtml.includes("Three complimentary founding builds"), "three-build complimentary limit is visible");
+  check(pilotHtml.includes("There is no charge"), "complimentary price boundary is visible");
+  check(pilotHtml.includes("You owe no positive review or public testimonial"), "testimonial is explicitly optional");
+  check(pilotHtml.includes("Applications are open. Keith reviews each brief before accepting a build."), "application status explains the fit review");
+  check(pilotHtml.includes("Public links only. Do not send medical, legal, financial, employment, confidential, or other sensitive material."), "intake safety boundary is adjacent to the form");
+
+  const fieldNames = [...pilotHtml.matchAll(/<(?:input|textarea)\b[^>]*\bname="([^"]+)"/g)].map((match) => match[1]);
+  const expectedFieldNames = [
+    "subject",
+    "form_type",
+    "inquiry_marker",
+    "source_page",
+    "offer_version",
+    "submission_id",
+    "_gotcha",
+    "public_url",
+    "recurring_question",
+    "next_action_url",
+    "email",
+    "authority_safety_contact_claims_confirmed",
+  ];
+  check(JSON.stringify(fieldNames) === JSON.stringify(expectedFieldNames), "pilot payload contains only the frozen field allowlist in exact order");
+  check(/name="subject" value="\[KS Client Tool Pilot\] \{\{ email \}\}"/.test(pilotHtml), "pilot subject marker includes the submitter email merge field");
+  check(/name="form_type" value="Interactive Client Tool Pilot"/.test(pilotHtml), "pilot form type is exact");
+  check(/name="inquiry_marker" value="ks-client-tool-pilot-v1"/.test(pilotHtml), "pilot body marker is exact");
+  check(/name="source_page" value="\/client-tool-pilot\/"/.test(pilotHtml), "pilot source page marker is exact");
+  check(/name="offer_version" value="founding-wave1-v1"/.test(pilotHtml), "pilot offer version is exact");
+  check(/name="submission_id" value=""[^>]*data-pilot-submission-id[^>]*disabled/.test(pilotHtml), "duplicate-prevention ID starts empty and disabled");
+  check(/name="_gotcha" type="text" tabindex="-1" autocomplete="off"[^>]*hidden[^>]*disabled/.test(pilotHtml), "honeypot is empty-by-default, disabled, and outside keyboard order");
+  check(/name="public_url" type="url"[^>]*autocomplete="url"[^>]*maxlength="500"[^>]*pattern="https:\/\/.\+"[^>]*required[^>]*disabled/.test(pilotHtml), "public source field requires a bounded HTTPS URL and starts fail-closed");
+  check(/name="recurring_question"[^>]*minlength="12"[^>]*maxlength="500"[^>]*required[^>]*disabled/.test(pilotHtml), "recurring question has exact length and fail-closed constraints");
+  check(/name="next_action_url" type="url"[^>]*maxlength="500"[^>]*pattern="https:\/\/.\+"[^>]*required[^>]*disabled/.test(pilotHtml), "next action field requires a bounded HTTPS URL and starts fail-closed");
+  check(/name="email" type="email"[^>]*autocomplete="email"[^>]*maxlength="254"[^>]*required[^>]*disabled/.test(pilotHtml), "email field has exact type, autocomplete, length, and fail-closed constraints");
+  check(/name="authority_safety_contact_claims_confirmed" type="checkbox" value="Confirmed" required[^>]*disabled/.test(pilotHtml), "combined authority, safety, contact, and claim confirmation is explicit, required, and fail-closed");
+  check(/<button\b[^>]*class="pilot-submit"[^>]*type="submit"[^>]*disabled/.test(pilotHtml), "submit control starts disabled until the guarded script is active");
+  check(!/contact_consent|submitted_at|type="file"|type="password"|name="(?:name|phone)"/i.test(pilotHtml), "pilot sends no implied consent, blank timestamp, upload, password, name, or phone field");
+  check(/data-pilot-success tabindex="-1" hidden/.test(pilotHtml), "branded success state starts hidden and can receive programmatic focus");
 
   check(pilotHtml.includes(`href="/tools/${tool.slug}/"`), "working example links to the public proof tool");
   check(pilotHtml.includes(`src="${tool.ogImage}"`), "working example uses the configured share image");
@@ -202,6 +247,25 @@ if (await exists(distPilotPath)) {
   check(!/prospect question|qualified visitor|Project Fit review/i.test(pilotHtml), "pilot opening and actions avoid internal sales jargon");
 }
 
+check(/addEventListener\("submit", async \(event\)/.test(pilotPageSource), "pilot intercepts submit inside the branded page");
+check(/event\.preventDefault\(\)/.test(pilotPageSource), "pilot prevents native Formspree navigation");
+check(/pilotForm\.reportValidity\(\)/.test(pilotPageSource), "pilot runs native validity before submission");
+check(/pilotForm\.getAttribute\("aria-busy"\) === "true"/.test(pilotPageSource), "pilot blocks duplicate submissions while a request is active");
+check(/new URL\(input\.value\)/.test(pilotPageSource) && /parsed\.protocol !== "https:"/.test(pilotPageSource), "pilot validates public HTTPS destinations at runtime");
+check(/pilotQuestion\.value\.trim\(\)\.length >= 12/.test(pilotPageSource), "pilot validates twelve non-space question characters");
+check(/if \(pilotHoneypot\?\.value\) return/.test(pilotPageSource), "pilot does not send a locally detected honeypot submission");
+check(/window\.location\.hostname !== productionHost/.test(pilotPageSource) && /This preview cannot send applications/.test(pilotPageSource), "pilot refuses transport outside the exact production host");
+check(/endpointUrl\.origin !== "https:\/\/formspree\.io"/.test(pilotPageSource) && /endpointUrl\.pathname !== "\/f\/xwvgnryp"/.test(pilotPageSource), "pilot refuses any endpoint other than the frozen Formspree route");
+check(/crypto\.randomUUID\(\)/.test(pilotPageSource) && /`ctf-\$\{crypto\.randomUUID\(\)\}`/.test(pilotPageSource), "pilot creates a random duplicate-prevention ID");
+check(/signature !== pendingSignature/.test(pilotPageSource) && /values\.delete\("submission_id"\)/.test(pilotPageSource), "pilot reuses an ID only for the same logical retry payload");
+check(/fetch\(endpoint, \{[\s\S]*method: "POST"[\s\S]*body: new FormData\(pilotForm\)[\s\S]*Accept: "application\/json"/.test(pilotPageSource), "pilot requests the exact JSON Formspree flow");
+check(/pilotForm\.hidden = true/.test(pilotPageSource) && /pilotSuccess\.focus\(\)/.test(pilotPageSource), "successful submission hides the form and focuses the branded confirmation");
+check(/Your answers are still on this page/.test(pilotPageSource) && /pilotSubmit\.disabled = false/.test(pilotPageSource), "failed submission preserves answers and enables retry");
+check(/failure\.definitive = response\.status >= 400 && response\.status < 500/.test(pilotPageSource), "pilot distinguishes definitive client errors from ambiguous delivery failures");
+check(/pilotEditableControls\.forEach\(\(control\) => \{ control\.disabled = false; \}\)/.test(pilotPageSource), "pilot enables controls only after the guarded submit listener is installed");
+check(!/localStorage|sessionStorage|document\.cookie|indexedDB/i.test(pilotPageSource), "pilot transport stores no application data in browser persistence");
+check(!/\btrack\s*\(/.test(pilotPageSource), "pilot application sends no analytics event");
+
 if (await exists(distToolPath)) {
   const toolHtml = await readFile(distToolPath, "utf8");
   check(toolHtml.includes('name="robots" content="noindex,nofollow"'), "proof tool is noindex and nofollow");
@@ -216,7 +280,10 @@ if (await exists(distToolPath)) {
 if (await exists(distPrivacyPath)) {
   const privacyHtml = await readFile(distPrivacyPath, "utf8");
   check(privacyHtml.includes("complimentary client-tool application"), "privacy notice names the client-tool application");
-  check(privacyHtml.includes("When the complimentary client-tool application opens, it will use Formspree too"), "privacy notice does not imply the closed application is active");
+  check(privacyHtml.includes("The complimentary client-tool application uses Formspree too"), "privacy notice describes the enabled application in current tense");
+  check(privacyHtml.includes("required authority, safety, contact, and claim-approval confirmation"), "privacy notice names the combined confirmation payload");
+  check(privacyHtml.includes("fixed routing labels that identify the application version and source page"), "privacy notice discloses routing metadata");
+  check(privacyHtml.includes("random duplicate-prevention ID generated for the submission attempt"), "privacy notice discloses the duplicate-prevention ID");
   check(privacyHtml.includes("final result category"), "privacy notice names bounded client-tool analytics");
   check(privacyHtml.includes("They use no browser storage"), "privacy notice names the client-tool storage boundary");
   check(privacyHtml.includes("Answers disappear when you reset, reload, or close the page"), "privacy notice explains answer deletion behavior");
