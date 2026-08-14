@@ -5,6 +5,7 @@ const distDir = path.resolve("dist");
 const siteUrl = "https://www.keithstaggers.com";
 const workflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
 const directSessionUrl = "https://cal.com/keith-staggers-rpphlg/one-to-one-ai-working-session";
+const privatePreviewRoutePattern = /^\/private-preview\/PROSPECT-[0-9a-f]{32}\/$/;
 const errors = [];
 
 const fail = (message) => errors.push(message);
@@ -144,8 +145,11 @@ const today = new Date().toISOString().slice(0, 10);
 if (sitemapLastmods.some((value) => !/^\d{4}-\d{2}-\d{2}$/.test(value) || value > today)) {
   fail("sitemap: lastmod values must be valid, non-future ISO dates");
 }
-for (const excludedRoute of ["/finish-loop/thank-you/", "/privacy/"]) {
+for (const excludedRoute of ["/finish-loop/thank-you/", "/privacy/", "/lead-path-kit/", "/lead-path-kit/terms/"]) {
   if (sitemapRoutes.includes(excludedRoute)) fail(`sitemap: ${excludedRoute} must be excluded`);
+}
+if (sitemapRoutes.some((route) => privatePreviewRoutePattern.test(route))) {
+  fail("sitemap: private preview routes must remain excluded");
 }
 if (sitemapRoutes.includes("/ai-workflow-guide.pdf")) fail("sitemap: PDF must remain excluded");
 
@@ -159,6 +163,8 @@ const minimalProofRoutes = new Set([
 const expectedNoindexRoutes = new Set([
   "/finish-loop/thank-you/",
   "/privacy/",
+  "/lead-path-kit/",
+  "/lead-path-kit/terms/",
   ...minimalProofRoutes,
 ]);
 const requiredSchema = new Map([
@@ -182,6 +188,26 @@ for (const page of pages) {
   const { route, html } = page;
   const noindex = /<meta\s+[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html);
   const title = tagContent(html, /<title>([\s\S]*?)<\/title>/i).trim();
+  if (privatePreviewRoutePattern.test(route)) {
+    if (!/<html\s+[^>]*lang=["']en["']/i.test(html)) fail(`${route}: html lang must be en`);
+    if (!title) fail(`${route}: missing title`);
+    if (!noindex) fail(`${route}: expected noindex`);
+    if (!html.includes("Unofficial concept. Not installed on or endorsed by this business.")) {
+      fail(`${route}: exact unofficial-concept disclosure is missing`);
+    }
+    if ((html.match(/<h1\b/gi) ?? []).length !== 1) fail(`${route}: expected one H1`);
+    if ((html.match(/<a\b/gi) ?? []).length !== 2) fail(`${route}: expected exactly two links`);
+    if ((html.match(/<script\b[^>]*src=["']\/_vercel\/insights\/script\.js["'][^>]*><\/script>/gi) ?? []).length !== 1) {
+      fail(`${route}: expected exactly one approved Vercel Analytics loader`);
+    }
+    if ((html.match(/<script\b/gi) ?? []).length !== 1) fail(`${route}: contains an unapproved script`);
+    if (/<(?:form|input|textarea|select|button)\b/iu.test(html)) fail(`${route}: contains an interactive form control`);
+    if (/\son[a-z]+\s*=/iu.test(html)) fail(`${route}: contains an inline event handler`);
+    if (!html.includes('href="https://www.keithstaggers.com/lead-path-kit/?p=PROSPECT-')) {
+      fail(`${route}: fixed compatibility route is missing`);
+    }
+    continue;
+  }
   const description = metaContent(html, "name", "description");
   const canonical = linkHref(html, "canonical");
   const ogTitle = metaContent(html, "property", "og:title");
@@ -314,7 +340,7 @@ for (const page of pages) {
   }
 }
 
-if (pages.some((page) => schemaTypes(page.html, page.route).has("ProfessionalService"))) {
+if (pages.filter((page) => !privatePreviewRoutePattern.test(page.route)).some((page) => schemaTypes(page.html, page.route).has("ProfessionalService"))) {
   fail("schema: deprecated ProfessionalService remains in the release");
 }
 

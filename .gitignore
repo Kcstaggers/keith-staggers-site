@@ -29,3 +29,7 @@ preview-build/
 /output/playwright/
 /tmp/
 /.playwright-cli/
+
+# Generated only during an authorized build from the encrypted preview bundle.
+/public/private-preview/
+/public/private-preview-test-*/

@@ -9,3 +9,11 @@ export const formEndpoint = /^https:\/\/formspree\.io\/f\/[a-z0-9]+$/i.test(FORM
   : "";
 
 export const formConfigured = Boolean(formEndpoint);
+
+// Proof-First stays fail-closed even though the general website inquiry form is live.
+// Change this only with the matching intake-control activation and end-to-end proof.
+export const LEAD_PATH_FORM_ENABLED = false;
+
+export const leadPathFormEndpoint = LEAD_PATH_FORM_ENABLED ? formEndpoint : "";
+
+export const leadPathFormConfigured = Boolean(leadPathFormEndpoint);
