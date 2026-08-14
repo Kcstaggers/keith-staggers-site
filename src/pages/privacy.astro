@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import { clientToolPilotFormConfigured } from "../data/clientToolPilot";
 import { site } from "../data/site";
 
 const privacyUrl = `${site.url}${site.newsletter.privacyPath}`;
@@ -71,8 +70,8 @@ const privacyJsonLd = {
         <p class="privacy-number">03</p>
         <div>
           <h2 id="privacy-inquiries">Inquiries through Formspree</h2>
-          <p>The Project Fit form and the optional Workflow Readiness follow-up use Formspree. {clientToolPilotFormConfigured ? "The complimentary client-tool application uses Formspree too." : "When the complimentary client-tool application opens, it will use Formspree too."} When you intentionally submit an open form, Formspree receives the fields shown in that form and delivers them to Keith's private inbox so he can evaluate and reply to the request.</p>
-          <p>{clientToolPilotFormConfigured ? "The client-tool application sends" : "When open, the client-tool application will send"} the public website or profile URL, recurring client question, next-action URL, email address, and required authority, safety, contact, and claim-approval confirmation. It also sends fixed routing labels that identify the application version and source page, plus a random duplicate-prevention ID generated for the submission attempt. Submitting an inquiry does not add you to the newsletter.</p>
+          <p>The Project Fit form and the optional Workflow Readiness follow-up use Formspree. When the complimentary client-tool application opens, it will use Formspree too. When you intentionally submit an open form, Formspree receives the fields shown in that form and delivers them to Keith's private inbox so he can evaluate and reply to the request.</p>
+          <p>When open, the client-tool application will send the public website or profile URL, recurring client question, next-action URL, email address, and required authority and safety confirmation. Submitting an inquiry does not add you to the newsletter.</p>
         </div>
       </section>
 
