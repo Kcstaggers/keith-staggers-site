@@ -1,12 +1,6 @@
 ---
 import MinimalStudio from "../layouts/MinimalStudio.astro";
 import {
-  CLIENT_TOOL_PILOT_FORM_TYPE,
-  CLIENT_TOOL_PILOT_INQUIRY_MARKER,
-  CLIENT_TOOL_PILOT_OFFER_VERSION,
-  CLIENT_TOOL_PILOT_PRODUCTION_HOST,
-  CLIENT_TOOL_PILOT_SOURCE_PAGE,
-  CLIENT_TOOL_PILOT_SUBJECT,
   clientToolPilotFormConfigured,
   clientToolPilotFormEndpoint,
 } from "../data/clientToolPilot";
@@ -42,15 +36,10 @@ const proofOutcome = proofTool.outcomes.followup;
         <h1 id="pilot-title">I build a short website guide that answers the question your clients keep asking.</h1>
         <p class="pilot-lede">You send your website, the question, and the right next step. I build the questions, tailored results, launch kit, and handoff.</p>
 
-        <div class="pilot-actions">
-          <a class="pilot-primary" href={clientToolPilotFormConfigured ? "#pilot-form" : "/tools/first-ai-workflow/"}>
-            {clientToolPilotFormConfigured ? "Apply for a complimentary build" : "Try the working example"}
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
-          </a>
-          {clientToolPilotFormConfigured && (
-            <a class="pilot-secondary" href="/tools/first-ai-workflow/">Try the working example</a>
-          )}
-        </div>
+        <a class="pilot-primary" href="/tools/first-ai-workflow/">
+          Try the working example
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+        </a>
 
         {!clientToolPilotFormConfigured && (
           <aside class="pilot-closed" data-pilot-closed aria-label="Application status">
@@ -155,20 +144,20 @@ const proofOutcome = proofTool.outcomes.followup;
           class="pilot-form"
           data-client-tool-pilot-form
           data-form-configured="true"
-          data-form-endpoint={clientToolPilotFormEndpoint}
-          data-production-host={CLIENT_TOOL_PILOT_PRODUCTION_HOST}
+          action={clientToolPilotFormEndpoint}
+          method="post"
           accept-charset="UTF-8"
         >
-          <input type="hidden" name="subject" value={CLIENT_TOOL_PILOT_SUBJECT} />
-          <input type="hidden" name="form_type" value={CLIENT_TOOL_PILOT_FORM_TYPE} />
-          <input type="hidden" name="inquiry_marker" value={CLIENT_TOOL_PILOT_INQUIRY_MARKER} />
-          <input type="hidden" name="source_page" value={CLIENT_TOOL_PILOT_SOURCE_PAGE} />
-          <input type="hidden" name="offer_version" value={CLIENT_TOOL_PILOT_OFFER_VERSION} />
-          <input type="hidden" name="submission_id" value="" data-pilot-submission-id disabled />
+          <input type="hidden" name="subject" value="[KS Client Tool Pilot] {{ email }}" />
+          <input type="hidden" name="form_type" value="Interactive Client Tool Pilot" />
+          <input type="hidden" name="inquiry_marker" value="ks-client-tool-pilot-v1" />
+          <input type="hidden" name="source_page" value="/client-tool-pilot/" />
+          <input type="hidden" name="offer_version" value="founding-0.1" />
+          <input type="hidden" name="submitted_at" data-pilot-submitted-at value="" />
 
-          <div class="form-honeypot" aria-hidden="true" hidden>
+          <div class="form-honeypot" aria-hidden="true">
             <label for="pilot-company-name">Leave this field empty</label>
-            <input id="pilot-company-name" name="_gotcha" type="text" tabindex="-1" autocomplete="off" hidden disabled />
+            <input id="pilot-company-name" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
           </div>
 
           <header>
@@ -177,51 +166,43 @@ const proofOutcome = proofTool.outcomes.followup;
             <span>No call, account, upload, or new software. Applying does not guarantee selection.</span>
           </header>
 
-          <p class="pilot-status" data-pilot-status data-state="ready" aria-live="polite">Applications are open. Keith reviews each brief before accepting a build.</p>
-          <p class="pilot-safety" id="pilot-safety-note">Public links only. Do not send medical, legal, financial, employment, confidential, or other sensitive material.</p>
+          <p class="pilot-status" data-pilot-status data-state="ready" aria-live="polite">Applications are open.</p>
 
           <div class="pilot-field">
             <label for="pilot-url">Your website or public profile</label>
-            <input id="pilot-url" name="public_url" type="url" inputmode="url" autocomplete="url" maxlength="500" pattern="https://.+" title="Enter a public https website or profile URL." aria-describedby="pilot-url-hint pilot-safety-note" placeholder="https://" required disabled />
-            <small class="pilot-hint" id="pilot-url-hint">Use a public HTTPS page with no login.</small>
+            <input id="pilot-url" name="public_url" type="url" inputmode="url" autocomplete="url" maxlength="500" placeholder="https://" required />
           </div>
 
           <div class="pilot-field">
             <label for="pilot-question">The question potential clients keep asking</label>
-            <textarea id="pilot-question" name="recurring_question" rows="3" minlength="12" maxlength="500" placeholder="Which service is right for me?" required disabled></textarea>
+            <textarea id="pilot-question" name="recurring_question" rows="3" minlength="12" maxlength="500" placeholder="How do I know if…?" required></textarea>
           </div>
 
           <div class="pilot-field">
             <label for="pilot-next">Where should the right visitor go next?</label>
-            <input id="pilot-next" name="next_action_url" type="url" inputmode="url" maxlength="500" pattern="https://.+" title="Enter a public https booking, service, or contact URL." aria-describedby="pilot-next-hint pilot-safety-note" placeholder="Booking, service, or contact URL" required disabled />
-            <small class="pilot-hint" id="pilot-next-hint">Use the public page an appropriate visitor should open.</small>
+            <input id="pilot-next" name="next_action_url" type="url" inputmode="url" maxlength="500" placeholder="Booking, service, or contact URL" required />
           </div>
 
           <div class="pilot-field">
             <label for="pilot-email">Your email</label>
-            <input id="pilot-email" name="email" type="email" autocomplete="email" maxlength="254" required disabled />
+            <input id="pilot-email" name="email" type="email" autocomplete="email" maxlength="254" required />
           </div>
 
           <label class="pilot-confirm" for="pilot-authority">
-            <input id="pilot-authority" name="authority_safety_contact_claims_confirmed" type="checkbox" value="Confirmed" required disabled />
-            <span>This is a straightforward, nonregulated service question. I am authorized to submit it, it contains no sensitive information, and I consent to a reply about this pilot. I will approve every claim before release. This does not add me to a mailing list.</span>
+            <input id="pilot-authority" name="authority_and_safety_confirmed" type="checkbox" value="Confirmed" required />
+            <span>I am authorized to submit this material, it contains no sensitive information, and I consent to a reply about this pilot. I will approve every claim before release. This does not add me to a mailing list.</span>
           </label>
+          <input type="hidden" name="contact_consent" value="Consented" />
 
           <p class="pilot-no-obligation">There is no charge. You owe no positive review or public testimonial. Candid feedback is expected.</p>
-          <p class="pilot-privacy">Formspree sends the five items shown here, fixed routing labels, and a random duplicate-prevention ID to Keith’s private inbox so he can evaluate and reply. They are not used to add you to a mailing list. <a href="/privacy/">Read the privacy notice.</a></p>
+          <p class="pilot-privacy">Formspree sends the four fields above and your required authority and safety confirmation to Keith’s private inbox so he can evaluate and reply to this pilot. They are not used to add you to a mailing list. <a href="/privacy/">Read the privacy notice.</a></p>
 
-          <button class="pilot-submit" type="submit" disabled>
+          <button class="pilot-submit" type="submit">
             <span data-pilot-submit-label>Apply for a complimentary build</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
           </button>
         </form>
 
-        <section class="pilot-success" data-pilot-success tabindex="-1" hidden aria-labelledby="pilot-success-title">
-          <p>Application received</p>
-          <h2 id="pilot-success-title">Keith has your brief.</h2>
-          <span>He will review the fit and reply by email. Applying does not guarantee selection.</span>
-          <a href="/tools/first-ai-workflow/">Use the working example while you wait</a>
-        </section>
       </section>
     )}
 
@@ -328,11 +309,6 @@ const proofOutcome = proofTool.outcomes.followup;
     text-decoration: none;
     transition: transform 180ms ease, box-shadow 180ms ease;
   }
-
-  .pilot-actions { display: grid; justify-items: start; gap: 0.85rem; }
-  .pilot-secondary { color: #a9b8ff; font-size: 0.82rem; font-weight: 680; text-underline-offset: 0.25rem; }
-  .pilot-secondary:hover,
-  .pilot-secondary:focus-visible { color: #f4f6fb; }
 
   .pilot-primary svg,
   .pilot-submit svg,
@@ -586,8 +562,7 @@ const proofOutcome = proofTool.outcomes.followup;
   .pilot-form h2,
   .pilot-success h2 { margin: 0.4rem 0 0; font-size: clamp(1.7rem, 3vw, 2.4rem); letter-spacing: -0.03em; }
   .pilot-form header > span,
-  .pilot-success > span { margin-top: 0.55rem; display: block; color: #a8abb7; line-height: 1.55; }
-  .pilot-success > p { margin: 0; color: #6e8bff; font-size: 0.76rem; font-weight: 720; letter-spacing: 0.1em; line-height: 1.45; text-transform: uppercase; }
+  .pilot-success p { margin-top: 0.55rem; display: block; color: #a8abb7; line-height: 1.55; }
   .pilot-field { margin-top: 1rem; }
   .pilot-field label { margin-bottom: 0.55rem; display: block; color: #eef0f5; font-size: 0.88rem; font-weight: 590; }
   .pilot-field input,
@@ -602,12 +577,10 @@ const proofOutcome = proofTool.outcomes.followup;
   .pilot-no-obligation { margin: 1rem 0 0; border-left: 2px solid #ff604d; padding-left: 0.75rem; color: #d8dae1; font-size: 0.78rem; line-height: 1.5; }
   .pilot-status { margin: 1rem 0 1.2rem; border-left: 2px solid currentColor; padding-left: 0.75rem; color: #8ca3ff; font-size: 0.82rem; line-height: 1.45; }
   .pilot-status[data-state="error"] { color: #ff8d80; }
-  .pilot-safety { margin: -0.35rem 0 1.2rem; color: #aeb2bd; font-size: 0.76rem; line-height: 1.5; }
-  .pilot-hint { margin-top: 0.45rem; display: block; color: #7f8490; font-size: 0.7rem; line-height: 1.45; }
   .pilot-submit { width: 100%; margin-top: 1.2rem; background: #2851ff; color: white; cursor: pointer; }
   .pilot-privacy { margin: 1rem 0 0; color: #7f8490; font-size: 0.72rem; line-height: 1.5; }
   .pilot-privacy a { color: #a9b8ff; }
-  .pilot-success { padding: 3rem; outline: none; }
+  .pilot-success { padding: 3rem; }
   .pilot-success a { margin-top: 1.5rem; display: inline-block; color: #7590ff; }
 
   .pilot-boundary {
@@ -670,186 +643,3 @@ const proofOutcome = proofTool.outcomes.followup;
     .pilot-submit { transition: none; }
   }
 </style>
-
-<script>
-  const pilotForm = document.querySelector<HTMLFormElement>("[data-client-tool-pilot-form]");
-  const pilotStatus = document.querySelector<HTMLElement>("[data-pilot-status]");
-  const pilotSubmit = pilotForm?.querySelector<HTMLButtonElement>(".pilot-submit");
-  const pilotSubmitLabel = pilotForm?.querySelector<HTMLElement>("[data-pilot-submit-label]");
-  const pilotSuccess = document.querySelector<HTMLElement>("[data-pilot-success]");
-  const pilotUrlFields = Array.from(pilotForm?.querySelectorAll<HTMLInputElement>('input[type="url"]') ?? []);
-  const pilotQuestion = pilotForm?.querySelector<HTMLTextAreaElement>('[name="recurring_question"]');
-  const pilotHoneypot = pilotForm?.querySelector<HTMLInputElement>('[name="_gotcha"]');
-  const pilotSubmissionId = pilotForm?.querySelector<HTMLInputElement>('[name="submission_id"]');
-  const pilotEditableControls = Array.from(
-    pilotForm?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-      'input:not([type="hidden"]), textarea, input[name="_gotcha"]',
-    ) ?? [],
-  );
-  let pendingSignature = "";
-  let pendingSubmissionId = "";
-
-  const isPrivateHost = (hostname: string) => {
-    const normalized = hostname.toLowerCase().replace(/^\[|\]$/g, "");
-    if (
-      normalized === "localhost" ||
-      normalized === "0.0.0.0" ||
-      normalized === "::1" ||
-      normalized.endsWith(".localhost") ||
-      normalized.endsWith(".local") ||
-      normalized.endsWith(".test") ||
-      normalized.endsWith(".invalid") ||
-      normalized.endsWith(".internal") ||
-      normalized.endsWith(".example") ||
-      normalized.includes(":") ||
-      /^\d{1,3}(?:\.\d{1,3}){3}$/.test(normalized)
-    ) return true;
-
-    if (/^10\./.test(normalized) || /^127\./.test(normalized) || /^169\.254\./.test(normalized) || /^192\.168\./.test(normalized)) return true;
-    const private172 = normalized.match(/^172\.(\d{1,3})\./);
-    return Boolean(private172 && Number(private172[1]) >= 16 && Number(private172[1]) <= 31);
-  };
-
-  const validatePublicUrl = (input: HTMLInputElement) => {
-    input.setCustomValidity("");
-    if (!input.value) return;
-
-    try {
-      const parsed = new URL(input.value);
-      if (parsed.protocol !== "https:" || !parsed.hostname || parsed.username || parsed.password || isPrivateHost(parsed.hostname)) {
-        input.setCustomValidity("Enter a public https URL with no login information.");
-      }
-    } catch {
-      input.setCustomValidity("Enter a complete public https URL.");
-    }
-  };
-
-  const validateQuestion = () => {
-    if (!pilotQuestion) return;
-    pilotQuestion.setCustomValidity(
-      pilotQuestion.value.trim().length >= 12
-        ? ""
-        : "Describe the recurring question in at least 12 non-space characters.",
-    );
-  };
-
-  pilotUrlFields.forEach((input) => {
-    input.addEventListener("input", () => validatePublicUrl(input));
-    input.addEventListener("blur", () => validatePublicUrl(input));
-  });
-  pilotQuestion?.addEventListener("input", validateQuestion);
-
-  const makePayloadSignature = () => {
-    if (!pilotForm) return "";
-    const values = new FormData(pilotForm);
-    values.delete("submission_id");
-    values.delete("_gotcha");
-    return JSON.stringify(Array.from(values.entries()));
-  };
-
-  const prepareSubmissionId = () => {
-    if (!pilotSubmissionId || typeof crypto.randomUUID !== "function") return false;
-    const signature = makePayloadSignature();
-    if (!pendingSubmissionId || signature !== pendingSignature) {
-      pendingSignature = signature;
-      pendingSubmissionId = `ctf-${crypto.randomUUID()}`;
-    }
-    pilotSubmissionId.value = pendingSubmissionId;
-    return true;
-  };
-
-  const clearPendingSubmission = () => {
-    pendingSignature = "";
-    pendingSubmissionId = "";
-    if (pilotSubmissionId) pilotSubmissionId.value = "";
-  };
-
-  pilotForm?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    if (pilotForm.getAttribute("aria-busy") === "true") return;
-
-    pilotUrlFields.forEach(validatePublicUrl);
-    validateQuestion();
-
-    if (!pilotForm.reportValidity() || !pilotStatus || !pilotSubmit || !pilotSubmitLabel) return;
-    if (pilotHoneypot?.value) return;
-
-    const configured = pilotForm.dataset.formConfigured === "true";
-    const endpoint = pilotForm.dataset.formEndpoint;
-    const productionHost = pilotForm.dataset.productionHost;
-    if (!configured || !endpoint || !productionHost) {
-      pilotStatus.dataset.state = "error";
-      pilotStatus.textContent = "Application delivery is not configured. Nothing was sent.";
-      return;
-    }
-
-    if (window.location.hostname !== productionHost) {
-      pilotStatus.dataset.state = "error";
-      pilotStatus.textContent = "This preview cannot send applications. Nothing was sent.";
-      return;
-    }
-
-    let endpointUrl: URL;
-    try {
-      endpointUrl = new URL(endpoint);
-    } catch {
-      pilotStatus.dataset.state = "error";
-      pilotStatus.textContent = "Application delivery is not configured. Nothing was sent.";
-      return;
-    }
-    if (endpointUrl.origin !== "https://formspree.io" || endpointUrl.pathname !== "/f/xwvgnryp") {
-      pilotStatus.dataset.state = "error";
-      pilotStatus.textContent = "Application delivery is not configured. Nothing was sent.";
-      return;
-    }
-
-    if (!prepareSubmissionId()) {
-      pilotStatus.dataset.state = "error";
-      pilotStatus.textContent = "This browser cannot create a safe submission ID. Nothing was sent.";
-      return;
-    }
-
-    pilotForm.setAttribute("aria-busy", "true");
-    pilotSubmit.disabled = true;
-    pilotSubmitLabel.textContent = "Sending...";
-    pilotStatus.dataset.state = "ready";
-    pilotStatus.textContent = "Sending your application...";
-
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        body: new FormData(pilotForm),
-        headers: { Accept: "application/json" },
-      });
-
-      if (!response.ok) {
-        const failure = new Error("Form submission failed") as Error & { definitive?: boolean };
-        failure.definitive = response.status >= 400 && response.status < 500;
-        throw failure;
-      }
-
-      pilotForm.reset();
-      clearPendingSubmission();
-      pilotForm.hidden = true;
-      if (pilotSuccess) {
-        pilotSuccess.hidden = false;
-        pilotSuccess.focus();
-      }
-    } catch (error) {
-      if ((error as Error & { definitive?: boolean }).definitive) clearPendingSubmission();
-      pilotStatus.dataset.state = "error";
-      pilotStatus.textContent = "That did not send. Check your connection and try again. Your answers are still on this page.";
-      pilotSubmit.disabled = false;
-      pilotSubmitLabel.textContent = "Apply for a complimentary build";
-    } finally {
-      pilotForm.removeAttribute("aria-busy");
-    }
-  });
-
-  if (pilotForm) {
-    pilotEditableControls.forEach((control) => { control.disabled = false; });
-    if (pilotSubmissionId) pilotSubmissionId.disabled = false;
-    if (pilotSubmit) pilotSubmit.disabled = false;
-  }
-</script>
