@@ -12,6 +12,18 @@ import { workflowTestCases } from "../data/workflow-testing";
 
 export const prerender = true;
 
+const articleHtmlToText = (html: string) =>
+  html
+    .replace(/<h2[^>]*>/g, "\n### ")
+    .replace(/<h3[^>]*>/g, "\n#### ")
+    .replace(/<li[^>]*>/g, "\n- ")
+    .replace(/<t[dh][^>]*>/g, "\n")
+    .replace(/<\/(?:h2|h3|p|li|tr|table|ol|ul|section|div)>/g, "\n")
+    .replace(/<[^>]+>/g, "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
 export const GET: APIRoute = () => {
   const serviceSections = services.flatMap((service) => [
     `## ${service.title}`,
@@ -42,11 +54,13 @@ export const GET: APIRoute = () => {
       "",
       note.summary,
       "",
-      ...note.sections.flatMap((section) => [
-        `### ${section.heading}`,
-        "",
-        ...section.paragraphs.flatMap((paragraph) => [paragraph, ""]),
-      ]),
+      ...(note.articleBodyHtml
+        ? articleHtmlToText(note.articleBodyHtml).flatMap((line) => [line, ""])
+        : note.sections.flatMap((section) => [
+            `### ${section.heading}`,
+            "",
+            ...section.paragraphs.flatMap((paragraph) => [paragraph, ""]),
+          ])),
     ]);
   const bookSections = books.flatMap((book) => {
     const editionLines = book.editions.map((edition) => {

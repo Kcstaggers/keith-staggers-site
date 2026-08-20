@@ -1238,8 +1238,8 @@ for (const phrase of [
   }
 }
 const newsletterExampleRoutes = sitemapRoutes.filter((route) => /^\/notes\/[^/]+\/$/.test(route));
-if (newsletterExampleRoutes.length !== 5) {
-  fail(`newsletter: expected five published Note examples, found ${newsletterExampleRoutes.length}`);
+if (newsletterExampleRoutes.length !== 6) {
+  fail(`newsletter: expected six published Note examples, found ${newsletterExampleRoutes.length}`);
 }
 for (const route of newsletterExampleRoutes) {
   if (!newsletterPage.includes(`href="${route}"`)) {

@@ -25,6 +25,7 @@ export type StudioNote = {
   };
   ctaHeading: string;
   primaryCtaLabel: string;
+  showCallout?: boolean;
   relatedNoteSlugs: string[];
   resources: Array<{
     title: string;
@@ -35,6 +36,7 @@ export type StudioNote = {
     heading: string;
     paragraphs: string[];
   }>;
+  articleBodyHtml?: string;
 };
 
 export const notes: StudioNote[] = [
@@ -472,6 +474,162 @@ export const notes: StudioNote[] = [
         ],
       },
     ],
+  },
+  {
+    status: "published",
+    slug: "practice-the-manual-fallback",
+    number: "07",
+    category: "Using AI at work",
+    title: "Test the manual fallback before it fails",
+    seoTitle: "Test the manual fallback before it fails",
+    excerpt:
+      "Use this five-minute drill to check how your team stops an AI-assisted process, finishes safely, avoids a duplicate action, and resumes with a named owner.",
+    summary:
+      "When an AI-assisted process fails, “do it manually” is not enough. A usable fallback is a short, written path that tells one person when to stop, what to check, how to finish the work safely, what to record, and when the normal process can resume.",
+    answerHeading: "Practice the fallback with every outside action turned off.",
+    keyPoints: [],
+    tags: ["AI workflow fallback", "operational resilience", "manual process"],
+    image: {
+      src: "/media/notes/sn-07-manual-fallback-1200x630.png",
+      alt: "Five-step fallback drill: stop, check whether the outside action already happened, finish through the manual path, record the exception, and resume only after the owner approves.",
+      width: 1200,
+      height: 630,
+    },
+    readingTime: "8 min read",
+    datePublished: "2026-08-18",
+    dateModified: "2026-08-18",
+    related: {
+      title: "Workflow readiness check",
+      href: "/workflow-readiness/",
+    },
+    ctaHeading: "Check one repeated job",
+    primaryCtaLabel: "Use the free workflow readiness check",
+    showCallout: false,
+    relatedNoteSlugs: ["ai-workflow-handoff-run-stop-recover"],
+    resources: [],
+    sections: [],
+    articleBodyHtml: `
+      <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">When an AI-assisted process fails, “do it manually” is not enough. A usable fallback is a short, written path that tells one person when to stop, what to check, how to finish the work safely, what to record, and when the normal process can resume.</p>
+      <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-16">The fastest way to find out whether that path works is to practice it for five minutes with sample information and every outside action turned off.</p>
+
+      <section>
+        <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text mb-4">01</p>
+        <h2 class="serif text-[clamp(30px,3.6vw,46px)] leading-[1.04] tracking-[-0.02em] mb-7">Start with a failure people already recognize</h2>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Imagine a small team uses an AI tool to turn weekly project notes into a follow-up email and action list. The normal process looks simple:</p>
+        <ol class="mb-6 list-decimal space-y-3 pl-6 text-[17px] leading-[1.7] text-paper/90">
+          <li>A manager adds the meeting notes.</li>
+          <li>AI drafts the email and action list.</li>
+          <li>A person checks the facts, owners, and dates.</li>
+          <li>The approved email is sent.</li>
+          <li>The team records that the follow-up went out.</li>
+        </ol>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Now the tool times out after step three.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Did the email send before the screen failed? Is the draft saved? If the manager starts over, will the team receive two messages? Can another person find the latest checked version?</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90">Those questions are the fallback. “Write the email yourself” answers only one of them.</p>
+      </section>
+
+      <section class="mt-16 border-t border-rule/70 pt-12">
+        <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text mb-4">02</p>
+        <h2 class="serif text-[clamp(30px,3.6vw,46px)] leading-[1.04] tracking-[-0.02em] mb-7">A fallback has five jobs</h2>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">A fallback is the safe alternative used when the normal process cannot finish. It should fit on one page and answer five ordinary questions.</p>
+        <div class="mb-8 overflow-x-auto border border-rule">
+          <table class="w-full border-collapse text-left text-[15px] leading-[1.6]">
+            <thead class="bg-panel text-paper">
+              <tr><th class="border-b border-rule px-4 py-3 font-mono text-[10px] uppercase tracking-[0.14em]">Job</th><th class="border-b border-rule px-4 py-3 font-mono text-[10px] uppercase tracking-[0.14em]">Question the operator needs answered</th></tr>
+            </thead>
+            <tbody class="text-paper-dim">
+              <tr><td class="border-b border-rule px-4 py-3 text-paper">Stop</td><td class="border-b border-rule px-4 py-3">What exact failure means I should stop the normal process?</td></tr>
+              <tr><td class="border-b border-rule px-4 py-3 text-paper">Check</td><td class="border-b border-rule px-4 py-3">How do I confirm what already happened?</td></tr>
+              <tr><td class="border-b border-rule px-4 py-3 text-paper">Finish</td><td class="border-b border-rule px-4 py-3">What short manual path completes the essential work?</td></tr>
+              <tr><td class="border-b border-rule px-4 py-3 text-paper">Record</td><td class="border-b border-rule px-4 py-3">Where do I note what happened and what I did?</td></tr>
+              <tr><td class="px-4 py-3 text-paper">Resume</td><td class="px-4 py-3">Who decides the normal process is safe to use again?</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">For the project-email example, the path could be:</p>
+        <ul class="mb-6 list-disc space-y-3 pl-6 text-[17px] leading-[1.7] text-paper/90">
+          <li>Stop after a timeout or missing confirmation. Do not press send again.</li>
+          <li>Check the sent folder, the message record, and the approved draft location.</li>
+          <li>If nothing was sent, copy the checked draft into the ordinary email tool and send it once.</li>
+          <li>Record the time, recipient list, final file, and whether the manual path was used.</li>
+          <li>Let the named process owner decide when the AI-assisted route resumes.</li>
+        </ul>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90">The point is not to create a thick emergency manual. It is to remove the next dangerous guess.</p>
+      </section>
+
+      <section class="mt-16 border-t border-rule/70 pt-12">
+        <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text mb-4">03</p>
+        <h2 class="serif text-[clamp(30px,3.6vw,46px)] leading-[1.04] tracking-[-0.02em] mb-7">Practice with every consequence turned off</h2>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">A consequence is an outside result such as sending an email, updating a customer record, publishing a page, or creating a charge. During the drill, disable those actions. Use sample names, a practice mailbox or unsent draft, and a test record that cannot affect real work.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-10">Then run this five-minute drill.</p>
+
+        <h3 class="mb-5 mt-10 serif text-[26px] leading-tight text-paper">Minute 1: Name the failure</h3>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Tell the operator the AI step is unavailable. Do not explain the workaround yet.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Ask: “What tells you to stop?”</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-8">The answer should point to something visible, such as a timeout, missing confirmation, or failed status. “It looks wrong” is too vague.</p>
+
+        <h3 class="mb-5 mt-10 serif text-[26px] leading-tight text-paper">Minute 2: Check for a partial run</h3>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Create one partial-run case. In the sample, the draft exists, but the operator does not know whether the email was sent.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Ask the operator to check the place that proves the outside action. A spinner or success message is not enough. For email, the proof might be the sent folder and message record. For a published page, it might be the live public URL. For a payment, it would be the payment provider’s completed transaction record.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-8">This check matters because retrying before you know what happened can create a duplicate.</p>
+
+        <h3 class="mb-5 mt-10 serif text-[26px] leading-tight text-paper">Minute 3: Use the manual path</h3>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Have the operator complete only the essential work through the approved ordinary tool.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">In the sample, they open the checked draft in the regular email tool, confirm the recipient list, and stop before the practice email is sent. The drill proves the path without contacting anyone.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-8">If the fallback depends on a password, permission, file, or person the operator cannot access, the fallback is not runnable yet.</p>
+
+        <h3 class="mb-5 mt-10 serif text-[26px] leading-tight text-paper">Minute 4: Record the exception</h3>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Ask the operator to record four facts:</p>
+        <ul class="mb-6 list-disc space-y-3 pl-6 text-[17px] leading-[1.7] text-paper/90">
+          <li>what failed;</li>
+          <li>what evidence they checked;</li>
+          <li>which path they used;</li>
+          <li>what remains unfinished.</li>
+        </ul>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-8">Do not copy private source material into the record. The record should explain the state of the work, not duplicate the sensitive input.</p>
+
+        <h3 class="mb-5 mt-10 serif text-[26px] leading-tight text-paper">Minute 5: Decide how normal work resumes</h3>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">The person doing the fallback should not have to guess when the AI-assisted route is safe again.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90">Name the owner who reviews the failure, confirms the fix, and authorizes the next normal run. If nobody owns that decision, the team will either avoid the process forever or restart it too soon.</p>
+      </section>
+
+      <section class="mt-16 border-t border-rule/70 pt-12">
+        <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text mb-4">04</p>
+        <h2 class="serif text-[clamp(30px,3.6vw,46px)] leading-[1.04] tracking-[-0.02em] mb-7">Test the duplicate case on purpose</h2>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">The most useful fallback test is often not a total outage. It is a partial run where one step may have succeeded.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Use at least two practice cases:</p>
+        <ol class="mb-6 list-decimal space-y-3 pl-6 text-[17px] leading-[1.7] text-paper/90">
+          <li><strong>Nothing happened.</strong> The AI tool failed before creating the draft.</li>
+          <li><strong>Something may have happened.</strong> The draft exists, and the outside action is uncertain.</li>
+        </ol>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">The second case forces the operator to check evidence before retrying. That is what protects customers, coworkers, and the business from duplicate messages, repeated updates, or accidental charges.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90">If the only instruction is “try again,” the process has no real recovery path.</p>
+      </section>
+
+      <section class="mt-16 border-t border-rule/70 pt-12">
+        <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text mb-4">05</p>
+        <h2 class="serif text-[clamp(30px,3.6vw,46px)] leading-[1.04] tracking-[-0.02em] mb-7">What a passing drill looks like</h2>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">The fallback passes when a person who did not design the process can:</p>
+        <ul class="mb-6 list-disc space-y-3 pl-6 text-[17px] leading-[1.7] text-paper/90">
+          <li>recognize the stop signal;</li>
+          <li>find the evidence of what already happened;</li>
+          <li>complete the essential work without the AI step;</li>
+          <li>avoid a duplicate outside action;</li>
+          <li>record the exception without copying restricted information; and</li>
+          <li>name who decides when normal work resumes.</li>
+        </ul>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Any hesitation is useful evidence. Fix the page, permission, label, or ownership gap while the practice run is harmless.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90">A written fallback is still only a claim until somebody else can follow it. This is the same reason an AI workflow is not finished until another person can <a href="/notes/ai-workflow-handoff-run-stop-recover/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">run, stop, and recover it</a>.</p>
+      </section>
+
+      <section class="mt-16 border-t border-rule/70 pt-12">
+        <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-cobalt-text mb-4">06</p>
+        <h2 class="serif text-[clamp(30px,3.6vw,46px)] leading-[1.04] tracking-[-0.02em] mb-7">Check one repeated job</h2>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">Choose one repeated job your team already uses. Ask what happens if the AI step or connected tool is unavailable for ten minutes.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90 mb-6">If the answer depends on memory, one unavailable person, or pressing retry and hoping, the next step is not more automation. Write and practice the short manual path first.</p>
+        <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90"><a href="/workflow-readiness/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">Use the free workflow readiness check</a> to see whether the job has a named owner, approved information, a human decision, and a usable fallback. If the work is ready for outside help, Keith offers <a href="/services/done-for-you/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">done-for-you AI setup for repeated team tasks</a>.</p>
+      </section>
+    `,
   },
 ];
 
