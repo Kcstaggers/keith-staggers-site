@@ -1,9 +1,15 @@
 import { formEndpoint } from "./forms";
 
-// The local product and intake can be built and tested while this stays false.
-// Activate only with the matching intake-control update, end-to-end proof, and
-// explicit release approval.
-export const CLIENT_TOOL_PILOT_FORM_ENABLED = false;
+// Founding pilot intake switch. Keep true only while the three complimentary
+// slots are open. Production changes require Keith's direct release approval.
+export const CLIENT_TOOL_PILOT_FORM_ENABLED = true;
+
+export const CLIENT_TOOL_PILOT_SUBJECT = "[KS Client Tool Pilot] {{ email }}";
+export const CLIENT_TOOL_PILOT_FORM_TYPE = "Interactive Client Tool Pilot";
+export const CLIENT_TOOL_PILOT_INQUIRY_MARKER = "ks-client-tool-pilot-v1";
+export const CLIENT_TOOL_PILOT_SOURCE_PAGE = "/client-tool-pilot/";
+export const CLIENT_TOOL_PILOT_OFFER_VERSION = "founding-wave1-v1";
+export const CLIENT_TOOL_PILOT_PRODUCTION_HOST = "www.keithstaggers.com";
 
 export const clientToolPilotFormEndpoint = CLIENT_TOOL_PILOT_FORM_ENABLED
   ? formEndpoint
