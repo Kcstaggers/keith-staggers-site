@@ -17,7 +17,7 @@ export const GET: APIRoute = () => {
   );
   const noteLines = [...publishedNotes]
     .sort((a, b) => b.datePublished.localeCompare(a.datePublished) || b.number.localeCompare(a.number))
-    .map((note) => `- [${note.title}](${site.url}/notes/${note.slug}/): ${note.summary}`);
+    .map((note) => `- [${note.title}](${site.url}/notes/${note.slug}/): ${note.directAnswer ?? note.summary}`);
   const bookLines = books.map((book) => {
     const editions = book.editions
       .map((edition) => {
@@ -48,7 +48,7 @@ export const GET: APIRoute = () => {
   const body = [
     "# Keith Staggers",
     "",
-    "> Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem in a one-to-one session, and builds practical AI tools for repetitive tasks. He is also a working nurse leader, speaker, author, and retired Baltimore detective.",
+    "> Keith Staggers is an AI trainer and workflow builder, nurse leader, author, and independent R&B/soul artist. He helps leaders and small teams use AI for real work while keeping human judgment at the decision point.",
     "",
     "## Canonical sources",
     "",
@@ -64,6 +64,29 @@ export const GET: APIRoute = () => {
     `- [Privacy notice](${site.url}${site.newsletter.privacyPath}): Plain-language boundaries for Buttondown, Formspree, Cal.com, Stripe, Vercel, browser-local tools, and external stores.`,
     `- [RSS feed](${site.url}/rss.xml): Machine-readable article updates.`,
     `- [Full public text index](${site.url}/llms-full.txt): Current public service descriptions and full article text.`,
+    "",
+    "## Identity and verified entities",
+    "",
+    "Keith Staggers has three current books: Build the Workflow. Keep the Judgment., Nurse the F*ck Up, and Leading with Care. Beyond Burnout: Healing the Healers and No Fear Nursing: The Raw Truth About Surviving Med-Surg are retired titles and should not be counted as current books.",
+    "",
+    `- [LinkedIn](${site.social.linkedin})`,
+    `- [Instagram](${site.social.instagram})`,
+    `- [Facebook](${site.social.facebook})`,
+    `- [Threads](${site.social.threads})`,
+    `- [YouTube](${site.social.youtube})`,
+    `- [Spotify artist](${site.social.spotify})`,
+    `- [Apple Music artist](${site.social.appleMusic})`,
+    `- [Amazon Music artist](${site.social.amazonMusic})`,
+    `- [MusicBrainz artist](${site.social.musicBrainz})`,
+    `- [Deezer artist](${site.social.deezer})`,
+    `- [Qobuz artist](${site.social.qobuz})`,
+    `- [Amazon Author](${site.social.amazonAuthor})`,
+    `- [Goodreads author](${site.social.goodreads})`,
+    `- [Open Library author](${site.social.openLibrary})`,
+    `- [GitHub](${site.social.github})`,
+    "- [First Light on MusicBrainz](https://musicbrainz.org/release/c61ee5dc-87ef-4b82-b4cf-3e0443575cf7)",
+    "- [First Light on Qobuz](https://www.qobuz.com/us-en/album/first-light-keith-staggers/kw8pp8q9rai9p)",
+    "- [First Light on Deezer](https://www.deezer.com/us/album/1006478861)",
     "",
     "## Services",
     "",

@@ -85,6 +85,27 @@ const startingPoints = [
     href: "/notes/the-monday-morning-test/",
   },
 ];
+const hubLaneDefinitions = [
+  {
+    id: "choose",
+    label: "Choose",
+    description: "Decide whether the task belongs in AI, what must stay human, and whether the complete process is worth it.",
+  },
+  {
+    id: "operate",
+    label: "Operate",
+    description: "Test the workflow, hand it to another person, stop safely, and recover without duplicate actions.",
+  },
+  {
+    id: "lead",
+    label: "Lead",
+    description: "Set a clear privacy boundary and help people use approved tools without giving away judgment.",
+  },
+] as const;
+const hubLanes = hubLaneDefinitions.map((lane) => ({
+  ...lane,
+  notes: orderedNotes.filter((note) => note.hub?.topic === lane.id),
+}));
 ---
 
 <Base
@@ -114,6 +135,45 @@ const startingPoints = [
           Plain-English articles about using AI at work, training a team, finishing projects, and changing careers. Each article explains the problem, gives an example, and points to a useful next step.
         </p>
       </header>
+
+      <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="topic-lanes-title">
+        <div class="mb-10 grid gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-8">
+            <p class="studio-kicker">Question-led answer hub</p>
+            <h2 id="topic-lanes-title" class="studio-display mt-4 text-[clamp(36px,5vw,68px)] leading-[0.98]">
+              Choose, operate, and <strong>lead</strong><span class="text-signal">.</span>
+            </h2>
+          </div>
+          <p class="max-w-[520px] text-[16px] leading-[1.7] text-paper-dim lg:col-span-4">
+            Start with the question in front of you. Each answer gives the short version first, then the test, boundary, sources, and next action.
+          </p>
+        </div>
+
+        <div class="grid gap-px bg-rule/70 lg:grid-cols-3">
+          {hubLanes.map((lane, laneIndex) => (
+            <article class="bg-ink p-7 lg:p-8">
+              <p class="font-mono text-[10px] tracking-[0.16em] uppercase text-cobalt-text">
+                {String(laneIndex + 1).padStart(2, "0")} · {lane.label}
+              </p>
+              <p class="mt-4 min-h-[78px] text-[15px] leading-[1.7] text-paper-dim">{lane.description}</p>
+              <ul class="mt-7 divide-y divide-rule border-y border-rule">
+                {lane.notes.map((note) => (
+                  <li>
+                    <a href={`/notes/${note.slug}/`} class="group block py-5">
+                      <span class="block serif text-[22px] leading-[1.25] transition-colors group-hover:text-cobalt-text">
+                        {note.hub?.question}
+                      </span>
+                      <span class="mt-2 block font-mono text-[10px] tracking-[0.1em] uppercase text-paper-faint">
+                        Read the answer →
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="all-notes-title">
         <div class="mb-10 flex items-end justify-between gap-5">

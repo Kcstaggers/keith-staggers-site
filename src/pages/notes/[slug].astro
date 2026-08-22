@@ -141,6 +141,11 @@ const articleJsonLd = {
         <h1 class="serif text-[clamp(46px,7vw,96px)] leading-[0.96] tracking-[-0.04em]">
           {note.title}
         </h1>
+        {note.directAnswer && (
+          <p class="mt-8 max-w-[900px] text-[19px] font-semibold leading-[1.65] text-paper sm:text-[21px]">
+            {note.directAnswer}
+          </p>
+        )}
       </div>
       <div class="lg:col-span-3 lg:self-end">
         <p class="font-mono text-[10px] tracking-[0.16em] uppercase text-paper-faint mb-3">{note.readingTime}</p>
@@ -148,6 +153,7 @@ const articleJsonLd = {
         <p class="mt-3 font-mono text-[10px] leading-[1.7] tracking-[0.1em] uppercase text-paper-faint">
           Published <time datetime={note.datePublished}>{formatDate(note.datePublished)}</time>
           {note.dateModified !== note.datePublished && <><br />Updated <time datetime={note.dateModified}>{formatDate(note.dateModified)}</time></>}
+          {note.lastReviewed && <><br />Reviewed <time datetime={note.lastReviewed}>{formatDate(note.lastReviewed)}</time></>}
         </p>
       </div>
     </header>

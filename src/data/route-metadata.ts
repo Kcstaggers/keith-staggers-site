@@ -1,6 +1,6 @@
 export const fixedRouteLastModified = [
-  { route: "/", lastModified: "2026-08-01" },
-  { route: "/about/", lastModified: "2026-07-31" },
+  { route: "/", lastModified: "2026-08-21" },
+  { route: "/about/", lastModified: "2026-08-21" },
   { route: "/finish-loop/", lastModified: "2026-08-09" },
   { route: "/frontline-nurse-leader/", lastModified: "2026-07-31" },
   { route: "/newsletter/", lastModified: "2026-08-01" },
