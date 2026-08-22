@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this kit, please cite it using the metadata below."
+title: "The Human Approval Gate: A Practical Guide to Keeping a Person at the Decision Point in AI-Assisted Work"
+type: generic
+version: "1.0.0"
+authors:
+  - family-names: Staggers
+    given-names: Keith
+    name-suffix: "MS, RN-BC"
+publisher: Keith Staggers Studio
+date-released: 2026-08-22
+url: "https://www.keithstaggers.com/human-approval-gate/"
+abstract: "A practical guide, worksheet, facilitator plan, and synthetic test set for defining a human approval gate in AI-assisted workflows."
+keywords:
+  - artificial intelligence
+  - human oversight
+  - workflow governance
+  - AI safety
+  - approval gate
+license: CC-BY-4.0

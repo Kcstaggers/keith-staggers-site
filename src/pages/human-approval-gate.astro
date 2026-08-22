@@ -1,0 +1,371 @@
+---
+import Base from "../layouts/Base.astro";
+import { humanApprovalGate as kit } from "../data/human-approval-gate";
+import { site } from "../data/site";
+
+const canonicalUrl = `${site.url}/human-approval-gate/`;
+const assetUrl = (path: string) => `${site.url}${path}`;
+const sourceUrls = [
+  "https://doi.org/10.6028/NIST.AI.100-1",
+  "https://doi.org/10.6028/NIST.AI.600-1",
+  "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/",
+  "https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/",
+];
+const kitJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${canonicalUrl}#page`,
+      name: "Human Approval Gate Kit",
+      description: kit.definition,
+      url: canonicalUrl,
+      dateCreated: kit.dateCreated,
+      datePublished: kit.datePublished,
+      dateModified: kit.dateModified,
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${site.url}/#website` },
+      author: { "@id": `${site.url}/#keith` },
+      about: ["Human oversight", "AI workflow governance", "AI workflow testing"],
+      mainEntity: { "@id": `${canonicalUrl}#kit` },
+    },
+    {
+      "@type": "LearningResource",
+      "@id": `${canonicalUrl}#kit`,
+      name: kit.name,
+      version: kit.version,
+      description: kit.definition,
+      url: canonicalUrl,
+      author: { "@id": `${site.url}/#keith` },
+      creator: { "@id": `${site.url}/#keith` },
+      publisher: { "@id": `${site.url}/#studio` },
+      dateCreated: kit.dateCreated,
+      datePublished: kit.datePublished,
+      dateModified: kit.dateModified,
+      inLanguage: "en-US",
+      learningResourceType: ["Practitioner guide", "Worksheet", "Synthetic test set"],
+      educationalUse: "Define and test a human approval gate in an AI-assisted workflow",
+      isAccessibleForFree: true,
+      license: "https://creativecommons.org/licenses/by/4.0/",
+      isBasedOn: sourceUrls,
+      hasPart: [
+        {
+          "@type": "DigitalDocument",
+          name: "Human Approval Gate Practitioner Guide",
+          encodingFormat: "application/pdf",
+          contentUrl: assetUrl(kit.files.guide),
+        },
+        {
+          "@type": "DigitalDocument",
+          name: "Human Approval Gate Worksheet",
+          encodingFormat: "application/pdf",
+          contentUrl: assetUrl(kit.files.worksheet),
+        },
+        { "@id": `${canonicalUrl}#dataset` },
+      ],
+    },
+    {
+      "@type": "Dataset",
+      "@id": `${canonicalUrl}#dataset`,
+      name: "Human Approval Gate Synthetic Test Cases",
+      description: "Ten synthetic cases for testing normal work, missing ownership, restricted input, unsupported claims, conflicts, reviewer authority, duplicate actions, rejection, outages, and version drift.",
+      creator: { "@id": `${site.url}/#keith` },
+      dateCreated: kit.dateCreated,
+      datePublished: kit.datePublished,
+      dateModified: kit.dateModified,
+      version: kit.version,
+      license: "https://creativecommons.org/licenses/by/4.0/",
+      isAccessibleForFree: true,
+      distribution: [
+        {
+          "@type": "DataDownload",
+          encodingFormat: "text/csv",
+          contentUrl: assetUrl(kit.files.csv),
+        },
+        {
+          "@type": "DataDownload",
+          encodingFormat: "application/json",
+          contentUrl: assetUrl(kit.files.json),
+        },
+      ],
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${site.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Human Approval Gate Kit",
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
+---
+
+<Base
+  title="Human Approval Gate: Free Guide and Worksheet"
+  description="Use the free Human Approval Gate guide, printable worksheet, facilitator notes, and ten synthetic test cases to define who checks AI-assisted work before it acts."
+  ogImage="/media/notes/workflow-handoff.png"
+  ogImageAlt="AI workflow path with human approval, stop, recovery, and ownership checks"
+  ogImageWidth={1200}
+  ogImageHeight={630}
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(kitJsonLd)} />
+  </Fragment>
+
+  <article class="hag-page px-6 pb-24 pt-10 lg:px-12 lg:pb-32 lg:pt-16">
+    <div class="mx-auto max-w-[1280px]">
+      <nav class="mb-12 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-faint" aria-label="Breadcrumb">
+        <a href="/" class="transition-colors hover:text-paper">Home</a>
+        <span class="mx-2 text-rule" aria-hidden="true">/</span>
+        <span class="text-cobalt-text" aria-current="page">Human Approval Gate</span>
+      </nav>
+
+      <header class="grid gap-10 border-b border-rule pb-14 lg:grid-cols-12 lg:items-end lg:pb-20">
+        <div class="lg:col-span-8">
+          <p class="mb-6 font-mono text-[11px] tracking-[0.2em] uppercase text-cobalt-text">Free toolkit · Version {kit.version}</p>
+          <h1 class="studio-display text-[clamp(52px,8vw,108px)] leading-[0.88]">
+            Keep a person at{" "}<br /><strong>the decision point</strong><span class="text-signal">.</span>
+          </h1>
+        </div>
+        <div class="lg:col-span-4">
+          <p class="text-[18px] leading-[1.7] text-paper-dim">{kit.definition}</p>
+          <p class="mt-5 font-mono text-[11px] leading-[1.7] tracking-[0.12em] uppercase text-paper-faint">Free · No email gate · Synthetic examples</p>
+        </div>
+      </header>
+
+      <section class="grid gap-8 border-b border-rule py-12 lg:grid-cols-12" aria-labelledby="download-title">
+        <div class="lg:col-span-4">
+          <h2 id="download-title" class="studio-display text-[clamp(34px,4vw,54px)] leading-[1]">Start with the <strong>two essential downloads</strong><span class="text-signal">.</span></h2>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 lg:col-span-8">
+          <a class="hag-download-card" href={kit.files.guide} download data-human-approval-download="guide-pdf">
+            <span>01</span>
+            <strong>Practitioner guide</strong>
+            <small>9-page PDF with the method, implementation steps, example, limits, and sources.</small>
+            <b>Download PDF</b>
+          </a>
+          <a class="hag-download-card" href={kit.files.worksheet} download data-human-approval-download="worksheet-pdf">
+            <span>02</span>
+            <strong>Printable worksheet</strong>
+            <small>One landscape page for defining the gate and recording the decision.</small>
+            <b>Download PDF</b>
+          </a>
+        </div>
+      </section>
+
+      <section class="border-b border-rule py-14 lg:py-20" aria-labelledby="clear-title">
+        <header class="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-8">
+            <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt-text">The practical method</p>
+            <h2 id="clear-title" class="studio-display mt-5 text-[clamp(44px,6.5vw,86px)] leading-[0.92]">Run the <strong>CLEAR test</strong><span class="text-signal">.</span></h2>
+          </div>
+          <p class="text-[16px] leading-[1.7] text-paper-dim lg:col-span-4">A glance at a polished answer is not a control. CLEAR makes the hold, reviewer, evidence, choices, and recovery visible.</p>
+        </header>
+
+        <ol class="mt-12 grid gap-px bg-rule md:grid-cols-5">
+          {kit.clear.map((item) => (
+            <li class="bg-ink p-6">
+              <span class="studio-display text-[52px] leading-none text-cobalt-text">{item.letter}</span>
+              <h3 class="mt-6 text-[17px] font-semibold text-paper">{item.title}</h3>
+              <p class="mt-3 text-[14px] leading-[1.65] text-paper-dim">{item.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="grid gap-10 border-b border-rule py-14 lg:grid-cols-12 lg:py-20" aria-labelledby="gate-use-title">
+        <div class="lg:col-span-4">
+          <h2 id="gate-use-title" class="studio-display text-[clamp(38px,4.5vw,62px)] leading-[0.98]">Use a gate before AI can <strong>affect real work</strong><span class="text-signal">.</span></h2>
+        </div>
+        <div class="lg:col-span-8">
+          <ul class="grid gap-px bg-rule sm:grid-cols-2">
+            {[
+              "Send or publish outside a private draft space",
+              "Alter a record, schedule, permission, account, or system state",
+              "Affect a person's access, opportunity, care, employment, money, or reputation",
+              "Create a charge or financial commitment",
+              "Handle sensitive information or professional guidance",
+              "Trigger another action that is hard to reverse",
+            ].map((item) => (
+              <li class="bg-panel p-6 text-[15px] leading-[1.65] text-paper-dim"><span class="mr-3 text-cobalt-text">+</span>{item}</li>
+            ))}
+          </ul>
+          <p class="mt-7 text-[15px] leading-[1.75] text-paper-dim">The strength of the gate should match the possible consequence, reversibility, sensitivity of the information, and difficulty of detecting an error.</p>
+        </div>
+      </section>
+
+      <section class="border-b border-rule py-14 lg:py-20" aria-labelledby="tests-title">
+        <header class="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-8">
+            <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-cobalt-text">Open synthetic dataset</p>
+            <h2 id="tests-title" class="studio-display mt-5 text-[clamp(42px,6vw,78px)] leading-[0.94]">Test the gate when <strong>something goes wrong</strong><span class="text-signal">.</span></h2>
+          </div>
+          <p class="text-[15px] leading-[1.7] text-paper-dim lg:col-span-4">The ten cases contain no patient, employee, employer, client, or private operational data.</p>
+        </header>
+
+        <div class="mt-12 overflow-x-auto border border-rule">
+          <table class="w-full min-w-[720px] border-collapse text-left">
+            <thead class="bg-panel font-mono text-[10px] tracking-[0.14em] uppercase text-paper-faint">
+              <tr><th class="p-4">Case</th><th class="p-4">Test</th><th class="p-4">Risk pattern</th></tr>
+            </thead>
+            <tbody class="divide-y divide-rule">
+              {kit.testCases.map(([id, title, pattern]) => (
+                <tr><td class="p-4 font-mono text-[11px] text-cobalt-text">{id}</td><td class="p-4 text-[15px] text-paper">{title}</td><td class="p-4 text-[14px] text-paper-dim">{pattern}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href={kit.files.csv} download class="studio-button studio-button--cobalt" data-human-approval-download="cases-csv">Download CSV</a>
+          <a href={kit.files.json} download class="studio-button studio-button--secondary" data-human-approval-download="cases-json">Download JSON</a>
+          <a href={kit.files.schema} download class="studio-button studio-button--secondary" data-human-approval-download="cases-schema">JSON Schema</a>
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-b border-rule py-14 lg:grid-cols-12 lg:py-20" aria-labelledby="full-kit-title">
+        <div class="lg:col-span-4">
+          <h2 id="full-kit-title" class="studio-display text-[clamp(38px,4.5vw,62px)] leading-[0.98]">Teach it, inspect it, and <strong>cite it</strong><span class="text-signal">.</span></h2>
+        </div>
+        <div class="space-y-8 lg:col-span-8">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <a class="hag-text-link" href={kit.files.facilitator} download>Facilitator notes <span>30-minute session</span></a>
+            <a class="hag-text-link" href={kit.files.guideSource} download>Guide source <span>Markdown</span></a>
+            <a class="hag-text-link" href={kit.files.citation} download>Citation metadata <span>CITATION.cff</span></a>
+            <a class="hag-text-link" href={kit.files.checksums} download>File checksums <span>SHA-256</span></a>
+          </div>
+          <div class="border border-cobalt/70 bg-cobalt/10 p-6 sm:p-8">
+            <p class="font-mono text-[10px] tracking-[0.16em] uppercase text-cobalt-text">Suggested citation</p>
+            <p class="mt-4 text-[16px] leading-[1.75] text-paper">{kit.citation} DOI: pending.</p>
+            <p class="mt-4 text-[14px] leading-[1.7] text-paper-dim">The kit is licensed under <a class="text-cobalt-text underline underline-offset-4" href="https://creativecommons.org/licenses/by/4.0/" rel="external">CC BY 4.0</a> when publicly released. Keep the version and canonical URL with any adaptation.</p>
+          </div>
+          <a href={kit.files.bundle} download class="studio-button studio-button--primary" data-human-approval-download="full-kit">Download the complete kit</a>
+        </div>
+      </section>
+
+      <section class="grid gap-10 border-b border-rule py-14 lg:grid-cols-12 lg:py-20" aria-labelledby="limits-title">
+        <div class="lg:col-span-4">
+          <h2 id="limits-title" class="studio-display text-[clamp(38px,4.5vw,62px)] leading-[0.98]">Know what this kit <strong>does not prove</strong><span class="text-signal">.</span></h2>
+        </div>
+        <div class="space-y-5 text-[16px] leading-[1.75] text-paper-dim lg:col-span-8">
+          <p>The Human Approval Gate and CLEAR test are proposed practical methods. They are not validated research instruments, a standard, a certification, legal advice, clinical guidance, or a guarantee.</p>
+          <p>A worksheet cannot make a prohibited use acceptable or make an unqualified reviewer qualified. Adapt the method to the laws, contracts, privacy rules, security controls, professional duties, records requirements, accessibility needs, and organizational policies that apply.</p>
+          <p><strong class="text-paper">Do not enter patient information, employee records, employer material, client data, passwords, credentials, or confidential information into an unapproved tool.</strong></p>
+        </div>
+      </section>
+
+      <section class="grid gap-10 py-14 lg:grid-cols-12 lg:py-20" aria-labelledby="sources-title">
+        <div class="lg:col-span-4">
+          <h2 id="sources-title" class="studio-display text-[clamp(38px,4.5vw,62px)] leading-[0.98]">Public source <strong>foundation</strong><span class="text-signal">.</span></h2>
+        </div>
+        <div class="lg:col-span-8">
+          <ul class="divide-y divide-rule border-y border-rule">
+            <li class="py-5"><a class="text-cobalt-text underline underline-offset-4" href={sourceUrls[0]} rel="external">NIST Artificial Intelligence Risk Management Framework 1.0</a></li>
+            <li class="py-5"><a class="text-cobalt-text underline underline-offset-4" href={sourceUrls[1]} rel="external">NIST Generative AI Profile</a></li>
+            <li class="py-5"><a class="text-cobalt-text underline underline-offset-4" href={sourceUrls[2]} rel="external">HHS Minimum Necessary Requirement</a></li>
+            <li class="py-5"><a class="text-cobalt-text underline underline-offset-4" href={sourceUrls[3]} rel="external">HHS HIPAA and Cloud Computing</a></li>
+          </ul>
+          <p class="mt-6 text-[14px] leading-[1.7] text-paper-dim">These sources inform the guide's risk, governance, privacy, and oversight principles. NIST and HHS do not endorse this kit or Keith Staggers.</p>
+        </div>
+      </section>
+
+      <section class="grid items-end gap-10 border-t border-rule pt-16 lg:grid-cols-12 lg:pt-24" aria-labelledby="next-title">
+        <div class="lg:col-span-8">
+          <h2 id="next-title" class="studio-display text-[clamp(40px,5.5vw,76px)] leading-[0.96]">Now test the <strong>whole workflow</strong><span class="text-signal">.</span></h2>
+        </div>
+        <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+          <a href="/workflow-testing-template/" class="studio-button studio-button--primary">Use the testing worksheet</a>
+          <a href="/workflow-readiness/" class="studio-button studio-button--secondary">Check task readiness</a>
+          <a href="/notes/ai-workflow-handoff-run-stop-recover/" class="studio-button studio-button--secondary">Read the handoff guide</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .hag-download-card {
+    display: grid;
+    min-height: 18rem;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1rem;
+    border: 1px solid var(--color-rule);
+    background: var(--color-panel);
+    padding: 1.5rem;
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+  }
+
+  .hag-download-card:hover,
+  .hag-download-card:focus-visible {
+    transform: translateY(-3px);
+    border-color: var(--color-cobalt);
+    background: rgb(40 81 255 / 0.1);
+  }
+
+  .hag-download-card > span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    color: var(--color-cobalt-text);
+  }
+
+  .hag-download-card > strong {
+    font-family: var(--font-sans);
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .hag-download-card > small {
+    color: var(--color-paper-dim);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .hag-download-card > b {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-signal);
+  }
+
+  .hag-text-link {
+    display: flex;
+    min-height: 5.5rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.45rem;
+    border: 1px solid var(--color-rule);
+    background: var(--color-panel);
+    padding: 1rem 1.25rem;
+    font-weight: 650;
+    transition: border-color 180ms ease, background 180ms ease;
+  }
+
+  .hag-text-link:hover,
+  .hag-text-link:focus-visible {
+    border-color: var(--color-cobalt);
+    background: rgb(40 81 255 / 0.1);
+  }
+
+  .hag-text-link span {
+    color: var(--color-paper-faint);
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+</style>
