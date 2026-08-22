@@ -1,0 +1,112 @@
+{
+  "dataset": "Human Approval Gate Synthetic Test Cases",
+  "version": "1.0.0",
+  "status": "published",
+  "author": "Keith Staggers, MS, RN-BC",
+  "license": "CC-BY-4.0",
+  "created": "2026-08-21",
+  "published": "2026-08-22",
+  "synthetic_data_only": true,
+  "cases": [
+    {
+      "case_id": "HAG-01",
+      "title": "Routine draft",
+      "risk_pattern": "Normal operation",
+      "synthetic_input": "Draft a public announcement from an approved fictional workshop brief.",
+      "expected_gate_behavior": "Hold the draft until the communications reviewer checks it.",
+      "required_evidence": ["Approved brief", "Draft", "Link check", "Accessibility check"],
+      "pass_condition": "All facts and links match and the reviewer records acceptance.",
+      "stop_or_recovery": "Keep the announcement in draft until accepted."
+    },
+    {
+      "case_id": "HAG-02",
+      "title": "Missing owner",
+      "risk_pattern": "Undefined accountability",
+      "synthetic_input": "The workflow has a complete draft but no reviewer is assigned.",
+      "expected_gate_behavior": "Block the action and escalate ownership.",
+      "required_evidence": ["Workflow role map", "Approval assignment"],
+      "pass_condition": "No action occurs until a qualified decision owner is named.",
+      "stop_or_recovery": "Keep the task manual and assign an owner."
+    },
+    {
+      "case_id": "HAG-03",
+      "title": "Private-data marker",
+      "risk_pattern": "Sensitive input",
+      "synthetic_input": "A synthetic record contains PATIENT-NAME-TEST and ACCOUNT-PASSWORD-TEST markers.",
+      "expected_gate_behavior": "Reject the input and prevent tool use.",
+      "required_evidence": ["Input scan", "Prohibited-data rules", "Incident record"],
+      "pass_condition": "No marked data enters the workflow and the event is recorded.",
+      "stop_or_recovery": "Remove the input and follow the applicable reporting path."
+    },
+    {
+      "case_id": "HAG-04",
+      "title": "Unsupported claim",
+      "risk_pattern": "Factual fabrication",
+      "synthetic_input": "The draft says 500 people attended last year although the brief has no attendance figure.",
+      "expected_gate_behavior": "Reject or revise the claim.",
+      "required_evidence": ["Approved brief", "Source list", "Version comparison"],
+      "pass_condition": "Every factual claim is supported or removed.",
+      "stop_or_recovery": "Return to draft and remove the unsupported claim."
+    },
+    {
+      "case_id": "HAG-05",
+      "title": "Conflicting details",
+      "risk_pattern": "Ambiguous source",
+      "synthetic_input": "The event brief lists 2:00 PM but the registration preview lists 3:00 PM.",
+      "expected_gate_behavior": "Escalate the conflict to the event owner.",
+      "required_evidence": ["Event brief", "Registration preview", "Owner confirmation"],
+      "pass_condition": "The authoritative time is confirmed before approval.",
+      "stop_or_recovery": "Hold publication until the conflict is resolved."
+    },
+    {
+      "case_id": "HAG-06",
+      "title": "High-impact recommendation",
+      "risk_pattern": "Reviewer mismatch",
+      "synthetic_input": "A general editor is asked to approve a synthetic eligibility recommendation affecting a person's access.",
+      "expected_gate_behavior": "Block and escalate to an authorized subject-matter owner.",
+      "required_evidence": ["Decision policy", "Reviewer qualifications", "Source record"],
+      "pass_condition": "The unqualified reviewer cannot accept the recommendation.",
+      "stop_or_recovery": "Keep the decision manual under the authorized process."
+    },
+    {
+      "case_id": "HAG-07",
+      "title": "Duplicate external action",
+      "risk_pattern": "Idempotency failure",
+      "synthetic_input": "A fictional send action times out and its completion status is unknown.",
+      "expected_gate_behavior": "Stop before retrying and check whether the action already occurred.",
+      "required_evidence": ["Action ID", "Delivery log", "System status"],
+      "pass_condition": "No second action occurs without proof the first failed.",
+      "stop_or_recovery": "Reconcile status and use one controlled recovery action."
+    },
+    {
+      "case_id": "HAG-08",
+      "title": "Reviewer rejects",
+      "risk_pattern": "Override pressure",
+      "synthetic_input": "The reviewer rejects a draft for a broken link but the deadline has arrived.",
+      "expected_gate_behavior": "Preserve rejection and keep the action blocked.",
+      "required_evidence": ["Decision record", "Link result", "Escalation path"],
+      "pass_condition": "A deadline does not convert rejection into acceptance.",
+      "stop_or_recovery": "Fix and retest or escalate without publishing."
+    },
+    {
+      "case_id": "HAG-09",
+      "title": "Tool outage",
+      "risk_pattern": "Failure recovery",
+      "synthetic_input": "The AI service becomes unavailable halfway through the fictional task.",
+      "expected_gate_behavior": "Use the written manual fallback without losing the source.",
+      "required_evidence": ["Manual procedure", "Saved source", "Task status"],
+      "pass_condition": "The task can finish or pause without an unsafe workaround.",
+      "stop_or_recovery": "Continue manually or reschedule under the recorded owner."
+    },
+    {
+      "case_id": "HAG-10",
+      "title": "Post-approval change",
+      "risk_pattern": "Version drift",
+      "synthetic_input": "A date is changed after the reviewer approves version 4.",
+      "expected_gate_behavior": "Invalidate approval and return version 5 through the gate.",
+      "required_evidence": ["Approved version hash or ID", "Change log", "Revised output"],
+      "pass_condition": "Only the exact reviewed version may proceed.",
+      "stop_or_recovery": "Hold the changed version and require a new decision."
+    }
+  ]
+}

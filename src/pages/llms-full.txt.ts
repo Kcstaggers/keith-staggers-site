@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { books } from "../data/books";
 import { publishedNotes } from "../data/notes";
 import { finishLoop } from "../data/products";
+import { humanApprovalGate } from "../data/human-approval-gate";
 import { services } from "../data/services";
 import { site } from "../data/site";
 import {
@@ -191,6 +192,28 @@ export const GET: APIRoute = () => {
     "The templates do not make an AI tool safe, legal, or correct by themselves. The person responsible must adapt them to the laws, workplace rules, privacy requirements, account controls, contracts, and professional duties that apply.",
     "",
     ...workflowBookSections,
+    "# Human Approval Gate Kit",
+    "",
+    `Canonical URL: ${site.url}/human-approval-gate/`,
+    "",
+    `Version: ${humanApprovalGate.version}. Updated: ${humanApprovalGate.dateModified}.`,
+    "",
+    humanApprovalGate.definition,
+    "",
+    "The CLEAR test:",
+    ...humanApprovalGate.clear.map((item) => `- ${item.letter}, ${item.title}: ${item.description}`),
+    "",
+    "The free package includes a nine-page practitioner guide, a one-page printable worksheet, facilitator notes, source Markdown, ten synthetic test cases in CSV and JSON, a JSON Schema, citation metadata, a license notice, and SHA-256 checksums.",
+    "",
+    "The method is educational and has not been validated as a research instrument. It is not a standard, certification, legal advice, clinical guidance, or a guarantee. Every example is synthetic. NIST and HHS do not endorse the kit or Keith Staggers.",
+    "",
+    `Practitioner guide: ${site.url}${humanApprovalGate.files.guide}`,
+    `Printable worksheet: ${site.url}${humanApprovalGate.files.worksheet}`,
+    `Synthetic test cases CSV: ${site.url}${humanApprovalGate.files.csv}`,
+    `Synthetic test cases JSON: ${site.url}${humanApprovalGate.files.json}`,
+    `JSON Schema: ${site.url}${humanApprovalGate.files.schema}`,
+    `Citation: ${humanApprovalGate.citation} DOI: pending.`,
+    "",
     "# Free AI process testing worksheet",
     "",
     `Canonical URL: ${site.url}/workflow-testing-template/`,

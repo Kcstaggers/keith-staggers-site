@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { books } from "../data/books";
 import { publishedNotes } from "../data/notes";
 import { finishLoop } from "../data/products";
+import { humanApprovalGate } from "../data/human-approval-gate";
 import { services } from "../data/services";
 import { site } from "../data/site";
 import {
@@ -59,6 +60,7 @@ export const GET: APIRoute = () => {
     `- [The Finish Loop](${site.url}${site.buy.productPath}): A $${finishLoop.price} downloadable toolkit for choosing one project, finishing it, releasing it, and saving a repeatable process.`,
     `- [Practical AI for Frontline Nurse Leaders](${site.url}/frontline-nurse-leader/): A $179 live virtual class on September 16, 2026, from 9:00 AM to 1:15 PM ET.`,
     `- [Build the Workflow companion](${site.url}${workflowBookCompanion.route}): Ten free text templates for organizing AI work, recording important approvals, testing the result, and planning what to do if something fails.`,
+    `- [${humanApprovalGate.name}](${site.url}/human-approval-gate/): A free Version ${humanApprovalGate.version} practitioner guide, printable worksheet, facilitator plan, and ten synthetic test cases for defining a human approval gate before AI-assisted work can act.`,
     `- [Articles and guides](${site.url}/notes/): Practical articles about using AI at work, team training, finishing projects, and career reinvention.`,
     `- [${site.newsletter.name}](${site.url}${site.newsletter.path}): A Buttondown-confirmed newsletter with one practical workflow, one guardrail, and one action. ${site.newsletter.cadence}. The ${publishedNotes.length} public Notes show what Keith writes about before someone joins.`,
     `- [Privacy notice](${site.url}${site.newsletter.privacyPath}): Plain-language boundaries for Buttondown, Formspree, Cal.com, Stripe, Vercel, browser-local tools, and external stores.`,
@@ -99,6 +101,7 @@ export const GET: APIRoute = () => {
     "## Free guides and worksheets for repetitive tasks",
     "",
     `- [10-Example AI Process Testing Worksheet](${site.url}/workflow-testing-template/): A browser worksheet for checking normal work, missing information, mistakes, required stops, duplicate actions, rejected results, and failures. Entries stay in the visitor's browser and can be exported as CSV or printed to PDF.`,
+    `- [Human Approval Gate Kit](${site.url}/human-approval-gate/): Defines the CLEAR test: Consequence held, Listed reviewer, Evidence checked, Allowed outcomes, and Record and recovery. The guide, one-page worksheet, facilitator notes, CSV, JSON, and schema are free without an email gate.`,
     `- [Build the Workflow companion](${site.url}${workflowBookCompanion.route}): Version ${workflowBookCompanion.version}. Ten editable text files that help a person organize, test, and safely run an AI-assisted task.`,
     ...workflowBookLines,
     "",

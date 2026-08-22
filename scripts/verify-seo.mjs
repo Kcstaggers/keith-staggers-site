@@ -274,6 +274,7 @@ const requiredSchema = new Map([
   ["/books/", ["CollectionPage", "ItemList", "BreadcrumbList"]],
   ["/finish-loop/", ["Product", "FAQPage", "BreadcrumbList"]],
   ["/frontline-nurse-leader/", ["Course", "BreadcrumbList"]],
+  ["/human-approval-gate/", ["WebPage", "LearningResource", "Dataset", "BreadcrumbList"]],
   ["/notes/", ["Blog", "ItemList", "BreadcrumbList"]],
   ["/newsletter/", ["WebPage", "ItemList", "BreadcrumbList"]],
   ["/privacy/", ["WebPage", "BreadcrumbList"]],

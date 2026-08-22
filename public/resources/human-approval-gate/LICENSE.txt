@@ -1,0 +1,12 @@
+Human Approval Gate Kit
+Copyright 2026 Keith Staggers
+
+When this package is publicly released by Keith Staggers, it is licensed under the Creative Commons Attribution 4.0 International license.
+
+License: https://creativecommons.org/licenses/by/4.0/
+
+Attribution:
+Human Approval Gate Kit by Keith Staggers, MS, RN-BC, licensed under CC BY 4.0. Cite the version and DOI or canonical URL used.
+
+Third-party source material remains subject to its original terms and is not relicensed by this notice.
+

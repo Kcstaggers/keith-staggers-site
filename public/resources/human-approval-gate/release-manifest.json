@@ -1,0 +1,23 @@
+{
+  "name": "Human Approval Gate Kit",
+  "version": "1.0.0",
+  "canonical_url": "https://www.keithstaggers.com/human-approval-gate/",
+  "author": "Keith Staggers, MS, RN-BC",
+  "prepared": "2026-08-21",
+  "published": "2026-08-22",
+  "license": "CC-BY-4.0",
+  "doi": null,
+  "synthetic_data_only": true,
+  "files": [
+    "human-approval-gate-practitioner-guide-v1.0.pdf",
+    "human-approval-gate-worksheet-v1.0.pdf",
+    "human-approval-gate-practitioner-guide-v1.0.md",
+    "human-approval-gate-facilitator-notes-v1.0.md",
+    "human-approval-gate-test-cases-v1.0.csv",
+    "human-approval-gate-test-cases-v1.0.json",
+    "human-approval-gate-test-cases-v1.0.schema.json",
+    "CITATION.cff",
+    "LICENSE.txt",
+    "SHA256SUMS.txt"
+  ]
+}
