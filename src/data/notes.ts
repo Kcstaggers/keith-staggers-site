@@ -1,3 +1,11 @@
+import readinessArticle from "../content/geo-notes/01-is-this-task-ready-for-ai.md?raw";
+import handoffArticle from "../content/geo-notes/02-how-to-hand-off-an-ai-workflow-safely.md?raw";
+import nurseLeaderPrivacyArticle from "../content/geo-notes/03-what-should-a-nurse-leader-never-put-into-ai.md?raw";
+import workflowTestingArticle from "../content/geo-notes/04-how-to-test-an-ai-workflow.md?raw";
+import humanAuthorityArticle from "../content/geo-notes/05-what-should-never-be-automated-with-ai.md?raw";
+import workflowRoiArticle from "../content/geo-notes/06-how-to-calculate-small-team-ai-roi.md?raw";
+import { renderArticleMarkdown } from "../utils/articleMarkdown";
+
 export type StudioNote = {
   status: "draft" | "published";
   slug: string;
@@ -19,6 +27,12 @@ export type StudioNote = {
   readingTime: string;
   datePublished: string;
   dateModified: string;
+  lastReviewed?: string;
+  directAnswer?: string;
+  hub?: {
+    topic: "choose" | "operate" | "lead";
+    question: string;
+  };
   related: {
     title: string;
     href: string;
@@ -260,34 +274,41 @@ export const notes: StudioNote[] = [
     slug: "ai-workflow-handoff-run-stop-recover",
     number: "04",
     category: "Using AI at work",
-    title: "How to know an AI process is ready for someone else to use.",
-    seoTitle: "How to Hand Off an AI Process to Your Team",
+    title: "How Do You Hand Off an AI Workflow Safely?",
+    seoTitle: "How to Hand Off an AI Workflow Safely",
     excerpt:
-      "A demonstration is not enough. Another person must be able to use the process, know when to stop, return to the manual method, and handle a failure.",
+      "Use Run, Stop, Recover, and Own to hand an AI-assisted process to another person without leaving critical knowledge in the builder's head.",
     summary:
-      "An AI-assisted process is ready for a team only when the person responsible can use it without the builder, recognize a problem, stop safely, finish the task manually, and restore the process.",
-    answerHeading: "Make sure another person can use it and handle a failure.",
+      "Hand off an AI workflow only after the new owner can run it, recognize when to stop, recover without creating duplicate actions, and explain who remains accountable.",
+    directAnswer:
+      "Hand off an AI workflow only after the new owner can run it, recognize when to stop, recover without creating duplicate actions, and explain who remains accountable. Give that person a one-page operating record, then watch them complete a normal case and a failure drill without help from the builder.",
+    answerHeading: "Run. Stop. Recover. Own.",
     keyPoints: [
-      "Write a one-page guide naming the person responsible, the allowed information, a good result, and the required check.",
-      "List clear events that mean the process must stop instead of saying only 'be careful.'",
-      "Keep the manual way to finish the task available beside the AI-assisted version.",
-      "Have the new owner demonstrate that they can use it, stop it, and handle a failure.",
+      "Give the operator one page naming the approved inputs, AI step, human check, output, stop rules, fallback, evidence, and owners.",
+      "Make the operator demonstrate a normal case and a failure case without quiet rescue from the builder.",
+      "Check whether an outside action already happened before any retry.",
+      "Retest after changes to the model, tool, data, integration, reviewer, or consequence.",
     ],
     tags: ["AI workflow handoff", "workflow documentation", "operational resilience"],
+    hub: {
+      topic: "operate",
+      question: "How do you hand off an AI workflow safely?",
+    },
     image: {
       src: "/media/notes/workflow-handoff.png",
       alt: "AI workflow handoff diagram showing run, stop, recover, and own as four required operator capabilities",
       width: 1200,
       height: 630,
     },
-    readingTime: "7 min read",
+    readingTime: "9 min read",
     datePublished: "2026-07-25",
-    dateModified: "2026-07-25",
+    dateModified: "2026-08-21",
+    lastReviewed: "2026-08-20",
     related: {
       title: "Done-for-You AI Setup",
       href: "/services/done-for-you/",
     },
-    ctaHeading: "Make the process usable without Keith standing beside it.",
+    ctaHeading: "Make the workflow usable without the builder standing beside it.",
     primaryCtaLabel: "Tell Keith about your task",
     relatedNoteSlugs: ["the-finishing-problem", "the-monday-morning-test"],
     resources: [
@@ -312,57 +333,8 @@ export const notes: StudioNote[] = [
         context: "Plain-English records of independent AI projects and finished work.",
       },
     ],
-    sections: [
-      {
-        heading: "The real test is whether the next person can use it.",
-        paragraphs: [
-          "A builder can make almost any AI process look ready while standing beside it. The builder already knows which information to use, which button matters, and how to fix a problem. That knowledge may exist only in the builder's head.",
-          "The process is ready only when the person responsible for the task can use it without quiet help from the builder. For someone working alone, that person may be you returning to the process a month later.",
-        ],
-      },
-      {
-        heading: "Write a one-page guide.",
-        paragraphs: [
-          "The guide should name what starts the task, who is responsible, what information is allowed, what AI does, what a person checks, what a good result looks like, and where that result goes.",
-          "Write for the person doing the work. Replace project nicknames with plain actions. Link to the correct source. State where the finished item appears. If someone has to remember an unwritten step, the guide is not complete.",
-        ],
-      },
-      {
-        heading: "Write clear rules for when to stop.",
-        paragraphs: [
-          "Saying 'be careful' is not enough. A missing source, unexpected file, conflicting instruction, failed check, unavailable destination, or unapproved input is a specific event a person can recognize. Each event needs a clear next action.",
-          "Every AI process can fail. The important question is whether the person using it can recognize the failure before using the result. A visible stop is safer than a quiet guess.",
-        ],
-      },
-      {
-        heading: "Keep the manual process available.",
-        paragraphs: [
-          "The backup plan must explain how to finish the task when the AI tool, connection, account, or reviewer is unavailable. The person should know where the source lives, which template to use, what to check, and where to save the result.",
-          "The manual process also provides an honest comparison. If it is faster, clearer, or safer for most cases, the AI-assisted version may not deserve to become the default.",
-        ],
-      },
-      {
-        heading: "Explain what to do after a failure.",
-        paragraphs: [
-          "Starting over can send a duplicate message, overwrite a record, or create two versions of the same result. Begin by checking what already happened and where the first result went.",
-          "Then choose the safe action: continue from a confirmed step, finish the task manually, or close the failed attempt and begin again. Never make a person guess whether the first attempt already changed something outside the tool.",
-        ],
-      },
-      {
-        heading: "Have the new owner demonstrate it.",
-        paragraphs: [
-          "The new owner should share the screen while the builder stays quiet. They complete a normal task, explain the required check, identify a reason to stop, use the manual backup, and explain what they would do after a failure.",
-          "This is more useful than asking whether the instructions make sense. Missing assumptions become visible during use, while there is still time to correct the guide.",
-        ],
-      },
-      {
-        heading: "This website article follows the same rule.",
-        paragraphs: [
-          "This article begins as one approved content record and one image. The website then uses that record to create the article page, article list, homepage link, RSS update, sitemap entry, social preview, and AI-readable text. A person approves the public message. Automation handles the repeated publishing steps.",
-          "A future operator should be able to publish an approved article, recognize a failed check, stop the release, and confirm what reached the public website. If that still requires undocumented knowledge from the builder, the process is not ready.",
-        ],
-      },
-    ],
+    sections: [],
+    articleBodyHtml: renderArticleMarkdown(handoffArticle),
   },
   {
     status: "published",
@@ -630,6 +602,296 @@ export const notes: StudioNote[] = [
         <p class="serif text-[18px] lg:text-[20px] leading-[1.72] text-paper/90"><a href="/workflow-readiness/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">Use the free workflow readiness check</a> to see whether the job has a named owner, approved information, a human decision, and a usable fallback. If the work is ready for outside help, Keith offers <a href="/services/done-for-you/" class="text-cobalt-text underline decoration-rule underline-offset-4 hover:text-paper">done-for-you AI setup for repeated team tasks</a>.</p>
       </section>
     `,
+  },
+  {
+    status: "published",
+    slug: "is-this-task-ready-for-ai",
+    number: "06",
+    category: "Using AI at work",
+    title: "Is This Task Ready for AI? Use This 7-Question Assessment",
+    seoTitle: "Is This Task Ready for AI? 7 Questions",
+    excerpt:
+      "Use seven practical questions to decide whether a work task is ready for a small, supervised AI pilot or should stay manual.",
+    summary:
+      "A task is ready for an AI pilot when the result is clear, the inputs are permitted, a person can verify the output, and the team can stop and finish safely without the tool.",
+    directAnswer:
+      "A task is ready for an AI pilot when the result is clear, the inputs are permitted, a person can verify the output, and the team can stop and finish safely without the tool. If the data permission, human owner, failure boundary, or fallback is unclear, the task is not ready yet.",
+    answerHeading: "Check the result, inputs, owner, human review, stop rule, and fallback.",
+    keyPoints: [
+      "Start with a specific repeated task and an observable finished result.",
+      "Confirm that every input is permitted for the exact tool, account, and purpose.",
+      "Name the person who reviews the evidence and can reject the result.",
+      "Keep a tested manual path and a clear pilot end date.",
+    ],
+    tags: ["AI workflow assessment", "AI readiness", "responsible AI"],
+    hub: {
+      topic: "choose",
+      question: "Is this task ready for AI?",
+    },
+    image: {
+      src: "/og-keith-staggers-v2.png",
+      alt: "Keith Staggers: practical AI training, one-to-one help, and done-for-you solutions.",
+      width: 1200,
+      height: 630,
+    },
+    readingTime: "8 min read",
+    datePublished: "2026-08-21",
+    dateModified: "2026-08-21",
+    lastReviewed: "2026-08-20",
+    related: {
+      title: "Workflow readiness check",
+      href: "/workflow-readiness/",
+    },
+    ctaHeading: "Check one real task before adding another tool.",
+    primaryCtaLabel: "Use the free readiness check",
+    showCallout: false,
+    relatedNoteSlugs: ["what-should-never-be-automated-with-ai", "ai-workflow-handoff-run-stop-recover"],
+    resources: [
+      {
+        title: "Use the seven-question workflow readiness check",
+        href: "/workflow-readiness/",
+        context: "Answer seven plain questions in the browser. No email is required.",
+      },
+      {
+        title: "Use the ten-case workflow testing worksheet",
+        href: "/workflow-testing-template/",
+        context: "Test normal work, missing information, restricted input, failures, and the manual fallback.",
+      },
+    ],
+    sections: [],
+    articleBodyHtml: renderArticleMarkdown(readinessArticle),
+  },
+  {
+    status: "published",
+    slug: "what-should-a-nurse-leader-never-put-into-ai",
+    number: "08",
+    category: "AI for nurse leaders",
+    title: "What Should a Nurse Leader Never Put Into an AI Tool?",
+    seoTitle: "What Nurse Leaders Should Never Put Into AI",
+    excerpt:
+      "A practical privacy boundary for nurse leaders: what not to paste, upload, record, or connect to an unapproved AI tool.",
+    summary:
+      "Never enter patient information, confidential workforce data, credentials, internal records, or other restricted material into an AI tool that is not approved for that information and purpose.",
+    directAnswer:
+      "Never paste, upload, record, or connect patient information, confidential workforce data, credentials, internal records, or other restricted material to an AI tool that your organization has not approved for that information and purpose. Even in an approved system, use only the minimum information permitted, keep required human review, and follow your organization's privacy, security, legal, clinical, and records policies.",
+    answerHeading: "Use the approved tool and minimum permitted information, or stop.",
+    keyPoints: [
+      "Removing a name does not automatically make a real patient or employee story safe to use.",
+      "Approval must cover the exact tool, account, information, and purpose.",
+      "Use synthetic examples, public information, or an approved de-identification process when possible.",
+      "Report an accidental disclosure through the designated organizational channel.",
+    ],
+    tags: ["AI for nurse leaders", "healthcare privacy", "responsible AI"],
+    hub: {
+      topic: "lead",
+      question: "What should a nurse leader never put into an AI tool?",
+    },
+    image: {
+      src: "/og-keith-staggers-v2.png",
+      alt: "Keith Staggers: practical AI training, one-to-one help, and done-for-you solutions.",
+      width: 1200,
+      height: 630,
+    },
+    readingTime: "9 min read",
+    datePublished: "2026-08-21",
+    dateModified: "2026-08-21",
+    lastReviewed: "2026-08-20",
+    related: {
+      title: "Practical AI training",
+      href: "/services/training/",
+    },
+    ctaHeading: "Teach the privacy boundary before teaching the tool.",
+    primaryCtaLabel: "See practical AI training",
+    showCallout: false,
+    relatedNoteSlugs: ["what-should-never-be-automated-with-ai", "the-monday-morning-test"],
+    resources: [
+      {
+        title: "Explore practical AI training",
+        href: "/services/training/",
+        context: "Hands-on team training with safe sample information and a clear human decision point.",
+      },
+      {
+        title: "Read all practical AI articles",
+        href: "/notes/",
+        context: "Question-led guidance for choosing, operating, and leading AI-assisted work.",
+      },
+    ],
+    sections: [],
+    articleBodyHtml: renderArticleMarkdown(nurseLeaderPrivacyArticle),
+  },
+  {
+    status: "published",
+    slug: "how-to-test-an-ai-workflow-before-your-team-uses-it",
+    number: "09",
+    category: "Using AI at work",
+    title: "How Do You Test an AI Workflow Before Your Team Relies on It?",
+    seoTitle: "How to Test an AI Workflow Before Team Use",
+    excerpt:
+      "Run a ten-case test with sample information, defined acceptance criteria, human review, failure cases, and a manual fallback before an AI workflow reaches real work.",
+    summary:
+      "Test an AI workflow against a written baseline and at least ten representative cases, including missing data, conflicting instructions, restricted input, rejected output, partial failure, and the manual fallback.",
+    directAnswer:
+      "Test an AI workflow against a written baseline and at least ten representative cases, including missing data, conflicting instructions, restricted input, a rejected output, a partial failure, and the manual fallback. Use sample information with outside actions disabled, record evidence for every result, and require a named person to make the go, revise, or stop decision.",
+    answerHeading: "Use a baseline, ten representative cases, and a named decision owner.",
+    keyPoints: [
+      "Write pass criteria before seeing the model's output.",
+      "Include normal cases, missing or conflicting inputs, restricted information, rejection, and failure recovery.",
+      "Disable messages, charges, publications, and other outside actions during testing.",
+      "Keep the evidence and let a named person decide whether to go, revise, or stop.",
+    ],
+    tags: ["AI workflow testing", "AI evaluation", "responsible AI"],
+    hub: {
+      topic: "operate",
+      question: "How do you test an AI workflow before your team relies on it?",
+    },
+    image: {
+      src: "/media/notes/sn-07-manual-fallback-1200x630.png",
+      alt: "Five-step fallback drill used as part of an AI workflow test",
+      width: 1200,
+      height: 630,
+    },
+    readingTime: "10 min read",
+    datePublished: "2026-08-21",
+    dateModified: "2026-08-21",
+    lastReviewed: "2026-08-20",
+    related: {
+      title: "10-Example AI Process Testing Worksheet",
+      href: "/workflow-testing-template/",
+    },
+    ctaHeading: "Test the workflow before real work depends on it.",
+    primaryCtaLabel: "Use the testing worksheet",
+    showCallout: false,
+    relatedNoteSlugs: ["ai-workflow-handoff-run-stop-recover", "practice-the-manual-fallback"],
+    resources: [
+      {
+        title: "Use the ten-case workflow testing worksheet",
+        href: "/workflow-testing-template/",
+        context: "Record expected behavior, observed results, evidence, and the final decision in the browser.",
+      },
+      {
+        title: "See if the task is ready for AI",
+        href: "/workflow-readiness/",
+        context: "Check the task definition, data permission, human owner, stop rule, and fallback before testing.",
+      },
+    ],
+    sections: [],
+    articleBodyHtml: renderArticleMarkdown(workflowTestingArticle),
+  },
+  {
+    status: "published",
+    slug: "what-should-never-be-automated-with-ai",
+    number: "10",
+    category: "Using AI at work",
+    title: "What Should Never Be Automated With AI?",
+    seoTitle: "What Should Never Be Automated With AI?",
+    excerpt:
+      "Keep people in control of high-impact decisions, irreversible actions, restricted information, and work that cannot be verified, contested, or safely recovered.",
+    summary:
+      "Never give AI unsupervised final authority over high-impact decisions, restricted-data access, or irreversible actions when a mistake could affect a person's health, safety, rights, employment, money, or ability to appeal.",
+    directAnswer:
+      "Never give AI unsupervised final authority over high-impact decisions, restricted-data access, or irreversible actions when a mistake could affect a person's health, safety, rights, employment, money, or ability to appeal. AI may assist with a bounded step, but a qualified person must control the decision, verify the evidence, stop the process, explain the outcome, and provide a workable path for correction.",
+    answerHeading: "Keep people in control of high-impact, restricted, and irreversible work.",
+    keyPoints: [
+      "Do not give AI final authority over decisions that materially affect a person.",
+      "Do not automate a consequence that cannot be verified, stopped, contested, or recovered safely.",
+      "Keep restricted information inside approved systems and purposes.",
+      "Use AI only for bounded assistance when a qualified person owns the decision.",
+    ],
+    tags: ["human oversight", "responsible AI", "AI automation"],
+    hub: {
+      topic: "choose",
+      question: "What should never be automated with AI?",
+    },
+    image: {
+      src: "/og-keith-staggers-v2.png",
+      alt: "Keith Staggers: practical AI training, one-to-one help, and done-for-you solutions.",
+      width: 1200,
+      height: 630,
+    },
+    readingTime: "9 min read",
+    datePublished: "2026-08-21",
+    dateModified: "2026-08-21",
+    lastReviewed: "2026-08-20",
+    related: {
+      title: "Workflow readiness check",
+      href: "/workflow-readiness/",
+    },
+    ctaHeading: "Name the human decision before automating the step.",
+    primaryCtaLabel: "Use the readiness check",
+    showCallout: false,
+    relatedNoteSlugs: ["is-this-task-ready-for-ai", "what-should-a-nurse-leader-never-put-into-ai"],
+    resources: [
+      {
+        title: "Use the workflow readiness check",
+        href: "/workflow-readiness/",
+        context: "Decide whether a task has a suitable result, approved information, human owner, and safe fallback.",
+      },
+      {
+        title: "Use the ten-case workflow testing worksheet",
+        href: "/workflow-testing-template/",
+        context: "Test rejection, stop, duplicate, failure, and manual-path cases before real use.",
+      },
+    ],
+    sections: [],
+    articleBodyHtml: renderArticleMarkdown(humanAuthorityArticle),
+  },
+  {
+    status: "published",
+    slug: "how-to-calculate-small-team-ai-workflow-roi",
+    number: "11",
+    category: "Using AI at work",
+    title: "How Do You Calculate the ROI of an AI Workflow for a Small Team?",
+    seoTitle: "How to Calculate Small-Team AI Workflow ROI",
+    excerpt:
+      "Compare the full AI-assisted process with a measured baseline, including review, correction, training, maintenance, tool cost, quality, and risk.",
+    summary:
+      "Calculate AI workflow ROI by comparing the complete approved process with the current baseline, then subtracting licenses, setup, review, correction, training, maintenance, monitoring, and expected failure costs from the measurable benefit.",
+    directAnswer:
+      "Calculate AI workflow ROI by comparing the complete approved process with the current baseline, then subtracting licenses, setup, review, correction, training, maintenance, monitoring, and expected failure costs from the measurable benefit. Report time released as capacity, not cash savings, unless the business can show how that capacity reduced cost, increased contribution margin, avoided spending, or created additional completed work.",
+    answerHeading: "Measure the complete process, not only the AI step.",
+    keyPoints: [
+      "Measure the current process before changing it.",
+      "Include review, correction, training, maintenance, monitoring, and expected failure costs.",
+      "Separate time released from actual cash savings or contribution margin.",
+      "Use a bounded pilot and a named go, revise, or stop decision.",
+    ],
+    tags: ["AI ROI", "AI workflow measurement", "small business AI"],
+    hub: {
+      topic: "choose",
+      question: "How do you calculate the ROI of an AI workflow for a small team?",
+    },
+    image: {
+      src: "/og-keith-staggers-v2.png",
+      alt: "Keith Staggers: practical AI training, one-to-one help, and done-for-you solutions.",
+      width: 1200,
+      height: 630,
+    },
+    readingTime: "10 min read",
+    datePublished: "2026-08-21",
+    dateModified: "2026-08-21",
+    lastReviewed: "2026-08-20",
+    related: {
+      title: "One-to-one AI working session",
+      href: "/services/coaching/",
+    },
+    ctaHeading: "Measure one repeated task before buying more software.",
+    primaryCtaLabel: "Work through one task with Keith",
+    showCallout: false,
+    relatedNoteSlugs: ["is-this-task-ready-for-ai", "how-to-test-an-ai-workflow-before-your-team-uses-it"],
+    resources: [
+      {
+        title: "Book a one-to-one AI working session",
+        href: "/services/coaching/",
+        context: "Work through one real task or stuck project in a 60-minute paid session.",
+      },
+      {
+        title: "See if the task is ready for AI",
+        href: "/workflow-readiness/",
+        context: "Confirm the result, owner, permitted information, human check, and fallback before calculating a pilot return.",
+      },
+    ],
+    sections: [],
+    articleBodyHtml: renderArticleMarkdown(workflowRoiArticle),
   },
 ];
 

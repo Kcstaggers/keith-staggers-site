@@ -5,6 +5,107 @@ const distDir = path.resolve("dist");
 const siteUrl = "https://www.keithstaggers.com";
 const workflowPaperbackUrl = "https://www.amazon.com/dp/B0HCCG4CTX";
 const directSessionUrl = "https://cal.com/keith-staggers-rpphlg/one-to-one-ai-working-session";
+const canonicalIdentity =
+  "Keith Staggers is an AI trainer and workflow builder, nurse leader, author, and independent R&B/soul artist. He helps leaders and small teams use AI for real work while keeping human judgment at the decision point.";
+const canonicalIdentityMeta = canonicalIdentity.replaceAll("&", "&amp;");
+const currentBookClassification =
+  "Keith Staggers has three current books: Build the Workflow. Keep the Judgment., Nurse the F*ck Up, and Leading with Care. Beyond Burnout: Healing the Healers and No Fear Nursing: The Raw Truth About Surviving Med-Surg are retired titles and should not be counted as current books.";
+const verifiedPersonSameAs = [
+  "https://www.linkedin.com/in/keithstaggers/",
+  "https://www.instagram.com/sta_ggers/",
+  "https://www.facebook.com/people/Keith-Staggers/61564900019924/",
+  "https://www.threads.com/@sta_ggers",
+  "https://www.youtube.com/@kcstaggers",
+  "https://open.spotify.com/artist/4BAYMh3hDuSfEQHAOoOu0g",
+  "https://music.apple.com/us/artist/keith-staggers/1743790202",
+  "https://music.amazon.com/artists/B0D2YZYWJ8/keith-staggers",
+  "https://musicbrainz.org/artist/72a34e28-f999-438c-be3b-b4b51604eb43",
+  "https://www.deezer.com/us/artist/264192171",
+  "https://www.qobuz.com/us-en/interpreter/keith-staggers/22287121",
+  "https://amazon.com/author/keithstaggers",
+  "https://www.goodreads.com/author/show/45798281.Keith_Staggers",
+  "https://openlibrary.org/authors/OL16535970A/Keith_Staggers",
+  "https://github.com/Kcstaggers",
+];
+const firstLightSameAs = [
+  "https://musicbrainz.org/release/c61ee5dc-87ef-4b82-b4cf-3e0443575cf7",
+  "https://www.qobuz.com/us-en/album/first-light-keith-staggers/kw8pp8q9rai9p",
+  "https://www.deezer.com/us/album/1006478861",
+];
+const geoNoteExpectations = [
+  {
+    route: "/notes/is-this-task-ready-for-ai/",
+    title: "Is This Task Ready for AI? Use This 7-Question Assessment",
+    directAnswer:
+      "A task is ready for an AI pilot when the result is clear, the inputs are permitted, a person can verify the output, and the team can stop and finish safely without the tool. If the data permission, human owner, failure boundary, or fallback is unclear, the task is not ready yet.",
+    sourceLinks: [
+      "https://www.nist.gov/itl/ai-risk-management-framework",
+      "https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final",
+    ],
+    internalLinks: ["/workflow-readiness/", "/workflow-testing-template/"],
+    datePublished: "2026-08-21",
+  },
+  {
+    route: "/notes/ai-workflow-handoff-run-stop-recover/",
+    title: "How Do You Hand Off an AI Workflow Safely?",
+    directAnswer:
+      "Hand off an AI workflow only after the new owner can run it, recognize when to stop, recover without creating duplicate actions, and explain who remains accountable. Give that person a one-page operating record, then watch them complete a normal case and a failure drill without help from the builder.",
+    sourceLinks: [
+      "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+    ],
+    internalLinks: ["/workflow-readiness/", "/workflow-testing-template/"],
+    datePublished: "2026-07-25",
+  },
+  {
+    route: "/notes/what-should-a-nurse-leader-never-put-into-ai/",
+    title: "What Should a Nurse Leader Never Put Into an AI Tool?",
+    directAnswer:
+      "Never paste, upload, record, or connect patient information, confidential workforce data, credentials, internal records, or other restricted material to an AI tool that your organization has not approved for that information and purpose. Even in an approved system, use only the minimum information permitted, keep required human review, and follow your organization's privacy, security, legal, clinical, and records policies.",
+    sourceLinks: [
+      "https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html",
+      "https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html",
+    ],
+    internalLinks: ["/services/training/"],
+    datePublished: "2026-08-21",
+  },
+  {
+    route: "/notes/how-to-test-an-ai-workflow-before-your-team-uses-it/",
+    title: "How Do You Test an AI Workflow Before Your Team Relies on It?",
+    directAnswer:
+      "Test an AI workflow against a written baseline and at least ten representative cases, including missing data, conflicting instructions, restricted input, a rejected output, a partial failure, and the manual fallback. Use sample information with outside actions disabled, record evidence for every result, and require a named person to make the go, revise, or stop decision.",
+    sourceLinks: [
+      "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+    ],
+    internalLinks: ["/workflow-testing-template/", "/workflow-readiness/"],
+    datePublished: "2026-08-21",
+  },
+  {
+    route: "/notes/what-should-never-be-automated-with-ai/",
+    title: "What Should Never Be Automated With AI?",
+    directAnswer:
+      "Never give AI unsupervised final authority over high-impact decisions, restricted-data access, or irreversible actions when a mistake could affect a person's health, safety, rights, employment, money, or ability to appeal. AI may assist with a bounded step, but a qualified person must control the decision, verify the evidence, stop the process, explain the outcome, and provide a workable path for correction.",
+    sourceLinks: [
+      "https://www.nist.gov/itl/ai-risk-management-framework",
+      "https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html",
+    ],
+    internalLinks: ["/workflow-readiness/", "/workflow-testing-template/"],
+    datePublished: "2026-08-21",
+  },
+  {
+    route: "/notes/how-to-calculate-small-team-ai-workflow-roi/",
+    title: "How Do You Calculate the ROI of an AI Workflow for a Small Team?",
+    directAnswer:
+      "Calculate AI workflow ROI by comparing the complete approved process with the current baseline, then subtracting licenses, setup, review, correction, training, maintenance, monitoring, and expected failure costs from the measurable benefit. Report time released as capacity, not cash savings, unless the business can show how that capacity reduced cost, increased contribution margin, avoided spending, or created additional completed work.",
+    sourceLinks: [
+      "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+    ],
+    internalLinks: ["/workflow-readiness/", "/services/coaching/"],
+    datePublished: "2026-08-21",
+  },
+];
 const privatePreviewRoutePattern = /^\/private-preview\/PROSPECT-[0-9a-f]{32}\/$/;
 const errors = [];
 
@@ -251,11 +352,15 @@ for (const page of pages) {
   if (!noindex) {
     indexableRoutes.push(route);
     if (title.length > 65) fail(`${route}: title is ${title.length} characters`);
-    if (description.length < 80 || description.length > 165) {
+    const usesCanonicalIdentityDescription =
+      (route === "/" || route === "/about/") && description === canonicalIdentityMeta;
+    if (description.length < 80 || (!usesCanonicalIdentityDescription && description.length > 165)) {
       fail(`${route}: description is ${description.length} characters`);
     }
     if (titles.has(title)) fail(`${route}: duplicate title also used by ${titles.get(title)}`);
-    if (descriptions.has(description)) fail(`${route}: duplicate description also used by ${descriptions.get(description)}`);
+    if (descriptions.has(description) && description !== canonicalIdentityMeta) {
+      fail(`${route}: duplicate description also used by ${descriptions.get(description)}`);
+    }
     titles.set(title, route);
     descriptions.set(description, route);
   }
@@ -415,7 +520,7 @@ const plainLanguageContracts = new Map([
       "At most two emails per month",
       "Buttondown will email you a confirmation link",
       "You are not subscribed unless you use that link",
-      "Five public examples",
+      "11 public examples",
       "The free tools stay free whether you subscribe or not",
     ],
   ],
@@ -576,16 +681,9 @@ if (serviceChoicePosition < 0 || methodPosition < 0 || serviceChoicePosition > m
   fail("homepage: clear service choices must appear before the method section");
 }
 
-const homepageDescription = metaContent(homepage, "name", "description").toLowerCase();
-for (const phrase of [
-  "leaders and small teams",
-  "builds solutions for repetitive tasks",
-  "works one-to-one",
-  "trains teams",
-]) {
-  if (!homepageDescription.includes(phrase)) {
-    fail(`homepage: metadata does not explain the offer in plain language (${phrase})`);
-  }
+const homepageDescription = metaContent(homepage, "name", "description");
+if (homepageDescription !== canonicalIdentityMeta) {
+  fail("homepage: metadata must use the canonical identity statement");
 }
 if (
   metaContent(homepage, "name", "google-site-verification") !==
@@ -606,6 +704,63 @@ if (!homepage.includes('rel="alternate" type="application/rss+xml"')) {
 }
 if (!homepage.includes(`"@id":"${siteUrl}/#keith","name":"Keith Staggers","url":"${siteUrl}/about/"`)) {
   fail("homepage: Person schema must use the About page as its identity URL");
+}
+const homepageGraphNodes = schemaGraphNodes(homepage);
+const personSchema = homepageGraphNodes.find(
+  (node) => node?.["@id"] === `${siteUrl}/#keith` && hasSchemaType(node, "Person")
+);
+if (!personSchema) {
+  fail("homepage: canonical Person schema is missing");
+} else {
+  const expectedJobTitles = [
+    "AI Trainer and Workflow Builder",
+    "Nurse Leader",
+    "Author",
+    "Independent R&B/Soul Artist",
+  ];
+  const actualJobTitles = Array.isArray(personSchema.jobTitle)
+    ? personSchema.jobTitle
+    : [personSchema.jobTitle].filter(Boolean);
+  if (
+    actualJobTitles.length !== expectedJobTitles.length ||
+    expectedJobTitles.some((title) => !actualJobTitles.includes(title))
+  ) {
+    fail("homepage: Person schema must include the four canonical public roles");
+  }
+  if (personSchema.description !== canonicalIdentity) {
+    fail("homepage: Person schema description must use the canonical identity statement");
+  }
+  const actualSameAs = Array.isArray(personSchema.sameAs)
+    ? personSchema.sameAs
+    : [personSchema.sameAs].filter(Boolean);
+  for (const url of verifiedPersonSameAs) {
+    if (!actualSameAs.includes(url)) fail(`homepage: Person sameAs is missing ${url}`);
+  }
+  for (const releaseUrl of firstLightSameAs) {
+    if (actualSameAs.includes(releaseUrl)) {
+      fail(`homepage: album release URL is misapplied to Person sameAs ${releaseUrl}`);
+    }
+  }
+}
+const firstLightSchema = homepageGraphNodes.find(
+  (node) => node?.["@id"] === `${siteUrl}/#first-light` && hasSchemaType(node, "MusicAlbum")
+);
+if (!firstLightSchema) {
+  fail("homepage: First Light MusicAlbum schema is missing");
+} else {
+  const actualAlbumSameAs = Array.isArray(firstLightSchema.sameAs)
+    ? firstLightSchema.sameAs
+    : [firstLightSchema.sameAs].filter(Boolean);
+  for (const url of firstLightSameAs) {
+    if (!actualAlbumSameAs.includes(url)) fail(`homepage: First Light sameAs is missing ${url}`);
+  }
+  if (
+    firstLightSchema.recordLabel?.name !== "BrokenTriangle" ||
+    firstLightSchema.recordLabel?.sameAs !==
+      "https://musicbrainz.org/label/f8b148fd-9f88-44a7-b977-a94234c4e891"
+  ) {
+    fail("homepage: First Light record label is missing the verified BrokenTriangle entity");
+  }
 }
 if (homepage.includes(`"@id":"${siteUrl}/#studio","name":"Keith Staggers Studio","alternateName":"Keith Staggers"`)) {
   fail("homepage: Person and Studio identities must not be conflated");
@@ -677,8 +832,10 @@ for (const page of pages.filter((candidate) => /charter\s*rn/i.test(visibleText(
 if (/mailto:|kcstaggers@gmail\.com/i.test(allPublicHtml)) {
   fail("release: public personal email path is present");
 }
-if (/Beyond Burnout|No Fear Nursing/i.test(allPublicHtml)) {
-  fail("books: retired test or alternate-title records must not appear in the public site");
+for (const page of pages.filter((candidate) => /Beyond Burnout|No Fear Nursing/i.test(visibleText(candidate.html)))) {
+  if (page.route !== "/about/") {
+    fail(`${page.route}: retired book titles may appear only in the exact About classification`);
+  }
 }
 if (/\b2 primary books\b|two primary works|Keith has written two healthcare books/i.test(allPublicHtml)) {
   fail("books: stale two-book public count remains");
@@ -688,6 +845,98 @@ if (/Companion to Keith(?:'|&#39;)s next book|does not yet have a verified publi
 }
 if (/Amazon page (?:still )?propagating/i.test(visibleText(allPublicHtml))) {
   fail("books: stale United States paperback propagation language remains");
+}
+
+const aboutPage = pages.find((page) => page.route === "/about/")?.html ?? "";
+const aboutText = visibleTextByRoute.get("/about/") ?? "";
+if (metaContent(aboutPage, "name", "description") !== canonicalIdentityMeta) {
+  fail("/about/: metadata must use the canonical identity statement");
+}
+const profilePageSchema = schemaGraphNodes(aboutPage).find((node) => hasSchemaType(node, "ProfilePage"));
+if (profilePageSchema?.description !== canonicalIdentity) {
+  fail("/about/: ProfilePage schema description must use the canonical identity statement");
+}
+for (const answerBlock of [
+  ["Who is Keith Staggers?", canonicalIdentity],
+  [
+    "What is Keith Staggers known for?",
+    "Keith Staggers is known for practical, human-centered AI workflow systems, nurse leadership, three current books, and independent R&B/soul music. His work focuses on privacy, verification, safe stopping conditions, accountable ownership, and keeping people responsible for final decisions.",
+  ],
+  ["What books has Keith Staggers written?", currentBookClassification],
+  [
+    "Who is the R&B/soul artist Keith Staggers?",
+    "Keith Staggers is a Baltimore-rooted independent R&B/soul artist based in Tampa, Florida. His music explores faith, survival, family, accountability, second chances, and reinvention, including the 2026 album First Light on BrokenTriangle.",
+  ],
+]) {
+  const [question, answer] = answerBlock;
+  const questionPosition = aboutText.indexOf(question);
+  const answerPosition = aboutText.indexOf(answer);
+  if (questionPosition < 0 || answerPosition < questionPosition) {
+    fail(`/about/: exact entity answer is missing or misplaced for ${question}`);
+  }
+}
+for (const albumUrl of firstLightSameAs) {
+  if (!aboutPage.includes(`href="${albumUrl}"`)) {
+    fail(`/about/: visible First Light source link is missing ${albumUrl}`);
+  }
+}
+
+const notesHubPage = pages.find((page) => page.route === "/notes/")?.html ?? "";
+const notesHubText = visibleTextByRoute.get("/notes/") ?? "";
+for (const lane of ["Choose", "Operate", "Lead"]) {
+  if (!notesHubText.includes(lane)) fail(`/notes/: ${lane} topic lane is missing`);
+}
+for (const expected of geoNoteExpectations) {
+  const question = expected.route === "/notes/ai-workflow-handoff-run-stop-recover/"
+    ? "How do you hand off an AI workflow safely?"
+    : expected.title
+        .replace(" Use This 7-Question Assessment", "")
+        .replace("How Do You Test an AI Workflow Before Your Team Relies on It?", "How do you test an AI workflow before your team relies on it?")
+        .replace("What Should a Nurse Leader Never Put Into an AI Tool?", "What should a nurse leader never put into an AI tool?")
+        .replace("What Should Never Be Automated With AI?", "What should never be automated with AI?")
+        .replace("How Do You Calculate the ROI of an AI Workflow for a Small Team?", "How do you calculate the ROI of an AI workflow for a small team?");
+  if (!notesHubText.toLowerCase().includes(question.toLowerCase()) || !notesHubPage.includes(`href="${expected.route}"`)) {
+    fail(`/notes/: question-led link is missing for ${expected.route}`);
+  }
+
+  const page = pages.find((candidate) => candidate.route === expected.route);
+  if (!page) {
+    fail(`${expected.route}: GEO article route is missing`);
+    continue;
+  }
+  const pageText = visibleText(page.html);
+  const titlePosition = pageText.indexOf(expected.title);
+  const answerPosition = pageText.indexOf(expected.directAnswer);
+  const briefPosition = pageText.indexOf("In brief");
+  if (
+    titlePosition < 0 ||
+    answerPosition <= titlePosition ||
+    (briefPosition >= 0 && answerPosition > briefPosition)
+  ) {
+    fail(`${expected.route}: exact two-sentence direct answer must appear under the title`);
+  }
+  if (!pageText.includes("Reviewed August 20, 2026")) {
+    fail(`${expected.route}: reviewed date is missing`);
+  }
+  for (const sourceLink of expected.sourceLinks) {
+    if (!page.html.includes(`href="${sourceLink}"`)) {
+      fail(`${expected.route}: primary-source citation is missing ${sourceLink}`);
+    }
+  }
+  for (const internalLink of expected.internalLinks) {
+    if (!page.html.includes(`href="${internalLink}"`)) {
+      fail(`${expected.route}: required internal next step is missing ${internalLink}`);
+    }
+  }
+  const articleSchema = schemaGraphNodes(page.html).find((node) => hasSchemaType(node, "BlogPosting"));
+  if (
+    !articleSchema ||
+    articleSchema.datePublished !== expected.datePublished ||
+    articleSchema.dateModified !== "2026-08-21" ||
+    articleSchema.author?.["@id"] !== `${siteUrl}/#keith`
+  ) {
+    fail(`${expected.route}: article schema dates or canonical author are incorrect`);
+  }
 }
 
 const bookExpectations = [
@@ -1238,8 +1487,8 @@ for (const phrase of [
   }
 }
 const newsletterExampleRoutes = sitemapRoutes.filter((route) => /^\/notes\/[^/]+\/$/.test(route));
-if (newsletterExampleRoutes.length !== 6) {
-  fail(`newsletter: expected six published Note examples, found ${newsletterExampleRoutes.length}`);
+if (newsletterExampleRoutes.length !== 11) {
+  fail(`newsletter: expected eleven published Note examples, found ${newsletterExampleRoutes.length}`);
 }
 for (const route of newsletterExampleRoutes) {
   if (!newsletterPage.includes(`href="${route}"`)) {
@@ -1362,9 +1611,7 @@ for (const fileName of ["llms.txt", "llms-full.txt"]) {
 }
 const llms = fs.readFileSync(path.join(distDir, "llms.txt"), "utf8");
 if (!llms.includes(`${siteUrl}/llms-full.txt`)) fail("llms.txt: full public text index link is missing");
-const plainAiIdentity =
-  "Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem in a one-to-one session, and builds practical AI tools for repetitive tasks.";
-if (!llms.includes(plainAiIdentity)) fail("llms.txt: plain-language identity is missing");
+if (!llms.includes(canonicalIdentity)) fail("llms.txt: canonical identity is missing");
 for (const requiredAiRecord of [
   `${siteUrl}/books/`,
   `${siteUrl}/books/build-the-workflow-keep-the-judgment/`,
@@ -1390,11 +1637,25 @@ for (const requiredAiRecord of [
   if (!llms.includes(requiredAiRecord)) fail(`llms.txt: missing public book or resource record ${requiredAiRecord}`);
 }
 const llmsFull = fs.readFileSync(path.join(distDir, "llms-full.txt"), "utf8");
-if (!llmsFull.includes(plainAiIdentity)) fail("llms-full.txt: plain-language identity is missing");
+if (!llmsFull.includes(canonicalIdentity)) fail("llms-full.txt: canonical identity is missing");
 for (const [fileName, content] of [
   ["llms.txt", llms],
   ["llms-full.txt", llmsFull],
 ]) {
+  if (!content.includes(currentBookClassification)) {
+    fail(`${fileName}: exact current and retired book classification is missing`);
+  }
+  for (const personUrl of verifiedPersonSameAs) {
+    if (!content.includes(personUrl)) fail(`${fileName}: verified person entity is missing ${personUrl}`);
+  }
+  for (const albumUrl of firstLightSameAs) {
+    if (!content.includes(albumUrl)) fail(`${fileName}: First Light entity is missing ${albumUrl}`);
+  }
+  for (const expected of geoNoteExpectations) {
+    if (!content.includes(`${siteUrl}${expected.route}`) || !content.includes(expected.directAnswer)) {
+      fail(`${fileName}: GEO article URL or direct answer is missing for ${expected.route}`);
+    }
+  }
   for (const requiredDiscoveryPath of [
     "/finish-loop/",
     "/frontline-nurse-leader/",

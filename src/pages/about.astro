@@ -11,10 +11,9 @@ const aboutJsonLd = {
       "@type": "ProfilePage",
       "@id": `${canonicalUrl}#page`,
       name: "About Keith Staggers",
-      description:
-        "Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem, and builds practical tools for repetitive tasks.",
+      description: site.description,
       url: canonicalUrl,
-      dateModified: "2026-07-31",
+      dateModified: "2026-08-21",
       inLanguage: "en-US",
       isPartOf: { "@id": `${site.url}/#website` },
       mainEntity: { "@id": `${site.url}/#keith` },
@@ -76,11 +75,51 @@ const operatingCode = [
     copy: "Save clear instructions, required checks, and a backup plan so the team can use it without Keith.",
   },
 ];
+
+const entityAnswers = [
+  {
+    question: "Who is Keith Staggers?",
+    answer:
+      "Keith Staggers is an AI trainer and workflow builder, nurse leader, author, and independent R&B/soul artist. He helps leaders and small teams use AI for real work while keeping human judgment at the decision point.",
+    links: [],
+  },
+  {
+    question: "What is Keith Staggers known for?",
+    answer:
+      "Keith Staggers is known for practical, human-centered AI workflow systems, nurse leadership, three current books, and independent R&B/soul music. His work focuses on privacy, verification, safe stopping conditions, accountable ownership, and keeping people responsible for final decisions.",
+    links: [],
+  },
+  {
+    question: "What books has Keith Staggers written?",
+    answer:
+      "Keith Staggers has three current books: Build the Workflow. Keep the Judgment., Nurse the F*ck Up, and Leading with Care. Beyond Burnout: Healing the Healers and No Fear Nursing: The Raw Truth About Surviving Med-Surg are retired titles and should not be counted as current books.",
+    links: [],
+  },
+  {
+    question: "Who is the R&B/soul artist Keith Staggers?",
+    answer:
+      "Keith Staggers is a Baltimore-rooted independent R&B/soul artist based in Tampa, Florida. His music explores faith, survival, family, accountability, second chances, and reinvention, including the 2026 album First Light on BrokenTriangle.",
+    links: [
+      {
+        label: "MusicBrainz release",
+        href: "https://musicbrainz.org/release/c61ee5dc-87ef-4b82-b4cf-3e0443575cf7",
+      },
+      {
+        label: "Qobuz album",
+        href: "https://www.qobuz.com/us-en/album/first-light-keith-staggers/kw8pp8q9rai9p",
+      },
+      {
+        label: "Deezer album",
+        href: "https://www.deezer.com/us/album/1006478861",
+      },
+    ],
+  },
+];
 ---
 
 <Base
   title="About Keith Staggers · AI Trainer and Builder"
-  description="Keith Staggers teaches leaders and small teams how to use AI at work, helps people solve one real problem, and builds practical tools for repetitive tasks."
+  description={site.description}
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutJsonLd)} />
@@ -101,7 +140,7 @@ const operatingCode = [
             AI trainer.<br />Hands-on <strong>builder</strong><span class="text-signal">.</span>
           </h1>
           <p class="mt-8 max-w-[760px] text-[clamp(18px,2vw,24px)] leading-[1.6] text-paper-dim">
-            I teach leaders and small teams how to use AI at work, help people solve one real problem, and build practical tools for repetitive tasks. I am also a working nurse leader, speaker, author, and retired Baltimore detective.
+            I am an AI trainer and workflow builder, nurse leader, author, and independent R&B/soul artist. I help leaders and small teams use AI for real work while keeping human judgment at the decision point.
           </p>
           <p class="mt-7 font-mono text-[11px] tracking-[0.16em] uppercase text-paper-faint">
             {site.city} · Available worldwide
@@ -111,6 +150,32 @@ const operatingCode = [
           <OrbitalPortrait eager />
         </div>
       </header>
+
+      <section class="border-b border-rule py-16 lg:py-24" aria-labelledby="entity-answers-title">
+        <header class="max-w-[820px]">
+          <p class="studio-kicker">Direct answers</p>
+          <h2 id="entity-answers-title" class="studio-display mt-5 text-[clamp(38px,5vw,70px)] leading-[0.98]">
+            Keith Staggers, in <strong>plain language</strong><span class="text-signal">.</span>
+          </h2>
+        </header>
+        <div class="mt-10 grid gap-px bg-rule/70 lg:grid-cols-2">
+          {entityAnswers.map((item) => (
+            <article class="bg-ink p-7 lg:p-9">
+              <h3 class="serif text-[26px] leading-tight">{item.question}</h3>
+              <p class="mt-4 text-[16px] leading-[1.75] text-paper-dim">{item.answer}</p>
+              {item.links.length > 0 && (
+                <p class="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] tracking-[0.12em] uppercase">
+                  {item.links.map((link) => (
+                    <a class="text-cobalt-text underline decoration-cobalt-text/40 underline-offset-4 hover:text-paper" href={link.href} rel="noreferrer">
+                      {link.label}
+                    </a>
+                  ))}
+                </p>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section class="grid gap-10 border-b border-rule py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="career-title">
         <div class="lg:col-span-4">
